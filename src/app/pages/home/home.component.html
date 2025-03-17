@@ -1,0 +1,42 @@
+<app-header></app-header>
+<section class="home">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="areagris"></div>
+      <div class="areablanc areablanc-interna animated fadeInUp">
+        <div class="div-responsive1">
+          
+          <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
+          
+          <div class="post-inner">
+            <!-- aviso falta info -->
+            <app-aviso></app-aviso>
+            <!-- aviso falta info -->
+
+            <!--category name-->
+            <app-categoria-horizontal></app-categoria-horizontal>
+            <!--category name-->
+            <br />
+
+            <!---Slider-->
+            <app-slider-horizontal></app-slider-horizontal>
+            <!---Slider-->
+
+            <div class="inner-data">
+              <!--list horizontal-->
+              <app-list-products-h></app-list-products-h>
+              <!---list vertical-->
+              <!--list products-->
+              <app-list-products></app-list-products>
+            </div>
+          </div>
+        </div>
+        <!-- lateral -->
+        <app-lateral></app-lateral>
+        <!-- lateral -->
+      </div>
+      <!---menu footer-->
+    </div>
+  </div>
+</section>
+<app-menu-footer></app-menu-footer>

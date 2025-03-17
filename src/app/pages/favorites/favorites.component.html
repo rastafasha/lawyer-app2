@@ -1,0 +1,29 @@
+<app-header></app-header>
+<section class="favorites ">
+  <div class="container-fluid">
+    <div class="row">
+      <!----info-->
+      <div class="areagris"></div>
+      <div class="areablanc areablanc-interna animated fadeInUp">
+        <div class="div-responsive1">
+          <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
+          <div class="post-inner">
+            <!---Slider-->
+            <h5>Firmas</h5>
+            <app-slider-horizontal></app-slider-horizontal>
+            <!---Slider-->
+            <br />
+            <h5>Abogados</h5>
+            <app-list-products-interno></app-list-products-interno>
+          </div>
+        </div>
+        <!-- lateral -->
+        <app-lateral></app-lateral>
+        <!-- lateral -->
+      </div>
+
+      <!---info-->
+    </div>
+  </div>
+</section>
+<app-menu-footer></app-menu-footer>

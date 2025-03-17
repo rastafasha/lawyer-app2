@@ -1,0 +1,99 @@
+<app-header></app-header>
+<section class="wallet home">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="areagris"></div>
+
+      <div class="areablanc areablanc-interna animated fadeInUp">
+        <div class="div-responsive1">
+          <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
+          <!-- <form class="d-flex shadowSearch">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success btn-seach" type="submit"><i class="fa fa-search"></i></button>
+                    </form> -->
+
+          <div class="post-inner">
+            <div class="paggrop">
+              <a routerLink="/wallet-payment">
+                <div class="group itemFav shadow">
+                  <div class="fa fa-paypal"></div>
+                  <div class="div1pagocon">
+                    <p>John Doe.</p>
+                    <!-- <p>Johndoe@gmail.com</p> -->
+                    <p>Pay with: Paypal</p>
+                  </div>
+                </div>
+              </a>
+
+              <a routerLink="/wallet-payment">
+                <div class="group itemFav shadow">
+                  <div class="fa fa-credit-card"></div>
+                  <div class="div1pagocon">
+                    <p>John Doe.</p>
+                    <!-- <p>Johndoe@gmail.com</p> -->
+                    <p>Pay with: Credit Card</p>
+                  </div>
+                </div>
+              </a>
+              <a routerLink="/wallet-payment.html">
+                <div class="group itemFav shadow">
+                  <div class="fa fa-money"></div>
+                  <div class="div1pagocon">
+                    <p>John Doe.</p>
+                    <!-- <p>Johndoe@gmail.com</p> -->
+                    <p>Pay with: Bank Transfer</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <div class="botonera">
+              <div class="button btn-simple-gray">Edit</div>
+              <div class="button btn-full-red">Add</div>
+            </div>
+            <br /><br />
+            <hr />
+            <div class="clear"></div>
+            <h5>Order Recents</h5>
+
+            <div class="paggrop">
+              <div class="ordenes">
+                <a routerLink="/orders">
+                  <img [src]="'users/3.jpg'" alt="" />
+                </a>
+                <div class="div1">
+                  <div class="info">
+                    <p>John Doe.</p>
+                    <p>Lorem ipsum dsadas</p>
+                    <div class="div1-order">
+                      <h3>$53.00</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ordenes">
+                <a routerLink="/orders">
+                  <img [src]="'users/3.jpg'" alt="" />
+                </a>
+                <div class="div1">
+                  <div class="info">
+                    <p>John Doe.</p>
+                    <p>Lorem ipsum dolor sit amet consectetur...</p>
+                    <div class="div1-order">
+                      <h3>$53.00</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- lateral -->
+        <app-lateral></app-lateral>
+        <!-- lateral -->
+      </div>
+    </div>
+  </div>
+</section>
+<app-menu-footer></app-menu-footer>

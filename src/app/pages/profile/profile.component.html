@@ -1,0 +1,67 @@
+<app-header></app-header>
+<section class="user">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="areagris"></div>
+
+      <div class="areablanc areablanc-interna animated fadeInUp">
+        <div class="div-responsive1">
+          <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
+          <div class="group itemFav shadow">
+            <img [src]="'/users/1.jpg'" alt="" />
+            <div class="div1">
+              <p>John Doe.</p>
+              <p>Johndoe&#64;gmail.com</p>
+              <p>User</p>
+            </div>
+          </div>
+          <div class="admin-services">
+            <a routerLink="/profile/edit">
+              <div class="option-admin">
+                <i class="fa fa-user"></i>
+                <p>Edit Profile</p>
+              </div>
+            </a>
+            <a routerLink="/profile/settings">
+              <div class="option-admin">
+                <i class="fa fa-user"></i>
+                <p>Settings</p>
+              </div>
+            </a>
+            <a routerLink="/profile/documents">
+              <div class="option-admin">
+                <i class="fa fa-user"></i>
+                <p>Documents</p>
+              </div>
+            </a>
+            <div class="option-admin">
+              <i class="fa fa-user"></i>
+              <p>Messages</p>
+            </div>
+            <div class="option-admin">
+              <i class="fa fa-user"></i>
+              <p>Notifications</p>
+            </div>
+            <a routerLink="/">
+              <div class="option-admin">
+                <i class="fa fa-user"></i>
+                <p>Logout</p>
+              </div>
+            </a>
+          </div>
+
+          <!--banner publicidad-->
+          <div class="banner-rectangular">
+            <img src="https://picsum.photos/seed/1920/120" alt="" />
+          </div>
+          <!--banner publicidad-->
+        </div>
+
+        <!-- lateral -->
+        <app-lateral></app-lateral>
+        <!-- lateral -->
+      </div>
+    </div>
+  </div>
+</section>
+<app-menu-footer></app-menu-footer>
