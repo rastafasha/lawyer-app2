@@ -28,7 +28,6 @@
 @import url("slidebutton.css");
 @import url("botones.css");
 @import url("registro.css");
-@import url("login.css");
 @import url("menu-footer.css");
 @import url("menu-top-header.css");
 @import url("home.css");
@@ -40,6 +39,7 @@
 @import url("shared.css");
 @import url("lawyer-profile.css");
 @import url("pricing.css");
+@import url("loginnuevo.css");
 
 /*--------------------------------------------------------------
 # General
@@ -88,6 +88,7 @@ h6 {
 
 :root {
     --red: #9F1A36;
+    --vinotinto: #9F1A36;
     --grisfondo: #40515B;
     --gris: #707070;
     --grisclaro: #B8B8B8;

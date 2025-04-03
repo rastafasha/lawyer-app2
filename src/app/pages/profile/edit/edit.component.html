@@ -15,9 +15,10 @@
                     <div class="group  itemFav shadow">
                         <img [src]="'/users/1.jpg'" alt="">
                         <div class="div1">
-                            <p>John Doe.</p>
-                            <p>Johndoe&#64;gmail.com</p>
-                            <p>User</p>
+                            <p>{{profile.nombre}} {{profile.surname}}</p>
+                            <p>{{user.email}}</p>
+                            <p>{{profile.status}}</p>
+                            <p>{{user.role}}</p>
                             <div class="botonera">
                                 <div class="button "><i class="fa fa-folder"></i></div>
                                 <div class="button "><i class="fa fa-camera"></i></div>
