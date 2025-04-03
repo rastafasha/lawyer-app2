@@ -8,6 +8,7 @@ import {  Location } from '@angular/common';
 export class BackButtnComponent {
     // private _location = Inject(Location)
     @Input() pageTitle!:string;
+    @Input() Title!:string;
     
     constructor(private _location: Location) {}
 

@@ -1,6 +1,7 @@
 export class Profile {
   id!: number;
   user_id!: number;
+  speciality_id!: number;
   nombre: string = "";
   username: string = "";
   surname: string = "";
@@ -8,6 +9,7 @@ export class Profile {
   n_doc: number = 0;
   created_at: string = "";
   direccion: string = "";
+  description: string = "";
   pais: string = "";
   estado: string = "";
   ciudad: string = "";
@@ -24,12 +26,13 @@ export class Profile {
 export class RedesSociales {
     id!: number;
     title: string = "";
+    icono: string = "";
     url: string = "";
   
   }
 export class Precios {
     id!: number;
-    tarifa: string = "";
+    item_tarifa: string = "";
     precio: number = 0;
   
   }

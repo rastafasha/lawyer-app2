@@ -18,7 +18,7 @@ declare const gapi: any;
 })
 export class LoginComponent implements OnInit {
   name = new FormControl();
-  surname = new FormControl();
+  username = new FormControl();
   email = new FormControl();
   password = new FormControl();
   n_doc = new FormControl();
@@ -51,12 +51,11 @@ export class LoginComponent implements OnInit {
   ) {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
-      surname: ['', Validators.required],
+      username: ['', Validators.required],
       email: [ '', [Validators.required, Validators.email] ],
-      n_doc: ['', Validators.required],
       password: ['', Validators.required],
       password2: ['', Validators.required],
-      role: ['GUEST'],
+      // role: ['GUEST'],
       // terminos: [false, Validators.required],
   
     }, {

@@ -125,6 +125,7 @@
         }
         .itemFav .div1 {
             grid-area: 1 / 2 / 2 / 3;
+            padding: 15px;
         }
     
     

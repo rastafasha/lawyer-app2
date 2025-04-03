@@ -37,11 +37,18 @@ export class SpecialitiesService {
       )
   }
 
-  getSpeciality(_id: Speciality) {
-    const url = `${baseUrl}/speciality/show/${_id}`;
+  getSpeciality(id: Speciality) {
+    const url = `${baseUrl}/speciality/show/${id}`;
     return this.http.get<any>(url, this.headers)
       .pipe(
         map((resp:{ok: boolean, speciality: Speciality}) => resp.speciality)
+        );
+  }
+  getSpecialitywithUsers(id: number) {
+    const url = `${baseUrl}/speciality/showWithUsers/${id}`;
+    return this.http.get<any>(url, this.headers)
+      .pipe(
+        map((resp:{ok: boolean, speciality: any}) => resp)
         );
   }
 

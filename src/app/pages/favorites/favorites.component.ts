@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { MenuFooterComponent } from '../../shared/menu-footer/menu-footer.component';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { CommonModule } from '@angular/common';
-import { SliderHorizontalComponent } from '../../components/slider-horizontal/slider-horizontal.component';
 import { LateralComponent } from '../../components/lateral/lateral.component';
 import { ListProductsInternoComponent } from '../../components/list-products-interno/list-products-interno.component';
 import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
@@ -14,7 +13,6 @@ import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
     MenuFooterComponent,
     HeaderComponent,
     CommonModule,
-    SliderHorizontalComponent,
     LateralComponent,
     ListProductsInternoComponent,
     BackButtnComponent

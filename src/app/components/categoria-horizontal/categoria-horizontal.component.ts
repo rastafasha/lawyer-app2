@@ -4,10 +4,11 @@ import { SpecialitiesService } from '../../services/specialities.service';
 import { AuthService } from '../../services/auth.service';
 import { Usuario } from '../../models/usuario.model';
 import { NgFor } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-categoria-horizontal',
-  imports: [NgFor],
+  imports: [NgFor, RouterModule],
   templateUrl: './categoria-horizontal.component.html',
   styleUrl: './categoria-horizontal.component.css'
 })

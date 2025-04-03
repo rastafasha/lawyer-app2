@@ -5,5 +5,6 @@ export class Speciality {
   description: string = "";
   is_active: number = 0;
   isFeatured: number = 0;
+  count_profiles: number = 0;
 
 }

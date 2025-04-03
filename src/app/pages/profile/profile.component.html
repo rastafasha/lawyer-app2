@@ -10,10 +10,12 @@
           <div class="group itemFav shadow">
             <img [src]="'/users/1.jpg'" alt="" />
             <div class="div1">
-              <p>{{profile.nombre}} {{profile.surname}}</p>
+              <p>{{user.username}}</p>
+              <p *ngIf="profile">{{profile.nombre}} {{profile.surname}}</p>
               <p>{{user.email}}</p>
+              <p *ngIf="speciality">{{speciality.title}}</p>
               <p>{{user.role}}</p>
-              <p>{{profile.status}}</p>
+              <p *ngIf="profile">{{profile.status}}</p>
             </div>
           </div>
           <div class="admin-services">

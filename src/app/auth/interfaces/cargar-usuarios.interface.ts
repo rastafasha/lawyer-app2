@@ -1,6 +1,7 @@
-import { User } from "src/app/models/user";
+import { Usuario } from "../../models/usuario.model";
+
 
 export interface CargarUsuario{
   total: number;
-  usuarios: User[];
+  usuarios: Usuario[];
 }

@@ -1,0 +1,20 @@
+<div class="carousel-inner-data">
+                <!--  -->
+                <div class="post navTabs" >
+                    <div class=" itemFav shadow "  *ngFor="let item of users">
+                        <div class="group  itemFav lastposthome">
+                            <a [routerLink]="['/especialista/', item.id]">
+                                <img src="assets/users/3.jpg" alt="">
+                            </a>
+                            <div class="div1">
+                                <h4 style="margin: 0; padding: 0;">{{item.username}}</h4>
+                                <h5 style="margin: 0; padding: 0;">{{item.role}}</h5>
+                                <h5 style="margin: 0; padding: 0;">{{item.ciudad}}</h5>
+                                <h5 style="margin: 0; padding: 0;">{{item.profiles.status}}</h5>
+                                
+                            </div>
+                        </div>
+                    </div>
+            
+                </div>
+            </div>

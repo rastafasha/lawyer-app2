@@ -5,8 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { LoginComponent } from './login/login.component';
-// import { PasswordresetComponent } from './passwordreset/passwordreset.component';
-// import { NewpasswordComponent } from './newpassword/newpassword.component';
+import { IconosService } from '../services/iconos.service'; // Adjusted import path
 
 @NgModule({
   imports: [
@@ -16,6 +15,7 @@ import { LoginComponent } from './login/login.component';
     ReactiveFormsModule,
     HttpClientModule, // Added HttpClientModule here
     LoginComponent
-  ]
+  ],
+  providers: [IconosService] // Correctly added IconosService here
 })
 export class AuthModule { }
