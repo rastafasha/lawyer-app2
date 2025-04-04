@@ -30,7 +30,7 @@ export class AvisoComponent {
     this.profileService.getByUser(this.user_id).subscribe({
       next: (res) => {
         this.profile = res.profile;
-        console.log(this.profile);
+        // console.log(this.profile);
       },
       error: (err) => {
         console.log(err);

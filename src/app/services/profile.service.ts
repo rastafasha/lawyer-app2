@@ -38,6 +38,7 @@ export class ProfileService {
         map((resp:{ok: boolean, profiles: Profile}) => resp.profiles)
       )
   }
+  
 
   getProfile(_id: number) {
     const url = `${baseUrl}/profile/show/${_id}`;
@@ -45,6 +46,21 @@ export class ProfileService {
       .pipe(
         map((resp:{ok: boolean, profile: Profile}) => resp.profile)
         );
+  }
+
+  getProfileRecientes() {
+    const url = `${baseUrl}/profile/recientes`;
+    return this.http.get<any>(url,this.headers)
+      .pipe(
+        map((resp:{ok: boolean, recientes: Profile}) => resp.recientes)
+      )
+  }
+  getProfileDestacados() {
+    const url = `${baseUrl}/profile/destacados`;
+    return this.http.get<any>(url,this.headers)
+      .pipe(
+        map((resp:{ok: boolean, destacados: Profile}) => resp.destacados)
+      )
   }
 
   getByUser(usuario:any) {

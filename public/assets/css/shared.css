@@ -99,13 +99,11 @@
     border: 1px solid var(--grisclaro);
 }
 
-.home .info,
-.search .info {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+.home .info, .search .info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20px;
 }
 
 .wallet .div1 p,
@@ -187,6 +185,13 @@
 }
 
 @media (min-width: 768px) {
+
+    .home .info, .search .info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 20px;
+    }
     .stars .fa {
         font-size: 1vw;
     }

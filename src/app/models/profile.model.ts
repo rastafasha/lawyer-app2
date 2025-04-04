@@ -18,6 +18,7 @@ export class Profile {
   image: string = "";
   status: string = "";
   rating: string = "";
+  speciality_title: string = "";
   redessociales: RedesSociales = new RedesSociales();
   precios: Precios = new Precios();
 
