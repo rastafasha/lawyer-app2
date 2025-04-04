@@ -39,7 +39,7 @@ export class ProfileService {
       )
   }
 
-  getProfile(_id: Profile) {
+  getProfile(_id: number) {
     const url = `${baseUrl}/profile/show/${_id}`;
     return this.http.get<any>(url, this.headers)
       .pipe(

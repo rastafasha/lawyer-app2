@@ -247,7 +247,7 @@ img {
 @media (min-width: 768px) {
     .div-scroll{
         height: calc(80vh - 100px);
-        /* height: auto; */
+        height: auto;
         overflow: hidden;
         overflow-y: scroll;
         padding: 20px;

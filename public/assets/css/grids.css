@@ -100,14 +100,14 @@
 @media(min-width: 768px) {
     .navTabs {
         display: grid;
-        gap: 8rem;
+        gap: 2rem;
         grid-auto-rows: 7rem;
         grid-template-columns: repeat(2, minmax(calc(180px), 1fr));
         
     }
     .navTabs img {
         display: flex;
-        width: 100%;
+        width: 50%;
     }
     .itemFav {
         display: grid;
