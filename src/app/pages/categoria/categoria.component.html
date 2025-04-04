@@ -1,0 +1,51 @@
+<app-header></app-header>
+<section class="favorites ">
+  <div class="container-fluid">
+    <div class="row">
+      <!----info-->
+      <div class="areagris"></div>
+      <div class="areablanc areablanc-interna animated fadeInUp">
+        <div class="div-responsive1">
+          <app-backButtn [pageTitle]="pageTitle" [Title]="Title"></app-backButtn>
+          <div class="post-inner">
+            <h5>Abogados</h5>
+            <div class="carousel-inner-data">
+                <!--  -->
+                <div class="post navTabs" >
+                    <div class=" itemFav shadow "  *ngFor="let item of profiles">
+                        <div class="group  itemFav lastposthome">
+                            <a [routerLink]="['/especialista/', item.user_id]">
+                                <img src="assets/users/3.jpg" alt="">
+                            </a>
+                            <div class="div1">
+                                <h4 style="margin: 0; padding: 0;">{{item.nombre}} {{item.surname}}</h4>
+                                <h5 style="margin: 0; padding: 0;">{{item.ciudad}}</h5>
+                                <p style="margin: 0; padding: 0;">{{item.description | slice:0:45}}...</p>
+                                <div class="stars">
+                                    <ul>
+                                        <li class="active"><i class="fa fa-star"></i></li>
+                                        <li class="active"><i class="fa fa-star"></i></li>
+                                        <li class="active"><i class="fa fa-star"></i></li>
+                                        <li class="active"><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                </div>
+            </div>
+            
+          </div>
+        </div>
+        <!-- lateral -->
+        <app-lateral></app-lateral>
+        <!-- lateral -->
+      </div>
+
+      <!---info-->
+    </div>
+  </div>
+</section>
+<app-menu-footer></app-menu-footer>

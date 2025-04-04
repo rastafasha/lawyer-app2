@@ -9,26 +9,33 @@
           <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
           
           <div class="post-inner">
-            <!-- aviso falta info -->
-            <app-aviso></app-aviso>
-            <!-- aviso falta info -->
+            <div *ngIf="user.role === 'MEMBER' || user.role === 'GUEST'">
+               <!-- aviso falta info -->
+               <app-aviso></app-aviso>
+               <!-- aviso falta info -->
+               <!--category name-->
+               <app-categoria-horizontal></app-categoria-horizontal>
+               <!--category name-->
+               <br />
+   
+               <!---Slider-->
+               <app-slider-horizontal></app-slider-horizontal>
+               <!---Slider-->
+   
+               <div class="inner-data">
+                 <!--list horizontal-->
+                 <app-list-products-h></app-list-products-h>
+                 <!---list vertical-->
+                 <!--list products-->
+                 <app-list-products></app-list-products>
+               </div>
 
-            <!--category name-->
-            <app-categoria-horizontal></app-categoria-horizontal>
-            <!--category name-->
-            <br />
+             </div>
+             
+             <div *ngIf="user.role === 'SUPERADMIN' || user.role === 'ADMIN'">
+              <app-ListaUsuarios [users]="users"></app-ListaUsuarios>
+             </div>
 
-            <!---Slider-->
-            <app-slider-horizontal></app-slider-horizontal>
-            <!---Slider-->
-
-            <div class="inner-data">
-              <!--list horizontal-->
-              <app-list-products-h></app-list-products-h>
-              <!---list vertical-->
-              <!--list products-->
-              <app-list-products></app-list-products>
-            </div>
           </div>
         </div>
         <!-- lateral -->

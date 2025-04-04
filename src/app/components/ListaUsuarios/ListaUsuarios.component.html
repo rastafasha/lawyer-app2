@@ -1,0 +1,26 @@
+<div class="carousel-inner-data lista">
+                <!--  -->
+                <div class="post navTabs" >
+                    <div class=" itemFav shadow "  *ngFor="let item of users">
+                        <div class="group  itemFav lastposthome">
+                            <a [routerLink]="['/especialista/', item.id]">
+                                <img src="assets/users/3.jpg" alt="">
+                            </a>
+                            <div class="div1">
+                                <h4 style="margin: 0; padding: 0;">{{item.username}}</h4>
+                                <p style="margin: 0; padding: 0;">{{item.role}}</p>
+                                <p style="margin: 0; padding: 0;">{{item.ciudad}}</p>
+                                <!-- <h5 style="margin: 0; padding: 0;">{{item.profiles.status}}</h5> -->
+                                <span class="badge  bg-primary"
+                                    *ngIf="item.profiles.status === 'PENDING'">Pendiente</span>
+                                <span class="badge bg-success"
+                                    *ngIf="item.profiles.status === 'VERIFIED'">Verificado</span>
+                                <span class="badge bg-danger"
+                                    *ngIf="item.profiles.status === 'REJECTED'">Por revisar</span>
+                                
+                            </div>
+                        </div>
+                    </div>
+            
+                </div>
+            </div>

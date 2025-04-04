@@ -308,9 +308,11 @@
         display: grid;
         cursor: pointer;
         grid-template-columns: 150px 1fr;
+        height: 260px;
+        border-radius: 16px;
     }
     .favorites .itemFav img {
-        width: 80%;
+        width: 100%;
         padding: 5px;
         border: 1px solid rgb(231, 231, 231);
         background-color: #fafafa;

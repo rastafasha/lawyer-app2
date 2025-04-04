@@ -10,13 +10,16 @@
           <div class="group itemFav shadow">
             <img [src]="'/users/1.jpg'" alt="" />
             <div class="div1">
-              <p>John Doe.</p>
-              <p>Johndoe&#64;gmail.com</p>
-              <p>User</p>
+              <p>{{user.username}}</p>
+              <p *ngIf="profile">{{profile.nombre}} {{profile.surname}}</p>
+              <p>{{user.email}}</p>
+              <p *ngIf="speciality">{{speciality.title}}</p>
+              <p>{{user.role}}</p>
+              <p *ngIf="profile">{{profile.status}}</p>
             </div>
           </div>
           <div class="admin-services">
-            <a routerLink="/profile/edit">
+            <a [routerLink]="['/profile/edit', user.id]">
               <div class="option-admin">
                 <i class="fa fa-user"></i>
                 <p>Edit Profile</p>

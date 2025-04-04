@@ -5,6 +5,12 @@ import { LateralComponent } from '../../components/lateral/lateral.component';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { RouterLink } from '@angular/router';
 import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
+import { AuthService } from '../../services/auth.service';
+import { Usuario } from '../../models/usuario.model';
+import { ProfileService } from '../../services/profile.service';
+import { Profile } from '../../models/profile.model';
+import { Speciality } from '../../models/speciality.model';
+import { SpecialitiesService } from '../../services/specialities.service';
 
 @Component({
   imports: [
@@ -21,4 +27,40 @@ import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
 })
 export class ProfileComponent {
   pageTitle= 'Profile';
+  public user!: Usuario;
+  public profile!: Profile;
+  public speciality_profile!: Speciality;
+  public speciality!: Speciality;
+
+  constructor(
+    private authService: AuthService,
+    private profileService: ProfileService,
+    private specialityService: SpecialitiesService,
+  ) {
+    this.user = this.authService.getUser();
+  }
+
+  ngOnInit(): void {
+    this.user = this.authService.getUser();
+    this.getProfile();
+  }
+
+  getProfile(){
+    this.profileService.getByUser(this.user.id).subscribe((resp:any) => {
+      // console.log(resp);
+      this.profile = resp.profile;
+      this.speciality_profile = resp.profile.speciality_id;
+      this.getSpeciality();
+      // setTimeout(() => {
+      // }
+      // , 5000);
+    })
+  }
+
+  getSpeciality(){
+    this.specialityService.getSpeciality(this.speciality_profile).subscribe((resp:any) => {
+      // console.log(resp);
+      this.speciality = resp;
+    })
+  }
 }

@@ -7,160 +7,304 @@
             </div>
 
             <div class="areablanc areablanc-interna animated fadeInUp">
-
-
                 <div class="div-responsive1">
 
-                    <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
-                    <div class="group  itemFav shadow">
-                        <img [src]="'/users/1.jpg'" alt="">
-                        <div class="div1">
-                            <p>John Doe.</p>
-                            <p>Johndoe&#64;gmail.com</p>
-                            <p>User</p>
-                            <div class="botonera">
-                                <div class="button "><i class="fa fa-folder"></i></div>
-                                <div class="button "><i class="fa fa-camera"></i></div>
-                            </div>
+                    <app-backButtn [pageTitle]="pageTitle" [Title]="Title"></app-backButtn>
 
-                        </div>
-
-                    </div>
-                    <div class="clear"></div>
-
-                    <div class="post-inner">
-
-                        <div class="form">
-                            <form action="">
-                                <div class="col-auto mb-2">
-                                    <input class="form-control form-control-md" type="text" placeholder="first name" aria-label=".form-control-lg example">
-                                </div>
-                                <div class="col-auto mb-2">
-                                    <input class="form-control form-control-md" type="text" placeholder="last name" aria-label=".form-control-lg example">
-                                </div>
-
-
-                                <div class="col-auto mb-2">
-                                    <input class="form-control form-control-md" type="text" placeholder="Email" aria-label=".form-control-lg example">
-                                </div>
-                                <div class="col-auto mb-2">
-                                    <input class="form-control form-control-md" type="text" placeholder="Phone number" aria-label=".form-control-lg example">
-                                </div>
-                                <div class="col-auto mb-2">
-                                    <input class="form-control form-control-md" type="text" placeholder="Home Address" aria-label=".form-control-lg example">
-                                </div>
-                                <div class="col-auto mb-2">
-                                    <input class="form-control form-control-md" type="text" placeholder="Business Address" aria-label=".form-control-lg example">
-                                </div>
-                                <div class="col-auto mb-2">
-                                    <select name="" id="" class="form-control form-control-md">
-                                        <option value="0">Select Carrer</option>
-                                        <option value="0">Category 1</option>
-                                        <option value="0">Category 2</option>
-                                        <option value="0">Category 3</option>
-                                        <option value="0">Category 4</option>
-                                    </select>
-                                </div>
-                                <div class="col-auto mb-2">
-                                    <input class="form-control form-control-md" type="text" placeholder="Insert Carrer" aria-label=".form-control-lg example">
-                                </div>
-                                <div class="col-auto mb-2">
-                                    <input class="form-control form-control-md" type="text" placeholder="Card Asoc ID" aria-label=".form-control-lg example">
-                                </div>
-                                <div class="col-auto mb-2">
-                                    <input class="form-control form-control-md" type="text" placeholder="social network Address" aria-label=".form-control-lg example">
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="">
-                                        <div class="form-check form-control-md">
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                              Male
-                                            </label>
+                    <div class="div-scroll">
+                        <form  [formGroup]="userForm">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="validationCustom02" class="form-label">Nombre</label>
+                                    <input type="text" formControlName="nombre" class="form-control" id="validationCustom02"  required>
+                                    @if(userForm.controls['nombre'].touched){
+                      
+                                        <div class="text-danger">
+                                          @if(userForm.controls['nombre'].errors?.['required']){
+                                              <span >Campo requerido</span>
+                                          }
+                                          @if(userForm.controls['nombre'].errors?.['minlength']){
+                                              <span >Minímo 3 caracteres</span>
+                                          }
                                         </div>
-                                        <div class="form-check form-control-md">
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                            <label class="form-check-label" for="flexCheckChecked">
-                                              Female
-                                            </label>
+                                    }
+                                  </div>
+                                  <div class="col-md-4">
+                                    <label for="validationCustom02" class="form-label">Apellido</label>
+                                    <input type="text" formControlName="surname" class="form-control" id="validationCustom02"  required>
+                                    @if(userForm.controls['surname'].touched){
+                      
+                                        <div class="text-danger">
+                                          @if(userForm.controls['surname'].errors?.['required']){
+                                              <span >Campo requerido</span>
+                                          }
+                                          @if(userForm.controls['surname'].errors?.['minlength']){
+                                              <span >Minímo 3 caracteres</span>
+                                          }
                                         </div>
-                                        <div class="col-auto mb-2">
-                                            <label for="">Accept Notification</label>
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                                                <label class="form-check-label" for="flexSwitchCheckDefault">Acept</label>
-                                            </div>
+                                    }
+                                  </div>
+                                  <div class="col-md-4">
+                                    <label for="validationCustom02" class="form-label">Teléfono Casa</label>
+                                    <input type="text" formControlName="telhome" class="form-control" id="validationCustom02"  required>
+                                    @if(userForm.controls['telhome'].touched){
+                      
+                                        <div class="text-danger">
+                                          @if(userForm.controls['telhome'].errors?.['required']){
+                                              <span >Campo requerido</span>
+                                          }
+                                          @if(userForm.controls['telhome'].errors?.['minlength']){
+                                              <span >Minímo 3 caracteres</span>
+                                          }
                                         </div>
+                                    }
+                                  </div>
+                                  <div class="col-md-4">
+                                    <label for="validationCustom02" class="form-label">Teléfono Móvil</label>
+                                    <input type="text" formControlName="telmovil" class="form-control" id="validationCustom02"  required>
+                                    @if(userForm.controls['telmovil'].touched){
+                      
+                                        <div class="text-danger">
+                                          @if(userForm.controls['telmovil'].errors?.['required']){
+                                              <span >Campo requerido</span>
+                                          }
+                                          @if(userForm.controls['telmovil'].errors?.['minlength']){
+                                              <span >Minímo 3 caracteres</span>
+                                          }
+                                        </div>
+                                    }
+                                  </div>
+                                  <div class="col-md-4">
+                                    <label for="validationCustom02" class="form-label">País</label>
+                                    <input type="text" formControlName="pais" class="form-control" id="validationCustom02"  required>
+                                    @if(userForm.controls['pais'].touched){
+                      
+                                        <div class="text-danger">
+                                          @if(userForm.controls['pais'].errors?.['required']){
+                                              <span >Campo requerido</span>
+                                          }
+                                          @if(userForm.controls['pais'].errors?.['minlength']){
+                                              <span >Minímo 3 caracteres</span>
+                                          }
+                                        </div>
+                                    }
+                                  </div>
+                                  <div class="col-md-4">
+                                    <label for="validationCustom02" class="form-label">Ciudad</label>
+                                    <input type="text" formControlName="ciudad" class="form-control" id="validationCustom02"  required>
+                                    @if(userForm.controls['ciudad'].touched){
+                      
+                                        <div class="text-danger">
+                                          @if(userForm.controls['ciudad'].errors?.['required']){
+                                              <span >Campo requerido</span>
+                                          }
+                                          @if(userForm.controls['ciudad'].errors?.['minlength']){
+                                              <span >Minímo 3 caracteres</span>
+                                          }
+                                        </div>
+                                    }
+                                  </div>
+                                  <div class="col-12">
+                                    <label for="validationCustom02" class="form-label">Dirección</label>
+                                    <textarea formControlName="direccion" class="form-control" id="validationCustom02"  required></textarea>
+                                    @if(userForm.controls['direccion'].touched){
+                      
+                                        <div class="text-danger">
+                                          @if(userForm.controls['direccion'].errors?.['required']){
+                                              <span >Campo requerido</span>
+                                          }
+                                          @if(userForm.controls['direccion'].errors?.['minlength']){
+                                              <span >Minímo 3 caracteres</span>
+                                          }
+                                        </div>
+                                    }
+                                  </div>
+                                  <div class="col-12">
+                                    <label for="validationCustom02" class="form-label">Descripción</label>
+                                    <textarea formControlName="description" class="form-control" id="validationCustom02"  required></textarea>
+                                    @if(userForm.controls['description'].touched){
+                      
+                                        <div class="text-danger">
+                                          @if(userForm.controls['description'].errors?.['required']){
+                                              <span >Campo requerido</span>
+                                          }
+                                          @if(userForm.controls['description'].errors?.['minlength']){
+                                              <span >Minímo 3 caracteres</span>
+                                          }
+                                        </div>
+                                    }
+                                  </div>
 
-                                        <div class="col-auto mb-2">
-                                            <label for="">Accept Terms & Conditions</label>
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                                                <label class="form-check-label" for="flexSwitchCheckDefault">Acept</label>
-                                            </div>
+                                  <div class="col-12 col-md-6 col-xl-6">
+                                    <div class="form-group local-top-form">
+                                        <label class="local-top">Foto <span class="login-danger">*</span></label>
+                                        <div class="settings-btn upload-files-avator">
+                                            <input type="file" accept="image/*" name="image" id="file" (change)="loadFile($event)" class="hide-input">
+                                            <label for="file" class="upload">Seleccione Foto</label>
                                         </div>
-                                        <div class="col-auto mb-2">
-                                            <label for="">Accept Terms & Conditions</label>
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                                                <label class="form-check-label" for="flexSwitchCheckDefault">Acept</label>
-                                            </div>
-                                        </div>
+                                    </div>
+                                    <div *ngIf="FILE_AVATAR">
+                                        <img [src]="IMAGE_PREVISUALIZA" style="width: 250px;" alt="">
                                     </div>
                                 </div>
 
+                            </div>
+                            <div class="row" *ngIf="user.role==='MEMBER' && profile.status === 'VERIFIED'">
+                                <div class="col-md-3">
+                                    <label for="validationCustom04" class="form-label">Especialidad</label>
+                                    <select class="form-select" formControlName="speciality_id" id="validationCustom04"  required>
+                                      <!-- <option selected disabled value="">Seleccione...</option> -->
+                                      <option *ngFor="let data of specialities" [value]="data.id">{{data.title}}</option>
+                                    </select>
 
-                                <div class="botonera">
-                                    <div class="button btn-simple-gray">Cancelar</div>
-                                    <div class="button btn-full-red">Actualizar</div>
+                                    <div class="invalid-feedback">
+                                      Favor seleccione una Especialidad.
+                                    </div>
+                                  </div>
+                            </div>
+                            <br>
+                            <!-- redes sociales -->
+                            <div class="row " >
+                                <h3>Redes Sociales</h3>
+                                <div class="col-12 col-sm-4">  
+                                    <div class="form-group local-forms">
+                                    <label >Icono<span class="login-danger">*</span></label>
+                                    <select class="form-control" name="icono" [ngModelOptions]="{standalone: true}"  [(ngModel)]="icono">
+                                        <option *ngFor="let ic of listIcons" value="{{ic.icon}}">
+                                          {{ic.name}} <i class="{{ic.name}}"></i>
+                                        </option>
+                                      </select>
+                                    </div>
                                 </div>
+                                <div class="col-12 col-sm-4">  
+                                    <div class="form-group local-forms">
+                                    <label >Nombre<span class="login-danger">*</span></label>
+                                    <input class="form-control" name="title" [ngModelOptions]="{standalone: true}"  [(ngModel)]="title" type="text" required>
 
-                            </form>
-                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-4">  
+                                    <div class="form-group local-forms">
+                                    <label >Dirección<span class="login-danger">*</span></label>
+                                    <input class="form-control" name="url" [ngModelOptions]="{standalone: true}"  [(ngModel)]="url" type="text" required>
 
-                        <!--auth verify-->
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <button class="btn btn-primary btn-sm text-end " (click)="addRedSocial()">+ Agregar</button>
+                                    <!-- <button class="btn btn-danger btn-sm">x</button> -->
+                                </div>
+                                <div class="col-xs-12 ">
+                                    <div class="table-responsive">
+                                        <table class="table mb-0 table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Icono</th>
+                                                    <th>Nombre</th>
+                                                    <th>Dirección</th>
+                                                    <th>Acción</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of redessociales ; let i=index">
+                                                    <td>
+                                                        <i [class]="'fa' +' '+ item.icono" aria-hidden="true"></i>
+                                                        
+                                                    </td>
+                                                    <td>
+                                                         {{item.title}}
+                                                        
+                                                    </td>
+                                                    <td>
+                                                        {{item.url }}
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-danger btn-sm text-end" (click)="deletered(i)">x</button>
+                                                    </td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <!-- redes sociales -->
+                            <br>
+                            <!-- Tarifas -->
+                            <div class="row " *ngIf="user.role==='MEMBER' && profile.status === 'VERIFIED'" >
+                                <h3>Tarifas</h3>
+                                
+                                <div class="row align-items-center" >
+                                    <div class="col-xs-12 ">
+                                        <div class="row">
+                                            
+                                            <div class="col-12 col-sm-8">  
+                                                <div class="form-group local-forms">
+                                                <label >Item<span class="login-danger">*</span></label>
+                                                <input class="form-control" name="item_tarifa" [ngModelOptions]="{standalone: true}"  [(ngModel)]="item_tarifa" type="text" required>
+    
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-2">
+                                                <div class="form-group local-forms">
+                                                    <label >Precio<span class="login-danger">*</span></label>
+                                                    <input class="form-control" name="precio" [ngModelOptions]="{standalone: true}" [(ngModel)]="precio" type="number"  >
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mb-3">
+                                                <button class="btn btn-primary btn-sm text-end " (click)="addMedicamento()">+ Agregar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 ">
+                                        <div class="table-responsive">
+                                            <table class="table mb-0 table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Descripción</th>
+                                                        <th>Precio</th>
+                                                        <th>Acción</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let item of tarifas ; let i=index">
+                                                        <td>
+                                                             {{item.item_tarifa}}
+                                                            
+                                                        </td>
+                                                        <td>
+                                                            {{item.precio  | currency }}
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-danger btn-sm text-end" (click)="deleteMedical(i)">x</button>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                
+                            </div>
+                            <!-- Tarifas -->
 
-                        <div class="verifyThirtPart">
-                            <h1>Verificar Identidad</h1>
-                            <div class=" group">
-                                <i class="fa fa-google" aria-hidden="true"></i>
-                                <div class="div1">
-                                    <h2>Google Verify</h2>
-                                    <p>emailaddress&#64;gmail.com</p>
+                            <div class="row align-items-center" >
+                                <div class="col-12">
+                                    <div class="doctor-submit text-end">
+                                        <button type="button" class="btn btn-primary submit-form me-2" (click)="onUserSave()">Guardar</button>
+                                        
+                                    </div>
                                 </div>
                             </div>
-                            <div class=" group">
-                                <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                                <div class="div1">
-                                    <h2>Professional Verify</h2>
-                                    <p>photo with id card</p>
-                                </div>
-                            </div>
+                            
 
-                        </div>
-
+                        </form>
                     </div>
                 </div>
-
-                <div class="div-responsive2">
-
-                    <div class="lateral">
-                        <div class="group  itemFav shadow">
-                            <img src="assets/users/1.jpg" alt="">
-                            <div class="div1">
-                                <p>John Doe.</p>
-                                <p>Johndoe&#64;gmail.com</p>
-                                <p>User</p>
-
-                            </div>
-                        </div>
-
-                        <div class="banner-c">
-                            <img src="https://picsum.photos/seed/car/500/500" alt="">
-                        </div>
-                    </div>
-                </div>
+                <app-lateral></app-lateral>
 
 
 
