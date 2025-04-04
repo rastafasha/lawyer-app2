@@ -1,15 +1,62 @@
+.tarifas{
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 100%;
+    &::-webkit-scrollbar {
+        width: 0px;
+        background: transparent; /* Optional: just make scrollbar invisible */
+    }
+}
+
 .tarifa {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: baseline;
     padding: 5px;
+    border-bottom: 1px dotted #ccc;
+    border-width: 80%;
+    & h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+     & p {
+        font-size: 1rem;
+        margin: 0;
+    }
 }
-.tarifa h1 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
+
+
+.stars {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-right: 13px;
+    & .fa {
+        font-size: 1vw;
+    }
+    & ul {
+        display: inline-flex;
+        & li {
+            list-style: none;
+            color: var(--grisfondo)
+        }
+        & li .active {
+            color: gold;
+        }
+    
+    }
+
 }
-.tarifa p {
-    font-size: 1rem;
-    margin: 0;
+
+.reds{
+    display: flex;
+    gap:5px;
+    justify-content: space-evenly;
+    & .cont{
+        display: flex;
+        & .fa {
+            font-size: 1.3em;
+        }
+    }
 }

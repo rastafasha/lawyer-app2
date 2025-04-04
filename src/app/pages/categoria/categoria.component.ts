@@ -49,7 +49,7 @@ export class CategoriaComponent {
   }
   getSpeciality(id: number) {
     this.specialityService.getSpecialitywithUsers(id).subscribe((resp: any) => {
-      console.log(resp);
+      // console.log(resp);
       this.Title = resp.speciality.title;
       this.speciality = resp.speciality;
       this.profiles = resp.users;

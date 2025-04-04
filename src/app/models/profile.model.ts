@@ -16,7 +16,8 @@ export class Profile {
   telhome: string = "";
   telmovil: string = "";
   image: string = "";
-  status: string = "";
+  status: number = 1;
+  // status: string = "";
   rating: string = "";
   speciality_title: string = "";
   redessociales: RedesSociales = new RedesSociales();

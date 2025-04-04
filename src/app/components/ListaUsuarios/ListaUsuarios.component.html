@@ -12,11 +12,11 @@
                                 <p style="margin: 0; padding: 0;">{{item.ciudad}}</p>
                                 <!-- <h5 style="margin: 0; padding: 0;">{{item.profiles.status}}</h5> -->
                                 <span class="badge  bg-primary"
-                                    *ngIf="item.profiles.status === 'PENDING'">Pendiente</span>
+                                    *ngIf="item.profiles.status === 1">Pendiente</span>
                                 <span class="badge bg-success"
-                                    *ngIf="item.profiles.status === 'VERIFIED'">Verificado</span>
+                                    *ngIf="item.profiles.status === 2">Verificado</span>
                                 <span class="badge bg-danger"
-                                    *ngIf="item.profiles.status === 'REJECTED'">Por revisar</span>
+                                    *ngIf="item.profiles.status === 3">Por revisar</span>
                                 
                             </div>
                         </div>

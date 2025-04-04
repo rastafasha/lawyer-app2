@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
   password = new FormControl();
   n_doc = new FormControl();
   remember = new FormControl();
+  terminos = new FormControl();
 
   loginForm!: FormGroup;
   submitted = false;
@@ -55,7 +56,7 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required],
       password2: ['', Validators.required],
       // role: ['GUEST'],
-      // terminos: [false, Validators.required],
+      terminos: [false, Validators.required],
   
     }, {
       validators: this.passwordsIguales('password', 'password2')

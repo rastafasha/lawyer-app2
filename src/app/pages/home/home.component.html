@@ -9,7 +9,7 @@
           <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
           
           <div class="post-inner">
-            <div *ngIf="user.role === 'MEMBER' || user.role === 'GUEST'">
+            <div *ngIf="user.roles[0] === 'MEMBER' || user.roles[0] === 'GUEST'">
                <!-- aviso falta info -->
                <app-aviso></app-aviso>
                <!-- aviso falta info -->
@@ -34,7 +34,7 @@
 
              </div>
              
-             <div *ngIf="user.role === 'SUPERADMIN' || user.role === 'ADMIN'">
+             <div *ngIf="user.roles[0] === 'SUPERADMIN' || user.roles[0] === 'ADMIN'">
               <app-ListaUsuarios [users]="users"></app-ListaUsuarios>
              </div>
 

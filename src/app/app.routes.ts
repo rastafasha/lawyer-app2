@@ -13,6 +13,7 @@ import { OrderComponent } from './pages/wallet/order/order.component';
 import { LoginComponent } from './auth/login/login.component';
 import { CategoriaComponent } from './pages/categoria/categoria.component';
 import { EspecialistaComponent } from './pages/especialista/especialista.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},

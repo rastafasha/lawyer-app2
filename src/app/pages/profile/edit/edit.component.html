@@ -12,7 +12,7 @@
                     <app-backButtn [pageTitle]="pageTitle" [Title]="Title"></app-backButtn>
 
                     <div class="div-scroll">
-                        <form  [formGroup]="userForm">
+                        <form   [formGroup]="userForm" >
                             <div class="row">
                                 <div class="col-md-4">
                                     <label for="validationCustom02" class="form-label">Nombre</label>
@@ -39,6 +39,21 @@
                                               <span >Campo requerido</span>
                                           }
                                           @if(userForm.controls['surname'].errors?.['minlength']){
+                                              <span >Minímo 3 caracteres</span>
+                                          }
+                                        </div>
+                                    }
+                                  </div>
+                                  <div class="col-md-4">
+                                    <label for="validationCustom02" class="form-label">Identificación</label>
+                                    <input type="text" formControlName="n_doc" class="form-control" id="validationCustom02"  required>
+                                    @if(userForm.controls['n_doc'].touched){
+                      
+                                        <div class="text-danger">
+                                          @if(userForm.controls['n_doc'].errors?.['required']){
+                                              <span >Campo requerido</span>
+                                          }
+                                          @if(userForm.controls['n_doc'].errors?.['minlength']){
                                               <span >Minímo 3 caracteres</span>
                                           }
                                         </div>
@@ -149,7 +164,7 @@
                                 </div>
 
                             </div>
-                            <div class="row" *ngIf="user.role==='MEMBER' && profile.status === 'VERIFIED'">
+                            <div class="row" *ngIf="user.roles[0] ==='MEMBER' && profile.status === 2">
                                 <div class="col-md-3">
                                     <label for="validationCustom04" class="form-label">Especialidad</label>
                                     <select class="form-select" formControlName="speciality_id" id="validationCustom04"  required>
@@ -232,7 +247,7 @@
                             <!-- redes sociales -->
                             <br>
                             <!-- Tarifas -->
-                            <div class="row " *ngIf="user.role==='MEMBER' && profile.status === 'VERIFIED'" >
+                            <div class="row " *ngIf="user.roles[0]==='MEMBER' && profile.status === 2" >
                                 <h3>Tarifas</h3>
                                 
                                 <div class="row align-items-center" >

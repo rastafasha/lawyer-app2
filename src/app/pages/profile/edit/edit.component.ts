@@ -48,6 +48,7 @@ export class EditComponent {
 
   public user!: Usuario;
   public user_id!: number;
+  public roles!: [];
   public profile_id!: number;
   public speciality_id!: number;
 
@@ -107,6 +108,7 @@ export class EditComponent {
       this.user = this.authService.getUser();
     }
   
+    
 
     ngOnInit(): void {
       window.scrollTo(0,0);
@@ -125,9 +127,11 @@ export class EditComponent {
         (resp:any) => {
           console.log('Profile response:', resp); // Log the response
           this.profile = resp.profile;
+          // this.redessociales = resp.profile.redessociales;
           this.redessociales = JSON.parse(resp.profile.redessociales);
           this.tarifas = JSON.parse(resp.profile.precios);
           this.profile_id = resp.profile.id;
+          this.IMAGE_PREVISUALIZA = resp.profile.avatar;
         },
         (error) => {
           console.error('Error fetching profile:', error); // Log any errors
@@ -160,9 +164,7 @@ export class EditComponent {
             telhome: this.profile.telhome,
             telmovil: this.profile.telmovil,
             speciality_id: this.profile.speciality_id,
-            // redessociales: this.profile.redessociales,
             usuario: this.user.id,
-            // img: this.profile.img
           });
           this.profileSeleccionado = res.profile;
           console.log('profileSeleccionado',this.profileSeleccionado);
@@ -189,6 +191,7 @@ export class EditComponent {
       telmovil: ['', Validators.required],
       speciality_id: ['', Validators.required],
       direccion: [''],
+      n_doc: [''],
       description: ['', Validators.required],
       usuario: [this.user.id],
       id: [''],
@@ -254,64 +257,91 @@ export class EditComponent {
   }
 
   loadFile($event: any) {
-    const file = $event.target.files[0];
-    if (file && !file.type.startsWith("image/")) {
-      this.text_validation = "Solamente pueden ser archivos de tipo imagen";
-      return;
-    }
-    this.text_validation = "";
-    this.FILE_AVATAR = $event.target.files[0];
-    console.log('Selected file:', this.FILE_AVATAR); // Log the selected file
-    const reader = new FileReader();
-    reader.readAsDataURL(this.FILE_AVATAR);
-    reader.onloadend = () => {
-        this.IMAGE_PREVISUALIZA = reader.result;
-        console.log('Image preview URL:', this.IMAGE_PREVISUALIZA); // Log the preview URL
-    };
-    reader.readAsDataURL(this.FILE_AVATAR);
-    reader.onloadend = () => (this.IMAGE_PREVISUALIZA = reader.result);
+    if ($event.target.files[0].type.indexOf("image")) {
+          this.text_validation = "Solamente pueden ser archivos de tipo imagen";
+          return;
+        }
+        this.text_validation = "";
+        this.FILE_AVATAR = $event.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(this.FILE_AVATAR);
+        reader.onloadend = () => (this.IMAGE_PREVISUALIZA = reader.result);
   }
 
+
   onUserSave(){
-    const formValue = this.userForm.value;
 
-    const data ={
-      redessociales: this.redessociales,
-      precios: this.tarifas,
-
-      nombre: formValue.nombre,
-      apellidos: formValue.apellidos,
-      pais: formValue.pais,
-      estado: formValue.estado,
-
-      ciudad: formValue.ciudad,
-      telhome: formValue.telhome,
-      telmovil: formValue.telmovil,
-      shortdescription: formValue.shortdescription,
-      usuario: this.user.id,
-      id: formValue.id,
-      user_id :this.user_id,
-      profile_id :this.profile_id,
-      // img: this.profile.img,
-      // imagen: this.FILE_AVATAR,
-      avatar: this.FILE_AVATAR,
-      ...this.userForm.value,
-
+    const formData = new FormData();
+    formData.append("nombre", this.userForm.value.nombre);
+    formData.append("surname", this.userForm.value.surname);
+    formData.append("direccion", this.userForm.value.direccion);
+    formData.append("telefono", this.userForm.value.telefono);
+    formData.append("n_doc", this.userForm.value.n_doc);
+    formData.append("description", this.userForm.value.description);
+    formData.append("pais", this.userForm.value.pais);
+    formData.append("estado", this.userForm.value.estado);
+    formData.append("ciudad", this.userForm.value.ciudad);
+    formData.append("telhome", this.userForm.value.telhome);
+    formData.append("celular", this.userForm.value.celular);
+    formData.append("usuario", this.user.id+'');
+    formData.append("user_id", this.user.id+'');
+    if (this.redessociales) {
+      // formData.append("redessociales", this.redessociales);
+      formData.append("redessociales", JSON.stringify(this.redessociales));
       
     }
+    if (this.speciality_id) {
+      formData.append("speciality_id", this.userForm.value.speciality_id);
+      
+    }
+    if (this.tarifas) {
+      // formData.append("precios", this.tarifas);
+      formData.append("precios", JSON.stringify(this.tarifas));
+
+    }
+    if (this.FILE_AVATAR) {
+      formData.append("imagen", this.FILE_AVATAR);
+    }
+
+    // const formValue = this.userForm.value;
+
+    // const data ={
+    //   redessociales: this.redessociales,
+    //   precios: this.tarifas,
+
+    //   nombre: formValue.nombre,
+    //   apellidos: formValue.apellidos,
+    //   pais: formValue.pais,
+    //   estado: formValue.estado,
+
+    //   ciudad: formValue.ciudad,
+    //   telhome: formValue.telhome,
+    //   telmovil: formValue.telmovil,
+    //   shortdescription: formValue.shortdescription,
+    //   usuario: this.user.id,
+    //   id: formValue.id,
+    //   user_id :this.user_id,
+    //   profile_id :this.profile_id,
+    //   // img: this.profile.img,
+    //   // imagen: this.FILE_AVATAR.,
+    //   avatar: this.FILE_AVATAR.name,
+    //   ...this.userForm.value,
+
+      
+    // }
 
     // console.log(formValue);
     // console.log(data);
 
     if(this.profile_id){
-      this.profileService.updateProfile( data, this.profile_id).subscribe((resp:any) => {
+      this.profileService.updateProfile( formData, this.profile_id).subscribe((resp:any) => {
         console.log(resp);
         this.profileSeleccionado = resp;
         // this.router.navigate(['/profile']);
-        Swal.fire('Exito!', 'Se ha actualizado la data', 'success');
+        Swal.fire('Exito!', 'Se ha actualizado la formData', 'success');
       });
     }else{
-      this.profileService.createProfile(data).subscribe((resp:any) => {
+      this.profileService.createProfile(formData).subscribe((resp:any) => {
         console.log(resp);
         this.profileSeleccionado = resp;
         Swal.fire('Exito!', 'Se ha creado la data', 'success');

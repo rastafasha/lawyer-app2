@@ -81,15 +81,6 @@ export class ProfileService {
   }
 
 
-  // createProfile(profile:Profile) {
-  //   const url = `${baseUrl}/profile/store`;
-  //   return this.http.post(url, profile, this.headers);
-  // }
-
-  // updateProfile(profile:Profile) {
-  //   const url = `${baseUrl}/profile/update/${profile.id}`;
-  //   return this.http.put(url, profile, this.headers);
-  // }
 
   createProfile(data:any){
     const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
@@ -112,4 +103,10 @@ export class ProfileService {
     return this.http.delete(url, this.headers);
   }
 
+
+  upload(data:any){
+    const url = `${baseUrl}/profile/update/`;
+    return this.http.post(url,  data, this.headers);
+
+  }
 }
