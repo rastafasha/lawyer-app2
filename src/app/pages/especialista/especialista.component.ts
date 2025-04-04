@@ -12,6 +12,9 @@ import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { MenuFooterComponent } from '../../shared/menu-footer/menu-footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SolicitudesService } from '../../services/solicitudes.service';
+import { Solicitud } from '../../models/solicitud.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-especialista',
@@ -36,12 +39,15 @@ export class EspecialistaComponent {
     public precios!: Precios[];
     public speciality_profile!: Speciality;
     public speciality!: Speciality;
+    public solicitud!: Solicitud;
     status!:Profile ;
+    solicitudes_selected: any[] = [];
   
     constructor(
       private authService: AuthService,
       private profileService: ProfileService,
       private specialityService: SpecialitiesService,
+      private solicitudService: SolicitudesService,
       private activatedRoute: ActivatedRoute,
     ) {
       this.user = this.authService.getUser();
@@ -76,7 +82,7 @@ export class EspecialistaComponent {
       })
     }
 
-    cambiarStatus(data:any){debugger
+    cambiarStatus(data:any){
       const VALUE = data;
       console.log(VALUE);
 
@@ -93,12 +99,29 @@ export class EspecialistaComponent {
     }
 
     solicitarItem(data:any){
+      if (!data || (Array.isArray(this.solicitudes_selected) && this.solicitudes_selected.length === 0)) {
+        Swal.fire('Error', 'No valid solicitudes selected', 'error');
+        return;
+      }
       
       const datos = {
+        id: 0,
         "user_id": this.user.id,
-        data: data
+        pedido: data,
+        status: 1,
+        solicitudes_selected: this.solicitudes_selected || []
       }
-      console.log(datos);
-      
+
+      this.solicitudService.createSolicitud(datos).subscribe({
+        next: (resp:any) => {
+          this.solicitud = resp;
+          Swal.fire('Éxito!', 'Solicitud creada correctamente', 'success');
+          this.ngOnInit();
+        },
+        error: (err) => {
+          Swal.fire('Error', 'Error al crear la solicitud', 'error');
+          console.error(err);
+        }
+      });
     }
 }

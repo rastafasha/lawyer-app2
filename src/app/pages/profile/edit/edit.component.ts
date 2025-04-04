@@ -14,6 +14,7 @@ import { LateralComponent } from '../../../components/lateral/lateral.component'
 import { SpecialitiesService } from '../../../services/specialities.service';
 import { IconosService } from '../../../services/iconos.service';
 import { Icons } from '../../../models/Icons';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit',
@@ -70,6 +71,11 @@ export class EditComponent {
     precio:number = 0;
     cantidad:number = 0;
     amount = 0;
+
+    public FILE_AVATAR: any;
+    public IMAGE_PREVISUALIZA: any = "assets/img/user-06.jpg";
+    text_validation: any = null;
+
 
     public listIcons = [
       { icon: 'fa fa-facebook', name: 'Facebook' },
@@ -189,11 +195,6 @@ export class EditComponent {
     });
   }
 
-  // get first_name() {
-  //   return this.perfilForm.get('first_name');
-  // }
-
-
 
   addRedSocial() {
     if (this.title && this.url ) {
@@ -244,7 +245,6 @@ export class EditComponent {
     this.amount = 0;
     this.cantidad = 0;
     
-
     if(this.tarifas.length === 0){
       this.item_tarifa = '';
       this.precio = 0;
@@ -253,17 +253,31 @@ export class EditComponent {
     }
   }
 
+  loadFile($event: any) {
+    const file = $event.target.files[0];
+    if (file && !file.type.startsWith("image/")) {
+      this.text_validation = "Solamente pueden ser archivos de tipo imagen";
+      return;
+    }
+    this.text_validation = "";
+    this.FILE_AVATAR = $event.target.files[0];
+    console.log('Selected file:', this.FILE_AVATAR); // Log the selected file
+    const reader = new FileReader();
+    reader.readAsDataURL(this.FILE_AVATAR);
+    reader.onloadend = () => {
+        this.IMAGE_PREVISUALIZA = reader.result;
+        console.log('Image preview URL:', this.IMAGE_PREVISUALIZA); // Log the preview URL
+    };
+    reader.readAsDataURL(this.FILE_AVATAR);
+    reader.onloadend = () => (this.IMAGE_PREVISUALIZA = reader.result);
+  }
 
   onUserSave(){
     const formValue = this.userForm.value;
-    
-
 
     const data ={
       redessociales: this.redessociales,
       precios: this.tarifas,
-      // speciality: this.speciality.id,
-      // speciality_id: this.speciality_id,
 
       nombre: formValue.nombre,
       apellidos: formValue.apellidos,
@@ -279,7 +293,8 @@ export class EditComponent {
       user_id :this.user_id,
       profile_id :this.profile_id,
       // img: this.profile.img,
-
+      // imagen: this.FILE_AVATAR,
+      avatar: this.FILE_AVATAR,
       ...this.userForm.value,
 
       
@@ -293,11 +308,13 @@ export class EditComponent {
         console.log(resp);
         this.profileSeleccionado = resp;
         // this.router.navigate(['/profile']);
+        Swal.fire('Exito!', 'Se ha actualizado la data', 'success');
       });
     }else{
       this.profileService.createProfile(data).subscribe((resp:any) => {
         console.log(resp);
         this.profileSeleccionado = resp;
+        Swal.fire('Exito!', 'Se ha creado la data', 'success');
         // this.router.navigate(['/profile']);
         });
     }

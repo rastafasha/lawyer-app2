@@ -10,7 +10,6 @@ import { AuthService } from '../../services/auth.service';
 import { SpecialitiesService } from '../../services/specialities.service';
 import { Usuario } from '../../models/usuario.model';
 import { Speciality } from '../../models/speciality.model';
-import { ListaUsuariosComponent } from '../../components/ListaUsuarios/ListaUsuarios.component';
 
 @Component({
   selector: 'app-categoria',
@@ -22,7 +21,6 @@ import { ListaUsuariosComponent } from '../../components/ListaUsuarios/ListaUsua
         BackButtnComponent,
         NgFor,
         RouterModule,
-        ListaUsuariosComponent
   ],
   templateUrl: './categoria.component.html',
   styleUrl: './categoria.component.scss'

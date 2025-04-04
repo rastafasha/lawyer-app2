@@ -1,18 +1,17 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-// import Swal from 'sweetalert2';
-import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
-import { filter, map } from 'rxjs';
+import Swal from 'sweetalert2';
 import { Usuario } from '../../models/usuario.model';
 import { AuthService } from '../../services/auth.service';
 import { ModalCondicionesComponent } from '../../components/modal-condiciones/modal-condiciones.component';
+import { NgIf } from '@angular/common';
 declare const gapi: any;
 
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, ModalCondicionesComponent],
+  imports: [ReactiveFormsModule, ModalCondicionesComponent, NgIf],
   templateUrl: './login.component.html',
   styleUrls: [ './login.component.css' ]
 })
@@ -106,7 +105,7 @@ login(){
       }
       
     },(error) => {
-      // Swal.fire('Error', error.error.msg, 'error');
+      Swal.fire('Error', error.error.msg, 'error');
       this.errors = error.error.msg;
       document.location.reload();
     }
@@ -126,10 +125,10 @@ crearUsuario(){
 
   this.authService.crearUsuario(this.registerForm.value).subscribe(
     resp =>{
-      // Swal.fire('Registrado!', `Ya puedes ingresar`, 'success');
+      Swal.fire('Registrado!', `Ya puedes ingresar`, 'success');
       this.ngOnInit();
     },(error) => {
-      // Swal.fire('Error', error.error.msg, 'error');
+      Swal.fire('Error', error.error.msg, 'error');
       this.errors = error.error;
     }
   );

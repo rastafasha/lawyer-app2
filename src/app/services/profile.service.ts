@@ -83,12 +83,9 @@ export class ProfileService {
   updateProfile( data:any, profile_id:any,){
     const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
     const URL = baseUrl+'/profile/update/'+profile_id;
-    return this.http.put(URL,data,{headers:headers});
+    return this.http.post(URL,data,{headers:headers});
   }
   updateProfileStatus( data:any, profile_id:number){
-    // const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
-    // const URL = baseUrl+'/profile/update/status/'+profile_id;
-    // return this.http.put(URL,data, {headers:headers});
 
     const url = `${baseUrl}/profile/update/status/${profile_id}`;
     return this.http.put(url,  data, this.headers);

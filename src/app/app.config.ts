@@ -3,14 +3,47 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideServiceWorker } from '@angular/service-worker';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpRequest, HttpHandlerFn, HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+// import { imageInterceptor } from './http-interceptors/image-intereceptor'; // Corrige el nombre del archivo
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }), 
-    provideHttpClient(),
-    provideRouter(routes), provideServiceWorker('ngsw-worker.js', {
-            enabled: !isDevMode(),
-            registrationStrategy: 'registerWhenStable:30000'
-          })]
+    provideHttpClient(
+      withInterceptors([imageInterceptor]) // Asegúrate de que el interceptor esté correctamente implementado
+    ),
+    provideRouter(routes), 
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000'
+    })
+  ]
 };
+
+function imageInterceptor(req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> {
+  // Check if the request is for an image
+  if (req.url.endsWith('.jpg') || req.url.endsWith('.png') || req.url.endsWith('.jpeg')) {
+    // Clone the request and add custom headers if needed
+    // const modifiedReq = req.clone({
+    //   setHeaders: {
+    //     'Cache-Control': 'no-cache',
+    //     'Pragma': 'no-cache'
+    //   }
+    // });
+    // return next(modifiedReq);
+    const jwtToken = window.localStorage.getItem('auth_token');
+    const modifiedReq = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${jwtToken}`
+      }
+    });
+    return next(modifiedReq);
+    
+  }
+  // Pass through other requests unmodified
+  return next(req);
+}
+

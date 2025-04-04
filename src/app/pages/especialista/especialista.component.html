@@ -4,71 +4,74 @@
     <div class="row">
       <div class="areagris"></div>
 
-      <div class="areablanc areablanc-interna animated fadeInUp">
+      <div class="areablanc areablanc-interna ">
         <div class="div-responsive1">
           <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
-          <div class="group itemFav shadow">
-            <img [src]="'/users/1.jpg'" alt="" />
-            <div class="div1">
-              <h3>{{ profile.nombre }} {{ profile.surname }}</h3>
-              <!-- <h4>{{ user.email }}</h4> -->
-              <h5>{{ speciality.title }}</h5>
-              <span class="badge  bg-primary"
-              *ngIf="profile.status === 'PENDING'">Pendiente</span>
-          <span class="badge bg-success"
-              *ngIf="profile.status === 'VERIFIED'">Verificado</span>
-          <span class="badge bg-danger"
-              *ngIf="profile.status === 'REJECTED'">Por revisar</span>
-              <div class="stars">
-                <ul>
-                  <li class="active"><i class="fa fa-star"></i></li>
-                  <li class="active"><i class="fa fa-star"></i></li>
-                  <li class="active"><i class="fa fa-star"></i></li>
-                  <li class="active"><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                </ul>
-              </div>
-              <p>{{ profile.description }}</p>
-            </div>
-          </div>
-          <div class="admin-services">
-            <div *ngIf="user.role === 'SUPERADMIN' || user.role === 'ADMIN'">
-              <select
-                class="form-control form-select-solid fw-bolder"
-                name="status"
-                [(ngModel)]="status"
-                [ngModelOptions]="{ standalone: true }"
-                (change)="cambiarStatus(status)"
-                placeholder="state"
-              >
-                <option>-- Select --</option>
-                <option value="PENDING">Pendiente</option>
-                <option value="VERIFIED">Verificado</option>
-                <option value="REJECTED">Rechazado</option>
-              </select>
-            </div>
-            
-            <ng-container *ngFor="let precio of precios">
-              
-              <div class="tarifa">
+          <div class="div-scroll">
 
-                <p>{{ precio.item_tarifa }}</p>
-                <h5>{{ precio.precio | currency }}</h5>
-                <button class="btn btn-outline-success" 
-                  (click)="solicitarItem(precio)">
-                Solicitar
-                </button>
-              </div>
-            </ng-container>
-            <div class="clear"></div>
-            <!-- <ng-container *ngFor="let red of redessociales">
-              <a [href]="red.url" target="_blank" rel="noopener noreferrer">
-                <div class="option-admin">
-                  <i [class]="red.icono"></i>
-                  <p>{{ red.title }}</p>
+            <div class="group itemFav shadow">
+              <img [src]="'/users/1.jpg'" alt="" />
+              <div class="div1">
+                <h3>{{ profile.nombre }} {{ profile.surname }}</h3>
+                <!-- <h4>{{ user.email }}</h4> -->
+                <span class="badge  bg-primary"
+                *ngIf="profile.status === 'PENDING'">Pendiente</span>
+                <span class="badge bg-success"
+                *ngIf="profile.status === 'VERIFIED'">Verificado</span>
+                <span class="badge bg-danger"
+                *ngIf="profile.status === 'REJECTED'">Por revisar</span>
+                <h5 *ngIf="speciality">{{ speciality.title }}</h5>
+                <div class="stars">
+                  <ul>
+                    <li class="active"><i class="fa fa-star"></i></li>
+                    <li class="active"><i class="fa fa-star"></i></li>
+                    <li class="active"><i class="fa fa-star"></i></li>
+                    <li class="active"><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                  </ul>
                 </div>
-              </a>
-            </ng-container> -->
+                <p>{{ profile.description }}</p>
+              </div>
+            </div>
+            <div class="admin-services">
+              <div *ngIf="user.role === 'SUPERADMIN' || user.role === 'ADMIN'">
+                <select
+                  class="form-control form-select-solid fw-bolder"
+                  name="status"
+                  [(ngModel)]="status"
+                  [ngModelOptions]="{ standalone: true }"
+                  (change)="cambiarStatus(status)"
+                  placeholder="state"
+                >
+                  <option>-- Select --</option>
+                  <option value="PENDING">Pendiente</option>
+                  <option value="VERIFIED">Verificado</option>
+                  <option value="REJECTED">Rechazado</option>
+                </select>
+              </div>
+              
+              <ng-container *ngFor="let precio of precios">
+                
+                <div class="tarifa">
+  
+                  <p>{{ precio.item_tarifa }}</p>
+                  <h5>{{ precio.precio | currency }}</h5>
+                  <button class="btn btn-outline-success" 
+                    (click)="solicitarItem(precio)">
+                  Solicitar
+                  </button>
+                </div>
+              </ng-container>
+              <div class="clear"></div>
+              <!-- <ng-container *ngFor="let red of redessociales">
+                <a [href]="red.url" target="_blank" rel="noopener noreferrer">
+                  <div class="option-admin">
+                    <i [class]="red.icono"></i>
+                    <p>{{ red.title }}</p>
+                  </div>
+                </a>
+              </ng-container> -->
+            </div>
           </div>
 
           <!--banner publicidad-->

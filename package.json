@@ -4,7 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:prod": "ng build && lite-server -p 8080 --baseDir dist/lawyer-app2",
     "build": "ng build",
+    "build:laflecha": "ng build --configuration laflecha",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -19,7 +21,9 @@
     "@angular/platform-browser-dynamic": "^19.0.0",
     "@angular/router": "^19.0.0",
     "@angular/service-worker": "^19.0.0",
+    "lite-server": "^2.6.1",
     "rxjs": "~7.8.0",
+    "sweetalert2": "^11.17.2",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },

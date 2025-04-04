@@ -8,9 +8,15 @@
                             </a>
                             <div class="div1">
                                 <h4 style="margin: 0; padding: 0;">{{item.username}}</h4>
-                                <h5 style="margin: 0; padding: 0;">{{item.role}}</h5>
-                                <h5 style="margin: 0; padding: 0;">{{item.ciudad}}</h5>
-                                <h5 style="margin: 0; padding: 0;">{{item.profiles.status}}</h5>
+                                <p style="margin: 0; padding: 0;">{{item.role}}</p>
+                                <p style="margin: 0; padding: 0;">{{item.ciudad}}</p>
+                                <!-- <h5 style="margin: 0; padding: 0;">{{item.profiles.status}}</h5> -->
+                                <span class="badge  bg-primary"
+                                    *ngIf="item.profiles.status === 'PENDING'">Pendiente</span>
+                                <span class="badge bg-success"
+                                    *ngIf="item.profiles.status === 'VERIFIED'">Verificado</span>
+                                <span class="badge bg-danger"
+                                    *ngIf="item.profiles.status === 'REJECTED'">Por revisar</span>
                                 
                             </div>
                         </div>
