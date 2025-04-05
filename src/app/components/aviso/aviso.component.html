@@ -4,5 +4,5 @@
     <p>Por favor verifica tu informacion para usar la app <a [routerLink]="['/profile/edit', user.id]">aqui</a>.</p>
 </div>
 <div class="alert alert-success shadow" *ngIf="profile">
-    Bienvenido <strong>{{profile?.nombre}} {{profile?.surname}}</strong>
+    Bienvenido <strong>{{profile.nombre}} {{profile.surname}}</strong>
 </div>

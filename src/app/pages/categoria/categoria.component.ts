@@ -21,8 +21,7 @@ import { ImagenPipe } from '../../pipes/imagen.pipe';
         LateralComponent,
         BackButtnComponent,
         NgFor,
-        RouterModule,
-        ImagenPipe
+        RouterModule
   ],
   templateUrl: './categoria.component.html',
   styleUrl: './categoria.component.scss'

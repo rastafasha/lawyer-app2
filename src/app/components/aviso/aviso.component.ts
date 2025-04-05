@@ -15,7 +15,7 @@ import { NgIf } from '@angular/common';
 export class AvisoComponent {
   user: Usuario;
   user_id!: number;
-  profile!: Profile ;
+  public profile: Profile = new Profile();
   constructor(
     private authService: AuthService,
     private profileService: ProfileService,

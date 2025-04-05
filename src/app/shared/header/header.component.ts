@@ -10,7 +10,7 @@ import { ImagenPipe } from '../../pipes/imagen.pipe';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, CommonModule, ImagenPipe],
+  imports: [RouterLink, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })

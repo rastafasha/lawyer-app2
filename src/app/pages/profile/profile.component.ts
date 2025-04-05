@@ -21,8 +21,7 @@ import { ImagenPipe } from "../../pipes/imagen.pipe";
     HeaderComponent,
     MenuFooterComponent,
     LateralComponent,
-    BackButtnComponent,
-    ImagenPipe
+    BackButtnComponent
 ],
   selector: 'app-profile',
   templateUrl: './profile.component.html',

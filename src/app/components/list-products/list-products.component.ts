@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
 import { ImagenPipe } from '../../pipes/imagen.pipe';
 @Component({
   selector: 'app-list-products',
-  imports: [CommonModule, NgFor, RouterModule, ImagenPipe],
+  imports: [CommonModule, NgFor, RouterModule],
   templateUrl: './list-products.component.html',
   styleUrl: './list-products.component.css'
 })

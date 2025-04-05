@@ -9,7 +9,7 @@ import { ImagenPipe } from '../../pipes/imagen.pipe';
 
 @Component({
   selector: 'app-list-products-h',
-  imports: [CommonModule, NgFor, RouterModule,  ImagenPipe],
+  imports: [CommonModule, NgFor, RouterModule],
   templateUrl: './list-products-h.component.html',
   styleUrl: './list-products-h.component.css'
 })

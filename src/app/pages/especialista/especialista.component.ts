@@ -34,7 +34,8 @@ import Swal from 'sweetalert2';
 export class EspecialistaComponent {
   pageTitle= 'Profile';
     public user!: Usuario;
-    public profile!: Profile;
+    // public profile!: Profile;
+    public profile: Profile = new Profile();
     public redessociales!: RedesSociales[];
     public precios!: Precios[];
     public speciality_profile!: Speciality;
