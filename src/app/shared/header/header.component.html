@@ -84,8 +84,9 @@
 
             <div class="user-header-top">
                 <a routerLink="/profile">
-                    <!-- <img *ngIf="!profile"[src]="'/users/1.jpg'" alt=""> -->
-                    <img *ngIf="profile" [src]="profile.avatar | imagenPipe: 'users' " alt="">
+                    
+                    <img *ngIf="!profile.avatar" [src]="profile.avatar  | imagenPipe: 'users' " alt="">
+                    <img *ngIf="profile.avatar" [src]="profile.avatar  " alt="">
                 </a>
             </div>
             <div class="logointerno ">
@@ -131,8 +132,8 @@
         <div class="isqmenu3">
             <div class="user-header-top ">
                 <a routerLink="/profile">
-                    <!-- <img *ngIf="!profile"[src]="'/users/1.jpg'" alt=""> -->
-                    <img *ngIf="profile" [src]="profile.avatar | imagenPipe: 'users' " alt="">
+                    <img *ngIf="!profile.avatar" [src]="profile.avatar  | imagenPipe: 'users' " alt="">
+                    <img *ngIf="profile.avatar" [src]="profile.avatar  " alt="">
                 </a>
             </div>
         </div>

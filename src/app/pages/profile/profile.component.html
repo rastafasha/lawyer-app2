@@ -8,7 +8,8 @@
         <div class="div-responsive1">
           <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
           <div class="group itemFav shadow">
-            <img [src]="profile.avatar | imagenPipe: 'users' " alt="" />
+            <img *ngIf="!profile.avatar" [src]="profile.avatar  | imagenPipe: 'users' " alt="">
+            <img *ngIf="profile.avatar" [src]="profile.avatar  " alt="">
             <div class="div1">
               <p>{{user.username}}</p>
               <p *ngIf="profile">{{profile.nombre}} {{profile.surname}}</p>

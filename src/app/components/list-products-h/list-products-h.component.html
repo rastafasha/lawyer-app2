@@ -5,8 +5,8 @@
             <div class="card shadow h-100">
                 <div class="ratio ratio-1x1">
                     <a [routerLink]="['/especialista/', item.user_id]">
-                        <!-- | imagenPipe: 'users'  -->
-                        <img [src]="item.avatar " class="card-img-top" loading="lazy" alt="...">
+                        <img *ngIf="!item.avatar" [src]="item.avatar  | imagenPipe: 'users' " class="card-img-top" loading="lazy">
+                        <img *ngIf="item.avatar" [src]="item.avatar  " class="card-img-top" loading="lazy">
                     </a>
                 </div>
                 <div class="card-body d-flex flex-column ">
