@@ -31,12 +31,13 @@ export const routes: Routes = [
     
     //user
     {path: 'profile', component: ProfileComponent},
-    {path: 'profile/paymentmethods/:id', component: PaymentmethodComponent},
     {path: 'profile/settings', component: SettingsComponent},
     {path: 'profile/edit/:id', component: EditComponent},
     {path: 'profile/documents', component: DocumentsComponent},
     {path: 'profile/documents/files', component: FilesComponent},
-
+    
+    {path: 'profile/paymentmethods', component: PaymentmethodComponent},
+    
     {path: 'admin/banners', component: BannerComponent},
 
     //wallet

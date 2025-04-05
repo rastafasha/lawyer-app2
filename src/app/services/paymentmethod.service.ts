@@ -101,14 +101,15 @@ export class PaymentmethodService {
       const URL = baseUrl+'/paymentmethods/update/'+id;
       return this.http.post(URL,data,{headers:headers});
     }
-    updateStatus( data:any){
-  
-      const url = `${baseUrl}/paymentmethods/update/status/`;
+    
+    updateStatus( data:any, profile_id:number){
+
+      const url = `${baseUrl}/paymentmethods/update/status/${profile_id}`;
       return this.http.put(url,  data, this.headers);
     }
   
-    deletePaymentmethod(_id: string) {
-      const url = `${baseUrl}/profiles/destroy/${_id}`;
+    deletePaymentmethod(_id: number) {
+      const url = `${baseUrl}/paymentmethods/destroy/${_id}`;
       return this.http.delete(url, this.headers);
     }
   

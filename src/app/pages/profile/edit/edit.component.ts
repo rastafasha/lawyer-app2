@@ -137,7 +137,8 @@ export class EditComponent {
             : resp.profile.precios || [];
           this.profile_id = resp.profile.id;
           this.IMAGE_PREVISUALIZA = resp.profile.avatar;
-          this.gender = resp.profile.gender
+          this.FILE_AVATAR = resp.profile.avatar;
+          // this.gender = resp.profile.gender
         },
         (error) => {
           console.error('Error fetching profile:', error); // Log any errors
@@ -168,6 +169,8 @@ export class EditComponent {
             pais: this.profile.pais,
             estado: this.profile.estado,
             ciudad: this.profile.ciudad,
+            gender: this.profile.gender,
+            n_doc: this.profile.n_doc,
             telhome: this.profile.telhome,
             telmovil: this.profile.telmovil,
             speciality_id: this.profile.speciality_id,

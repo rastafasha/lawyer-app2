@@ -29,6 +29,7 @@ export class PaymentmethodComponent {
   public tiposdepagos: PaymentMethod [] = [];
   public tiposdepagosuser: PaymentMethod [] = [];
   public user!: Usuario;
+
   user_id!:number;
   tipoSeleccionado:any;
   pagoSeleccionado:any;
@@ -36,84 +37,34 @@ export class PaymentmethodComponent {
   public paymentMForm!: FormGroup;
 
   username!:PaymentMethod;
-  bankAccountType!:PaymentMethod;
-  bankName!:PaymentMethod;
-  bankAccount!:PaymentMethod;
-  ciorif!:PaymentMethod;
-  phone!:PaymentMethod;
-  email!:PaymentMethod;
-  tipo!:PaymentMethod;
+  bankAccountType!:string;
+  bankName!:string;
+  bankAccount!:string;
+  ciorif!:string;
+  phone!:string;
+  email!:string;
+  tipo!:string;
   id!:number;
 
   constructor(
-    private paymentMService: PaymentmethodService,
     private authService: AuthService,
+    private paymentMService: PaymentmethodService,
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
   ) {
     this.user = this.authService.getUser();
   }
-  ngOninit(): void {
-    // this.getPaymentMethods();
+
+  ngOnInit(): void {
+    this.user = this.authService.getUser();
     this.user_id = this.user.id;
-    console.log('hola',this.user_id);
-    this.getPaymentMethods();
+    console.log('hola',this.user.id);
+    // this.getPaymentMethods();
     this.getPaymentMethodByUserId();
-    this.getTiposdePago();
+    // this.getTiposdePago();
 
   }
 
-  // iniciarFormularioPerfil(id:number){
-  //   if (!id == null || !id == undefined || id) {
-  //     this.paymentMService.getPaymentMethodByUserId(id).subscribe(
-  //       (res:any) => {
-  //         // this.userForm.patchValue({
-  //         //   id: res.id,
-  //         //   nombre: this.profile.nombre,
-  //         //   surname: this.profile.surname,
-            
-  //         //   direccion: this.profile.direccion,
-  //         //   description: this.profile.description,
-  //         //   pais: this.profile.pais,
-  //         //   estado: this.profile.estado,
-  //         //   ciudad: this.profile.ciudad,
-  //         //   telhome: this.profile.telhome,
-  //         //   telmovil: this.profile.telmovil,
-  //         //   speciality_id: this.profile.speciality_id,
-  //         //   usuario: this.user.id,
-  //         // });
-  //         // this.profileSeleccionado = res.profile;
-  //         console.log('profileSeleccionado',res);
-
-  //       }
-
-  //     );
-  //   } else {
-  //     this.pageTitle = 'Crear Perfil';
-  //   }
-
-
-
-  // }
-
-  // validarFormularioPerfil(){
-  //   this.paymentMForm = this.fb.group({
-  //     nombre: ['', Validators.required],
-  //     surname: ['', Validators.required],
-  //     pais: [''],
-  //     estado: [''],
-  //     ciudad: [''],
-  //     telhome: ['', Validators.required],
-  //     telmovil: ['', Validators.required],
-  //     speciality_id: ['', Validators.required],
-  //     direccion: [''],
-  //     n_doc: [''],
-  //     gender: [''],
-  //     description: ['', Validators.required],
-  //     usuario: [this.user.id],
-  //     id: [''],
-  //   });
-  // }
 
 
   getPaymentMethods() {
@@ -150,26 +101,12 @@ selectedType(tipodepago:any){
     // console.log(this.tipoSeleccionado);
 }
 
-getTiposdePago(){
-    this.paymentMService.getPaymentmethods().subscribe(paymentMethods=>{
-      console.log(paymentMethods);
-      this.tiposdepagos = paymentMethods;
-      // console.log(this.tiposdepagos);
-    })
-}
-getTiposdePagoByUser(){
-    this.paymentMService.getPaymentMethodByUserId(this.user.id).subscribe(paymentMethods =>{
-      console.log(paymentMethods);
-      this.tiposdepagos = paymentMethods;
-      // console.log(this.tiposdepagos);
-    })
-}
 
 cambiarStatus(tipodepago:any){
     let VALUE = tipodepago.status;
     // console.log(VALUE);
     
-    this.paymentMService.updateStatus(tipodepago).subscribe(
+    this.paymentMService.updateStatus(tipodepago, tipodepago.id).subscribe(
       resp =>{
         // console.log(resp);
         // Swal.fire('Actualizado', `actualizado correctamente`, 'success');
@@ -187,32 +124,32 @@ cambiarStatus(tipodepago:any){
 
 save(){
 
-    // let data = {
-    //   tipo: this.tipo,
-    //   bankAccountType: this.bankAccountType,
-    //   bankName: this.bankName,
-    //   bankAccount: this.bankAccount,
-    //   ciorif:this.ciorif,
-    //   phone:this.phone,
-    //   email: this.email,
-    //   user: this.user.uid
-    // }
-    // this.paymentMService.crearPaymentMethod(data).subscribe((resp:any)=>{
-    //   // console.log(resp);
-    //   this.tipo = '';
-    //   this.bankAccountType = '';
-    //   this.bankName = '';
-    //   this.bankAccount = '';
-    //   this.ciorif = '';
-    //   this.phone = '';
-    //   this.email = '';
-    //   this.ngOnInit();
-    // })
+    let data = {
+      tipo: this.tipo,
+      bankAccountType: this.bankAccountType,
+      bankName: this.bankName,
+      bankAccount: this.bankAccount,
+      ciorif:this.ciorif,
+      phone:this.phone,
+      email: this.email,
+      user_id: this.user.id
+    }
+    this.paymentMService.createPaymentmethod(data).subscribe((resp:any)=>{
+      // console.log(resp);
+      this.tipo = '';
+      this.bankAccountType = '';
+      this.bankName = '';
+      this.bankAccount = '';
+      this.ciorif = '';
+      this.phone = '';
+      this.email = '';
+      this.ngOnInit();
+    })
   }
 
 deleteTipoPago(tiposdepago:any){
 
-    this.paymentMService.deletePaymentmethod(tiposdepago._id).subscribe(
+    this.paymentMService.deletePaymentmethod(tiposdepago.id).subscribe(
       (resp:any) =>{
         this.getPaymentMethodByUserId();
         

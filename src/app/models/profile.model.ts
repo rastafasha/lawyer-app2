@@ -17,7 +17,7 @@ export class Profile {
   telmovil: string = "";
   avatar: string = "";
   status: number = 1;
-  gender?: number ;
+  gender: number = 1 ;
   // status: string = "";
   rating: number = 0;
   speciality_title: string = "";
