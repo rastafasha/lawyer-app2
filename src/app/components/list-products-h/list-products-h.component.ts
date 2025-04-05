@@ -5,10 +5,11 @@ import { ProfileService } from '../../services/profile.service';
 import { SpecialitiesService } from '../../services/specialities.service';
 import { CommonModule, NgFor } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { ImagenPipe } from '../../pipes/imagen.pipe';
 
 @Component({
   selector: 'app-list-products-h',
-  imports: [CommonModule, NgFor, RouterModule],
+  imports: [CommonModule, NgFor, RouterModule,  ImagenPipe],
   templateUrl: './list-products-h.component.html',
   styleUrl: './list-products-h.component.css'
 })
@@ -29,7 +30,7 @@ export class ListProductsHComponent {
   getProfiles(){
       this.profileService.getProfileDestacados().subscribe((resp:any) => {
         // console.log(resp);
-        this.profiles = resp;
+        this.profiles = resp.data;
         
       })
     }

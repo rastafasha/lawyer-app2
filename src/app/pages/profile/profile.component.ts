@@ -11,16 +11,19 @@ import { ProfileService } from '../../services/profile.service';
 import { Profile } from '../../models/profile.model';
 import { Speciality } from '../../models/speciality.model';
 import { SpecialitiesService } from '../../services/specialities.service';
+import { PipesModule } from '../../pipes/pipes.module';
+import { ImagenPipe } from "../../pipes/imagen.pipe";
 
 @Component({
   imports: [
     CommonModule,
     RouterLink,
     HeaderComponent,
-    MenuFooterComponent, 
-    LateralComponent, 
-    BackButtnComponent
-  ],
+    MenuFooterComponent,
+    LateralComponent,
+    BackButtnComponent,
+    ImagenPipe
+],
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
@@ -28,9 +31,11 @@ import { SpecialitiesService } from '../../services/specialities.service';
 export class ProfileComponent {
   pageTitle= 'Profile';
   public user!: Usuario;
-  public profile!: Profile;
+  // public profile!: Profile;
   public speciality_profile!: Speciality;
   public speciality!: Speciality;
+
+  public profile: Profile = new Profile();
 
   constructor(
     private authService: AuthService,

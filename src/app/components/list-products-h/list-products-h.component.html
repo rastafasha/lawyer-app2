@@ -5,7 +5,8 @@
             <div class="card shadow h-100">
                 <div class="ratio ratio-1x1">
                     <a [routerLink]="['/especialista/', item.user_id]">
-                        <img src="https://swiffyslider.com/assets/img/shoes/shoe1.webp" class="card-img-top" loading="lazy" alt="...">
+                        <!-- | imagenPipe: 'users'  -->
+                        <img [src]="item.avatar " class="card-img-top" loading="lazy" alt="...">
                     </a>
                 </div>
                 <div class="card-body d-flex flex-column ">
@@ -16,13 +17,56 @@
                     <div class="div1-home">
 
                         <div class="stars">
-                            <ul>
+                            <!-- <ul>
                                 <li class="active"><i class="fa fa-star"></i></li>
                                 <li class="active"><i class="fa fa-star"></i></li>
                                 <li class="active"><i class="fa fa-star"></i></li>
                                 <li class="active"><i class="fa fa-star"></i></li>
                                 <li><i class="fa fa-star"></i></li>
-                            </ul>
+                            </ul> -->
+      
+                            <ul class="star-rating" *ngIf="item.rating === 5">
+                              <li class="active"><i class="fa fa-star "></i></li>
+                              <li class="active"><i class="fa fa-star "></i></li>
+                              <li class="active"><i class="fa fa-star "></i></li>
+                              <li class="active"><i class="fa fa-star "></i></li>
+                              <li class="active"><i class="fa fa-star "></i></li>
+                          </ul>
+                          <ul class="star-rating" *ngIf="item.rating >= 4 && item.rating < 5">
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                          </ul>
+                          <ul class="star-rating" *ngIf="item.rating >= 3 && item.rating < 4">
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                          </ul>
+                          <ul class="star-rating" *ngIf="item.rating >= 2 && item.rating < 3">
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                          </ul>
+                          <ul class="star-rating" *ngIf="item.rating >= 1 && item.rating < 2">
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                          </ul>
+                          <ul class="star-rating" *ngIf="item.rating >= 0 && item.rating < 1">
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                          </ul>
                         </div>
                     </div>
 

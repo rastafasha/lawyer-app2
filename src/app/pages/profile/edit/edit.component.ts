@@ -51,8 +51,10 @@ export class EditComponent {
   public roles!: [];
   public profile_id!: number;
   public speciality_id!: number;
+  public gender!: number;
 
-    public profile!: Profile;
+    // public profile!: Profile;
+    public profile: Profile = new Profile();
     // public redessociales: RedesSociales[] = []; // Initialize as an empty array
     public precios!: Precios;
     // public listIcons: Icons[] = [];
@@ -127,11 +129,15 @@ export class EditComponent {
         (resp:any) => {
           console.log('Profile response:', resp); // Log the response
           this.profile = resp.profile;
-          // this.redessociales = resp.profile.redessociales;
-          this.redessociales = JSON.parse(resp.profile.redessociales);
-          this.tarifas = JSON.parse(resp.profile.precios);
+          this.redessociales = typeof resp.profile.redessociales === 'string' 
+            ? JSON.parse(resp.profile.redessociales) || []
+            : resp.profile.redessociales || [];
+          this.tarifas = typeof resp.profile.precios === 'string'
+            ? JSON.parse(resp.profile.precios) || []
+            : resp.profile.precios || [];
           this.profile_id = resp.profile.id;
           this.IMAGE_PREVISUALIZA = resp.profile.avatar;
+          this.gender = resp.profile.gender
         },
         (error) => {
           console.error('Error fetching profile:', error); // Log any errors
@@ -156,6 +162,7 @@ export class EditComponent {
             id: res.id,
             nombre: this.profile.nombre,
             surname: this.profile.surname,
+            
             direccion: this.profile.direccion,
             description: this.profile.description,
             pais: this.profile.pais,
@@ -192,6 +199,7 @@ export class EditComponent {
       speciality_id: ['', Validators.required],
       direccion: [''],
       n_doc: [''],
+      gender: [''],
       description: ['', Validators.required],
       usuario: [this.user.id],
       id: [''],
@@ -269,29 +277,63 @@ export class EditComponent {
   }
 
 
-  onUserSave(){
+  onUserSave(){debugger
 
     const formData = new FormData();
     formData.append("nombre", this.userForm.value.nombre);
     formData.append("surname", this.userForm.value.surname);
-    formData.append("direccion", this.userForm.value.direccion);
-    formData.append("telefono", this.userForm.value.telefono);
-    formData.append("n_doc", this.userForm.value.n_doc);
-    formData.append("description", this.userForm.value.description);
-    formData.append("pais", this.userForm.value.pais);
-    formData.append("estado", this.userForm.value.estado);
-    formData.append("ciudad", this.userForm.value.ciudad);
-    formData.append("telhome", this.userForm.value.telhome);
-    formData.append("celular", this.userForm.value.celular);
     formData.append("usuario", this.user.id+'');
     formData.append("user_id", this.user.id+'');
+    formData.append("profile_id", this.profile_id+'');
+    if (this.userForm.value.direccion) {
+      formData.append("direccion", this.userForm.value.direccion);
+      
+    }
+    if (this.userForm.value.description) {
+      formData.append("description", this.userForm.value.description);
+      
+    }
+    if (this.userForm.value.pais) {
+      formData.append("pais", this.userForm.value.pais);
+      
+    }
+    
+    if (this.userForm.value.estado) {
+      formData.append("estado", this.userForm.value.estado);
+      
+    }
+    if (this.userForm.value.ciudad) {
+      formData.append("ciudad", this.userForm.value.ciudad);
+      
+    }
+    if (this.userForm.value.telefono) {
+      formData.append("telefono", this.userForm.value.telefono);
+      
+    }
+    if (this.userForm.value.telhome) {
+      formData.append("telhome", this.userForm.value.telhome);
+      
+    }
+    if (this.userForm.value.celular) {
+      formData.append("celular", this.userForm.value.celular);
+      
+    }
+    
+    if (this.userForm.value.n_doc) {
+      formData.append("n_doc", this.userForm.value.n_doc);
+      
+    }
+    if (this.userForm.value.gender) {
+      formData.append("gender", this.userForm.value.gender);
+      
+    }
+    if (this.userForm.value.speciality_id) {
+      formData.append("speciality_id", this.userForm.value.speciality_id);
+      
+    }
     if (this.redessociales) {
       // formData.append("redessociales", this.redessociales);
       formData.append("redessociales", JSON.stringify(this.redessociales));
-      
-    }
-    if (this.speciality_id) {
-      formData.append("speciality_id", this.userForm.value.speciality_id);
       
     }
     if (this.tarifas) {

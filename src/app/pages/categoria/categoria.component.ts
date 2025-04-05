@@ -10,6 +10,7 @@ import { AuthService } from '../../services/auth.service';
 import { SpecialitiesService } from '../../services/specialities.service';
 import { Usuario } from '../../models/usuario.model';
 import { Speciality } from '../../models/speciality.model';
+import { ImagenPipe } from '../../pipes/imagen.pipe';
 
 @Component({
   selector: 'app-categoria',
@@ -21,6 +22,7 @@ import { Speciality } from '../../models/speciality.model';
         BackButtnComponent,
         NgFor,
         RouterModule,
+        ImagenPipe
   ],
   templateUrl: './categoria.component.html',
   styleUrl: './categoria.component.scss'
@@ -52,7 +54,7 @@ export class CategoriaComponent {
       // console.log(resp);
       this.Title = resp.speciality.title;
       this.speciality = resp.speciality;
-      this.profiles = resp.users;
+      this.profiles = resp.users.data;
     });
   }
 }
