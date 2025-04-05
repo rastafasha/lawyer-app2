@@ -15,7 +15,8 @@ export class Usuario {
   n_doc: number = 0;
   created_at: string = "";
   image: string = "";
-  role?: 'SUPERADMIN' | 'ADMIN' | 'MEMBER' | 'GUEST';
+  // role?: 'SUPERADMIN' | 'ADMIN' | 'MEMBER' | 'GUEST';
+  roles?: any;
 
 
 

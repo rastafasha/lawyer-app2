@@ -1,4 +1,34 @@
-<div class="menu-footer">
+<div class="menu-footer" *ngIf="user.roles[0] === 'SUPERADMIN'">
+    <ul>
+
+        <li >
+            <a routerLink="/" routerLinkActive="active">
+                <i class="fa fa-home"></i>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/admin/banners" routerLinkActive="active">
+                <i class="fa fa-desktop"></i>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/search" routerLinkActive="active">
+                <i class="fa fa-search"></i>
+            </a>
+            </li>
+        <li>
+            <a routerLink="/wallet" routerLinkActive="active">
+                <i class="fa fa-adjust"></i>
+            </a>
+            </li>
+        <li>
+            <a routerLink="/profile" routerLinkActive="active">
+                <i class="fa fa-user"></i>
+            </a>
+            </li>
+    </ul>
+</div>
+<div class="menu-footer" *ngIf="user.roles[0] !== 'SUPERADMIN'">
     <ul>
 
         <li >

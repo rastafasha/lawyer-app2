@@ -1,239 +1,75 @@
 <div class="swiffy-slider slider-item-show3 slider-item-reveal slider-nav-dark slider-nav-outside-expand">
-    <ul class="slider-container py-4 slideh-list" id="slider2">
-        <li>
+    
+    <ul class="slider-container py-4 slideh-list" id="slider2" >
+        <li *ngFor="let item of profiles">
             <div class="card shadow h-100">
                 <div class="ratio ratio-1x1">
-                    <a href="lawyer-profile.html">
-                        <img src="https://swiffyslider.com/assets/img/shoes/shoe1.webp" class="card-img-top" loading="lazy" alt="...">
+                    <a [routerLink]="['/especialista/', item.user_id]">
+                        <img *ngIf="!item.avatar" [src]="item.avatar  | imagenPipe: 'users' " class="card-img-top" loading="lazy">
+                        <img *ngIf="item.avatar" [src]="item.avatar  " class="card-img-top" loading="lazy">
                     </a>
                 </div>
-                <div class="card-body d-flex flex-column flex-md-row">
+                <div class="card-body d-flex flex-column ">
                     <div class="flex-grow-1">
-                        <strong>Subject</strong>
-                        <p class="card-text">Category</p>
+                        <strong>{{item.surname}}</strong>
+                        <p class="card-text">{{item.speciality_title }}</p>
                     </div>
-                    <div class="px-md-2">$200</div>
                     <div class="div1-home">
 
                         <div class="stars">
-                            <ul>
+                            <!-- <ul>
                                 <li class="active"><i class="fa fa-star"></i></li>
                                 <li class="active"><i class="fa fa-star"></i></li>
                                 <li class="active"><i class="fa fa-star"></i></li>
                                 <li class="active"><i class="fa fa-star"></i></li>
                                 <li><i class="fa fa-star"></i></li>
-                            </ul>
+                            </ul> -->
+      
+                            <ul class="star-rating" *ngIf="item.rating === 5">
+                              <li class="active"><i class="fa fa-star "></i></li>
+                              <li class="active"><i class="fa fa-star "></i></li>
+                              <li class="active"><i class="fa fa-star "></i></li>
+                              <li class="active"><i class="fa fa-star "></i></li>
+                              <li class="active"><i class="fa fa-star "></i></li>
+                          </ul>
+                          <ul class="star-rating" *ngIf="item.rating >= 4 && item.rating < 5">
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                          </ul>
+                          <ul class="star-rating" *ngIf="item.rating >= 3 && item.rating < 4">
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                          </ul>
+                          <ul class="star-rating" *ngIf="item.rating >= 2 && item.rating < 3">
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                          </ul>
+                          <ul class="star-rating" *ngIf="item.rating >= 1 && item.rating < 2">
+                            <li class="active"><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                          </ul>
+                          <ul class="star-rating" *ngIf="item.rating >= 0 && item.rating < 1">
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                            <li ><i class="fa fa-star "></i></li>
+                          </ul>
                         </div>
                     </div>
 
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="card shadow h-100">
-                <div class="ratio ratio-1x1">
-                    <img src="https://swiffyslider.com/assets/img/shoes/shoe2.webp" class="card-img-top" loading="lazy" alt="...">
-                </div>
-                <div class="card-body d-flex flex-column flex-md-row">
-                    <div class="flex-grow-1">
-                        <strong>Subject</strong>
-                        <p class="card-text">Category</p>
-                    </div>
-                    <div class="px-md-2">$200</div>
-                    <div class="div1-home">
-
-                        <div class="stars">
-                            <ul>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="card shadow h-100">
-                <div class="ratio ratio-1x1">
-                    <img src="https://swiffyslider.com/assets/img/shoes/shoe3.webp" class="card-img-top" loading="lazy" alt="...">
-                </div>
-                <div class="card-body d-flex flex-column flex-md-row">
-                    <div class="flex-grow-1">
-                        <strong>Subject</strong>
-                        <p class="card-text">Category</p>
-                    </div>
-                    <div class="px-md-2">$200</div>
-                    <div class="div1-home">
-
-                        <div class="stars">
-                            <ul>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="card shadow h-100">
-                <div class="ratio ratio-1x1">
-                    <img src="https://swiffyslider.com/assets/img/shoes/shoe4.webp" class="card-img-top" loading="lazy" alt="...">
-                </div>
-                <div class="card-body d-flex flex-column flex-md-row">
-                    <div class="flex-grow-1">
-                        <strong>Subject</strong>
-                        <p class="card-text">Category</p>
-                    </div>
-                    <div class="px-md-2">$200</div>
-                    <div class="div1-home">
-
-                        <div class="stars">
-                            <ul>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="card shadow h-100">
-                <div class="ratio ratio-1x1">
-                    <img src="https://swiffyslider.com/assets/img/shoes/shoe5.webp" class="card-img-top" loading="lazy" alt="...">
-                </div>
-                <div class="card-body d-flex flex-column flex-md-row">
-                    <div class="flex-grow-1">
-                        <strong>Subject</strong>
-                        <p class="card-text">Category</p>
-                    </div>
-                    <div class="px-md-2">$200</div>
-                    <div class="div1-home">
-
-                        <div class="stars">
-                            <ul>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="card shadow h-100">
-                <div class="ratio ratio-1x1">
-                    <img src="https://swiffyslider.com/assets/img/shoes/shoe6.webp" class="card-img-top" loading="lazy" alt="...">
-                </div>
-                <div class="card-body d-flex flex-column flex-md-row">
-                    <div class="flex-grow-1">
-                        <strong>Subject</strong>
-                        <p class="card-text">Category</p>
-                    </div>
-                    <div class="px-md-2">$200</div>
-                    <div class="div1-home">
-
-                        <div class="stars">
-                            <ul>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="card shadow h-100">
-                <div class="ratio ratio-1x1">
-                    <img src="https://swiffyslider.com/assets/img/shoes/shoe1.webp" class="card-img-top" loading="lazy" alt="...">
-                </div>
-                <div class="card-body d-flex flex-column flex-md-row">
-                    <div class="flex-grow-1">
-                        <strong>Subject</strong>
-                        <p class="card-text">Category</p>
-                    </div>
-                    <div class="px-md-2">$200</div>
-                    <div class="div1-home">
-
-                        <div class="stars">
-                            <ul>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="card shadow h-100">
-                <div class="ratio ratio-1x1">
-                    <img src="https://swiffyslider.com/assets/img/shoes/shoe2.webp" class="card-img-top" loading="lazy" alt="...">
-                </div>
-                <div class="card-body d-flex flex-column flex-md-row">
-                    <div class="flex-grow-1">
-                        <strong>Subject</strong>
-                        <p class="card-text">Category</p>
-                    </div>
-                    <div class="px-md-2">$200</div>
-                    <div class="div1-home">
-
-                        <div class="stars">
-                            <ul>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="card shadow h-100">
-                <div class="ratio ratio-1x1">
-                    <img src="https://swiffyslider.com/assets/img/shoes/shoe3.webp" class="card-img-top" loading="lazy" alt="...">
-                </div>
-                <div class="card-body d-flex flex-column flex-md-row">
-                    <div class="flex-grow-1">
-                        <strong>Subject</strong>
-                        <p class="card-text">Category</p>
-                    </div>
-                    <div class="px-md-2">$200</div>
-                    <div class="div1-home">
-
-                        <div class="stars">
-                            <ul>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li class="active"><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
             </div>
         </li>

@@ -4,6 +4,7 @@ import { BackButtnComponent } from '../../../shared/backButtn/backButtn.componen
 import { HeaderComponent } from '../../../shared/header/header.component';
 import { MenuFooterComponent } from '../../../shared/menu-footer/menu-footer.component';
 import { RouterLink } from '@angular/router';
+import { LateralComponent } from '../../../components/lateral/lateral.component';
 
 @Component({
   selector: 'app-documents',
@@ -12,7 +13,8 @@ import { RouterLink } from '@angular/router';
         HeaderComponent,
             MenuFooterComponent, 
             BackButtnComponent,
-            RouterLink
+            RouterLink,
+            LateralComponent
   ],
   templateUrl: './documents.component.html',
   styleUrl: './documents.component.css'

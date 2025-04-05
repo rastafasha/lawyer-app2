@@ -15,9 +15,12 @@ export class Profile {
   ciudad: string = "";
   telhome: string = "";
   telmovil: string = "";
-  image: string = "";
-  status: string = "";
-  rating: string = "";
+  avatar: string = "";
+  status: number = 1;
+  gender: number = 1 ;
+  // status: string = "";
+  rating: number = 0;
+  speciality_title: string = "";
   redessociales: RedesSociales = new RedesSociales();
   precios: Precios = new Precios();
 

@@ -11,16 +11,19 @@ import { ProfileService } from '../../services/profile.service';
 import { Profile } from '../../models/profile.model';
 import { Speciality } from '../../models/speciality.model';
 import { SpecialitiesService } from '../../services/specialities.service';
+import { PipesModule } from '../../pipes/pipes.module';
+import { ImagenPipe } from "../../pipes/imagen.pipe";
 
 @Component({
   imports: [
     CommonModule,
     RouterLink,
     HeaderComponent,
-    MenuFooterComponent, 
-    LateralComponent, 
-    BackButtnComponent
-  ],
+    MenuFooterComponent,
+    LateralComponent,
+    BackButtnComponent,
+    ImagenPipe
+],
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
@@ -28,9 +31,11 @@ import { SpecialitiesService } from '../../services/specialities.service';
 export class ProfileComponent {
   pageTitle= 'Profile';
   public user!: Usuario;
-  public profile!: Profile;
+  // public profile!: Profile;
   public speciality_profile!: Speciality;
-  public speciality!: Speciality;
+  public speciality!: Speciality ;
+
+  public profile: Profile = new Profile();
 
   constructor(
     private authService: AuthService,
@@ -48,7 +53,7 @@ export class ProfileComponent {
   getProfile(){
     this.profileService.getByUser(this.user.id).subscribe((resp:any) => {
       // console.log(resp);
-      this.profile = resp.profile;
+      this.profile = resp.profile || null;
       this.speciality_profile = resp.profile.speciality_id;
       this.getSpeciality();
       // setTimeout(() => {
@@ -60,7 +65,12 @@ export class ProfileComponent {
   getSpeciality(){
     this.specialityService.getSpeciality(this.speciality_profile).subscribe((resp:any) => {
       // console.log(resp);
-      this.speciality = resp;
+      this.speciality = resp || null;
+
     })
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

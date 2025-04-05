@@ -4,19 +4,20 @@
                     <div class=" itemFav shadow "  *ngFor="let item of users">
                         <div class="group  itemFav lastposthome">
                             <a [routerLink]="['/especialista/', item.id]">
-                                <img src="assets/users/3.jpg" alt="">
+                                <img *ngIf="!item.profile?.avatar "[src]="item.profile?.avatar | imagenPipe: 'users'" alt="">
+                                <img *ngIf="item.profile?.avatar "[src]="item.profile?.avatar | imagenPipe: 'users'" alt="">
                             </a>
                             <div class="div1">
-                                <h4 style="margin: 0; padding: 0;">{{item.username}}</h4>
-                                <p style="margin: 0; padding: 0;">{{item.role}}</p>
-                                <p style="margin: 0; padding: 0;">{{item.ciudad}}</p>
+                                <h5 style="margin: 0; padding: 0;">{{item.username}}</h5>
+                                <p style="margin: 0; padding: 0;">{{item.roles[0].name}}</p>
+                                <p style="margin: 0; padding: 0;">{{item.profile?.ciudad}}</p>
                                 <!-- <h5 style="margin: 0; padding: 0;">{{item.profiles.status}}</h5> -->
                                 <span class="badge  bg-primary"
-                                    *ngIf="item.profiles.status === 'PENDING'">Pendiente</span>
+                                    *ngIf="item.profile?.status === 1">Pendiente</span>
                                 <span class="badge bg-success"
-                                    *ngIf="item.profiles.status === 'VERIFIED'">Verificado</span>
+                                    *ngIf="item.profile?.status === 2">Verificado</span>
                                 <span class="badge bg-danger"
-                                    *ngIf="item.profiles.status === 'REJECTED'">Por revisar</span>
+                                    *ngIf="item.profile?.status === 3">Por revisar</span>
                                 
                             </div>
                         </div>

@@ -13,6 +13,9 @@ import { OrderComponent } from './pages/wallet/order/order.component';
 import { LoginComponent } from './auth/login/login.component';
 import { CategoriaComponent } from './pages/categoria/categoria.component';
 import { EspecialistaComponent } from './pages/especialista/especialista.component';
+import { AuthGuard } from './guards/auth.guard';
+import { PaymentmethodComponent } from './pages/profile/paymentmethod/paymentmethod.component';
+import { BannerComponent } from './pages/admin/banner/banner.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -20,9 +23,11 @@ export const routes: Routes = [
     
     {path: 'favorites', component: FavoritesComponent},
     {path: 'search', component: SearchComponent},
+
     {path: 'especialidades', component: CategoriaComponent},
     {path: 'especialidad/:id', component: CategoriaComponent},
     {path: 'especialista/:id', component: EspecialistaComponent},
+
     
     //user
     {path: 'profile', component: ProfileComponent},
@@ -30,6 +35,10 @@ export const routes: Routes = [
     {path: 'profile/edit/:id', component: EditComponent},
     {path: 'profile/documents', component: DocumentsComponent},
     {path: 'profile/documents/files', component: FilesComponent},
+    
+    {path: 'profile/paymentmethods', component: PaymentmethodComponent},
+    
+    {path: 'admin/banners', component: BannerComponent},
 
     //wallet
     {path: 'wallet', component: WalletComponent},
