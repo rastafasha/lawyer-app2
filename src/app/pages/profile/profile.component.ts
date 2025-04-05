@@ -21,7 +21,8 @@ import { ImagenPipe } from "../../pipes/imagen.pipe";
     HeaderComponent,
     MenuFooterComponent,
     LateralComponent,
-    BackButtnComponent
+    BackButtnComponent,
+    ImagenPipe
 ],
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -32,7 +33,7 @@ export class ProfileComponent {
   public user!: Usuario;
   // public profile!: Profile;
   public speciality_profile!: Speciality;
-  public speciality!: Speciality;
+  public speciality!: Speciality ;
 
   public profile: Profile = new Profile();
 
@@ -52,7 +53,7 @@ export class ProfileComponent {
   getProfile(){
     this.profileService.getByUser(this.user.id).subscribe((resp:any) => {
       // console.log(resp);
-      this.profile = resp.profile;
+      this.profile = resp.profile || null;
       this.speciality_profile = resp.profile.speciality_id;
       this.getSpeciality();
       // setTimeout(() => {
@@ -64,7 +65,12 @@ export class ProfileComponent {
   getSpeciality(){
     this.specialityService.getSpeciality(this.speciality_profile).subscribe((resp:any) => {
       // console.log(resp);
-      this.speciality = resp;
+      this.speciality = resp || null;
+
     })
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

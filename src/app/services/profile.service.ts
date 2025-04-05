@@ -104,9 +104,4 @@ export class ProfileService {
   }
 
 
-  upload(data:any){
-    const url = `${baseUrl}/profile/update/`;
-    return this.http.post(url,  data, this.headers);
-
-  }
 }

@@ -8,11 +8,12 @@ import { AuthService } from '../../services/auth.service';
 import { SpecialitiesService } from '../../services/specialities.service';
 import { UserService } from '../../services/usuario.service';
 import { ProfileService } from '../../services/profile.service';
+import { ImagenPipe } from '../../pipes/imagen.pipe';
 
 @Component({
     selector: 'app-ListaUsuarios',
     templateUrl: './ListaUsuarios.component.html',
-    imports: [CommonModule, RouterModule, NgIf, NgFor],
+    imports: [CommonModule, RouterModule, NgIf, NgFor, ImagenPipe],
     styleUrls: ['./ListaUsuarios.component.css']
 })
 export class ListaUsuariosComponent {

@@ -51,6 +51,10 @@
 
 .isqmenu3 {
     grid-area: 1 / 5 / 2 / 5;
+    grid-area: 1 / 5 / 2 / 5;
+    justify-items: end;
+    padding-right: 15px;
+    align-content: end;
 }
 
 .menu-trigger .fa {

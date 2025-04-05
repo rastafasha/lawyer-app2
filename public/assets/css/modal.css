@@ -1,7 +1,29 @@
 .modal {
-    top: 190px !important;
+    /* top: 0px !important; */
     border-radius: 60px 60px 0px 0px;
 
+}
+
+
+.modal .modal-content{
+    z-index: 30000 !important;
+}
+
+.modal.show .modal-dialog {
+    transform: none;
+    align-items: baseline !important;
+    z-index: 3000 !important;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10 !important;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    display: none !important;
 }
 .modal h3 {
     text-align: center;

@@ -25,9 +25,9 @@
         <a href="javascript:void(0)" (click)="closeMenu()" class="close"></a>
         <div class="usermenu">
             <div class="fichahome">
-                <p>Hola! <strong>{{user.username }}</strong></p>
+                <p>Hola! <strong>{{user.username |slice: 0:10 }}...</strong></p>
 
-                <div class="stars">
+                <div class="stars" *ngIf="profile.rating  ">
                     <!-- <ul>
                         <li class="active"><i class="fa fa-star"></i></li>
                         <li class="active"><i class="fa fa-star"></i></li>
@@ -84,8 +84,8 @@
 
             <div class="user-header-top">
                 <a routerLink="/profile">
-                    <img *ngIf="!profile"[src]="'/users/1.jpg'" alt="">
-                    <img *ngIf="profile" [src]="profile.avatar  " alt="">
+                    <!-- <img *ngIf="!profile"[src]="'/users/1.jpg'" alt=""> -->
+                    <img *ngIf="profile" [src]="profile.avatar | imagenPipe: 'users' " alt="">
                 </a>
             </div>
             <div class="logointerno ">
@@ -131,8 +131,8 @@
         <div class="isqmenu3">
             <div class="user-header-top ">
                 <a routerLink="/profile">
-                    <img *ngIf="!profile"[src]="'/users/1.jpg'" alt="">
-                    <img *ngIf="profile" [src]="profile.avatar  " alt="">
+                    <!-- <img *ngIf="!profile"[src]="'/users/1.jpg'" alt=""> -->
+                    <img *ngIf="profile" [src]="profile.avatar | imagenPipe: 'users' " alt="">
                 </a>
             </div>
         </div>

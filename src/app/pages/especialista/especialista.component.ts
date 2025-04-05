@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SolicitudesService } from '../../services/solicitudes.service';
 import { Solicitud } from '../../models/solicitud.model';
 import Swal from 'sweetalert2';
+import { ImagenPipe } from '../../pipes/imagen.pipe';
 
 @Component({
   selector: 'app-especialista',
@@ -26,7 +27,8 @@ import Swal from 'sweetalert2';
     BackButtnComponent,
     NgFor,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ImagenPipe
   ],
   templateUrl: './especialista.component.html',
   styleUrl: './especialista.component.scss'

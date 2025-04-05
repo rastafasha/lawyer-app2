@@ -8,7 +8,7 @@
         <div class="div-responsive1">
           <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
           <div class="group itemFav shadow">
-            <img [src]="profile.avatar " alt="" />
+            <img [src]="profile.avatar | imagenPipe: 'users' " alt="" />
             <div class="div1">
               <p>{{user.username}}</p>
               <p *ngIf="profile">{{profile.nombre}} {{profile.surname}}</p>
@@ -31,33 +31,33 @@
                 <p>Edit Profile</p>
               </div>
             </a>
-            <a [routerLink]="['/profile/paymentmethods', user.id]">
+            <a [routerLink]="['/profile/paymentmethods', user.id]" *ngIf="user.roles[0] !== 'SUPERADMIN'">
               <div class="option-admin">
                 <i class="fa fa-user"></i>
                 <p>paymentmethods</p>
               </div>
             </a>
-            <a routerLink="/profile/settings">
+            <a routerLink="/profile/settings" *ngIf="user.roles[0] !== 'SUPERADMIN'">
               <div class="option-admin">
                 <i class="fa fa-user"></i>
                 <p>Settings</p>
               </div>
             </a>
-            <a routerLink="/profile/documents">
+            <a routerLink="/profile/documents" *ngIf="user.roles[0] !== 'SUPERADMIN'">
               <div class="option-admin">
                 <i class="fa fa-user"></i>
                 <p>Documents</p>
               </div>
             </a>
-            <div class="option-admin">
+            <div class="option-admin" *ngIf="user.roles[0] !== 'SUPERADMIN'">
               <i class="fa fa-user"></i>
               <p>Messages</p>
             </div>
-            <div class="option-admin">
+            <div class="option-admin" *ngIf="user.roles[0] !== 'SUPERADMIN'">
               <i class="fa fa-user"></i>
               <p>Notifications</p>
             </div>
-            <a routerLink="/">
+            <a (click)="logout()">
               <div class="option-admin">
                 <i class="fa fa-user"></i>
                 <p>Logout</p>
