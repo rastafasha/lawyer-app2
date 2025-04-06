@@ -5,8 +5,7 @@
       <div class="col-xs-12 col-sm-9 col-md-9">
         <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
         <div class=" itemFav shadow">
-          <img *ngIf="!profile.avatar" [src]="profile.avatar  | imagenPipe: 'users' " alt="">
-          <img *ngIf="profile.avatar" [src]="profile.avatar  " alt="">
+          <img [src]="profile.avatar  | imagenPipe: 'users' " alt="">
           <div class="div1">
             <p>{{user.username}}</p>
             <p *ngIf="profile">{{profile.nombre}} {{profile.surname}}</p>

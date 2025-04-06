@@ -391,6 +391,7 @@ export class EditComponent {
         this.profileSeleccionado = resp;
         // this.router.navigate(['/profile']);
         Swal.fire('Exito!', 'Se ha actualizado la formData', 'success');
+        this.ngOnInit();
       });
     }else{
       this.profileService.createProfile(formData).subscribe((resp:any) => {
@@ -398,6 +399,7 @@ export class EditComponent {
         this.profileSeleccionado = resp;
         Swal.fire('Exito!', 'Se ha creado la data', 'success');
         // this.router.navigate(['/profile']);
+        this.ngOnInit();
         });
     }
 

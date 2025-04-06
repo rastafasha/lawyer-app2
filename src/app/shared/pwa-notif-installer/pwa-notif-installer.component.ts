@@ -9,7 +9,7 @@ import { filter, map } from 'rxjs';
   standalone: true,
   imports: [ CommonModule],
   templateUrl: './pwa-notif-installer.component.html',
-  styleUrls: ['./pwa-notif-installer.component.css']
+  styleUrls: ['./pwa-notif-installer.component.scss']
 })
 export class PwaNotifInstallerComponent implements OnInit {
 

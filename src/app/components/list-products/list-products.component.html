@@ -4,8 +4,8 @@
             <div class="foto">
                 <div class="post-date">
                     <a [routerLink]="['/especialista/', item.user_id]">
-                      <img *ngIf="!item.avatar" [src]="item.avatar  | imagenPipe: 'users' " alt="">
-                      <img *ngIf="item.avatar" [src]="item.avatar  " alt="">
+                      <img  [src]="item.avatar  | imagenPipe: 'users' " alt="">
+                      <!-- <img *ngIf="item.avatar" [src]="item.avatar  " alt=""> -->
                     </a>
                 </div>
             </div>

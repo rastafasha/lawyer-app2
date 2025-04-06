@@ -4,8 +4,7 @@
                     <div class=" itemFav shadow "  *ngFor="let item of users">
                         <div class="group  itemFav lastposthome">
                             <a [routerLink]="['/especialista/', item.id]">
-                                <img *ngIf="!item.profile?.avatar "[src]="item.profile?.avatar | imagenPipe: 'users'" alt="">
-                                <img *ngIf="item.profile?.avatar "[src]="item.profile?.avatar | imagenPipe: 'users'" alt="">
+                                <img [src]="item.profile?.avatar | imagenPipe: 'users'" alt="">
                             </a>
                             <div class="div1">
                                 <h5 style="margin: 0; padding: 0;">{{item.username}}</h5>
