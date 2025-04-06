@@ -7,19 +7,19 @@
             </div>
 
             <div class="areablanc areablanc-interna animated fadeInUp">
-                <div class="div-responsive1">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-12 ">
 
-                    <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
-
-                    <div class="post-inner">
-                        <h3>Active o desactive las opciones de la app</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat nobis at aperiam molestiae ab, quibusdam quidem laborum debitis, qui accusamus fuga sequi cupiditate! Neque placeat, perspiciatis voluptatem consequatur porro
-                            hic!
-                        </p>
-                        <div class="container">
-                            
+                            <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
+        
+                            <div class="post-inner">
+                                <h3>Active o desactive las opciones de la app</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat nobis at aperiam molestiae ab, quibusdam quidem laborum debitis, qui accusamus fuga sequi cupiditate! Neque placeat, perspiciatis voluptatem consequatur porro
+                                    hic!
+                                </p>
                                 <div class="tab-pane" id="address" role="tabpanel" aria-labelledby="address-tab">
-                                    
+                                            
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-5" *ngIf="!tipoSeleccionado">
                                             <form  class="rbt-profile-row rbt-default-form row row--15">
@@ -271,15 +271,17 @@
                                     
                                     <!-- End Profile Row  -->
                                 </div>
-
-                            
+        
+                            </div>
                         </div>
-
+                        <!---side bar responsive table-->
+                        <!-- <div class="col-xs-12 col-sm-3 col-md-3">
+                            <app-lateral></app-lateral>
+                  
+                        </div> -->
+                        <!---side bar responsive table-->
                     </div>
                 </div>
-                <!---side bar responsive table-->
-                <div class="div-responsive2"></div>
-                <!---side bar responsive table-->
 
             </div>
 

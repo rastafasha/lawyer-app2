@@ -1,4 +1,6 @@
-<div class="swiffy-slider slider-item-reveal slider-nav-round slider-item-ratio slider-item-ratio-21x9">
+<app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="3"></app-skeleton-loader>
+
+<div *ngIf="!isLoading" class="swiffy-slider slider-item-reveal slider-nav-round slider-item-ratio slider-item-ratio-21x9">
     <ul class="slider-container " >
         <li *ngFor="let item of pubs">
             <!-- <div class="info-slider">

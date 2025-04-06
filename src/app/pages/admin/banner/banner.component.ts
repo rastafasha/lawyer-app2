@@ -20,8 +20,7 @@ declare var $:any;
     LateralComponent,
     BackButtnComponent,
     ReactiveFormsModule,
-    FormsModule,
-    ImagenPipe
+    FormsModule
   ],
   templateUrl: './banner.component.html',
   styleUrl: './banner.component.scss'

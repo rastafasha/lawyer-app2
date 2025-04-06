@@ -15,6 +15,7 @@ import { SpecialitiesService } from '../../../services/specialities.service';
 import { IconosService } from '../../../services/iconos.service';
 import { Icons } from '../../../models/Icons';
 import Swal from 'sweetalert2';
+import { WhatsappFilterPipe } from '../../../pipes/whatsapp-filter.pipe';
 
 @Component({
   selector: 'app-edit',
@@ -24,9 +25,10 @@ import Swal from 'sweetalert2';
         MenuFooterComponent, 
         BackButtnComponent,
         ReactiveFormsModule,
-        LateralComponent,
+        // LateralComponent,
         FormsModule,
-        NgFor 
+        NgFor,
+        WhatsappFilterPipe 
   ],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.css'
@@ -34,6 +36,8 @@ import Swal from 'sweetalert2';
 export class EditComponent {
   pageTitle= 'Edit Profile';
   Title!:string;
+  public iswhatsapp : boolean = false;
+  selectedValueCode = '';
 
   userForm: FormGroup = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
@@ -78,7 +82,7 @@ export class EditComponent {
     public FILE_AVATAR: any;
     public IMAGE_PREVISUALIZA: any = "assets/img/user-06.jpg";
     text_validation: any = null;
-
+    iconoSeleccionado:any;
 
     public listIcons = [
       { icon: 'fa fa-facebook', name: 'Facebook' },
@@ -279,8 +283,17 @@ export class EditComponent {
         reader.onloadend = () => (this.IMAGE_PREVISUALIZA = reader.result);
   }
 
+ onPaServiceSelect(event: any) {
+    const ic = event;
+    this.iswhatsapp = false;
+    if (ic === 'fa fa-whatsapp') {
+      this.selectedValueCode = ic;
+      this.iswhatsapp = true;
+    }
+  }
 
-  onUserSave(){debugger
+
+  onUserSave(){
 
     const formData = new FormData();
     formData.append("nombre", this.userForm.value.nombre);

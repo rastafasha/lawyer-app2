@@ -68,8 +68,13 @@ export class EspecialistaComponent {
       this.profileService.getByUser(id).subscribe((resp:any) => {
         // console.log(resp);
         this.profile = resp.profile;
-        this.redessociales = JSON.parse(resp.profile.redessociales);
-        this.precios = JSON.parse(resp.profile.precios);
+        this.redessociales = typeof resp.profile.redessociales === 'string' 
+            ? JSON.parse(resp.profile.redessociales) || []
+            : resp.profile.redessociales || [];
+
+            this.precios = typeof resp.profile.precios === 'string' 
+            ? JSON.parse(resp.profile.precios) || []
+            : resp.profile.precios || [];
         this.speciality_profile = resp.profile.speciality_id;
         this.getSpeciality();
         // setTimeout(() => {
@@ -109,7 +114,8 @@ export class EspecialistaComponent {
       
       const datos = {
         id: 0,
-        "user_id": this.user.id,
+        "user_id": this.profile.id,
+        "cliente_id": this.user.id,
         pedido: data,
         status: 1,
         solicitudes_selected: this.solicitudes_selected || []

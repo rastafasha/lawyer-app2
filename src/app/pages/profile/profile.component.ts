@@ -8,7 +8,7 @@ import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
 import { AuthService } from '../../services/auth.service';
 import { Usuario } from '../../models/usuario.model';
 import { ProfileService } from '../../services/profile.service';
-import { Profile } from '../../models/profile.model';
+import { Profile, RedesSociales } from '../../models/profile.model';
 import { Speciality } from '../../models/speciality.model';
 import { SpecialitiesService } from '../../services/specialities.service';
 import { PipesModule } from '../../pipes/pipes.module';
@@ -26,7 +26,7 @@ import { ImagenPipe } from "../../pipes/imagen.pipe";
 ],
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+  styleUrl: './profile.component.scss'
 })
 export class ProfileComponent {
   pageTitle= 'Profile';
@@ -36,6 +36,7 @@ export class ProfileComponent {
   public speciality!: Speciality ;
 
   public profile: Profile = new Profile();
+  public redessociales: RedesSociales [] =[];
 
   constructor(
     private authService: AuthService,
@@ -54,6 +55,9 @@ export class ProfileComponent {
     this.profileService.getByUser(this.user.id).subscribe((resp:any) => {
       // console.log(resp);
       this.profile = resp.profile || null;
+      this.redessociales = typeof resp.profile.redessociales === 'string' 
+            ? JSON.parse(resp.profile.redessociales) || []
+            : resp.profile.redessociales || [];
       this.speciality_profile = resp.profile.speciality_id;
       this.getSpeciality();
       // setTimeout(() => {
