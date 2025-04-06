@@ -56,29 +56,29 @@
                 <a [routerLink]="['/profile/paymentmethods']" *ngIf="user.roles[0] === 'MEMBER'">
                   <div class="option-admin">
                     <i class="fa fa-user"></i>
-                    <p>paymentmethods</p>
+                    <p>payment methods</p>
                   </div>
                 </a>
-                <a routerLink="/profile/documents/file" *ngIf="user.roles[0] !== 'SUPERADMIN'">
+                <!-- <a routerLink="/profile/documents/file" *ngIf="user.roles[0] !== 'SUPERADMIN'">
                   <div class="option-admin">
                     <i class="fa fa-user"></i>
                     <p>Settings</p>
                   </div>
-                </a>
+                </a> -->
                 <a routerLink="/profile/documents" *ngIf="user.roles[0] !== 'SUPERADMIN'">
                   <div class="option-admin">
                     <i class="fa fa-user"></i>
                     <p>Documents</p>
                   </div>
                 </a>
-                <div class="option-admin" *ngIf="user.roles[0] !== 'SUPERADMIN'">
+                <!-- <div class="option-admin" *ngIf="user.roles[0] !== 'SUPERADMIN'">
                   <i class="fa fa-user"></i>
                   <p>Messages</p>
                 </div>
                 <div class="option-admin" *ngIf="user.roles[0] !== 'SUPERADMIN'">
                   <i class="fa fa-user"></i>
                   <p>Notifications</p>
-                </div>
+                </div> -->
                 <a (click)="logout()">
                   <div class="option-admin">
                     <i class="fa fa-user"></i>

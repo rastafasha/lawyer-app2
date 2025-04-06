@@ -11,7 +11,8 @@
               <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
               <div class="div-scroll">
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <app-skeleton-loader *ngIf="isLoading" [rows]="3" [columns]="2"></app-skeleton-loader>
+                  <div class="col-xs-12 col-sm-6" *ngIf="!isLoading">
                     <div class=" itemFav shadow">
                       <img *ngIf="!profile.avatar" [src]="profile.avatar  | imagenPipe: 'users' " alt="">
                       <img *ngIf="profile.avatar" [src]="profile.avatar  " alt="">
@@ -95,7 +96,7 @@
                     </div>
       
                   </div>
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 col-sm-6" *ngIf="!isLoading">
                     <div *ngIf="user.roles[0] === 'SUPERADMIN' || user.roles[0] === 'ADMIN'">
                       <select
                         class="form-control form-select-solid fw-bolder"

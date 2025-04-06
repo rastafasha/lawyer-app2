@@ -88,35 +88,7 @@
                                                     <!--end::Item-->
     
 
-                                                      <!-- modal -->
-                                                      <div [attr.id]="'view-doc-'+FILE.id" class="modal fade add-modal" role="dialog">
-                                                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <a href="javascript:void(0);"  class="btn btn-white me-1" data-bs-dismiss="modal">Cerrar</a>
-                                                                    <h5 class="modal-title" id="exampleModalLabel">{{FILE.name_file}}</h5>
-                                                                  </div>
-
-                                                                <div class="modal-body text-center">
-                                                                    <!-- *ngIf="FILE.type === 'png' || FILE.type === 'jpg'" -->
-                                                                    <span >
-                                                                        <img *ngIf="FILE.type !== 'pdf'" [src]="FILE.file" style="width: 100%; height: fit-content;"  alt="">
-                                                                        <div class="container" *ngIf="FILE.type === 'pdf'">
-                                                                            <iframe class="embed-responsive-item pdf-viewer" [src]="getPDFIframe(FILE.file)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                                                           
-                                                                        </div>
-                                                                        
-                                                                    </span>
-                                                                    <!-- <span *ngIf="file_selected.type === 'pdf'">
-                                                                        <embed [src]="getDocumentIframe(FILE.file)"  class="pdf-content"/>
-                                                                    </span> -->
-                                                                    
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                      </div>
-
-                                                       <!-- modal -->
+                                                      
                                                     
                                                     </ng-container>
                                                     
