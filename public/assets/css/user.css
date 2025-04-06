@@ -108,6 +108,7 @@
     height: 40px;
     display: flex;
     padding: 5px;
+    justify-content: center;
 }
 
 .option-admin p {
@@ -156,5 +157,18 @@
         display: flex;
         width: 50%;
         float: left;
+    }
+
+    .user .post-inner {
+        overflow: hidden;
+        overflow: scroll;
+        overflow-x: scroll;
+        position: fixed;
+        padding-right: 40px;
+        width: auto;
+        height: 280px;
+        padding-bottom: 150px;
+        margin-top: 30px;
+    
     }
 }

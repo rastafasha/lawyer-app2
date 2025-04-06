@@ -1,4 +1,7 @@
-<div class="swiffy-slider slider-item-show6 slider-item-reveal slider-item-ratio slider-item-ratio-2x1">
+
+
+<app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="5"></app-skeleton-loader>
+<div  *ngIf="!isLoading"class="swiffy-slider slider-item-show6 slider-item-reveal slider-item-ratio slider-item-ratio-2x1" style="height: 30px;">
     <div class="slider-container categorylist">
         <div *ngFor="let item of specialities" class="slider-item">
             <a [routerLink]="['/especialidad/', item.id]">

@@ -1,0 +1,17 @@
+.itemlist{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    & .info_itemlist{
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+
+    }
+    & .buttons{
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        align-self: flex-end;
+    }
+}

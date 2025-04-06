@@ -94,6 +94,9 @@
         display: flex;
         flex-direction: column;
         cursor: pointer;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 14px;
     }
     .user .itemFav img {
         width: 40%;
@@ -118,9 +121,12 @@
         width: 50%;
     }
     .itemFav {
-        display: grid;
+        /* display: grid;
+        grid-template-columns: repeat(2, minmax(calc(180px), 1fr)); */
         cursor: pointer;
-        grid-template-columns: repeat(2, minmax(calc(180px), 1fr));
+        display: flex;
+        flex-direction: row;
+        
         
     }
     .itemFav h2,

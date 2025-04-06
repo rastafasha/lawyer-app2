@@ -261,3 +261,23 @@ img {
     color: gold;
 }
 
+@media (max-width: 768px) {
+    .lateral{
+        display: none !important;
+    }
+    .stars .fa {
+        font-size: 2ch;
+    }
+
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0, 0, 0, .125);
+        border-radius: .25rem;
+    }
+}
