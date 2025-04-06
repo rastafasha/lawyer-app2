@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { BackButtnComponent } from '../../../shared/backButtn/backButtn.component';
 import { HeaderComponent } from '../../../shared/header/header.component';
 import { MenuFooterComponent } from '../../../shared/menu-footer/menu-footer.component';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { LateralComponent } from '../../../components/lateral/lateral.component';
 import { DocumentService } from '../../../services/document.service';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -13,7 +13,8 @@ import { Usuario } from '../../../models/usuario.model';
 import { AuthService } from '../../../services/auth.service';
 import { Document } from '../../../models/document.model';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-
+import { environment } from '../../../environments/environment';
+const baseUrl = environment.url_servicios;
 declare let $:any;  
 @Component({
   selector: 'app-documents',
@@ -25,7 +26,8 @@ declare let $:any;
             LateralComponent,
             ReactiveFormsModule,
             FormsModule,
-            PdfViewerModule
+            PdfViewerModule,
+            RouterModule
   ],
   templateUrl: './documents.component.html',
   styleUrl: './documents.component.scss'
@@ -45,8 +47,9 @@ export class DocumentsComponent {
   user_id!:number;
   user!:Usuario;
 
-  pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf"
+  // pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf"
   // pdfSrc!:string;
+
 
   constructor(
     // public appointmentService:AppointmentService,
@@ -65,6 +68,8 @@ export class DocumentsComponent {
     this.user_id = this.user.id;
     this.getdocumentsbyUser();
   }
+
+
 
   getdocumentsbyUser(){
     this.documentService.getDocumentsByUser(this.user_id).subscribe((resp:any)=>{
@@ -104,18 +109,18 @@ export class DocumentsComponent {
     this.file_selected = FILE;
   }
 
-  getDocumentIframe(url:any) {
-    let document, results;
 
-    if (url === null) {
-        return '';
-    }
-    // eslint-disable-next-line prefer-const
-    results = url.match('[\\?&]v=([^&#]*)');
-    // eslint-disable-next-line prefer-const
-    document   = (results === null) ? url : results[1];
+getPDFIframe(url:any) {
+  var file, results;
 
-    return this._sanitizer.bypassSecurityTrustResourceUrl(document);
+  if (url === null) {
+      return '';
+  }
+  results = url.match('[\\?&]v=([^&#]*)');
+  file   = (results === null) ? url : results[1];
+
+  // return this._sanitizer.bypassSecurityTrustResourceUrl(baseUrl + file);
+  return this._sanitizer.bypassSecurityTrustResourceUrl(file);
 }
 
 closeModalDoc(){

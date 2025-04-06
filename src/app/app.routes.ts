@@ -34,7 +34,7 @@ export const routes: Routes = [
     {path: 'profile/settings', component: SettingsComponent},
     {path: 'profile/edit/:id', component: EditComponent},
     {path: 'profile/documents', component: DocumentsComponent},
-    {path: 'profile/documents/files', component: FilesComponent},
+    {path: 'profile/documents/file/:id', component: FilesComponent},
     
     {path: 'profile/paymentmethods', component: PaymentmethodComponent},
     
