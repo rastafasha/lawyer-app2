@@ -8,7 +8,7 @@
 
             <div class="areablanc areablanc-interna ">
 
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row">
                         <div class="col-xs-12 col-sm-9 col-md-9">
 
@@ -42,41 +42,29 @@
                                 <div class="col-xs-12 col-sm-6">
                                     <div class="row align-items-center" >
                                         <div class="card card-flush">
-                                            <!--begin::Header-->
                                             <div class="card-header pt-7">
-                                                <!--begin::Title-->
+                                                
                                                 <h3 class="card-title align-items-start flex-column">
                                                     <span class="card-label fw-bolder text-dark">Lista de Archivos</span>
                                                 </h3>
                                                 <div class="card-toolbar">
                                                 </div>
                                             </div>
-                                            <!--end::Header-->
-                                            <!--begin::Body-->
                                             <div class="card-body">
-                                                <!--begin::Scroll-->
                                                 <div class="hover-scroll-overlay-y pe-6 me-n6">
                                                     <ng-container *ngFor="let FILE of FILES; let i = index;">
-                                                        <!--begin::Item-->
+
                                                     <div class="itemlist">
-                                                        <!--begin::Info-->
                                                         <div class="d-flex flex-stack mb-3">
-                                                            <!--begin::Wrapper-->
                                                             <div class="me-3">
-                                                                <!--begin::Icon-->
                                                                 <a  href="javascript:void(0);" (click)="selectDoc(FILE)" data-bs-toggle="modal" [attr.data-bs-target]="'#view-doc-'+FILE.id">
                                                                     <img src="assets/svg/doc.svg" class="w-50px ms-n1 me-1 filesvg" alt="">
                                                                    </a>
-                                                                <!--end::Icon-->
-                                                                
                                                             </div>
-                                                            <!--end::Wrapper-->
                                                         </div>
-                                                        <!--end::Info-->
-                                                        <!--begin::Customer-->
                                                         <div class="info_itemlist">
                                                             <!--begin::Title-->
-                                                            <a href="javascript:void(0);" (click)="selectDoc(FILE)" data-bs-toggle="modal" [attr.data-bs-target]="'#view-doc-'+FILE.id" class="text-gray-800 text-hover-primary fw-bolder">{{FILE.name_file}}</a>
+                                                            <a href="javascript:void(0);" (click)="selectDoc(FILE)" data-bs-toggle="modal" [attr.data-bs-target]="'#view-doc-'+FILE.id" class="text-gray-800 text-hover-primary fw-bolder">{{FILE.name_file | slice:0:10}}... .{{FILE.type}}</a>
                                                             <!--end::Title-->
                                                             <!--begin::Name-->
                                                             <span class="text-gray-400 fw-bolder">Name:
@@ -108,7 +96,16 @@
                                                                 <div class="modal-body text-center">
                                                                     <!-- *ngIf="FILE.type === 'png' || FILE.type === 'jpg'" -->
                                                                     <span >
-                                                                        <img [src]="FILE.file" style="width: 100%; height: fit-content;"  alt="">
+                                                                        <img *ngIf="FILE.type !== 'pdf'" [src]="FILE.file" style="width: 100%; height: fit-content;"  alt="">
+                                                                        <div class="container" *ngIf="FILE.type === 'pdf'">
+                                                                            <pdf-viewer [src]="pdfSrc"
+                                                                                        [render-text]="true"
+                                                                                        [original-size]="false"
+                                                                                        style="width: 400px; height: 500px"
+                                                                            ></pdf-viewer>
+                                                                        </div>
+                                                                        <!-- <img  [src]="FILE.file" style="width: 100%; height: fit-content;"  alt=""> -->
+                                                                        
                                                                     </span>
                                                                     <!-- <span *ngIf="file_selected.type === 'pdf'">
                                                                         <embed [src]="getDocumentIframe(FILE.file)"  class="pdf-content"/>

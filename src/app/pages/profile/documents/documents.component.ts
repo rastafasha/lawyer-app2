@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { Usuario } from '../../../models/usuario.model';
 import { AuthService } from '../../../services/auth.service';
 import { Document } from '../../../models/document.model';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 declare let $:any;  
 @Component({
@@ -23,7 +24,8 @@ declare let $:any;
             BackButtnComponent,
             LateralComponent,
             ReactiveFormsModule,
-            FormsModule
+            FormsModule,
+            PdfViewerModule
   ],
   templateUrl: './documents.component.html',
   styleUrl: './documents.component.scss'
@@ -42,6 +44,9 @@ export class DocumentsComponent {
   public name_category!:string;
   user_id!:number;
   user!:Usuario;
+
+  pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf"
+  // pdfSrc!:string;
 
   constructor(
     // public appointmentService:AppointmentService,
@@ -63,7 +68,7 @@ export class DocumentsComponent {
 
   getdocumentsbyUser(){
     this.documentService.getDocumentsByUser(this.user_id).subscribe((resp:any)=>{
-      console.log(resp);
+      // console.log(resp);
       this.FILES =resp.data
     })
   }
@@ -74,6 +79,11 @@ export class DocumentsComponent {
       this.FILES.push(file);
     }
     console.log(this.FILES);
+    //si viene un archivo pdf
+    if(this.FILES.length > 0){
+      this.FilesAdded.push(this.FILES[0]);
+      this.FILES.splice(0,1); 
+    }
   
   }
 
@@ -92,22 +102,21 @@ export class DocumentsComponent {
 
   selectDoc(FILE:any){
     this.file_selected = FILE;
-    console.log(this.file_selected);
   }
 
-//   getDocumentIframe(url) {
-//     let document, results;
+  getDocumentIframe(url:any) {
+    let document, results;
 
-//     if (url === null) {
-//         return '';
-//     }
-//     // eslint-disable-next-line prefer-const
-//     results = url.match('[\\?&]v=([^&#]*)');
-//     // eslint-disable-next-line prefer-const
-//     document   = (results === null) ? url : results[1];
+    if (url === null) {
+        return '';
+    }
+    // eslint-disable-next-line prefer-const
+    results = url.match('[\\?&]v=([^&#]*)');
+    // eslint-disable-next-line prefer-const
+    document   = (results === null) ? url : results[1];
 
-//     return this._sanitizer.bypassSecurityTrustResourceUrl(document);
-// }
+    return this._sanitizer.bypassSecurityTrustResourceUrl(document);
+}
 
 closeModalDoc(){
 
