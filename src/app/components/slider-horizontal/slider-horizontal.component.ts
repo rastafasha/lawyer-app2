@@ -3,6 +3,7 @@ import { BannerService } from '../../services/banner.service';
 import { Banner } from '../../models/banner.model';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { SkeletonLoaderComponent } from '../../shared/skeleton-loader/skeleton-loader.component';
+import { LoadingComponent } from '../../shared/loading/loading.component';
 
 @Component({
   selector: 'app-slider-horizontal',
@@ -10,7 +11,7 @@ import { SkeletonLoaderComponent } from '../../shared/skeleton-loader/skeleton-l
     CommonModule,
     NgFor,
     NgIf,
-    SkeletonLoaderComponent
+    LoadingComponent
   ],
   templateUrl: './slider-horizontal.component.html',
   styleUrl: './slider-horizontal.component.css'

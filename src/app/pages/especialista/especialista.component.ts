@@ -17,6 +17,7 @@ import { Solicitud } from '../../models/solicitud.model';
 import Swal from 'sweetalert2';
 import { ImagenPipe } from '../../pipes/imagen.pipe';
 import { SkeletonLoaderComponent } from '../../shared/skeleton-loader/skeleton-loader.component';
+import { LoadingComponent } from '../../shared/loading/loading.component';
 
 @Component({
   selector: 'app-especialista',
@@ -30,7 +31,8 @@ import { SkeletonLoaderComponent } from '../../shared/skeleton-loader/skeleton-l
     FormsModule,
     ReactiveFormsModule,
     ImagenPipe,
-    SkeletonLoaderComponent
+    // SkeletonLoaderComponent,
+    LoadingComponent
   ],
   templateUrl: './especialista.component.html',
   styleUrl: './especialista.component.scss'
@@ -38,7 +40,9 @@ import { SkeletonLoaderComponent } from '../../shared/skeleton-loader/skeleton-l
 export class EspecialistaComponent {
   pageTitle= 'Profile';
     public user!: Usuario;
+
     public isLoading:boolean = false;
+    loadingTitle!:string;
     // public profile!: Profile;
     public profile: Profile = new Profile();
     public redessociales!: RedesSociales[];
@@ -69,6 +73,7 @@ export class EspecialistaComponent {
   
     getProfile(id:number){
       this.isLoading = true;
+      this.loadingTitle = 'Cargando perfil';
       this.profileService.getByUser(id).subscribe((resp:any) => {
         // console.log(resp);
         this.profile = resp.profile;

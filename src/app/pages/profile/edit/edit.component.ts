@@ -12,6 +12,7 @@ import { ProfileService } from '../../../services/profile.service';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SpecialitiesService } from '../../../services/specialities.service';
 import Swal from 'sweetalert2';
+import { LoadingComponent } from '../../../shared/loading/loading.component';
 
 @Component({
   selector: 'app-edit',
@@ -23,6 +24,7 @@ import Swal from 'sweetalert2';
         ReactiveFormsModule,
         FormsModule,
         NgFor,
+        LoadingComponent
   ],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.css'
@@ -32,6 +34,9 @@ export class EditComponent {
   Title!:string;
   public iswhatsapp : boolean = false;
   selectedValueCode = '';
+
+  public isLoading:boolean = false;
+    loadingTitle!:string;
 
   userForm: FormGroup = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
@@ -123,6 +128,8 @@ export class EditComponent {
     }
 
     getProfile(){
+      this.isLoading = true;
+      this.loadingTitle = 'Cargando perfil';
       this.profileService.getByUser(this.user.id).subscribe(
         (resp:any) => {
           console.log('Profile response:', resp); // Log the response
@@ -137,6 +144,7 @@ export class EditComponent {
           this.IMAGE_PREVISUALIZA = resp.profile.avatar;
           this.FILE_AVATAR = resp.profile.avatar;
           // this.gender = resp.profile.gender
+          this.isLoading = false;
         },
         (error) => {
           console.error('Error fetching profile:', error); // Log any errors

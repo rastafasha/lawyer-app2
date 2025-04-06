@@ -6,7 +6,10 @@
         <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
         <div class="div-scroll">
           <div class="row">
-            <app-skeleton-loader *ngIf="isLoading" [rows]="3" [columns]="2"></app-skeleton-loader>
+            <!-- <app-skeleton-loader *ngIf="isLoading" [rows]="3" [columns]="2"></app-skeleton-loader> -->
+
+            <app-loading *ngIf="isLoading" [loadingTitle]="loadingTitle"></app-loading>
+
             <div class="col-xs-12 col-sm-6" *ngIf="!isLoading">
               <div class=" itemFav shadow">
                 <img *ngIf="!profile.avatar" [src]="profile.avatar  | imagenPipe: 'users' " alt="">

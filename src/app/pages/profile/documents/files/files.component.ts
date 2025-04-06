@@ -8,6 +8,7 @@ import { DocumentService } from '../../../../services/document.service';
 import { Document } from '../../../../models/document.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ImagenPipe } from '../../../../pipes/imagen.pipe';
+import { LoadingComponent } from '../../../../shared/loading/loading.component';
 @Component({
   selector: 'app-files',
   imports: [
@@ -15,7 +16,8 @@ import { ImagenPipe } from '../../../../pipes/imagen.pipe';
     HeaderComponent,
     MenuFooterComponent,
     BackButtnComponent,
-    ImagenPipe
+    ImagenPipe,
+    LoadingComponent
   ],
   templateUrl: './files.component.html',
   styleUrl: './files.component.scss',
@@ -24,6 +26,7 @@ export class FilesComponent {
   pageTitle= 'File Documents';
   FILE!: Document;
   type!: string;
+  isLoading:boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private documentService: DocumentService,
@@ -37,10 +40,12 @@ export class FilesComponent {
   }
 
   iniciarFile(id:number){
+    this.isLoading = true;
     this.documentService.getDocument(id).subscribe((resp:any)=>{
       this.FILE = resp;
       // console.log(this.FILE);
       this.type = this.FILE.type;
+      this.isLoading = false;
     })
   }
 

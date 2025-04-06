@@ -1,4 +1,6 @@
-<ul class="post"  >
+<app-loading *ngIf="isLoading" [loadingTitle]="loadingTitle"></app-loading>
+
+<ul class="post"  *ngIf="!isLoading">
     <li class="group" >
         <div class="div-group" *ngFor="let item of profiles">
             <div class="foto">

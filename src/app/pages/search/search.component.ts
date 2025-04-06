@@ -10,7 +10,7 @@ import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
   selector: 'app-search',
   imports: [MenuFooterComponent, HeaderComponent, 
     LateralComponent,
-    ListProductsComponent, BackButtnComponent
+    ListProductsComponent, BackButtnComponent,
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'

@@ -5,14 +5,16 @@
             <div class="col-xs-12 col-sm-9 col-md-9">
 
                 <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
+                <app-loading *ngIf="isLoading" ></app-loading>
                 
-
-                <form class="d-flex shadowSearch">
+                <form class="d-flex shadowSearch" *ngIf="!isLoading">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success btn-seach" type="submit"><i class="fa fa-search"></i></button>
                 </form>
+
                 
-                <div class="row">
+                
+                <div class="row" *ngIf="!isLoading">
                     <div class="col-xs-12 col-sm-6">
                         <div class="col-12 col-sm-4">  
                             <div class="form-group local-forms">

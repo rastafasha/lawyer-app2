@@ -5,16 +5,18 @@ import { AuthService } from '../../services/auth.service';
 import { ProfileService } from '../../services/profile.service';
 import { Profile } from '../../models/profile.model';
 import { NgIf } from '@angular/common';
+import { LoadingComponent } from '../../shared/loading/loading.component';
 
 @Component({
   selector: 'app-aviso',
-  imports: [RouterLink, NgIf],
+  imports: [RouterLink, NgIf, LoadingComponent],
   templateUrl: './aviso.component.html',
   styleUrl: './aviso.component.css'
 })
 export class AvisoComponent {
   user: Usuario;
   user_id!: number;
+  isLoading:boolean = false;
   public profile: Profile = new Profile();
   constructor(
     private authService: AuthService,
@@ -27,10 +29,12 @@ export class AvisoComponent {
     this.getProfile();
   }
   getProfile() {
+    this.isLoading = true;
     this.profileService.getByUser(this.user_id).subscribe({
       next: (res) => {
         this.profile = res.profile;
         // console.log(this.profile);
+        this.isLoading = false;
       },
       error: (err) => {
         console.log(err);

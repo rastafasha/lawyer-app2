@@ -4,7 +4,8 @@
     <div class="row">
       <div class="col-xs-12 col-sm-9 col-md-9">
         <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
-        <div class=" itemFav shadow">
+        <app-loading *ngIf="isLoading" [loadingTitle]="loadingTitle"></app-loading>
+        <div class=" itemFav shadow" *ngIf="!isLoading">
           <img [src]="profile.avatar  | imagenPipe: 'users' " alt="">
           <div class="div1">
             <p>{{user.username}}</p>

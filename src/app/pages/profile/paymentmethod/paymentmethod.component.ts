@@ -9,6 +9,7 @@ import { PaymentmethodService } from '../../../services/paymentmethod.service';
 import { AuthService } from '../../../services/auth.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { LoadingComponent } from '../../../shared/loading/loading.component';
 
 @Component({
   selector: 'app-paymentmethod',
@@ -19,7 +20,8 @@ import { ActivatedRoute } from '@angular/router';
     BackButtnComponent,
     NgFor,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LoadingComponent
   ],
   templateUrl: './paymentmethod.component.html',
   styleUrl: './paymentmethod.component.scss',
@@ -29,7 +31,7 @@ export class PaymentmethodComponent {
   public tiposdepagos: PaymentMethod [] = [];
   public tiposdepagosuser: PaymentMethod [] = [];
   public user!: Usuario;
-
+  isLoading:boolean = false;
   user_id!:number;
   tipoSeleccionado:any;
   pagoSeleccionado:any;
@@ -58,7 +60,7 @@ export class PaymentmethodComponent {
   ngOnInit(): void {
     this.user = this.authService.getUser();
     this.user_id = this.user.id;
-    console.log('hola',this.user.id);
+    // console.log('hola',this.user.id);
     // this.getPaymentMethods();
     this.getPaymentMethodByUserId();
     // this.getTiposdePago();
@@ -71,7 +73,7 @@ export class PaymentmethodComponent {
     this.paymentMService.getPaymentmethods().subscribe(
       (resp: any) => {
         this.tiposdepagos = resp;
-        console.log(this.tiposdepagos);
+        // console.log(this.tiposdepagos);
       },
       (error) => {
         console.error('Error fetching payment methods:', error);
@@ -79,10 +81,12 @@ export class PaymentmethodComponent {
     );
   }
   getPaymentMethodByUserId() {
+    this.isLoading = true;
     this.paymentMService.getPaymentMethodByUserId(this.user.id).subscribe(
       (resp: any) => {
         this.tiposdepagosuser = resp;
-        console.log(this.tiposdepagosuser);
+        // console.log(this.tiposdepagosuser);
+        this.isLoading = false;
       },
       (error) => {
         console.error('Error fetching payment methods:', error);

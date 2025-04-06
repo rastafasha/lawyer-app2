@@ -19,20 +19,23 @@ import { LoadingComponent } from "../../shared/loading/loading.component";
 })
 export class ListaUsuariosComponent {
 
-  loadingTitle: string = 'Cargando usuarios...';
+  
     @Input() users: any[] = [];
-    currentPage = 1;
-    itemsPerPage = 2;
-    loading = false;
-    hasMore = true;
+    
 
     user: Usuario;
     speciality!: Speciality;
     Title!: string;
 
+    loadingTitle!: string ;
+    loading = false;
+    
     isRefreshing = false;
     private startY: number = 0;
     private currentY: number = 0;
+    currentPage = 1;
+    itemsPerPage = 2;
+    hasMore = true;
 
 
 
@@ -54,6 +57,7 @@ export class ListaUsuariosComponent {
       }
     getProfiles() {
       this.loading = true;
+      this.loadingTitle = 'Cargando usuarios...';
       this.usersServices.listUsers(this.currentPage, this.itemsPerPage).subscribe({
         next: (resp: any) => {
           this.users = [...this.users, ...resp.users];

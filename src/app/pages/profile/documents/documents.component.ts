@@ -13,6 +13,7 @@ import { AuthService } from '../../../services/auth.service';
 import { Document } from '../../../models/document.model';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { environment } from '../../../environments/environment';
+import { LoadingComponent } from '../../../shared/loading/loading.component';
 const baseUrl = environment.url_servicios;
 declare let $:any;  
 @Component({
@@ -26,13 +27,15 @@ declare let $:any;
             ReactiveFormsModule,
             FormsModule,
             PdfViewerModule,
-            RouterModule
+            RouterModule,
+            LoadingComponent
   ],
   templateUrl: './documents.component.html',
   styleUrl: './documents.component.scss'
 })
 export class DocumentsComponent {
   pageTitle= 'Documents';
+  isLoading:boolean = false;
 
   valid_form_success = false;
     public text_validation = '';
@@ -70,9 +73,11 @@ export class DocumentsComponent {
 
 
   getdocumentsbyUser(){
+    this.isLoading = true;
     this.documentService.getDocumentsByUser(this.user_id).subscribe((resp:any)=>{
       // console.log(resp);
       this.FILES =resp.data
+      this.isLoading = false;
     })
   }
 

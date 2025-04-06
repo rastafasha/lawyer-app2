@@ -20,7 +20,7 @@ export class UserService {
 
   
 
-  listUsers(page: number = 1, perPage: number = 10){
+  listUsers(page: number = 1, perPage: number = 2){
     const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
     const URL = `${url_servicios}/users?page=${page}&per_page=${perPage}`;
     return this.http.get(URL, {headers:headers});

@@ -9,6 +9,7 @@ import { Banner } from '../../../models/banner.model';
 import { BannerService } from '../../../services/banner.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImagenPipe } from '../../../pipes/imagen.pipe';
+import { LoadingComponent } from '../../../shared/loading/loading.component';
 declare var $:any;  
 
 @Component({
@@ -20,14 +21,16 @@ declare var $:any;
     LateralComponent,
     BackButtnComponent,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    LoadingComponent
   ],
   templateUrl: './banner.component.html',
   styleUrl: './banner.component.scss'
 })
 export class BannerComponent {
   pageTitle = 'Banners';
-
+  isLoading:boolean = false;
+  loadingTitle!:string;
   public FILE_AVATAR:any;
   public IMAGE_PREVISUALIZA:any = 'assets/img/user-06.jpg';
 
@@ -52,11 +55,11 @@ export class BannerComponent {
 
   private getTableData(page=1): void {
     this.publicidadList = [];
-
+    this.isLoading = true;
+    this.loadingTitle = 'Cargando datos';
     this.bannerService.getBanners().subscribe((resp:any)=>{
       this.publicidadList = resp.data;
-      console.log(resp.data);
-
+      this.isLoading = false;
     })
   }
 
