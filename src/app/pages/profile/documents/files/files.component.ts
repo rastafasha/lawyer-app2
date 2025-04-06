@@ -37,7 +37,7 @@ export class FilesComponent {
   iniciarFile(id:number){
     this.documentService.getDocument(id).subscribe((resp:any)=>{
       this.FILE = resp;
-      console.log(this.FILE);
+      // console.log(this.FILE);
       this.type = this.FILE.type;
     })
   }

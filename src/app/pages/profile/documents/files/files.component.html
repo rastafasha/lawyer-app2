@@ -2,35 +2,27 @@
 <section class="user-document">
   <div class="container-fluid">
     <div class="row">
-      <div class="areagris"></div>
-
-      <div class="areablanc areablanc-interna">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-xs-12 ">
-              <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
-              <div class="post-inner">
-                <img
-                  *ngIf="FILE.type !== 'pdf'"
-                  [src]="FILE.file"
-                  style="width: 100%; height: fit-content"
-                  alt=""
-                />
-                <div  *ngIf="FILE.type === 'pdf'">
-                  <iframe
-                    class="embed-responsive-item pdf-viewer"
-                    [src]="getPDFIframe(FILE.file)"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                  ></iframe>
-                </div>
-              </div>
-            </div>
-
+      <div class="col-xs-12 ">
+        <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
+        <div class="post-inner">
+          <img
+            *ngIf="FILE.type !== 'pdf'"
+            [src]="FILE.file"
+            style="width: 100%; height: fit-content"
+            alt=""
+          />
+          <div  *ngIf="FILE.type === 'pdf'">
+            <iframe
+              class="embed-responsive-item pdf-viewer"
+              [src]="getPDFIframe(FILE.file)"
+              frameborder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>

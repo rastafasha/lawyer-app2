@@ -10,7 +10,7 @@ import { ImagenPipe } from '../../pipes/imagen.pipe';
   selector: 'app-list-products',
   imports: [CommonModule, NgFor, RouterModule, ImagenPipe],
   templateUrl: './list-products.component.html',
-  styleUrl: './list-products.component.css'
+  styleUrl: './list-products.component.scss'
 })
 export class ListProductsComponent {
 

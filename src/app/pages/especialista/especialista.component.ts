@@ -16,6 +16,7 @@ import { SolicitudesService } from '../../services/solicitudes.service';
 import { Solicitud } from '../../models/solicitud.model';
 import Swal from 'sweetalert2';
 import { ImagenPipe } from '../../pipes/imagen.pipe';
+import { SkeletonLoaderComponent } from '../../shared/skeleton-loader/skeleton-loader.component';
 
 @Component({
   selector: 'app-especialista',
@@ -28,7 +29,8 @@ import { ImagenPipe } from '../../pipes/imagen.pipe';
     NgFor,
     FormsModule,
     ReactiveFormsModule,
-    ImagenPipe
+    ImagenPipe,
+    SkeletonLoaderComponent
   ],
   templateUrl: './especialista.component.html',
   styleUrl: './especialista.component.scss'
@@ -36,6 +38,7 @@ import { ImagenPipe } from '../../pipes/imagen.pipe';
 export class EspecialistaComponent {
   pageTitle= 'Profile';
     public user!: Usuario;
+    public isLoading:boolean = false;
     // public profile!: Profile;
     public profile: Profile = new Profile();
     public redessociales!: RedesSociales[];
@@ -65,6 +68,7 @@ export class EspecialistaComponent {
     }
   
     getProfile(id:number){
+      this.isLoading = true;
       this.profileService.getByUser(id).subscribe((resp:any) => {
         // console.log(resp);
         this.profile = resp.profile;
@@ -77,9 +81,7 @@ export class EspecialistaComponent {
             : resp.profile.precios || [];
         this.speciality_profile = resp.profile.speciality_id;
         this.getSpeciality();
-        // setTimeout(() => {
-        // }
-        // , 5000);
+        this.isLoading = false;
       })
     }
   

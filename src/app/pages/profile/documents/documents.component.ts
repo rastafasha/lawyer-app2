@@ -6,7 +6,6 @@ import { MenuFooterComponent } from '../../../shared/menu-footer/menu-footer.com
 import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { LateralComponent } from '../../../components/lateral/lateral.component';
 import { DocumentService } from '../../../services/document.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Usuario } from '../../../models/usuario.model';
@@ -55,7 +54,6 @@ export class DocumentsComponent {
     // public appointmentService:AppointmentService,
     private authService: AuthService,
     public documentService:DocumentService,
-    private _sanitizer: DomSanitizer,
     public router: Router,
     public ativatedRoute: ActivatedRoute,
     public fb: FormBuilder,
@@ -110,18 +108,6 @@ export class DocumentsComponent {
   }
 
 
-getPDFIframe(url:any) {
-  var file, results;
-
-  if (url === null) {
-      return '';
-  }
-  results = url.match('[\\?&]v=([^&#]*)');
-  file   = (results === null) ? url : results[1];
-
-  // return this._sanitizer.bypassSecurityTrustResourceUrl(baseUrl + file);
-  return this._sanitizer.bypassSecurityTrustResourceUrl(file);
-}
 
 closeModalDoc(){
 
