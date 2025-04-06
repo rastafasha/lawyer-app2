@@ -1,0 +1,9 @@
+.swiffy-slider {
+    height: 30px;
+}
+
+@media (max-width: 768px) {
+    .swiffy-slider {
+        height: 80px
+    }
+}

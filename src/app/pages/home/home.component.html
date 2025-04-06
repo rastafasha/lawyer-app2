@@ -2,57 +2,43 @@
 <section class="home">
   <div class="container-fluid">
     <div class="row">
-      <div class="areagris"></div>
-    <div class="areablanc areablanc-interna animated fadeInUp">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xs-12 col-sm-9 col-md-9">
+      <div class="col-xs-12 col-sm-9 col-md-9">
+    
+        <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
         
-            <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
-            
-            <div class="post-inner">
-              <div *ngIf="user.roles[0] === 'MEMBER' || user.roles[0] === 'GUEST'">
-                 <!-- aviso falta info -->
-                 <app-aviso></app-aviso>
-                 <!-- aviso falta info -->
-                 <!--category name-->
-                 <app-categoria-horizontal></app-categoria-horizontal>
-                 <!--category name-->
-                 <br />
-     
-                 <!---Slider-->
-                 <app-slider-horizontal></app-slider-horizontal>
-                 <!---Slider-->
-     
-                 <div class="inner-data" style="margin-top: 20px;">
-                   <!--list horizontal-->
-                   <h3>Destacados</h3>
-                   <app-list-products-h></app-list-products-h>
-                   <!---list vertical-->
-                   <!--list products-->
-                   <h3>Recientes</h3>
-                   <app-list-products></app-list-products>
-                 </div>
-  
-               </div>
-               
-               <div *ngIf="user.roles[0] === 'SUPERADMIN' || user.roles[0] === 'ADMIN'">
-                <app-ListaUsuarios [users]="users"></app-ListaUsuarios>
-               </div>
-  
-            </div>
-          </div>
-          <!-- lateral -->
-          <div class="col-xs-12 col-sm-3 col-md-3">
-            <app-lateral></app-lateral>
-  
+        <div *ngIf="user.roles[0] === 'MEMBER' || user.roles[0] === 'GUEST'">
+          <!-- aviso falta info -->
+          <app-aviso></app-aviso>
+          <!-- aviso falta info -->
+          <!--category name-->
+          <app-categoria-horizontal></app-categoria-horizontal>
+          <!--category name-->
+          <br />
+
+          <!---Slider-->
+          <app-slider-horizontal></app-slider-horizontal>
+          <!---Slider-->
+
+          <!--list horizontal-->
+          <h3>Destacados</h3>
+          <app-list-products-h></app-list-products-h>
+          <!---list vertical-->
+          <!--list products-->
+          <h3>Recientes</h3>
+          <app-list-products></app-list-products>
+
         </div>
+        
+        <div *ngIf="user.roles[0] === 'SUPERADMIN' || user.roles[0] === 'ADMIN'">
+         <app-ListaUsuarios [users]="users"></app-ListaUsuarios>
         </div>
       </div>
       <!-- lateral -->
+      <div class="col-xs-12 col-sm-3 col-md-3">
+        <app-lateral></app-lateral>
+
     </div>
     </div>
-    
   </div>
 </section>
 <app-menu-footer></app-menu-footer>

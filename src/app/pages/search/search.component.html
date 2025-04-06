@@ -1,40 +1,35 @@
 <app-header></app-header>
 <section class="search">
+  
+
   <div class="container-fluid">
     <div class="row">
-      <div class="areagris"></div>
-      <div class="areablanc areablanc-interna animated fadeInUp">
-       <div class="container-fluid">
-        <div class="row">
-          <div class="col-xs-12 col-sm-9 col-md-9">
-            <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
-  
-            <form class="d-flex shadowSearch">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-success btn-seach" type="submit">
-                <i class="fa fa-search"></i>
-              </button>
-            </form>
-  
-            <div class="post-inner">
-  
-              <app-list-products></app-list-products>
-            </div>
-          </div>
-  
-          <div class="col-xs-12 col-sm-3 col-md-3">
-            <app-lateral></app-lateral>
-  
+      <div class="col-xs-12 col-sm-9 col-md-9">
+        <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
+
+        <form class="d-flex shadowSearch">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-success btn-seach" type="submit">
+            <i class="fa fa-search"></i>
+          </button>
+        </form>
+
+        <div class="post-inner">
+
+          <app-list-products></app-list-products>
         </div>
-        </div>
-       </div>
       </div>
+
+      <div class="col-xs-12 col-sm-3 col-md-3">
+        <app-lateral></app-lateral>
+
     </div>
-  </div>
+    </div>
+   </div>
 </section>
 <app-menu-footer></app-menu-footer>
