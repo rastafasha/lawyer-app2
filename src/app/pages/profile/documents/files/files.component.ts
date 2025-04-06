@@ -7,6 +7,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DocumentService } from '../../../../services/document.service';
 import { Document } from '../../../../models/document.model';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ImagenPipe } from '../../../../pipes/imagen.pipe';
 @Component({
   selector: 'app-files',
   imports: [
@@ -14,6 +15,7 @@ import { DomSanitizer } from '@angular/platform-browser';
     HeaderComponent,
     MenuFooterComponent,
     BackButtnComponent,
+    ImagenPipe
   ],
   templateUrl: './files.component.html',
   styleUrl: './files.component.scss',
