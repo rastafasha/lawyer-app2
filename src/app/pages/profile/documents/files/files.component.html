@@ -1,87 +1,37 @@
 <app-header></app-header>
 <section class="user-document">
-    <div class="container-fluid">
-        <div class="row">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="areagris"></div>
 
-            <div class="areagris">
+      <div class="areablanc areablanc-interna">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-xs-12 ">
+              <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
+              <div class="post-inner">
+                <img
+                  *ngIf="FILE.type !== 'pdf'"
+                  [src]="FILE.file"
+                  style="width: 100%; height: fit-content"
+                  alt=""
+                />
+                <div  *ngIf="FILE.type === 'pdf'">
+                  <iframe
+                    class="embed-responsive-item pdf-viewer"
+                    [src]="getPDFIframe(FILE.file)"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+              </div>
             </div>
 
-            <div class="areablanc areablanc-interna animated fadeInUp">
-
-
-                <div class="div-responsive1">
-
-                    <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
-
-
-                    <form class="d-flex shadowSearch">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success btn-seach" type="submit"><i class="fa fa-search"></i></button>
-                    </form>
-
-                    <div class="post-inner">
-                        <div class="carousel-inner-data">
-                            <div class="post navTabs">
-                                <div class=" itemFav">
-                                    <i class="fa fa-file-pdf-o"></i>
-                                    <div class="div1">
-                                        <h2>Subject</h2>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                                    </div>
-                                </div>
-                                <div class=" itemFav">
-                                    <i class="fa fa-file-pdf-o"></i>
-                                    <div class="div1">
-                                        <h2>Subject</h2>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                                    </div>
-                                </div>
-                                <div class=" itemFav">
-                                    <i class="fa fa-file-pdf-o"></i>
-                                    <div class="div1">
-                                        <h2>Subject</h2>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                                    </div>
-                                </div>
-                                <div class=" itemFav">
-                                    <i class="fa fa-file-pdf-o"></i>
-                                    <div class="div1">
-                                        <h2>Subject</h2>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-                <div class="div-responsive2">
-
-                    <div class="lateral">
-                        <div class="group  itemFav shadow">
-                            <img src="assets/users/1.jpg" alt="">
-                            <div class="div1">
-                                <p>John Doe.</p>
-                                <p>Johndoe&#64;gmail.com</p>
-                                <p>User</p>
-
-                            </div>
-                        </div>
-
-                        <div class="banner-c">
-                            <img src="https://picsum.photos/seed/car/500/500" alt="">
-                        </div>
-                    </div>
-                </div>
-
+          </div>
         </div>
-
+      </div>
     </div>
-    </div>
+  </div>
 </section>
 <app-menu-footer></app-menu-footer>

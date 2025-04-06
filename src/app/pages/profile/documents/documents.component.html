@@ -24,8 +24,8 @@
                                 <div class="col-xs-12 col-sm-6">
                                     <div class="col-12 col-sm-4">  
                                         <div class="form-group local-forms">
-                                        <label >Nombre<span class="login-danger">*</span></label>
-                                        <input class="form-control" name="title" [ngModelOptions]="{standalone: true}"  [(ngModel)]="name_category" type="text" required>
+                                        <label >Categoria<span class="login-danger">*</span></label>
+                                        <input class="form-control" name="name_category" [ngModelOptions]="{standalone: true}"  [(ngModel)]="name_category" type="text" required>
         
                                         </div>
                                     </div>
@@ -57,20 +57,24 @@
                                                     <div class="itemlist">
                                                         <div class="d-flex flex-stack mb-3">
                                                             <div class="me-3">
-                                                                <a  href="javascript:void(0);" (click)="selectDoc(FILE)" data-bs-toggle="modal" [attr.data-bs-target]="'#view-doc-'+FILE.id">
+                                                                <a  [routerLink]="['/profile/documents/file', FILE.id]"  >
                                                                     <img src="assets/svg/doc.svg" class="w-50px ms-n1 me-1 filesvg" alt="">
                                                                    </a>
+                                                                <!-- <a  href="javascript:void(0);" (click)="selectDoc(FILE)" data-bs-toggle="modal" [attr.data-bs-target]="'#view-doc-'+FILE.id">
+                                                                    <img src="assets/svg/doc.svg" class="w-50px ms-n1 me-1 filesvg" alt="">
+                                                                   </a> -->
                                                             </div>
                                                         </div>
                                                         <div class="info_itemlist">
                                                             <!--begin::Title-->
-                                                            <a href="javascript:void(0);" (click)="selectDoc(FILE)" data-bs-toggle="modal" [attr.data-bs-target]="'#view-doc-'+FILE.id" class="text-gray-800 text-hover-primary fw-bolder">{{FILE.name_file | slice:0:10}}... .{{FILE.type}}</a>
+                                                            <a [routerLink]="['/profile/documents/file', FILE.id]" class="text-gray-800 text-hover-primary fw-bolder">{{FILE.name_file | slice:0:10}}... .{{FILE.type}}</a>
+                                                            <!-- <a href="javascript:void(0);" (click)="selectDoc(FILE)" data-bs-toggle="modal" [attr.data-bs-target]="'#view-doc-'+FILE.id" class="text-gray-800 text-hover-primary fw-bolder">{{FILE.name_file | slice:0:10}}... .{{FILE.type}}</a> -->
                                                             <!--end::Title-->
                                                             <!--begin::Name-->
-                                                            <span class="text-gray-400 fw-bolder">Name:
-                                                                <a href="#" onclick="return false;" class="text-gray-800 text-hover-primary fw-bolder">{{FILE.name_category}}</a></span>
+                                                            <span class="text-gray-400 fw-bolder">Categoria:
+                                                                <a href="javascript:void(0);" onclick="return false;" class="text-gray-800 text-hover-primary fw-bolder">{{FILE.name_category}}</a></span>
                                                             <span class="text-gray-400 fw-bolder">Size:
-                                                            <a href="#" onclick="return false;" class="text-gray-800 text-hover-primary fw-bolder">{{FILE.size}} Kb.</a></span>
+                                                            <a href="javascript:void(0);" onclick="return false;" class="text-gray-800 text-hover-primary fw-bolder">{{FILE.size}} Kb.</a></span>
                                                             <!--end::Name-->
                                                             <!--begin::Label-->
                                                             <!--end::Label-->
@@ -98,13 +102,9 @@
                                                                     <span >
                                                                         <img *ngIf="FILE.type !== 'pdf'" [src]="FILE.file" style="width: 100%; height: fit-content;"  alt="">
                                                                         <div class="container" *ngIf="FILE.type === 'pdf'">
-                                                                            <pdf-viewer [src]="pdfSrc"
-                                                                                        [render-text]="true"
-                                                                                        [original-size]="false"
-                                                                                        style="width: 400px; height: 500px"
-                                                                            ></pdf-viewer>
+                                                                            <iframe class="embed-responsive-item pdf-viewer" [src]="getPDFIframe(FILE.file)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                                           
                                                                         </div>
-                                                                        <!-- <img  [src]="FILE.file" style="width: 100%; height: fit-content;"  alt=""> -->
                                                                         
                                                                     </span>
                                                                     <!-- <span *ngIf="file_selected.type === 'pdf'">
