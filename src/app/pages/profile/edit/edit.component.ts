@@ -10,12 +10,8 @@ import { Usuario } from '../../../models/usuario.model';
 import { AuthService } from '../../../services/auth.service';
 import { ProfileService } from '../../../services/profile.service';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LateralComponent } from '../../../components/lateral/lateral.component';
 import { SpecialitiesService } from '../../../services/specialities.service';
-import { IconosService } from '../../../services/iconos.service';
-import { Icons } from '../../../models/Icons';
 import Swal from 'sweetalert2';
-import { WhatsappFilterPipe } from '../../../pipes/whatsapp-filter.pipe';
 
 @Component({
   selector: 'app-edit',
@@ -25,10 +21,8 @@ import { WhatsappFilterPipe } from '../../../pipes/whatsapp-filter.pipe';
         MenuFooterComponent, 
         BackButtnComponent,
         ReactiveFormsModule,
-        // LateralComponent,
         FormsModule,
         NgFor,
-        WhatsappFilterPipe 
   ],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.css'

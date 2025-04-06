@@ -9,7 +9,7 @@ import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
 @Component({
   selector: 'app-search',
   imports: [MenuFooterComponent, HeaderComponent, 
-    LateralComponent, SliderHorizontalComponent,
+    LateralComponent,
     ListProductsComponent, BackButtnComponent
   ],
   templateUrl: './search.component.html',
