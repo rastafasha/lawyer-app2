@@ -1,26 +1,42 @@
-<div class="carousel-inner-data lista">
-                <!--  -->
-                <div class="post navTabs" >
-                    <div class=" itemFav shadow "  *ngFor="let item of users">
-                        <div class="group  itemFav lastposthome">
-                            <a [routerLink]="['/especialista/', item.id]">
-                                <img [src]="item.profile?.avatar | imagenPipe: 'users'" alt="">
-                            </a>
-                            <div class="div1">
-                                <h5 style="margin: 0; padding: 0;">{{item.username}}</h5>
-                                <p style="margin: 0; padding: 0;">{{item.roles[0].name}}</p>
-                                <p style="margin: 0; padding: 0;">{{item.profile?.ciudad}}</p>
-                                <!-- <h5 style="margin: 0; padding: 0;">{{item.profiles.status}}</h5> -->
-                                <span class="badge  bg-primary"
-                                    *ngIf="item.profile?.status === 1">Pendiente</span>
-                                <span class="badge bg-success"
-                                    *ngIf="item.profile?.status === 2">Verificado</span>
-                                <span class="badge bg-danger"
-                                    *ngIf="item.profile?.status === 3">Por revisar</span>
-                                
-                            </div>
-                        </div>
-                    </div>
-            
-                </div>
+<div class="refresh-container" [class.refreshing]="isRefreshing">
+  <div class="pull-down-indicator" *ngIf="isRefreshing">
+    <app-loading *ngIf="loading" [loadingTitle]="loadingTitle"></app-loading>
+
+  </div>
+  <div class="content">
+    <!-- Your main content here -->
+
+    <div class="carousel-inner-data lista">
+      <!--  -->
+      <div class="post navTabs">
+        <div class="itemFav shadow" *ngFor="let item of users">
+          <div class="group itemFav lastposthome">
+            <a [routerLink]="['/especialista/', item.id]">
+              <img [src]="item.profile?.avatar | imagenPipe : 'users'" alt="" />
+            </a>
+            <div class="div1">
+              <h5 style="margin: 0; padding: 0">{{ item.username }}</h5>
+              <p style="margin: 0; padding: 0">{{ item.roles[0].name }}</p>
+              <p style="margin: 0; padding: 0">{{ item.profile?.ciudad }}</p>
+              <!-- <h5 style="margin: 0; padding: 0;">{{item.profiles.status}}</h5> -->
+              <span class="badge bg-primary" *ngIf="item.profile?.status === 1"
+                >Pendiente</span
+              >
+              <span class="badge bg-success" *ngIf="item.profile?.status === 2"
+                >Verificado</span
+              >
+              <span class="badge bg-danger" *ngIf="item.profile?.status === 3"
+                >Por revisar</span
+              >
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-loading *ngIf="loading"></app-loading>
+  </div>
+</div>
+
+<style>
+
+</style>

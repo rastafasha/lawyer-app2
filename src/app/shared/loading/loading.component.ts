@@ -6,6 +6,6 @@ import { Component, Input } from '@angular/core';
     styleUrls: ['./loading.component.css']
 })
 export class LoadingComponent {
-    
+    @Input() loadingTitle!:string;
     constructor () {}
 }

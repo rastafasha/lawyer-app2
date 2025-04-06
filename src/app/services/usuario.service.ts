@@ -20,9 +20,9 @@ export class UserService {
 
   
 
-  listUsers(){
+  listUsers(page: number = 1, perPage: number = 10){
     const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
-    const URL = url_servicios+"/users";
+    const URL = `${url_servicios}/users?page=${page}&per_page=${perPage}`;
     return this.http.get(URL, {headers:headers});
   }
   listConfig(){

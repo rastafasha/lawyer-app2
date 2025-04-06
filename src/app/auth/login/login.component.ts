@@ -12,7 +12,10 @@ declare const gapi: any;
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, ModalCondicionesComponent, NgIf, PwaNotifInstallerComponent],
+  imports: [ReactiveFormsModule, ModalCondicionesComponent,
+     NgIf, 
+    //  PwaNotifInstallerComponent
+    ],
   templateUrl: './login.component.html',
   styleUrls: [ './login.component.css' ]
 })
