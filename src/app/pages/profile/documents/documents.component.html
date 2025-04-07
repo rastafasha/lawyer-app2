@@ -1,5 +1,14 @@
 <app-header></app-header>
-<section class="user-document home">
+<section class="user-document home" [class.refreshing]="isRefreshing"
+(scrolledUp)="onScrollUp()">
+<div class="pull-down-indicator" *ngIf="isRefreshing">
+    <app-loading  ></app-loading>
+    <p class="text-center">
+        refrescando ...
+    </p>
+    
+
+ </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12 col-sm-9 col-md-9">
@@ -75,7 +84,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="hover-scroll-overlay-y pe-6 me-n6">
-                                        <ng-container *ngFor="let FILE of FILES; let i = index;">
+                                        <ng-container *ngFor="let FILE of FILES;let i = index">
 
                                         <div class="itemlist">
                                             <div class="d-flex flex-stack mb-3">
@@ -103,7 +112,7 @@
                                                 <!--end::Label-->
                                             </div>
                                             <div class="buttons">
-                                                <button class="btn btn-danger btn-sm" (click)="deleteDocument(i)">x</button>
+                                                <button class="btn btn-danger btn-sm" (click)="deleteFile(FILE.id)">x</button>
 
                                             </div>
                                             <!--end::Customer-->

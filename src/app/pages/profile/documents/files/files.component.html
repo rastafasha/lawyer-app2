@@ -6,9 +6,11 @@
         <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
         <app-loading *ngIf="isLoading" ></app-loading>
         <div  *ngIf="!isLoading">
+          <p>Nombre: {{FILE.name_file }}</p>
+          <p>Categoria: {{FILE.name_category }}</p>
           <img
             *ngIf="FILE.type !== 'pdf'"
-            [src]="FILE.file | imagenPipe: 'documents' "
+            [src]="FILE.file "
             style="width: 100%; height: fit-content"
             alt=""
           />

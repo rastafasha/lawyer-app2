@@ -36,6 +36,7 @@ declare let $:any;
 export class DocumentsComponent {
   pageTitle= 'Documents';
   isLoading:boolean = false;
+  isRefreshing = false;
 
   valid_form_success = false;
     public text_validation = '';
@@ -82,25 +83,51 @@ export class DocumentsComponent {
   }
 
 
-  processFile($event:any){
-    for (const file of $event.target.files){
-      this.FILES.push(file);
-    }
-    console.log(this.FILES);
-    //si viene un archivo pdf
-    if(this.FILES.length > 0){
-      this.FilesAdded.push(this.FILES[0]);
-      this.FILES.splice(0,1); 
-    }
+  // processFile($event:any){
+    
+    
+  //   //si viene un archivo pdf
+  //   if(this.FILES.length > 0){
+  //     this.FILES.push(this.FILES[0]);
+  //     this.FILES.splice(0,1); 
+      
+  //   }else{
+  //     for (const file of $event.target.files){
+  //       this.FILES.push(file);
+  //     }
+  //   }
+  //   console.log(this.FILES);
   
+  // }
+
+  processFile($event: any) {
+    const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+  const allowedPdfType = 'application/pdf';
+  
+  // No limpiamos this.FILES para mantener los archivos existentes
+  
+  for (const file of $event.target.files) {
+    // Verificamos si el archivo es PDF o imagen
+    if (file.type === allowedPdfType || allowedImageTypes.includes(file.type)) {
+      // Agregamos el archivo solo si no existe ya en el array
+      if (!this.FILES.some((f: File) => f.name === file.name && f.size === file.size && f.lastModified === file.lastModified)) {
+        this.FILES.push(file);
+      }
+    } else {
+      console.warn(`Tipo de archivo no soportado: ${file.type}`);
+    }
+  }
+  
+  console.log('Archivos seleccionados:', this.FILES);
+
   }
 
-  deleteFile(FILE:any){
-    this.FilesAdded.splice(FILE,1);
-    this.documentService.deleteDocument(FILE.id).subscribe((resp:any)=>{
+  deleteFile(FILE:any){debugger
+    this.documentService.deleteDocument(FILE).subscribe((resp:any)=>{
       // this.getAppointment();
       this.getdocumentsbyUser();
     })
+    this.FilesAdded.splice(FILE,1);
   }
 
 
@@ -181,5 +208,21 @@ closeModalDoc(){
     })
 
   }
+
+  onScrollUp(){
+    this.refreshData(); 
+  }
+
+  refreshData() { 
+    this.isRefreshing = true; 
+    // Simulate data fetching 
+    setTimeout(() => { 
+      this.isRefreshing = false; 
+      // Update your data here 
+      // this.ngOnInit();
+      window.location.reload();
+    }, 2000); 
+  }
+  
 
 }
