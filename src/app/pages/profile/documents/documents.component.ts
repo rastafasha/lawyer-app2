@@ -23,7 +23,6 @@ declare let $:any;
         HeaderComponent,
             MenuFooterComponent, 
             BackButtnComponent,
-            LateralComponent,
             ReactiveFormsModule,
             FormsModule,
             PdfViewerModule,
@@ -46,16 +45,12 @@ export class DocumentsComponent {
   FilesAdded:any = [];
   public file_selected:any;
   public user_files:Document[]= [];
+  public user_filesfiltered:Document[]= [];
   public name_category!:string;
   user_id!:number;
   user!:Usuario;
 
-  // pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf"
-  // pdfSrc!:string;
-
-
   constructor(
-    // public appointmentService:AppointmentService,
     private authService: AuthService,
     public documentService:DocumentService,
     public router: Router,
@@ -84,52 +79,37 @@ export class DocumentsComponent {
         if(!this.user_files.find((doc:Document)=>doc.name_category==element.name_category)){
           this.user_files.push(element);
           }
-          });
+      });
+    })
+  }
 
+  getDocumentsbyCategory(name_category:string){
+    this.documentService.getDocumentsByUserCategory(this.user_id, name_category).subscribe((resp:any)=>{
+      this.user_filesfiltered = resp.data;
     })
   }
 
 
-  // processFile($event:any){
-    
-    
-  //   //si viene un archivo pdf
-  //   if(this.FILES.length > 0){
-  //     this.FILES.push(this.FILES[0]);
-  //     this.FILES.splice(0,1); 
-      
-  //   }else{
-  //     for (const file of $event.target.files){
-  //       this.FILES.push(file);
-  //     }
-  //   }
-  //   console.log(this.FILES);
-  
-  // }
-
   processFile($event: any) {
     const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
-  const allowedPdfType = 'application/pdf';
-  
-  // No limpiamos this.FILES para mantener los archivos existentes
-  
-  for (const file of $event.target.files) {
-    // Verificamos si el archivo es PDF o imagen
-    if (file.type === allowedPdfType || allowedImageTypes.includes(file.type)) {
-      // Agregamos el archivo solo si no existe ya en el array
-      if (!this.FILES.some((f: File) => f.name === file.name && f.size === file.size && f.lastModified === file.lastModified)) {
-        this.FILES.push(file);
+    const allowedPdfType = 'application/pdf';
+    
+    // No limpiamos this.FILES para mantener los archivos existentes
+    
+    for (const file of $event.target.files) {
+      // Verificamos si el archivo es PDF o imagen
+      if (file.type === allowedPdfType || allowedImageTypes.includes(file.type)) {
+        // Agregamos el archivo solo si no existe ya en el array
+        if (!this.FILES.some((f: File) => f.name === file.name && f.size === file.size && f.lastModified === file.lastModified)) {
+          this.FILES.push(file);
+        }
+      } else {
+        console.warn(`Tipo de archivo no soportado: ${file.type}`);
       }
-    } else {
-      console.warn(`Tipo de archivo no soportado: ${file.type}`);
     }
   }
-  
-  console.log('Archivos seleccionados:', this.FILES);
 
-  }
-
-  deleteFile(FILE:any){debugger
+  deleteFile(FILE:any){
     this.documentService.deleteDocument(FILE).subscribe((resp:any)=>{
       // this.getAppointment();
       this.getdocumentsbyUser();
@@ -137,10 +117,6 @@ export class DocumentsComponent {
     this.FilesAdded.splice(FILE,1);
   }
 
-
-  deleteDocument(i:any){
-    this.FILES.splice(i,1);
-  }
 
   selectDoc(FILE:any){
     this.file_selected = FILE;
@@ -174,9 +150,6 @@ closeModalDoc(){
       return;
 
     }
-
-    
-
     const formData = new FormData();
     formData.append('user_id', this.user_id+'');
     formData.append('name_category', this.name_category);
@@ -184,14 +157,16 @@ closeModalDoc(){
     this.FILES.forEach((file:any, index:number)=>{
       formData.append("files["+index+"]", file);
     });
-
+    this.isLoading = true;
     this.documentService.createDocument(formData).subscribe((resp:any)=>{
       // console.log(resp);
       // this.getAppointment();
       
       if(resp.message == 403){
         // Swal.fire('Actualizado', this.text_validation, 'success');
+        this.isLoading = false
         this.text_validation = resp.message_text;
+
         Swal.fire({
           position: "top-end",
                 icon: "warning",
@@ -199,7 +174,9 @@ closeModalDoc(){
                 showConfirmButton: false,
                 timer: 1500
               });
+              
             }else{
+              this.isLoading = false
               // Swal.fire('Actualizado', this.text_success, 'success' );
                 this.text_success = 'Se guardó la informacion del Laboratorio con la cita'
               // this.text_success = 'actualizado correctamente';
@@ -225,14 +202,11 @@ closeModalDoc(){
     // Simulate data fetching 
     setTimeout(() => { 
       this.isRefreshing = false; 
-      // Update your data here 
-      // this.ngOnInit();
       window.location.reload();
     }, 2000); 
   }
   
   closeReload(){
-    
     this.ngOnInit();
   }
 

@@ -53,6 +53,13 @@ export class DocumentService {
           map((resp:{ok: boolean, documents: Document}) => resp.documents)
           );
     }
+    getDocumentsByUserCategory(user_id: number, name_category:string) {
+      const url = `${baseUrl}/document/showByCategory/${user_id}/${name_category}`;
+      return this.http.get<any>(url, this.headers)
+        .pipe(
+          map((resp:{ok: boolean, documents: Document}) => resp.documents)
+          );
+    }
   
     getDocumentActivos() {
       const url = `${baseUrl}/document/activos`;

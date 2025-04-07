@@ -11,7 +11,7 @@
 
 .modal.show .modal-dialog {
     transform: none;
-    align-items: baseline !important;
+    /* align-items: baseline !important; */
     z-index: 3000 !important;
 }
 
