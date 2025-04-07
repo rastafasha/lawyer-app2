@@ -132,7 +132,7 @@ export class EditComponent {
       this.loadingTitle = 'Cargando perfil';
       this.profileService.getByUser(this.user.id).subscribe(
         (resp:any) => {
-          console.log('Profile response:', resp); // Log the response
+          // console.log('Profile response:', resp); // Log the response
           this.profile = resp.profile;
           this.redessociales = typeof resp.profile.redessociales === 'string' 
             ? JSON.parse(resp.profile.redessociales) || []
@@ -183,7 +183,7 @@ export class EditComponent {
             usuario: this.user.id,
           });
           this.profileSeleccionado = res.profile;
-          console.log('profileSeleccionado',this.profileSeleccionado);
+          // console.log('profileSeleccionado',this.profileSeleccionado);
 
         }
 

@@ -2,7 +2,7 @@
 <div class="refresh-container" [class.refreshing]="isRefreshing">
   <div class="pull-down-indicator" *ngIf="isRefreshing">
      refresh...
-
+     <app-loading *ngIf="loading" [loadingTitle]="loadingTitle"></app-loading>
   </div>
   <div class="content" *ngIf="!loading">
     <!-- Your main content here -->

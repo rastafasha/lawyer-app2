@@ -1,5 +1,19 @@
 <app-header></app-header>
-<section class="favorites ">
+<section class="favorites " infiniteScroll 
+[infiniteScrollDistance]="2"  [infiniteScrollUpDistance]="2" 
+[infiniteScrollThrottle]=" 50"
+(scrolled)="onScrollDown()" (scrolledUp)="onScrollUp()"
+
+[class.refreshing]="isRefreshing"
+>
+<div class="pull-down-indicator" *ngIf="isRefreshing">
+    <app-loading  ></app-loading>
+    <p class="text-center">
+        refrescando ...
+    </p>
+    
+
+ </div>
   <div class="container-fluid">
     <div class="row">
       <div class="col-xs-12 col-sm-9 col-md-9">
@@ -7,107 +21,41 @@
 
         <app-loading *ngIf="isLoading" ></app-loading>
 
-        <div class="refresh-container" [class.refreshing]="isRefreshing">
-            <div class="pull-down-indicator" *ngIf="isRefreshing">
-               refresh...
-          
-            </div>
-            <div class="content" *ngIf="!isLoading">
-              <!-- Your main content here -->
-          
-              <div class="carousel-inner-data">
-                <div class="post navTabs">
-                    <div class=" itemFav">
-                        <div class="group  itemFav lastposthome">
-                            <a href="lawyer-profile.html">
-                                <img src="assets/users/3.jpg" alt="">
-                            </a>
-                            <div class="div1">
-                                <p>John Doe.</p>
-                                <p>Lorem ipsum dolor sit amet consectetur...</p>
-                                <div class="stars">
-                                    <ul>
-                                        <li class="active"><i class="fa fa-star"></i></li>
-                                        <li class="active"><i class="fa fa-star"></i></li>
-                                        <li class="active"><i class="fa fa-star"></i></li>
-                                        <li class="active"><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
+
+
+        <div class="carousel-inner-data" *ngIf="!isLoading">
+            <div class="post navTabs" *ngIf="characters.length > 0 else message">
+                <div class=" itemFav" *ngFor="let character of characters; trackby: trackByCharacterId">
+                    <div class="group  itemFav lastposthome">
+                        <a href="lawyer-profile.html">
+                            <img [src]="character.image" alt="">
+                        </a>
+                        <div class="div1">
+                            <p>{{character.name}}</p>
+                            <p>{{character.species}}</p>
+                            <p>{{character.gender}}</p>
+                            <!-- <p>Lorem ipsum dolor sit amet consectetur...</p> -->
+                            <div class="stars">
+                                <ul>
+                                    <li class="active"><i class="fa fa-star"></i></li>
+                                    <li class="active"><i class="fa fa-star"></i></li>
+                                    <li class="active"><i class="fa fa-star"></i></li>
+                                    <li class="active"><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    <div class=" itemFav">
-                        <div class="group  itemFav lastposthome">
-                            <a href="lawyer-profile.html">
-                                <img src="assets/users/3.jpg" alt="">
-                            </a>
-                            <div class="div1">
-                                <p>John Doe.</p>
-                                <p>Lorem ipsum dolor sit amet consectetur...</p>
-                                <div class="stars">
-                                    <ul>
-                                        <li class="active"><i class="fa fa-star"></i></li>
-                                        <li class="active"><i class="fa fa-star"></i></li>
-                                        <li class="active"><i class="fa fa-star"></i></li>
-                                        <li class="active"><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class=" itemFav">
-                        <div class="group  itemFav lastposthome">
-                            <a href="lawyer-profile.html">
-                                <img src="assets/users/3.jpg" alt="">
-                            </a>
-                            <div class="div1">
-                                <p>John Doe.</p>
-                                <p>Lorem ipsum dolor sit amet consectetur...</p>
-                                <div class="stars">
-                                    <ul>
-                                        <li class="active"><i class="fa fa-star"></i></li>
-                                        <li class="active"><i class="fa fa-star"></i></li>
-                                        <li class="active"><i class="fa fa-star"></i></li>
-                                        <li class="active"><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class=" itemFav">
-                        <div class="group  itemFav lastposthome">
-                            <a href="lawyer-profile.html">
-                                <img src="assets/users/3.jpg" alt="">
-                            </a>
-                            <div class="div1">
-                                <p>John Doe.</p>
-                                <p>Lorem ipsum dolor sit amet consectetur...</p>
-                                <div class="stars">
-                                    <ul>
-                                        <li class="active"><i class="fa fa-star"></i></li>
-                                        <li class="active"><i class="fa fa-star"></i></li>
-                                        <li class="active"><i class="fa fa-star"></i></li>
-                                        <li class="active"><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            
-            
-            
-            
-            
                 </div>
+                
             </div>
-              
-            </div>
-          </div>
-        
+            <ng-template #message>
+                <p>lista vacia</p>
+            </ng-template>
+            <ng-template *ngIf="isEdnOfList">
+                <p>{{loadingTitle}}</p>
+            </ng-template>
+        </div>
       
       </div>
       <!-- lateral -->
