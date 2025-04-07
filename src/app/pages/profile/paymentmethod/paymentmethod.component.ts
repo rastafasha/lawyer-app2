@@ -10,6 +10,7 @@ import { AuthService } from '../../../services/auth.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingComponent } from '../../../shared/loading/loading.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-paymentmethod',
@@ -58,34 +59,19 @@ export class PaymentmethodComponent {
   }
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.user = this.authService.getUser();
     this.user_id = this.user.id;
-    // console.log('hola',this.user.id);
-    // this.getPaymentMethods();
     this.getPaymentMethodByUserId();
-    // this.getTiposdePago();
 
   }
 
 
-
-  getPaymentMethods() {
-    this.paymentMService.getPaymentmethods().subscribe(
-      (resp: any) => {
-        this.tiposdepagos = resp;
-        // console.log(this.tiposdepagos);
-      },
-      (error) => {
-        console.error('Error fetching payment methods:', error);
-      }
-    );
-  }
   getPaymentMethodByUserId() {
     this.isLoading = true;
     this.paymentMService.getPaymentMethodByUserId(this.user.id).subscribe(
       (resp: any) => {
         this.tiposdepagosuser = resp;
-        // console.log(this.tiposdepagosuser);
         this.isLoading = false;
       },
       (error) => {
@@ -113,7 +99,7 @@ cambiarStatus(tipodepago:any){
     this.paymentMService.updateStatus(tipodepago, tipodepago.id).subscribe(
       resp =>{
         // console.log(resp);
-        // Swal.fire('Actualizado', `actualizado correctamente`, 'success');
+        Swal.fire('Actualizado', `actualizado correctamente`, 'success');
         // this.toaster.open({
         //   text:'Producto Actualizado!',
         //   caption:'Mensaje de Validación',

@@ -1,11 +1,25 @@
 <app-header></app-header>
-<section class="favorites ">
+<!-- (scrolled)="onScrollDown()" (scrolledUp)="onScrollUp()" -->
+
+<section class="favorites "
+infiniteScroll 
+[infiniteScrollDistance]="2"  [infiniteScrollUpDistance]="2" 
+[infiniteScrollThrottle]=" 50"
+
+[class.refreshing]="isRefreshing"
+>
+<div class="pull-down-indicator" *ngIf="isRefreshing">
+  <app-loading  ></app-loading>
+  <p class="text-center">
+      refrescando ...
+  </p>
+</div>
   <div class="container-fluid">
     <div class="row">
       <div class="col-xs-12 col-sm-9 col-md-9">
         <app-backButtn [pageTitle]="pageTitle" [Title]="Title"></app-backButtn>
-        <app-loading *ngIf="isLoading" [loadingTitle]="loadingTitle"></app-loading>
         <h5>Abogados</h5>
+        <app-loading *ngIf="isLoading" [loadingTitle]="loadingTitle"></app-loading>
         <div class="post navTabs" *ngIf="!isLoading" >
           <div class=" itemFav shadow "  *ngFor="let item of profiles">
               <div class="group  itemFav lastposthome">

@@ -17,4 +17,8 @@ import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
 })
 export class SearchComponent {
   pageTitle= 'Search';
+
+  ngOnInit(){
+    window.scrollTo(0, 0);
+  }
 }

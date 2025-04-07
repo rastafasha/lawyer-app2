@@ -64,6 +64,7 @@ export class EspecialistaComponent {
     }
   
     ngOnInit(): void {
+      window.scrollTo(0, 0);
       this.activatedRoute.params.subscribe(({ id }) => {
         this.getProfile(id);
       });

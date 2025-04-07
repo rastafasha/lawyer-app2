@@ -1,18 +1,18 @@
-<app-loading *ngIf="loading" [loadingTitle]="loadingTitle"></app-loading>
-<div class="refresh-container" [class.refreshing]="isRefreshing">
-  <div class="pull-down-indicator" *ngIf="isRefreshing">
-     refresh...
-     <app-loading *ngIf="loading" [loadingTitle]="loadingTitle"></app-loading>
-  </div>
-  <div class="content" *ngIf="!loading">
-    <!-- Your main content here -->
+<app-loading *ngIf="isLoading" [loadingTitle]="loadingTitle"></app-loading>
+<section class="user " infiniteScroll 
+[infiniteScrollDistance]="2"  [infiniteScrollUpDistance]="2" 
+[infiniteScrollThrottle]=" 50"
+(scrolled)="onScrollDown()" (scrolledUp)="onScrollUp()"
 
-    
-    
-  </div>
+[class.refreshing]="isRefreshing"
+>
+<div class="pull-down-indicator" *ngIf="isRefreshing">
+  <app-loading  ></app-loading>
+  <p class="text-center">
+      refrescando ...
+  </p>
 </div>
-
-<div class="carousel-inner-data lista" *ngIf="!loading">
+<div class="carousel-inner-data lista" *ngIf="!isLoading">
   <!--  -->
   <div class="post navTabs">
     <div class="itemFav shadow" *ngFor="let item of users">
@@ -39,3 +39,4 @@
     </div>
   </div>
 </div>
+</section>

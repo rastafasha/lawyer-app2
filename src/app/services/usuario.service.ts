@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { environment } from '../environments/environment';
+import { Observable, Observer, share } from 'rxjs';
 
 const url_servicios = environment.url_servicios;
 declare let $:any;
@@ -20,11 +21,17 @@ export class UserService {
 
   
 
-  listUsers(page: number = 1, perPage: number = 2){
+  listUsers(page: number = 1, perPage: number = 10){
     const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
     const URL = `${url_servicios}/users?page=${page}&per_page=${perPage}`;
     return this.http.get(URL, {headers:headers});
   }
+
+  getCharacters(apiUrl:string = `${url_servicios}/users`):Observable<any> {
+      return this.http.get(apiUrl).pipe(share())
+  
+    }
+
   listConfig(){
     const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
     const URL = url_servicios+'/users/config';

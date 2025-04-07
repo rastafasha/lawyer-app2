@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, TrackByFunction } from '@angular/core';
 import { LateralComponent } from '../../../components/lateral/lateral.component';
 import { ListProductsInternoComponent } from '../../../components/list-products-interno/list-products-interno.component';
 import { BackButtnComponent } from '../../../shared/backButtn/backButtn.component';
@@ -10,6 +10,8 @@ import { BannerService } from '../../../services/banner.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImagenPipe } from '../../../pipes/imagen.pipe';
 import { LoadingComponent } from '../../../shared/loading/loading.component';
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
+import Swal from 'sweetalert2';
 declare var $:any;  
 
 @Component({
@@ -22,7 +24,8 @@ declare var $:any;
     BackButtnComponent,
     ReactiveFormsModule,
     FormsModule,
-    LoadingComponent
+    LoadingComponent,
+    InfiniteScrollDirective,
   ],
   templateUrl: './banner.component.html',
   styleUrl: './banner.component.scss'
@@ -31,13 +34,25 @@ export class BannerComponent {
   pageTitle = 'Banners';
   isLoading:boolean = false;
   loadingTitle!:string;
+
+    isEdnOfList = false;
+    
+    isRefreshing = false;
+    private startY: number = 0;
+    private currentY: number = 0;
+    currentPage = 1;
+    itemsPerPage = 10;
+    hasMore = true;
+
+    nextUrl!:number ;
+
   public FILE_AVATAR:any;
   public IMAGE_PREVISUALIZA:any = 'assets/img/user-06.jpg';
 
   public text_success = '';
   public text_validation = '';
   public publicidad_selected:any;
-  public publicidadList:Banner[] = [];
+  public publicidadLists:Banner[] = [];
   public publicidadd!:Banner;
 
   constructor(
@@ -54,11 +69,12 @@ export class BannerComponent {
   
 
   private getTableData(page=1): void {
-    this.publicidadList = [];
+    this.publicidadLists = [];
     this.isLoading = true;
     this.loadingTitle = 'Cargando datos';
     this.bannerService.getBanners().subscribe((resp:any)=>{
-      this.publicidadList = resp.data;
+      this.publicidadLists = resp.data;
+      this.nextUrl = resp.data.next_page_url;
       this.isLoading = false;
     })
   }
@@ -70,13 +86,8 @@ export class BannerComponent {
     
     this.bannerService.updateStatus(data, data.id).subscribe(
       (resp:any) =>{
-        // console.log(resp);
-        // Swal.fire('Actualizado', `actualizado correctamente`, 'success');
-        // this.toaster.open({
-        //   text:'Producto Actualizado!',
-        //   caption:'Mensaje de Validación',
-        //   type:'success',
-        // })
+        Swal.fire('Actualizado', `actualizado correctamente`, 'success');
+        
         this.getTableData();
       }
     )
@@ -86,9 +97,9 @@ export class BannerComponent {
 
     this.bannerService.deleteBanner(this.publicidad_selected.id).subscribe((resp:any) => {
       // console.log(resp);
-      const INDEX = this.publicidadList.findIndex((item:any) => item.id == this.publicidad_selected.id);
+      const INDEX = this.publicidadLists.findIndex((item:any) => item.id == this.publicidad_selected.id);
       if(INDEX != -1){
-        this.publicidadList.splice(INDEX,1);
+        this.publicidadLists.splice(INDEX,1);
 
         $('#delete_publicidad').hide();
         $("#delete_publicidad").removeClass("show");
@@ -119,10 +130,10 @@ export class BannerComponent {
 
     this.bannerService.createBanner(formData).subscribe((resp:any) => {
       // console.log(resp);
-      const INDEX = this.publicidadList.findIndex((item:any) => item.id == this.publicidad_selected.id);
+      const INDEX = this.publicidadLists.findIndex((item:any) => item.id == this.publicidad_selected.id);
       // this.text_success = "La publicidad se registró correctamente";
       if(INDEX != -1){
-        this.publicidadList.splice(INDEX,1);
+        this.publicidadLists.splice(INDEX,1);
 
 
         
@@ -144,9 +155,9 @@ export class BannerComponent {
 
     this.bannerService.updateBanner(formData, publicidad.id).subscribe((resp:any) => {
       // console.log(resp);
-      const INDEX = this.publicidadList.findIndex((item:any) => item.id == this.publicidad_selected.id);
+      const INDEX = this.publicidadLists.findIndex((item:any) => item.id == this.publicidad_selected.id);
       if(INDEX != -1){
-        this.publicidadList.splice(INDEX,1);
+        this.publicidadLists.splice(INDEX,1);
         
         $('#edit_publicidad').hide();
         $("#edit_publicidad").removeClass("show");
@@ -167,7 +178,7 @@ export class BannerComponent {
     this.publicidad_selected = null;
     this.FILE_AVATAR = null;
         this.IMAGE_PREVISUALIZA = null;
-    this.getTableData();
+    this.ngOnInit();
   }
 
   selectPublicidad(publicidad:any){
@@ -184,5 +195,41 @@ export class BannerComponent {
       this.publicidadd = resp.publicidad;
     })
   }
+
+
+  onScrollDown(){
+    if (!this.nextUrl || this.isLoading) return;
+    this.bannerService.getBanners(this.itemsPerPage, this.nextUrl ).subscribe({
+      next: (resp: any) => {
+        if (resp.users.data.next_page_url) {
+          this.nextUrl = resp.data.next_page_url;
+          this.publicidadLists = [...this.publicidadLists, ...resp.results];
+        } else {
+          this.isEdnOfList = true;
+          this.loadingTitle = 'No hay más personajes para mostrar';
+        }
+      },
+      error: () => {
+        this.isLoading = false;
+      }
+    });
+  }
+
+  onScrollUp(){
+    this.refreshData(); 
+  }
+
+  trackByCharacterId: TrackByFunction<any>  = (index: number, character: any) => character.id;
+
+
+    refreshData() { 
+      this.isRefreshing = true; 
+      // Simulate data fetching 
+      setTimeout(() => { 
+        this.isRefreshing = false; 
+        // Update your data here 
+        this.getTableData();
+      }, 2000); 
+    }
 
 }

@@ -1,7 +1,18 @@
 <app-header></app-header>
 
-<section class="favorites ">
-    <div class="container-fluid">
+<section class="favorites " infiniteScroll 
+[infiniteScrollDistance]="2"  [infiniteScrollUpDistance]="2" 
+[infiniteScrollThrottle]=" 50"
+(scrolled)="onScrollDown()" (scrolledUp)="onScrollUp()"
+
+[class.refreshing]="isRefreshing">
+<div class="pull-down-indicator" *ngIf="isRefreshing">
+    <app-loading  ></app-loading>
+    <p class="text-center">
+        refrescando ...
+    </p>
+ </div>
+    <div class="container-fluid" >
         <div class="row">
             <div class="col-xs-12 col-sm-9 col-md-9">
                 <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
@@ -23,7 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let data of publicidadList">
+                        <tr *ngFor="let data of publicidadLists">
                             
                             <td>
                                 <img [src]="data.avatar " style="height: auto; width:150px" >

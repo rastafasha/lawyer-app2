@@ -1,7 +1,19 @@
 <app-loading *ngIf="isLoading" [loadingTitle]="loadingTitle"></app-loading>
 
-<ul class="post"  *ngIf="!isLoading">
-    <li class="group" >
+<ul class="post"  infiniteScroll 
+[infiniteScrollDistance]="2"  [infiniteScrollUpDistance]="2" 
+[infiniteScrollThrottle]=" 50"
+(scrolled)="onScrollDown()" (scrolledUp)="onScrollUp()"
+
+[class.refreshing]="isRefreshing"
+>
+<div class="pull-down-indicator" *ngIf="isRefreshing">
+  <app-loading  ></app-loading>
+  <p class="text-center">
+      refrescando ...
+  </p>
+</div>
+    <li class="group"  *ngIf="!isLoading">
         <div class="div-group" *ngFor="let item of profiles">
             <div class="foto">
                 <div class="post-date">

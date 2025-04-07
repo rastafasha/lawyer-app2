@@ -38,6 +38,9 @@ export class HomeComponent {
 
   }
 
+  ngOnInit(){
+    window.scrollTo(0, 0);
+  }
 
 
   isRefreshing = false; 

@@ -1,5 +1,5 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { Component, HostListener, Input } from '@angular/core';
+import { Component, HostListener, Input, TrackByFunction } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Profile } from '../../models/profile.model';
 import { Speciality } from '../../models/speciality.model';
@@ -10,11 +10,14 @@ import { UserService } from '../../services/usuario.service';
 import { ProfileService } from '../../services/profile.service';
 import { ImagenPipe } from '../../pipes/imagen.pipe';
 import { LoadingComponent } from "../../shared/loading/loading.component";
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 
 @Component({
     selector: 'app-ListaUsuarios',
     templateUrl: './ListaUsuarios.component.html',
-    imports: [CommonModule, RouterModule, NgIf, NgFor, ImagenPipe, LoadingComponent],
+    imports: [CommonModule, RouterModule, 
+      NgIf, NgFor, ImagenPipe, LoadingComponent,
+    InfiniteScrollDirective,],
     styleUrls: ['./ListaUsuarios.component.css']
 })
 export class ListaUsuariosComponent {
@@ -28,14 +31,17 @@ export class ListaUsuariosComponent {
     Title!: string;
 
     loadingTitle!: string ;
-    loading = false;
+    isLoading = false;
+    isEdnOfList = false;
     
     isRefreshing = false;
     private startY: number = 0;
     private currentY: number = 0;
     currentPage = 1;
-    itemsPerPage = 2;
+    itemsPerPage = 10;
     hasMore = true;
+
+    nextUrl!:number ;
 
 
 
@@ -56,83 +62,50 @@ export class ListaUsuariosComponent {
         this.getProfiles();
       }
     getProfiles() {
-      this.loading = true;
+      this.isLoading = true;
       this.loadingTitle = 'Cargando usuarios...';
-      this.usersServices.listUsers(this.currentPage, this.itemsPerPage).subscribe({
+      this.usersServices.listUsers().subscribe((resp:any)=>{
+        this.users = resp.users.data;
+        this.nextUrl = resp.users.data.next_page_url;
+        this.isLoading = false;
+      });
+    }
+
+    onScrollDown(){
+      if (!this.nextUrl || this.isLoading) return;
+      this.usersServices.listUsers(this.itemsPerPage, this.nextUrl ).subscribe({
         next: (resp: any) => {
-          this.users = [...this.users, ...resp.users];
-          this.checkIfMoreData(resp.total || 0);
-          this.loading = false;
+          if (resp.users.data.next_page_url) {
+            this.nextUrl = resp.users.data.next_page_url;
+            this.users = [...this.users, ...resp.results];
+          } else {
+            this.isEdnOfList = true;
+            this.loadingTitle = 'No hay más personajes para mostrar';
+          }
         },
         error: () => {
-          this.loading = false;
+          this.isLoading = false;
         }
       });
     }
 
-
-
- 
-  @HostListener('touchstart', ['$event']) 
-  onTouchStart(event: TouchEvent) { 
-    // Logic to detect the start of a touch event 
-    this.startY = event.touches[0].clientY;
-    this.scrollDownToContinue();
-  } 
- 
-  @HostListener('touchmove', ['$event']) 
-  onTouchMove(event: TouchEvent) { 
-    // Logic to detect the pull down gesture 
-    this.currentY = event.touches[0].clientY; 
-    const distance = this.currentY - this.startY; 
-    if (distance > 0) { 
-      // Update the UI to show the pull-down effect 
-      // e.g., increase the position of pull-down indicator 
-    } 
-  } 
- 
-  @HostListener('touchend', ['$event']) 
-  onTouchEnd(event: TouchEvent) { 
-    // Logic to handle the refresh action
-    const distance = this.currentY - this.startY; 
-    if (distance > 100) { // Adjust threshold as needed 
-      this.isRefreshing = true; 
+    onScrollUp(){
       this.refreshData(); 
-    }  
-  } 
- 
-  refreshData() { 
-    this.isRefreshing = true; 
-    // Simulate data fetching 
-    setTimeout(() => { 
-      this.isRefreshing = false; 
-      // Update your data here 
-      this.getProfiles();
-    }, 2000); 
-  }
-  
-  @HostListener('window:scroll', ['$event'])
-  onWindowScroll() {
-    const pos = (document.documentElement.scrollTop || document.body.scrollTop) + document.documentElement.offsetHeight;
-    const max = document.documentElement.scrollHeight;
-    
-    if (pos > max - 100 && !this.loading && this.hasMore) {
-      this.scrollDownToContinue();
     }
-  }
 
-  scrollDownToContinue() {
-    if (this.loading || !this.hasMore) return;
-    
-    this.loading = true;
-    this.loadingTitle = 'Cargando list...';
-    this.currentPage++;
-    this.getProfiles();
-    console.log(this.loadingTitle);
-  }
+    trackByCharacterId: TrackByFunction<any>  = (index: number, character: any) => character.id;
 
-  private checkIfMoreData(totalItems: number) {
-    this.hasMore = this.users.length < totalItems;
-  }
+
+      refreshData() { 
+        this.isRefreshing = true; 
+        // Simulate data fetching 
+        setTimeout(() => { 
+          this.isRefreshing = false; 
+          // Update your data here 
+          this.getProfiles();
+        }, 2000); 
+      }
+
+
   
 }

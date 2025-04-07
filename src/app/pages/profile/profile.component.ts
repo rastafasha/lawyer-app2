@@ -51,6 +51,7 @@ export class ProfileComponent {
   }
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.user = this.authService.getUser();
     this.getProfile();
   }

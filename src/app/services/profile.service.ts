@@ -48,8 +48,8 @@ export class ProfileService {
         );
   }
 
-  getProfileRecientes() {
-    const url = `${baseUrl}/profile/recientes`;
+  getProfileRecientes(page: number = 1, perPage: number = 10) {
+    const url = `${baseUrl}/profile/recientes/?page=${page}&per_page=${perPage}`;
     return this.http.get<any>(url,this.headers)
       .pipe(
         map((resp:{ok: boolean, recientes: Profile}) => resp.recientes)

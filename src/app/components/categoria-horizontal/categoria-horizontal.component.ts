@@ -30,8 +30,8 @@ export class CategoriaHorizontalComponent {
 
 ngOnInit() {
   this.isLoading = true;
-  this.specialitiesService.getSpecialitys().subscribe((specialities: Speciality[]) => {
-    this.specialities = specialities;
+  this.specialitiesService.getSpecialitysMayorCero().subscribe((resp:any) => {
+    this.specialities = resp.data;
     this.isLoading = false;
   });
 }

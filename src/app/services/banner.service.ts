@@ -33,8 +33,8 @@ export class BannerService {
       }
     
     
-      getBanners() {
-        const url = `${baseUrl}/pub`;
+      getBanners(page: number = 1, perPage: number = 10) {
+        const url = `${baseUrl}/pub?page=${page}&per_page=${perPage}`;
         return this.http.get<any>(url,this.headers)
           .pipe(
             map((resp:{ok: boolean, pubs: Banner[]}) => resp.pubs)

@@ -36,7 +36,7 @@ export class ListProductsHComponent {
     this.isLoading = true;
       this.profileService.getProfileDestacados().subscribe((resp:any) => {
         // console.log(resp);
-        this.profiles = resp.data;
+        this.profiles = resp;
         this.isLoading = false;
       })
     }
