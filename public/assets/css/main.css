@@ -205,35 +205,10 @@ img {
 
 
 
-
-
 .register {
     height: 100%;
 }
 
-.fa-google,
-.fa-facebook {
-    font-size: 20px;
-    text-align: center;
-    margin-right: 10px;
-    border-radius: 50px;
-    /* box-shadow: var(--shadow); */
-}
-
-.fa-google {
-    color: #9F1A36;
-    /* border: 1px solid #9F1A36; */
-}
-
-.fa-apple {
-    color: #333;
-    /* border: 1px solid #9F1A36; */
-}
-
-.fa-facebook {
-    color: royalblue;
-    /* border: 1px solid royalblue; */
-}
 
 
 .stars {

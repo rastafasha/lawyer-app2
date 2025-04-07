@@ -79,6 +79,13 @@ export class DocumentsComponent {
       // console.log(resp);
       this.FILES =resp.data
       this.isLoading = false;
+      //agrupamos por name_category
+      this.FILES.forEach((element: any) => {
+        if(!this.user_files.find((doc:Document)=>doc.name_category==element.name_category)){
+          this.user_files.push(element);
+          }
+          });
+
     })
   }
 
@@ -156,10 +163,10 @@ closeModalDoc(){
 
   save(){
     this.text_validation = '';
-    // if(!this.name_laboratory){
-    //   this.text_validation = 'Es requerido ingresar un nombre';
-    //   return;
-    // }
+    if(!this.name_category){
+      this.text_validation = 'Es requerido ingresar un nombre de categoria';
+      return;
+    }
 
 
     if(this.FILES.length === 0){
@@ -224,5 +231,10 @@ closeModalDoc(){
     }, 2000); 
   }
   
+  closeReload(){
+    
+    this.ngOnInit();
+  }
+
 
 }

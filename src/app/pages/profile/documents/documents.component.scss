@@ -15,3 +15,26 @@
         align-self: flex-end;
     }
 }
+.post{
+    display: flex;
+    flex-direction: row;
+}
+.group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.div-group{
+    height: auto;
+}
+
+.columnadoble{
+    column-count: 2;
+}
+
+@media (max-width: 768px) {
+    .columnadoble{
+        column-count: 1;
+    }
+}
