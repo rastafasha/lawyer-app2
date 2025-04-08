@@ -119,7 +119,7 @@
         </nav>
         <div class="footer-menu">
 
-            <p>2022</p>
+            <p>2022 - {{year}}</p>
         </div>
     </div>
 
@@ -136,24 +136,30 @@
 
         </div>
         <div class="isqmenu3 fotolang">
-            <div class="header-info">
-                <div class="dropdown">
-                    <span>{{'Language'|translate}}</span>
-                    <div class="dropdown-content">
-                        <li class="has-child-menu">
-                            <a style="cursor: pointer;">
-                                <!-- <img class="left-image" src="assets/images/icons/de.png" alt="Language Images"> -->
-                                <a *ngIf="!flag" style="cursor: pointer;" [ngClass]="{'active': activeLang == 'es'}" (click)="cambiarLenguaje('en')"><span class="menu-item">{{'Spanish'|translate}}</span></a>
-                            </a>
-                        </li>
-                        <li class="has-child-menu">
-                            <a style="cursor: pointer;">
-                                <a *ngIf="flag" style="cursor: pointer;" [ngClass]="{'active': activeLang == 'en'}" (click)="cambiarLenguaje('es')"><span class="menu-item">{{'English'|translate}}</span></a>
-                            </a>
-                        </li>
-                    </div>
-                  </div>
-            </div>
+            
+            <ul class="menuright">
+
+                <li>
+                    <img class="globowhite"  (click)="darkMode('dark')" src="./assets/svg/luna.svg" alt="">
+                    <img class="globoblack"  (click)="darkMode('dark')" src="./assets/svg/sol.svg" alt="">
+                </li>
+            </ul>
+            <div class="dropdown">
+                <span>{{'Language'|translate}}</span>
+                <div class="dropdown-content">
+                    <li class="has-child-menu">
+                        <a style="cursor: pointer;">
+                            <!-- <img class="left-image" src="assets/images/icons/de.png" alt="Language Images"> -->
+                            <a *ngIf="!flag" style="cursor: pointer;" [ngClass]="{'active': activeLang == 'es'}" (click)="cambiarLenguaje('en')"><span class="menu-item">{{'Spanish'|translate}}</span></a>
+                        </a>
+                    </li>
+                    <li class="has-child-menu">
+                        <a style="cursor: pointer;">
+                            <a *ngIf="flag" style="cursor: pointer;" [ngClass]="{'active': activeLang == 'en'}" (click)="cambiarLenguaje('es')"><span class="menu-item">{{'English'|translate}}</span></a>
+                        </a>
+                    </li>
+                </div>
+              </div>
             <div class="user-header-top ">
                 <a routerLink="/profile">
                     <img  [src]="profile.avatar  | imagenPipe: 'users' " alt="">

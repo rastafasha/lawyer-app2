@@ -21,17 +21,17 @@ infiniteScroll
   <div class="row">
     <div class="col-xs-12 col-sm-9 col-md-9">
       <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
-      <form class="d-flex shadowSearch col-xs-12 col-sm-10" *ngIf="!isLoading">
+      <form class="d-flex shadowSearch col-xs-12 " *ngIf="!isLoading">
         <!-- <input class="form-control me-2" type="search" placeholder="{{'Search' |translate}}" aria-label="Search">
         <button class="btn btn-outline-success btn-seach" type="submit"><i
             class="fa fa-search"></i></button> -->
 
-            <form>
+            <form [formGroup]="searchForm" *ngIf="!isLoading">
                 <div class="row search5">
                   
                   <div class="col-12 col-md-3">
                     <div class="form-group local-forms">
-                      <label>{{'Country'|translate}}  </label>
+                      <label>{{'formulario.Country'|translate}}  </label>
                     <select class="form-control" formControlName="pais"  >
                         <option *ngFor="let data of paises" [value]="data.code">
                         {{data.title}}
@@ -43,7 +43,7 @@ infiniteScroll
                   <div class="col-12 col-sm-3">
                     <div class="form-group local-forms">
                       <label>{{'formulario.Speciality'|translate}}</label>
-                      <select class="form-control" formControlName="pais"  >
+                      <select class="form-control" formControlName="speciality_id"  >
                         <option *ngFor="let data of specialities" [value]="data.id">
                         {{data.title}}
                         </option>
@@ -52,51 +52,49 @@ infiniteScroll
                   </div>
                   <div class="col-12 col-md-3">
                     <div class="form-group local-forms">
-                      <label>{{'Status'|translate}} </label>
+                      <label>{{'Rating'|translate}} </label>
                       <select
-                  class="form-control form-select-solid fw-bolder"
-                  name="status"
-                  
-                  placeholder="state"
-                >
-                  <option>-- {{'Select'|translate}} --</option>
-                  <option value="1">
-                   1 Estrella
-                  </option>
-                  <option value="2">
-                    2 Estrella
-                  </option>
-                  <option value="3">
-                    3 Estrella
-                  </option>
-                  <option value="4">
-                    4 Estrella
-                  </option>
-                  <option value="5">
-                    5 Estrella
-                  </option>
-                </select>
+                        class="form-control form-select-solid fw-bolder"
+                        formControlName="rating"
+                        placeholder="state"
+                      >
+                        <option>-- {{'Select'|translate}} --</option>
+                        <option value="1">
+                        1 Estrella
+                        </option>
+                        <option value="2">
+                          2 Estrella
+                        </option>
+                        <option value="3">
+                          3 Estrella
+                        </option>
+                        <option value="4">
+                          4 Estrella
+                        </option>
+                        <option value="5">
+                          5 Estrella
+                        </option>
+                      </select>
                     </div>
                   </div>
                   <div class="col-12 col-md-2">
                     <div class="doctor-submit">
-                        <!-- (click)="onSearch()" -->
                       <button
                         type="button"
                         class="btn btn-primary submit-list-form me-2"
-                        
+                        (click)="onSearch()"
                       >
-                        Search
+                      {{'Search'|translate}}
                       </button>
                     </div>
                   </div>
                   <div class="col-12 col-md-1">
                     <div class="doctor-submit">
-                        <!-- (click)="onRefresh()" -->
+                        
                       <button
                         type="button"
                         class="btn btn-outline-primary submit-list-form me-2"
-                        
+                        (click)="PageSize()"
                       >
                       <i class="fa fa-refresh"></i>
                       </button>

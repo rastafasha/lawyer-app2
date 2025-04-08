@@ -47,8 +47,11 @@ export class DocumentsComponent {
   public user_files:Document[]= [];
   public user_filesfiltered:Document[]= [];
   public name_category!:string;
+  public created_at!:any;
   user_id!:number;
   user!:Usuario;
+
+  currentPage = 1;
 
   constructor(
     private authService: AuthService,
@@ -68,9 +71,30 @@ export class DocumentsComponent {
 
 
 
+  // getdocumentsbyUser(){
+  //   this.isLoading = true;
+  //   this.currentPage;
+  //   this.documentService.getAllClientReportByPatient(
+  //     this.user_id, 
+  //     this.currentPage,
+  //     this.created_at,
+  //     this.name_category).subscribe((resp:any)=>{
+  //     // console.log(resp);
+  //     this.FILES =resp.data
+  //     this.isLoading = false;
+  //     //agrupamos por name_category
+  //     this.FILES.forEach((element: any) => {
+  //       if(!this.user_files.find((doc:Document)=>doc.name_category==element.name_category)){
+  //         this.user_files.push(element);
+  //         }
+  //     });
+  //   })
+  // }
   getdocumentsbyUser(){
     this.isLoading = true;
-    this.documentService.getDocumentsByUser(this.user_id).subscribe((resp:any)=>{
+    this.currentPage;
+    this.documentService.getDocumentsByUser(
+      this.user_id ).subscribe((resp:any)=>{
       // console.log(resp);
       this.FILES =resp.data
       this.isLoading = false;
@@ -202,12 +226,25 @@ closeModalDoc(){
     // Simulate data fetching 
     setTimeout(() => { 
       this.isRefreshing = false; 
-      window.location.reload();
+      // window.location.reload();
+      this.ngOnInit();
     }, 2000); 
   }
   
   closeReload(){
     this.ngOnInit();
+  }
+
+  searchData(user_id: any) {
+    // this.dataSource.filter = value.trim().toLowerCase();
+    // this.patientList = this.dataSource.filteredData;
+    // this.combinedList = [];
+    // this.pageSelection = [];
+    // this.limit = this.pageSize;
+    // this.skip = 0;
+    this.currentPage = 1;
+    user_id;
+    this.getdocumentsbyUser();
   }
 
 

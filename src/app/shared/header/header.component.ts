@@ -16,6 +16,7 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  year: number = new Date().getFullYear();
   public user: Usuario;
   public profile: Profile = new Profile();
   langs: string[] = [];
@@ -44,11 +45,18 @@ export class HeaderComponent {
     this.activeLang = lang;
     this.translate.use(lang);
     this.flag = !this.flag;
+    localStorage.setItem('lang', this.activeLang);
   }
   
   ngOnInit(): void {
+    this.authService.getLocalDarkMode();
     this.user = this.authService.getUser();
     this.getProfile();
+    const lang = localStorage.getItem('lang');
+    if (lang) {
+      this.activeLang = lang;
+      this.translate.use(lang);
+      }
   }
 
   getProfile() {
@@ -74,4 +82,30 @@ export class HeaderComponent {
   logout() {
     this.authService.logout();
   }
+
+  darkMode(dark:string){
+    var element = document.body;
+
+    const classExists = document.getElementsByClassName(
+      'darkmode'
+     ).length > 0;
+
+    var dayNight = document.getElementsByClassName("site");
+      for (var i = 0; i<dayNight.length; i++) {
+        // dayNight[i].classList.toggle("darkmode");
+        element.classList.toggle("darkmode");
+
+      }
+      // localStorage.setItem('dark', dark);
+
+      if (classExists) {
+        localStorage.removeItem('darkmode');
+        // console.log('✅ class exists on page, removido');
+      } else {
+        localStorage.setItem('darkmode', dark);
+        // console.log('⛔️ class does NOT exist on page, agregado');
+      }
+      // console.log('Pulsado');
+  }
+
 }

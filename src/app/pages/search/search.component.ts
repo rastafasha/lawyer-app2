@@ -14,13 +14,15 @@ import { PaisService } from '../../services/pais.service';
 import { Pais } from '../../models/pais';
 import { Speciality } from '../../models/speciality.model';
 import { SpecialitiesService } from '../../services/specialities.service';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-search',
   imports: [MenuFooterComponent, HeaderComponent, 
     LateralComponent, BackButtnComponent,
     InfiniteScrollDirective,
-    LoadingComponent,NgFor,NgIf, TranslateModule
+    LoadingComponent,NgFor,NgIf, TranslateModule,
+    ReactiveFormsModule, FormsModule
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
@@ -33,19 +35,31 @@ export class SearchComponent {
   isEdnOfList = false;
   characters: Array<any> = [];
     nextUrl:string = '';
+    search!:string;
 
     public paises :Pais[] = [];
     public specialities :Speciality[] = [];
 
+    searchForm!:FormGroup;
+
   private favoriteService = inject(FavoritoService);
   private paisService = inject(PaisService);
   private specialityService = inject(SpecialitiesService);
+  private fb = inject(FormBuilder);
+
+  // searchForm: FormGroup = new FormGroup({
+  //   pais: new FormControl('', ),
+  //   speciality_id: new FormControl('',),
+  //   status: new FormControl('', ),
+
+  //   });
 
   ngOnInit():void{
     window.scrollTo(0, 0);
     this.getCharactrs();
     this.getPaisesList();
     this.getSpecialitiesList();
+    this.validarFormularioPerfil();
   }
 
   getPaisesList(): void {
@@ -109,5 +123,31 @@ export class SearchComponent {
         this.getCharactrs();
       }, 2000); 
     }
+
+    validarFormularioPerfil(){
+      this.searchForm = this.fb.group({
+        pais: [''],
+        speciality_id: [''],
+        rating: [''],
+        id: [''],
+      });
+    }
+    
+    onSearch(){
+      const formValue = this.searchForm.value;
+      console.log(this.searchForm.value);
+      // this.search = this.search.toLowerCase();
+      // this.characters = this.characters.filter((character: any) => {
+      //   return character.name.toLowerCase().includes(this.search);
+      //   });
+      } 
+
+      PageSize(): void {
+        // this.pageSelection = [];
+        // this.limit = this.pageSize;
+        // this.skip = 0;
+        // this.currentPage = 1;
+        this.searchForm.reset();
+      }
     
 }

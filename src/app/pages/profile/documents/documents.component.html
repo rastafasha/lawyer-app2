@@ -26,21 +26,10 @@
                             <div class="row search5">
                               <div class="col-12 col-md-3">
                                 <div class="form-group local-forms">
-                                  <label>From </label>
+                                  <label>{{'From'|translate}}</label>
                                   <input
                                     class="form-control datetimepicker"
-                                    name="date_start"
-                                    
-                                    type="date"
-                                  />
-                                </div>
-                              </div>
-                              <div class="col-12 col-md-3">
-                                <div class="form-group local-forms">
-                                  <label>To </label>
-                                  <input
-                                    class="form-control datetimepicker"
-                                    name="date_end"
+                                    name="created_at"
                                     
                                     type="date"
                                   />
@@ -52,7 +41,8 @@
                                   <!-- [(ngModel)]="status"
                               [ngModelOptions]="{ standalone: true }"
                               (change)="cambiarStatus(status)" -->
-                              <select class="form-control" formControlName="pais"  >
+                              <!-- formControlName="name_category" -->
+                              <select class="form-control"   >
                                 <option *ngFor="let data of user_files" [value]="data.name_category">
                                 {{data.name_category}}
                                 </option>
@@ -62,23 +52,21 @@
                               
                               <div class="col-12 col-md-2">
                                 <div class="doctor-submit">
-                                    <!-- (click)="onSearch()" -->
                                   <button
                                     type="button"
                                     class="btn btn-primary submit-list-form me-2"
-                                    
+                                    (click)="searchData(user_id)"
                                   >
-                                    Search
+                                  {{'Search'|translate}}
                                   </button>
                                 </div>
                               </div>
                               <div class="col-12 col-md-1">
                                 <div class="doctor-submit d-flex">
-                                    <!-- (click)="onRefresh()" -->
                                   <button
                                     type="button"
                                     class="btn btn-outline-primary submit-list-form me-2"
-                                    
+                                    (click)="refreshData()"
                                   >
                                     <i class="fa fa-refresh"></i>
                                   </button>
@@ -197,6 +185,7 @@
                                             </div>
                                             <i class="fa fa-folder"></i>
                                             <h2>{{'Category'|translate}}: {{cat.name_category}}</h2>
+                                            <p> {{cat.created_at}}</p>
                                         </div>
                                     </a>
         
