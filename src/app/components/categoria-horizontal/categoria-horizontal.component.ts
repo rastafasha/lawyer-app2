@@ -6,10 +6,14 @@ import { Usuario } from '../../models/usuario.model';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SkeletonLoaderComponent } from '../../shared/skeleton-loader/skeleton-loader.component';
+import { LoadingComponent } from '../../shared/loading/loading.component';
 
 @Component({
   selector: 'app-categoria-horizontal',
-  imports: [NgFor, RouterModule, NgIf,  CommonModule, SkeletonLoaderComponent],
+  imports: [NgFor, RouterModule, NgIf,  
+    CommonModule,
+     LoadingComponent
+    ],
   templateUrl: './categoria-horizontal.component.html',
   styleUrl: './categoria-horizontal.component.css'
 })
@@ -26,8 +30,8 @@ export class CategoriaHorizontalComponent {
 
 ngOnInit() {
   this.isLoading = true;
-  this.specialitiesService.getSpecialitys().subscribe((specialities: Speciality[]) => {
-    this.specialities = specialities;
+  this.specialitiesService.getSpecialitysMayorCero().subscribe((resp:any) => {
+    this.specialities = resp.data;
     this.isLoading = false;
   });
 }

@@ -5,275 +5,332 @@
             <div class="col-xs-12 ">
 
                 <app-backButtn [pageTitle]="pageTitle" [Title]="Title"></app-backButtn>
-
-                <div class="div-scroll">
-                    <form   [formGroup]="userForm" >
-                        <!-- datos -->
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-3">
-                                <!-- Foto -->
-                                <div class="col-12 col-md-6 col-xl-6">
-                                    <div class="form-group local-top-form">
-                                        <label class="local-top">Foto <span class="login-danger">*</span></label>
-                                        <div class="settings-btn upload-files-avator">
-                                            <input type="file" accept="image/*" name="image" id="file" (change)="loadFile($event)" class="hide-input">
-                                            <label for="file" class="upload">Seleccione Foto</label>
-                                        </div>
-                                    </div>
-                                    <div *ngIf="FILE_AVATAR">
-                                        <img [src]="IMAGE_PREVISUALIZA" style="width: 250px;" alt="">
+                <app-loading *ngIf="isLoading" [loadingTitle]="loadingTitle"></app-loading>
+                <form   [formGroup]="userForm" *ngIf="!isLoading" >
+                    <!-- datos -->
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3">
+                            <!-- Foto -->
+                            <div class="col-12 col-md-6 col-xl-6">
+                                <div class="form-group local-top-form">
+                                    <label class="local-top"> {{'formulario.Picture'|translate}}<span class="login-danger">*</span></label>
+                                    <div class="settings-btn upload-files-avator">
+                                        <input type="file" accept="image/*" name="image" id="file" (change)="loadFile($event)" class="hide-input">
+                                        <label for="file" class="upload">{{'formulario.Select a Photo'|translate}}</label>
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="col-xs-12 col-sm-9">
-                                <div class="row">
-                                    <!-- Nombre -->
-                                    <div class="col-md-4">
-                                        <label for="validationCustom02" class="form-label">Nombre</label>
-                                        <input type="text" formControlName="nombre" class="form-control" id="validationCustom02"  required>
-                                        @if(userForm.controls['nombre'].touched){
-                          
-                                            <div class="text-danger">
-                                              @if(userForm.controls['nombre'].errors?.['required']){
-                                                  <span >Campo requerido</span>
-                                              }
-                                              @if(userForm.controls['nombre'].errors?.['minlength']){
-                                                  <span >Minímo 3 caracteres</span>
-                                              }
-                                            </div>
-                                        }
-                                      </div>
-                                      <!-- Apellido -->
-                                      <div class="col-md-4">
-                                        <label for="validationCustom02" class="form-label">Apellido</label>
-                                        <input type="text" formControlName="surname" class="form-control" id="validationCustom02"  required>
-                                        @if(userForm.controls['surname'].touched){
-                          
-                                            <div class="text-danger">
-                                              @if(userForm.controls['surname'].errors?.['required']){
-                                                  <span >Campo requerido</span>
-                                              }
-                                              @if(userForm.controls['surname'].errors?.['minlength']){
-                                                  <span >Minímo 3 caracteres</span>
-                                              }
-                                            </div>
-                                        }
-                                      </div>
-                                      <!-- Identificación -->
-                                      <div class="col-md-4">
-                                        <label for="validationCustom02" class="form-label">Identificación</label>
-                                        <input type="text" formControlName="n_doc" class="form-control" id="validationCustom02"  required>
-                                        @if(userForm.controls['n_doc'].touched){
-                          
-                                            <div class="text-danger">
-                                              @if(userForm.controls['n_doc'].errors?.['required']){
-                                                  <span >Campo requerido</span>
-                                              }
-                                              @if(userForm.controls['n_doc'].errors?.['minlength']){
-                                                  <span >Minímo 3 caracteres</span>
-                                              }
-                                            </div>
-                                        }
-                                      </div>
-                                      <!-- Teléfono Casa -->
-                                      <div class="col-md-4">
-                                        <label for="validationCustom02" class="form-label">Teléfono Casa</label>
-                                        <input type="text" formControlName="telhome" class="form-control" id="validationCustom02"  required>
-                                        @if(userForm.controls['telhome'].touched){
-                          
-                                            <div class="text-danger">
-                                              @if(userForm.controls['telhome'].errors?.['required']){
-                                                  <span >Campo requerido</span>
-                                              }
-                                              @if(userForm.controls['telhome'].errors?.['minlength']){
-                                                  <span >Minímo 3 caracteres</span>
-                                              }
-                                            </div>
-                                        }
-                                      </div>
-                                      <!-- Teléfono Móvil -->
-                                      <div class="col-md-4">
-                                        <label for="validationCustom02" class="form-label">Teléfono Móvil</label>
-                                        <input type="text" formControlName="telmovil" class="form-control" id="validationCustom02"  required>
-                                        @if(userForm.controls['telmovil'].touched){
-                          
-                                            <div class="text-danger">
-                                              @if(userForm.controls['telmovil'].errors?.['required']){
-                                                  <span >Campo requerido</span>
-                                              }
-                                              @if(userForm.controls['telmovil'].errors?.['minlength']){
-                                                  <span >Minímo 3 caracteres</span>
-                                              }
-                                            </div>
-                                        }
-                                      </div>
-                                      <!-- País -->
-                                      <div class="col-md-4">
-                                        <label for="validationCustom02" class="form-label">País</label>
-                                        <input type="text" formControlName="pais" class="form-control" id="validationCustom02"  required>
-                                        @if(userForm.controls['pais'].touched){
-                          
-                                            <div class="text-danger">
-                                              @if(userForm.controls['pais'].errors?.['required']){
-                                                  <span >Campo requerido</span>
-                                              }
-                                              @if(userForm.controls['pais'].errors?.['minlength']){
-                                                  <span >Minímo 3 caracteres</span>
-                                              }
-                                            </div>
-                                        }
-                                      </div>
-                                      <!-- Ciudad -->
-                                      <div class="col-md-4">
-                                        <label for="validationCustom02" class="form-label">Ciudad</label>
-                                        <input type="text" formControlName="ciudad" class="form-control" id="validationCustom02"  required>
-                                        @if(userForm.controls['ciudad'].touched){
-                          
-                                            <div class="text-danger">
-                                              @if(userForm.controls['ciudad'].errors?.['required']){
-                                                  <span >Campo requerido</span>
-                                              }
-                                              @if(userForm.controls['ciudad'].errors?.['minlength']){
-                                                  <span >Minímo 3 caracteres</span>
-                                              }
-                                            </div>
-                                        }
-                                      </div>
-                                      <!-- Género -->
-                                      <div class="col-12 col-md-4 col-xl-4">
-                                        <div class="form-group select-gender">
-                                            <label class="gen-label">Género<span class="login-danger">*</span></label><br>
-                                            <div class="form-check-inline">
-                                                <label class="form-check-label">
-                                                    <input type="radio"  value="1" formControlName="gender" class="form-check-input">Masculino
-                                                </label>
-                                            </div>
-                                            <div class="form-check-inline">
-                                                <label class="form-check-label">
-                                                    <input type="radio"  value="2" formControlName="gender" class="form-check-input">Femenino
-                                                </label>
-                                            </div>
-                                        </div>
-                                      </div>
-                                    <!-- Especialidad -->
-                                      <div class="col-12 col-md-4 col-xl-4" *ngIf="user.roles[0] ==='MEMBER' && profile.status === 2">
-                                        <label for="validationCustom04" class="form-label">Especialidad</label>
-                                        <select class="form-select" formControlName="speciality_id" id="validationCustom04"  required>
-                                          <!-- <option selected disabled value="">Seleccione...</option> -->
-                                          <option *ngFor="let data of specialities" [value]="data.id">{{data.title}}</option>
-                                        </select>
-    
-                                        <div class="invalid-feedback">
-                                          Favor seleccione una Especialidad.
-                                        </div>
-                                      </div>
-                                      <!-- Dirección -->
-                                      <div class="col-12">
-                                        <label for="validationCustom02" class="form-label">Dirección</label>
-                                        <textarea formControlName="direccion" class="form-control" id="validationCustom02"  required></textarea>
-                                        @if(userForm.controls['direccion'].touched){
-                          
-                                            <div class="text-danger">
-                                              @if(userForm.controls['direccion'].errors?.['required']){
-                                                  <span >Campo requerido</span>
-                                              }
-                                              @if(userForm.controls['direccion'].errors?.['minlength']){
-                                                  <span >Minímo 3 caracteres</span>
-                                              }
-                                            </div>
-                                        }
-                                      </div>
-                                      <!-- Descripción -->
-                                      <div class="col-12">
-                                        <label for="validationCustom02" class="form-label">Descripción</label>
-                                        <textarea formControlName="description" class="form-control" id="validationCustom02"  required></textarea>
-                                        @if(userForm.controls['description'].touched){
-                          
-                                            <div class="text-danger">
-                                              @if(userForm.controls['description'].errors?.['required']){
-                                                  <span >Campo requerido</span>
-                                              }
-                                              @if(userForm.controls['description'].errors?.['minlength']){
-                                                  <span >Minímo 3 caracteres</span>
-                                              }
-                                            </div>
-                                        }
-                                      </div>
-                                      
-                                      
-    
+                                <div *ngIf="FILE_AVATAR">
+                                    <img [src]="IMAGE_PREVISUALIZA" style="width: 250px;" alt="">
                                 </div>
                             </div>
                         </div>
-                        <br>
-                        <!-- redes sociales -->
-                        <div class="row " >
-                            <h3>Redes Sociales</h3>
-                            <div class="col-12 col-sm-4">  
-                                <div class="form-group local-forms">
-                                <label >Icono<span class="login-danger">*</span></label>
-                                <select class="form-control" name="icono" 
-                                [ngModelOptions]="{standalone: true}"  [(ngModel)]="icono"
-                                (change)="onPaServiceSelect(icono)"
-                                >
-                                    <option *ngFor="let ic of listIcons " value="{{ic.icon}}">
-                                      {{ic.name}} <i class="{{ic.name}}"></i>
-                                    </option>
-                                  </select>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-4">  
-                                <div class="form-group local-forms">
-                                <label >Nombre<span class="login-danger">*</span></label>
-                                <input class="form-control" name="title" [ngModelOptions]="{standalone: true}"  [(ngModel)]="title" type="text" required>
+                        
+                        <div class="col-xs-12 col-sm-9">
+                            <div class="row">
+                                <!-- Nombre -->
+                                <div class="col-md-4">
+                                    <label for="validationCustom02" class="form-label">{{'formulario.First Name'|translate}}</label>
+                                    <input type="text" formControlName="nombre" class="form-control" id="validationCustom02"  required>
+                                    @if(userForm.controls['nombre'].touched){
+                      
+                                        <div class="text-danger">
+                                          @if(userForm.controls['nombre'].errors?.['required']){
+                                              <span >{{'formulario.Field Required'|translate}}</span>
+                                          }
+                                          @if(userForm.controls['nombre'].errors?.['minlength']){
+                                              <span >{{'formulario.3 Charecters Minimal'|translate}}</span>
+                                          }
+                                        </div>
+                                    }
+                                  </div>
+                                  <!-- Apellido -->
+                                  <div class="col-md-4">
+                                    <label for="validationCustom02" class="form-label">{{'formulario.Last Name'|translate}}</label>
+                                    <input type="text" formControlName="surname" class="form-control" id="validationCustom02"  required>
+                                    @if(userForm.controls['surname'].touched){
+                      
+                                        <div class="text-danger">
+                                          @if(userForm.controls['surname'].errors?.['required']){
+                                              <span >{{'formulario.Field Required'|translate}}</span>
+                                          }
+                                          @if(userForm.controls['surname'].errors?.['minlength']){
+                                              <span >{{'formulario.3 Charecters Minimal'|translate}}</span>
+                                          }
+                                        </div>
+                                    }
+                                  </div>
+                                  <!-- Identificación -->
+                                  <div class="col-md-4">
+                                    <label for="validationCustom02" class="form-label">{{'formulario.Id Number'|translate}}</label>
+                                    <input type="text" formControlName="n_doc" class="form-control" id="validationCustom02"  required>
+                                    @if(userForm.controls['n_doc'].touched){
+                      
+                                        <div class="text-danger">
+                                          @if(userForm.controls['n_doc'].errors?.['required']){
+                                              <span >{{'formulario.Field Required'|translate}}</span>
+                                          }
+                                          @if(userForm.controls['n_doc'].errors?.['minlength']){
+                                              <span >{{'formulario.3 Charecters Minimal'|translate}}</span>
+                                          }
+                                        </div>
+                                    }
+                                  </div>
+                                  <!-- Teléfono Casa -->
+                                  <div class="col-md-4">
+                                    <label for="validationCustom02" class="form-label">{{'formulario.Phome Home'|translate}}</label>
+                                    <input type="text" formControlName="telhome" class="form-control" id="validationCustom02"  required>
+                                    @if(userForm.controls['telhome'].touched){
+                      
+                                        <div class="text-danger">
+                                          @if(userForm.controls['telhome'].errors?.['required']){
+                                              <span >{{'formulario.Field Required'|translate}}</span>
+                                          }
+                                          @if(userForm.controls['telhome'].errors?.['minlength']){
+                                              <span >{{'formulario.3 Charecters Minimal'|translate}}</span>
+                                          }
+                                        </div>
+                                    }
+                                  </div>
+                                  <!-- Teléfono Móvil -->
+                                  <div class="col-md-4">
+                                    <label for="validationCustom02" class="form-label">{{'formulario.Phome Mobile'|translate}}</label>
+                                    <input type="text" formControlName="telmovil" class="form-control" id="validationCustom02"  required>
+                                    @if(userForm.controls['telmovil'].touched){
+                      
+                                        <div class="text-danger">
+                                          @if(userForm.controls['telmovil'].errors?.['required']){
+                                              <span >{{'formulario.Field Required'|translate}}</span>
+                                          }
+                                          @if(userForm.controls['telmovil'].errors?.['minlength']){
+                                              <span >{{'formulario.3 Charecters Minimal'|translate}}</span>
+                                          }
+                                        </div>
+                                    }
+                                  </div>
+                                  <!-- País -->
+                                  <div class="col-md-4">
+                                    <label for="validationCustom02" class="form-label">{{'formulario.Country'|translate}}</label>
+                                    <input type="text" formControlName="pais" class="form-control" id="validationCustom02"  required>
+                                    @if(userForm.controls['pais'].touched){
+                      
+                                        <div class="text-danger">
+                                          @if(userForm.controls['pais'].errors?.['required']){
+                                              <span >{{'formulario.Field Required'|translate}}</span>
+                                          }
+                                          @if(userForm.controls['pais'].errors?.['minlength']){
+                                              <span >{{'formulario.3 Charecters Minimal'|translate}}</span>
+                                          }
+                                        </div>
+                                    }
+                                  </div>
+                                  <!-- Ciudad -->
+                                  <div class="col-md-4">
+                                    <label for="validationCustom02" class="form-label">{{'formulario.City'|translate}}</label>
+                                    <input type="text" formControlName="ciudad" class="form-control" id="validationCustom02"  required>
+                                    @if(userForm.controls['ciudad'].touched){
+                      
+                                        <div class="text-danger">
+                                          @if(userForm.controls['ciudad'].errors?.['required']){
+                                              <span >{{'formulario.Field Required'|translate}}</span>
+                                          }
+                                          @if(userForm.controls['ciudad'].errors?.['minlength']){
+                                              <span >{{'formulario.3 Charecters Minimal'|translate}}</span>
+                                          }
+                                        </div>
+                                    }
+                                  </div>
+                                  <!-- Género -->
+                                  <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group select-gender">
+                                        <label class="gen-label">{{'formulario.Gender'|translate}}<span class="login-danger">*</span></label><br>
+                                        <div class="form-check-inline">
+                                            <label class="form-check-label">
+                                                <input type="radio"  value="1" formControlName="gender" class="form-check-input">{{'formulario.Male'|translate}}
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline">
+                                            <label class="form-check-label">
+                                                <input type="radio"  value="2" formControlName="gender" class="form-check-input">{{'formulario.Female'|translate}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                  </div>
+                                <!-- Especialidad -->
+                                  <div class="col-12 col-md-4 col-xl-4" *ngIf="user.roles[0] ==='MEMBER' && profile.status === 2">
+                                    <label for="validationCustom04" class="form-label">{{'formulario.Speciality'|translate}}</label>
+                                    <select class="form-select" formControlName="speciality_id" id="validationCustom04"  required>
+                                      <!-- <option selected disabled value="">Seleccione...</option> -->
+                                      <option *ngFor="let data of specialities" [value]="data.id">{{data.title}}</option>
+                                    </select>
 
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-4" *ngIf="!iswhatsapp">  
-                                <div class="form-group local-forms">
-                                <label >Dirección<span class="login-danger">*</span></label>
-                                <input class="form-control" name="url" [ngModelOptions]="{standalone: true}"  [(ngModel)]="url" type="text" required>
+                                    <div class="invalid-feedback">
+                                        {{'formulario.pleaseSelec'|translate}}
+                                    </div>
+                                  </div>
+                                  <!-- Dirección -->
+                                  <div class="col-12">
+                                    <label for="validationCustom02" class="form-label">{{'formulario.Address'|translate}}</label>
+                                    <textarea formControlName="direccion" class="form-control" id="validationCustom02"  required></textarea>
+                                    @if(userForm.controls['direccion'].touched){
+                      
+                                        <div class="text-danger">
+                                          @if(userForm.controls['direccion'].errors?.['required']){
+                                              <span >{{'formulario.Field Required'|translate}}</span>
+                                          }
+                                          @if(userForm.controls['direccion'].errors?.['minlength']){
+                                              <span >{{'formulario.3 Charecters Minimal'|translate}}</span>
+                                          }
+                                        </div>
+                                    }
+                                  </div>
+                                  <!-- Descripción -->
+                                  <div class="col-12">
+                                    <label for="validationCustom02" class="form-label">{{'formulario.Description'|translate}}</label>
+                                    <textarea formControlName="description" class="form-control" id="validationCustom02"  required></textarea>
+                                    @if(userForm.controls['description'].touched){
+                      
+                                        <div class="text-danger">
+                                          @if(userForm.controls['description'].errors?.['required']){
+                                              <span >{{'formulario.Field Required'|translate}}</span>
+                                          }
+                                          @if(userForm.controls['description'].errors?.['minlength']){
+                                              <span >{{'formulario.3 Charecters Minimal'|translate}}</span>
+                                          }
+                                        </div>
+                                    }
+                                  </div>
+                                  
+                                  
 
-                                </div>
                             </div>
-                            <div class="col-12 col-sm-4" *ngIf="iswhatsapp">  
-                                <div class="form-group local-forms">
-                                <label >Número<span class="login-danger">*</span></label>
-                                <input class="form-control" name="url" [ngModelOptions]="{standalone: true}"  [(ngModel)]="url" type="text" required>
+                        </div>
+                    </div>
+                    <br>
+                    <!-- redes sociales -->
+                    <div class="row " >
+                        <h3>{{'formulario.Social Networks'|translate}}</h3>
+                        <div class="col-12 col-sm-4">  
+                            <div class="form-group local-forms">
+                            <label >{{'formulario.Icon'|translate}}<span class="login-danger">*</span></label>
+                            <select class="form-control" name="icono" 
+                            [ngModelOptions]="{standalone: true}"  [(ngModel)]="icono"
+                            (change)="onPaServiceSelect(icono)"
+                            >
+                                <option *ngFor="let ic of listIcons " value="{{ic.icon}}">
+                                  {{ic.name}} <i class="{{ic.name}}"></i>
+                                </option>
+                              </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">  
+                            <div class="form-group local-forms">
+                            <label >{{'formulario.Name'|translate}}<span class="login-danger">*</span></label>
+                            <input class="form-control" name="title" [ngModelOptions]="{standalone: true}"  [(ngModel)]="title" type="text" required>
 
-                                </div>
                             </div>
-                            <div class="col-12 mb-3">
-                                <button class="btn btn-primary btn-sm text-end " (click)="addRedSocial()">+ Agregar</button>
-                                <!-- <button class="btn btn-danger btn-sm">x</button> -->
+                        </div>
+                        <div class="col-12 col-sm-4" *ngIf="!iswhatsapp">  
+                            <div class="form-group local-forms">
+                            <label >{{'formulario.Address'|translate}}<span class="login-danger">*</span></label>
+                            <input class="form-control" name="url" [ngModelOptions]="{standalone: true}"  [(ngModel)]="url" type="text" required>
+
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4" *ngIf="iswhatsapp">  
+                            <div class="form-group local-forms">
+                            <label >{{'formulario.Whatsapp Number'|translate}}<span class="login-danger">*</span></label>
+                            <input class="form-control" name="url" [ngModelOptions]="{standalone: true}"  [(ngModel)]="url" type="text" required>
+
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <button class="btn btn-primary btn-sm text-end " (click)="addRedSocial()">+ {{'formulario.Add'|translate}}</button>
+                            <!-- <button class="btn btn-danger btn-sm">x</button> -->
+                        </div>
+                        <div class="col-xs-12 ">
+                            <div class="table-responsive">
+                                <table class="table mb-0 table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>{{'formulario.Icon'|translate}}</th>
+                                            <th>{{'formulario.Name'|translate}}</th>
+                                            <th>{{'formulario.Address/Whatsapp'|translate}}</th>
+                                            <th>{{'formulario.Action'|translate}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of redessociales ; let i=index">
+                                            <td>
+                                                <i [class]="'fa' +' '+ item.icono" aria-hidden="true"></i>
+                                                
+                                            </td>
+                                            <td>
+                                                 {{item.title}}
+                                                
+                                            </td>
+                                            <td>
+                                                {{item.url }}
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-danger btn-sm text-end" (click)="deletered(i)">x</button>
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <!-- redes sociales -->
+                    <br>
+                    <!-- Tarifas -->
+                    <div class="row " *ngIf="user.roles[0]==='MEMBER' && profile.status === 2" >
+                        <h3>{{'formulario.Price Sale'|translate}}</h3>
+                        
+                        <div class="row align-items-center" >
+                            <div class="col-xs-12 ">
+                                <div class="row">
+                                    
+                                    <div class="col-12 col-sm-8">  
+                                        <div class="form-group local-forms">
+                                        <label >Item<span class="login-danger">*</span></label>
+                                        <input class="form-control" name="item_tarifa" [ngModelOptions]="{standalone: true}"  [(ngModel)]="item_tarifa" type="text" required>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-2">
+                                        <div class="form-group local-forms">
+                                            <label >{{'formulario.Price'|translate}}<span class="login-danger">*</span></label>
+                                            <input class="form-control" name="precio" [ngModelOptions]="{standalone: true}" [(ngModel)]="precio" type="number"  >
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <button class="btn btn-primary btn-sm text-end " (click)="addMedicamento()">+ {{'formulario.Add'|translate}}</button>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-xs-12 ">
                                 <div class="table-responsive">
                                     <table class="table mb-0 table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Icono</th>
-                                                <th>Nombre</th>
-                                                <th>Dirección/ Num.</th>
-                                                <th>Acción</th>
+                                                <th>{{'formulario.Description'|translate}}</th>
+                                                <th>{{'formulario.Price'|translate}}</th>
+                                                <th>{{'formulario.Action'|translate}}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let item of redessociales ; let i=index">
+                                            <tr *ngFor="let item of tarifas ; let i=index">
                                                 <td>
-                                                    <i [class]="'fa' +' '+ item.icono" aria-hidden="true"></i>
+                                                     {{item.item_tarifa}}
                                                     
                                                 </td>
                                                 <td>
-                                                     {{item.title}}
-                                                    
+                                                    {{item.precio  | currency }}
                                                 </td>
                                                 <td>
-                                                    {{item.url }}
-                                                </td>
-                                                <td>
-                                                    <button class="btn btn-danger btn-sm text-end" (click)="deletered(i)">x</button>
+                                                    <button class="btn btn-danger btn-sm text-end" (click)="deleteMedical(i)">x</button>
                                                 </td>
                                             </tr>
                                             
@@ -283,80 +340,21 @@
                             </div>
                             
                         </div>
-                        <!-- redes sociales -->
-                        <br>
-                        <!-- Tarifas -->
-                        <div class="row " *ngIf="user.roles[0]==='MEMBER' && profile.status === 2" >
-                            <h3>Tarifas</h3>
-                            
-                            <div class="row align-items-center" >
-                                <div class="col-xs-12 ">
-                                    <div class="row">
-                                        
-                                        <div class="col-12 col-sm-8">  
-                                            <div class="form-group local-forms">
-                                            <label >Item<span class="login-danger">*</span></label>
-                                            <input class="form-control" name="item_tarifa" [ngModelOptions]="{standalone: true}"  [(ngModel)]="item_tarifa" type="text" required>
+                        
+                    </div>
+                    <!-- Tarifas -->
 
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <div class="form-group local-forms">
-                                                <label >Precio<span class="login-danger">*</span></label>
-                                                <input class="form-control" name="precio" [ngModelOptions]="{standalone: true}" [(ngModel)]="precio" type="number"  >
-                                            </div>
-                                        </div>
-                                        <div class="col-12 mb-3">
-                                            <button class="btn btn-primary btn-sm text-end " (click)="addMedicamento()">+ Agregar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 ">
-                                    <div class="table-responsive">
-                                        <table class="table mb-0 table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Descripción</th>
-                                                    <th>Precio</th>
-                                                    <th>Acción</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr *ngFor="let item of tarifas ; let i=index">
-                                                    <td>
-                                                         {{item.item_tarifa}}
-                                                        
-                                                    </td>
-                                                    <td>
-                                                        {{item.precio  | currency }}
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-danger btn-sm text-end" (click)="deleteMedical(i)">x</button>
-                                                    </td>
-                                                </tr>
-                                                
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                    <div class="row align-items-center" >
+                        <div class="col-12">
+                            <div class="doctor-submit text-end">
+                                <button type="button" class="btn btn-primary submit-form me-2" (click)="onUserSave()">{{'formulario.Save'|translate}}</button>
                                 
                             </div>
-                            
                         </div>
-                        <!-- Tarifas -->
+                    </div>
+                    
 
-                        <div class="row align-items-center" >
-                            <div class="col-12">
-                                <div class="doctor-submit text-end">
-                                    <button type="button" class="btn btn-primary submit-form me-2" (click)="onUserSave()">Guardar</button>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        
-
-                    </form>
-                </div>
+                </form>
             </div>
             <!-- <div class="col-xs-12 col-sm-3 col-md-3">
                 <app-lateral></app-lateral>

@@ -4,14 +4,14 @@
 
         <nav class="menu">
             <ul>
-                <li><a routerLink="/">Home</a></li>
-                <li><a routerLink="/profile">Profile</a></li>
-                <li><a href="firms.html">Firms</a></li>
-                <li><a href="slider.html">How to?</a></li>
-                <li><a href="settings.html">Settings</a></li>
-                <li><a href="about-us.html">About Us</a></li>
-                <li><a href="terms.html">Terms & Cond.</a></li>
-                <li><a href="#" (click)="logout()">Logout</a></li>
+                <li><a routerLink="/">{{'Home'|translate}}</a></li>
+                <li><a routerLink="/profile">{{'Profile'|translate}}</a></li>
+                <li><a href="firms.html">{{'menu.Firms'|translate}}</a></li>
+                <li><a href="slider.html">{{'menu.How to?'|translate}}</a></li>
+                <li><a href="settings.html">{{'menu.Settings'|translate}}</a></li>
+                <li><a href="about-us.html">{{'menu.About Us'|translate}}</a></li>
+                <li><a href="terms.html">{{'menu.Terms & Cond'|translate}}</a></li>
+                <li><a href="#" (click)="logout()">{{'auth.Logout'|translate}}</a></li>
             </ul>
         </nav>
     </div>
@@ -25,17 +25,9 @@
         <a href="javascript:void(0)" (click)="closeMenu()" class="close"></a>
         <div class="usermenu">
             <div class="fichahome">
-                <p>Hola! <strong>{{user.username |slice: 0:10 }}...</strong></p>
+                <p>{{'saludo'|translate}}! <strong>{{user.username |slice: 0:10 }}...</strong></p>
 
                 <div class="stars" *ngIf="profile.rating  ">
-                    <!-- <ul>
-                        <li class="active"><i class="fa fa-star"></i></li>
-                        <li class="active"><i class="fa fa-star"></i></li>
-                        <li class="active"><i class="fa fa-star"></i></li>
-                        <li class="active"><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                    </ul> -->
-
                     <ul class="star-rating" *ngIf="profile.rating === 5">
                       <li class="active"><i class="fa fa-star "></i></li>
                       <li class="active"><i class="fa fa-star "></i></li>
@@ -83,10 +75,24 @@
             </div>
 
             <div class="user-header-top">
+                <!-- <div class="header-info">
+                    <ul class="rbt-dropdown-menu switcher-language">
+                        <li class="has-child-menu">
+                            <a style="cursor: pointer;">
+                                <a *ngIf="!flag" style="cursor: pointer;" [ngClass]="{'active': activeLang == 'es'}" (click)="cambiarLenguaje('en')"><span class="menu-item">Español</span></a>
+                            </a>
+                        </li>
+                        <li class="has-child-menu">
+                            <a style="cursor: pointer;">
+                                <a *ngIf="flag" style="cursor: pointer;" [ngClass]="{'active': activeLang == 'en'}" (click)="cambiarLenguaje('es')"><span class="menu-item">English</span></a>
+                            </a>
+                        </li>
+                    </ul>
+                </div> -->
                 <a routerLink="/profile">
                     
-                    <img *ngIf="!profile.avatar" [src]="profile.avatar  | imagenPipe: 'users' " alt="">
-                    <img *ngIf="profile.avatar" [src]="profile.avatar  " alt="">
+                    <img [src]="profile.avatar  | imagenPipe: 'users' " alt="">
+                   
                 </a>
             </div>
             <div class="logointerno ">
@@ -101,14 +107,14 @@
         </div>
         <nav>
             <ul>
-                <li><a routerLink="/">Home</a></li>
-                <li><a routerLink="/profile">Profile</a></li>
-                <li><a href="firms.html">Firms</a></li>
-                <li><a href="slider.html">How to?</a></li>
-                <li><a href="settings.html">Settings</a></li>
-                <li><a href="about-us.html">About Us</a></li>
-                <li><a href="terms.html">Terms & Cond.</a></li>
-                <li><a href="#" (click)="logout()">Logout</a></li>
+                <li><a routerLink="/">{{'Home'|translate}}</a></li>
+                <li><a routerLink="/profile">{{'Profile'|translate}}</a></li>
+                <li><a href="firms.html">{{'menu.Firms'|translate}}</a></li>
+                <li><a href="slider.html">{{'menu.How to?'|translate}}</a></li>
+                <li><a href="settings.html">{{'menu.Settings'|translate}}</a></li>
+                <li><a href="about-us.html">{{'menu.About Us'|translate}}</a></li>
+                <li><a href="terms.html">{{'menu.Terms & Cond'|translate}}</a></li>
+                <li><a href="#" (click)="logout()">{{'auth.Logout'|translate}}</a></li>
             </ul>
         </nav>
         <div class="footer-menu">
@@ -129,11 +135,28 @@
               </svg>
 
         </div>
-        <div class="isqmenu3">
+        <div class="isqmenu3 fotolang">
+            <div class="header-info">
+                <div class="dropdown">
+                    <span>{{'Language'|translate}}</span>
+                    <div class="dropdown-content">
+                        <li class="has-child-menu">
+                            <a style="cursor: pointer;">
+                                <!-- <img class="left-image" src="assets/images/icons/de.png" alt="Language Images"> -->
+                                <a *ngIf="!flag" style="cursor: pointer;" [ngClass]="{'active': activeLang == 'es'}" (click)="cambiarLenguaje('en')"><span class="menu-item">{{'Spanish'|translate}}</span></a>
+                            </a>
+                        </li>
+                        <li class="has-child-menu">
+                            <a style="cursor: pointer;">
+                                <a *ngIf="flag" style="cursor: pointer;" [ngClass]="{'active': activeLang == 'en'}" (click)="cambiarLenguaje('es')"><span class="menu-item">{{'English'|translate}}</span></a>
+                            </a>
+                        </li>
+                    </div>
+                  </div>
+            </div>
             <div class="user-header-top ">
                 <a routerLink="/profile">
-                    <img *ngIf="!profile.avatar" [src]="profile.avatar  | imagenPipe: 'users' " alt="">
-                    <img *ngIf="profile.avatar" [src]="profile.avatar  " alt="">
+                    <img  [src]="profile.avatar  | imagenPipe: 'users' " alt="">
                 </a>
             </div>
         </div>

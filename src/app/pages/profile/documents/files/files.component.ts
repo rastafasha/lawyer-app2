@@ -7,6 +7,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DocumentService } from '../../../../services/document.service';
 import { Document } from '../../../../models/document.model';
 import { DomSanitizer } from '@angular/platform-browser';
+import { LoadingComponent } from '../../../../shared/loading/loading.component';
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-files',
   imports: [
@@ -14,6 +16,8 @@ import { DomSanitizer } from '@angular/platform-browser';
     HeaderComponent,
     MenuFooterComponent,
     BackButtnComponent,
+    LoadingComponent,
+    TranslateModule
   ],
   templateUrl: './files.component.html',
   styleUrl: './files.component.scss',
@@ -22,6 +26,7 @@ export class FilesComponent {
   pageTitle= 'File Documents';
   FILE!: Document;
   type!: string;
+  isLoading:boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private documentService: DocumentService,
@@ -35,10 +40,12 @@ export class FilesComponent {
   }
 
   iniciarFile(id:number){
+    this.isLoading = true;
     this.documentService.getDocument(id).subscribe((resp:any)=>{
       this.FILE = resp;
       // console.log(this.FILE);
       this.type = this.FILE.type;
+      this.isLoading = false;
     })
   }
 

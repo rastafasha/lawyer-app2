@@ -1,5 +1,5 @@
-<app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="4"></app-skeleton-loader>
-
+<!-- <app-skeleton-loader *ngIf="isLoading" [rows]="1" [columns]="4"></app-skeleton-loader> -->
+<app-loading *ngIf="isLoading"></app-loading>
 <div *ngIf="!isLoading" class="swiffy-slider slider-item-show3 slider-item-reveal slider-nav-dark slider-nav-outside-expand">
     
     <ul class="slider-container py-4 slideh-list" id="slider2" >
@@ -7,8 +7,7 @@
             <div class="card shadow h-100">
                 <div class="ratio ratio-1x1">
                     <a [routerLink]="['/especialista/', item.user_id]">
-                        <img *ngIf="!item.avatar" [src]="item.avatar  | imagenPipe: 'users' " class="card-img-top" loading="lazy">
-                        <img *ngIf="item.avatar" [src]="item.avatar  " class="card-img-top" loading="lazy">
+                        <img  [src]="item.avatar  | imagenPipe: 'users' " class="card-img-top" loading="lazy">
                     </a>
                 </div>
                 <div class="card-body d-flex flex-column ">

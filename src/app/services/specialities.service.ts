@@ -36,6 +36,13 @@ export class SpecialitiesService {
         map((resp:{ok: boolean, specialities: Speciality[]}) => resp.specialities)
       )
   }
+  getSpecialitysMayorCero() {
+    const url = `${baseUrl}/specialities/filtradoMayorCero`;
+    return this.http.get<any>(url,this.headers)
+      .pipe(
+        map((resp:{ok: boolean, specialities: Speciality[]}) => resp.specialities)
+      )
+  }
 
   getSpeciality(id: Speciality) {
     const url = `${baseUrl}/speciality/show/${id}`;

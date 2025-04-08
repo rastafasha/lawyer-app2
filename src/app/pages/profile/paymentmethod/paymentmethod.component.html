@@ -1,9 +1,12 @@
 <app-header></app-header>
-<section class="user">
+
+
+<section class="user" >
   <div class="container-fluid">
     <div class="row">
       <div class="col-xs-12">
         <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
+        <app-loading *ngIf="isLoading"></app-loading>
         <h3>Active o desactive las opciones de la app</h3>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat nobis
@@ -16,6 +19,7 @@
           id="address"
           role="tabpanel"
           aria-labelledby="address-tab"
+          *ngIf="!isLoading"
         >
           <div class="row">
             <div class="col-xs-12 col-sm-5" *ngIf="!tipoSeleccionado">

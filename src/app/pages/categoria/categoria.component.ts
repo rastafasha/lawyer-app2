@@ -12,6 +12,8 @@ import { Usuario } from '../../models/usuario.model';
 import { Speciality } from '../../models/speciality.model';
 import { ImagenPipe } from '../../pipes/imagen.pipe';
 import { SkeletonLoaderComponent } from '../../shared/skeleton-loader/skeleton-loader.component';
+import { LoadingComponent } from '../../shared/loading/loading.component';
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 
 @Component({
   selector: 'app-categoria',
@@ -24,7 +26,8 @@ import { SkeletonLoaderComponent } from '../../shared/skeleton-loader/skeleton-l
         NgFor,
         RouterModule,
         ImagenPipe,
-        SkeletonLoaderComponent
+        LoadingComponent,
+        InfiniteScrollDirective,
   ],
   templateUrl: './categoria.component.html',
   styleUrl: './categoria.component.scss'
@@ -37,6 +40,19 @@ export class CategoriaComponent {
   Title!: string;
   public isLoading:boolean = false;
 
+  loadingTitle!:string;
+
+    isEdnOfList = false;
+    
+    isRefreshing = false;
+    private startY: number = 0;
+    private currentY: number = 0;
+    currentPage = 1;
+    itemsPerPage = 10;
+    hasMore = true;
+
+    nextUrl!:number ;
+
   constructor(
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
@@ -48,12 +64,14 @@ export class CategoriaComponent {
   }
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.activatedRoute.params.subscribe(({ id }) => {
       this.getSpeciality(id);
     });
   }
   getSpeciality(id: number) {
     this.isLoading = true;
+    this.loadingTitle = 'Cargando especialidad';
     this.specialityService.getSpecialitywithUsers(id).subscribe((resp: any) => {
       // console.log(resp);
       this.Title = resp.speciality.title;

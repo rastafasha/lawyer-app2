@@ -11,8 +11,9 @@ import Swal from 'sweetalert2';
 import { Usuario } from '../../../models/usuario.model';
 import { AuthService } from '../../../services/auth.service';
 import { Document } from '../../../models/document.model';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { environment } from '../../../environments/environment';
+import { LoadingComponent } from '../../../shared/loading/loading.component';
+import { TranslateModule } from '@ngx-translate/core';
 const baseUrl = environment.url_servicios;
 declare let $:any;  
 @Component({
@@ -22,17 +23,19 @@ declare let $:any;
         HeaderComponent,
             MenuFooterComponent, 
             BackButtnComponent,
-            LateralComponent,
             ReactiveFormsModule,
             FormsModule,
-            PdfViewerModule,
-            RouterModule
+            RouterModule,
+            LoadingComponent,
+            TranslateModule
   ],
   templateUrl: './documents.component.html',
   styleUrl: './documents.component.scss'
 })
 export class DocumentsComponent {
   pageTitle= 'Documents';
+  isLoading:boolean = false;
+  isRefreshing = false;
 
   valid_form_success = false;
     public text_validation = '';
@@ -42,16 +45,12 @@ export class DocumentsComponent {
   FilesAdded:any = [];
   public file_selected:any;
   public user_files:Document[]= [];
+  public user_filesfiltered:Document[]= [];
   public name_category!:string;
   user_id!:number;
   user!:Usuario;
 
-  // pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf"
-  // pdfSrc!:string;
-
-
   constructor(
-    // public appointmentService:AppointmentService,
     private authService: AuthService,
     public documentService:DocumentService,
     public router: Router,
@@ -70,38 +69,54 @@ export class DocumentsComponent {
 
 
   getdocumentsbyUser(){
+    this.isLoading = true;
     this.documentService.getDocumentsByUser(this.user_id).subscribe((resp:any)=>{
       // console.log(resp);
       this.FILES =resp.data
+      this.isLoading = false;
+      //agrupamos por name_category
+      this.FILES.forEach((element: any) => {
+        if(!this.user_files.find((doc:Document)=>doc.name_category==element.name_category)){
+          this.user_files.push(element);
+          }
+      });
+    })
+  }
+
+  getDocumentsbyCategory(name_category:string){
+    this.documentService.getDocumentsByUserCategory(this.user_id, name_category).subscribe((resp:any)=>{
+      this.user_filesfiltered = resp.data;
     })
   }
 
 
-  processFile($event:any){
-    for (const file of $event.target.files){
-      this.FILES.push(file);
+  processFile($event: any) {
+    const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    const allowedPdfType = 'application/pdf';
+    
+    // No limpiamos this.FILES para mantener los archivos existentes
+    
+    for (const file of $event.target.files) {
+      // Verificamos si el archivo es PDF o imagen
+      if (file.type === allowedPdfType || allowedImageTypes.includes(file.type)) {
+        // Agregamos el archivo solo si no existe ya en el array
+        if (!this.FILES.some((f: File) => f.name === file.name && f.size === file.size && f.lastModified === file.lastModified)) {
+          this.FILES.push(file);
+        }
+      } else {
+        console.warn(`Tipo de archivo no soportado: ${file.type}`);
+      }
     }
-    console.log(this.FILES);
-    //si viene un archivo pdf
-    if(this.FILES.length > 0){
-      this.FilesAdded.push(this.FILES[0]);
-      this.FILES.splice(0,1); 
-    }
-  
   }
 
   deleteFile(FILE:any){
-    this.FilesAdded.splice(FILE,1);
-    this.documentService.deleteDocument(FILE.id).subscribe((resp:any)=>{
+    this.documentService.deleteDocument(FILE).subscribe((resp:any)=>{
       // this.getAppointment();
       this.getdocumentsbyUser();
     })
+    this.FilesAdded.splice(FILE,1);
   }
 
-
-  deleteDocument(i:any){
-    this.FILES.splice(i,1);
-  }
 
   selectDoc(FILE:any){
     this.file_selected = FILE;
@@ -124,10 +139,10 @@ closeModalDoc(){
 
   save(){
     this.text_validation = '';
-    // if(!this.name_laboratory){
-    //   this.text_validation = 'Es requerido ingresar un nombre';
-    //   return;
-    // }
+    if(!this.name_category){
+      this.text_validation = 'Es requerido ingresar un nombre de categoria';
+      return;
+    }
 
 
     if(this.FILES.length === 0){
@@ -135,9 +150,6 @@ closeModalDoc(){
       return;
 
     }
-
-    
-
     const formData = new FormData();
     formData.append('user_id', this.user_id+'');
     formData.append('name_category', this.name_category);
@@ -145,14 +157,16 @@ closeModalDoc(){
     this.FILES.forEach((file:any, index:number)=>{
       formData.append("files["+index+"]", file);
     });
-
+    this.isLoading = true;
     this.documentService.createDocument(formData).subscribe((resp:any)=>{
       // console.log(resp);
       // this.getAppointment();
       
       if(resp.message == 403){
         // Swal.fire('Actualizado', this.text_validation, 'success');
+        this.isLoading = false
         this.text_validation = resp.message_text;
+
         Swal.fire({
           position: "top-end",
                 icon: "warning",
@@ -160,7 +174,9 @@ closeModalDoc(){
                 showConfirmButton: false,
                 timer: 1500
               });
+              
             }else{
+              this.isLoading = false
               // Swal.fire('Actualizado', this.text_success, 'success' );
                 this.text_success = 'Se guardó la informacion del Laboratorio con la cita'
               // this.text_success = 'actualizado correctamente';
@@ -176,5 +192,23 @@ closeModalDoc(){
     })
 
   }
+
+  onScrollUp(){
+    this.refreshData(); 
+  }
+
+  refreshData() { 
+    this.isRefreshing = true; 
+    // Simulate data fetching 
+    setTimeout(() => { 
+      this.isRefreshing = false; 
+      window.location.reload();
+    }, 2000); 
+  }
+  
+  closeReload(){
+    this.ngOnInit();
+  }
+
 
 }

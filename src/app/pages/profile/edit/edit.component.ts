@@ -10,12 +10,10 @@ import { Usuario } from '../../../models/usuario.model';
 import { AuthService } from '../../../services/auth.service';
 import { ProfileService } from '../../../services/profile.service';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LateralComponent } from '../../../components/lateral/lateral.component';
 import { SpecialitiesService } from '../../../services/specialities.service';
-import { IconosService } from '../../../services/iconos.service';
-import { Icons } from '../../../models/Icons';
 import Swal from 'sweetalert2';
-import { WhatsappFilterPipe } from '../../../pipes/whatsapp-filter.pipe';
+import { LoadingComponent } from '../../../shared/loading/loading.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit',
@@ -25,10 +23,10 @@ import { WhatsappFilterPipe } from '../../../pipes/whatsapp-filter.pipe';
         MenuFooterComponent, 
         BackButtnComponent,
         ReactiveFormsModule,
-        // LateralComponent,
         FormsModule,
         NgFor,
-        WhatsappFilterPipe 
+        LoadingComponent,
+        TranslateModule
   ],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.css'
@@ -38,6 +36,9 @@ export class EditComponent {
   Title!:string;
   public iswhatsapp : boolean = false;
   selectedValueCode = '';
+
+  public isLoading:boolean = false;
+    loadingTitle!:string;
 
   userForm: FormGroup = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
@@ -129,9 +130,11 @@ export class EditComponent {
     }
 
     getProfile(){
+      this.isLoading = true;
+      this.loadingTitle = 'Cargando perfil';
       this.profileService.getByUser(this.user.id).subscribe(
         (resp:any) => {
-          console.log('Profile response:', resp); // Log the response
+          // console.log('Profile response:', resp); // Log the response
           this.profile = resp.profile;
           this.redessociales = typeof resp.profile.redessociales === 'string' 
             ? JSON.parse(resp.profile.redessociales) || []
@@ -143,6 +146,7 @@ export class EditComponent {
           this.IMAGE_PREVISUALIZA = resp.profile.avatar;
           this.FILE_AVATAR = resp.profile.avatar;
           // this.gender = resp.profile.gender
+          this.isLoading = false;
         },
         (error) => {
           console.error('Error fetching profile:', error); // Log any errors
@@ -181,7 +185,7 @@ export class EditComponent {
             usuario: this.user.id,
           });
           this.profileSeleccionado = res.profile;
-          console.log('profileSeleccionado',this.profileSeleccionado);
+          // console.log('profileSeleccionado',this.profileSeleccionado);
 
         }
 
@@ -397,6 +401,7 @@ export class EditComponent {
         this.profileSeleccionado = resp;
         // this.router.navigate(['/profile']);
         Swal.fire('Exito!', 'Se ha actualizado la formData', 'success');
+        this.ngOnInit();
       });
     }else{
       this.profileService.createProfile(formData).subscribe((resp:any) => {
@@ -404,6 +409,7 @@ export class EditComponent {
         this.profileSeleccionado = resp;
         Swal.fire('Exito!', 'Se ha creado la data', 'success');
         // this.router.navigate(['/profile']);
+        this.ngOnInit();
         });
     }
 

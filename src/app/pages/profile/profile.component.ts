@@ -13,6 +13,8 @@ import { Speciality } from '../../models/speciality.model';
 import { SpecialitiesService } from '../../services/specialities.service';
 import { PipesModule } from '../../pipes/pipes.module';
 import { ImagenPipe } from "../../pipes/imagen.pipe";
+import { LoadingComponent } from '../../shared/loading/loading.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   imports: [
@@ -22,7 +24,9 @@ import { ImagenPipe } from "../../pipes/imagen.pipe";
     MenuFooterComponent,
     LateralComponent,
     BackButtnComponent,
-    ImagenPipe
+    ImagenPipe,
+    LoadingComponent,
+    TranslateModule
 ],
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -34,6 +38,8 @@ export class ProfileComponent {
   // public profile!: Profile;
   public speciality_profile!: Speciality;
   public speciality!: Speciality ;
+  public isLoading:boolean = false;
+    loadingTitle!:string;
 
   public profile: Profile = new Profile();
   public redessociales: RedesSociales [] =[];
@@ -47,11 +53,14 @@ export class ProfileComponent {
   }
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.user = this.authService.getUser();
     this.getProfile();
   }
 
   getProfile(){
+    this.isLoading = true;
+    this.loadingTitle = 'Loading Profile...';
     this.profileService.getByUser(this.user.id).subscribe((resp:any) => {
       // console.log(resp);
       this.profile = resp.profile || null;
@@ -59,6 +68,7 @@ export class ProfileComponent {
             ? JSON.parse(resp.profile.redessociales) || []
             : resp.profile.redessociales || [];
       this.speciality_profile = resp.profile.speciality_id;
+      this.isLoading = false;
       this.getSpeciality();
       // setTimeout(() => {
       // }

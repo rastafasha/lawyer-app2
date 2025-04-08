@@ -18,4 +18,7 @@ import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
 })
 export class WalletComponent {
   pageTitle='Wallet';
+  ngOnInit(){
+    window.scrollTo(0, 0);
+  }
 }

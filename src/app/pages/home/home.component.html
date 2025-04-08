@@ -1,4 +1,5 @@
 <app-header></app-header>
+
 <section class="home">
   <div class="container-fluid">
     <div class="row">
@@ -20,11 +21,11 @@
           <!---Slider-->
 
           <!--list horizontal-->
-          <h3>Destacados</h3>
+          <h3>{{'featured'|translate}}</h3>
           <app-list-products-h></app-list-products-h>
           <!---list vertical-->
           <!--list products-->
-          <h3>Recientes</h3>
+          <h3>{{'recent'|translate}}</h3>
           <app-list-products></app-list-products>
 
         </div>
@@ -41,4 +42,7 @@
     </div>
   </div>
 </section>
+
+
+
 <app-menu-footer></app-menu-footer>

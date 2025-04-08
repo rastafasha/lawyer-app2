@@ -6,12 +6,17 @@ import { Usuario } from '../../models/usuario.model';
 import { AuthService } from '../../services/auth.service';
 import { ModalCondicionesComponent } from '../../components/modal-condiciones/modal-condiciones.component';
 import { NgIf } from '@angular/common';
+import { PwaNotifInstallerComponent } from '../../shared/pwa-notif-installer/pwa-notif-installer.component';
+import { TranslateModule } from '@ngx-translate/core';
 declare const gapi: any;
 
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, ModalCondicionesComponent, NgIf],
+  imports: [ReactiveFormsModule, ModalCondicionesComponent,
+     NgIf, TranslateModule
+    //  PwaNotifInstallerComponent
+    ],
   templateUrl: './login.component.html',
   styleUrls: [ './login.component.css' ]
 })

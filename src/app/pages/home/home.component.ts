@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { MenuFooterComponent } from '../../shared/menu-footer/menu-footer.component';
 import { AvisoComponent } from '../../components/aviso/aviso.component';
@@ -21,8 +22,10 @@ import { UserService } from '../../services/usuario.service';
     AvisoComponent, CategoriaHorizontalComponent,
     SliderHorizontalComponent, ListProductsComponent,
     LateralComponent, ListProductsHComponent,
-    CommonModule, BackButtnComponent, ListaUsuariosComponent
+    CommonModule, BackButtnComponent, ListaUsuariosComponent,
+    TranslateModule
   ],
+  providers: [TranslateService],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -31,17 +34,18 @@ export class HomeComponent {
   user: Usuario;
   users: any = [];
 
+  private translate = inject(TranslateService);
+  
   constructor(
     private authService: AuthService,
   ){
     this.user = this.authService.getUser();
-
+    this.translate.use('es'); // Set default language
   }
 
-  ngOninit() {
+  ngOnInit(){
+    window.scrollTo(0, 0);
   }
-
-  
 
 
 }

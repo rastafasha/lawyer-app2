@@ -1,5 +1,6 @@
 .modal {
-    /* top: 0px !important; */
+    margin-top: -100px !important;
+    
     border-radius: 60px 60px 0px 0px;
 
 }
@@ -11,7 +12,7 @@
 
 .modal.show .modal-dialog {
     transform: none;
-    align-items: baseline !important;
+    /* align-items: baseline !important; */
     z-index: 3000 !important;
 }
 
@@ -133,6 +134,14 @@
     border-radius: 20px;
 }
 
+
+@media (min-width:768px) {
+    .modal {
+        margin-top: -100px !important;
+        
+    
+    }
+}
 
 
 

@@ -9,12 +9,16 @@ import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
 @Component({
   selector: 'app-search',
   imports: [MenuFooterComponent, HeaderComponent, 
-    LateralComponent, SliderHorizontalComponent,
-    ListProductsComponent, BackButtnComponent
+    LateralComponent,
+    ListProductsComponent, BackButtnComponent,
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })
 export class SearchComponent {
   pageTitle= 'Search';
+
+  ngOnInit(){
+    window.scrollTo(0, 0);
+  }
 }
