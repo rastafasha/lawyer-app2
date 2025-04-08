@@ -58,14 +58,18 @@ export class DocumentService {
       user_id :number,
       page = 1,
       created_at = '',
-      name_category?: string
+      name_category?: string,
+      name_file?: string
     ) {
       let LINK = '';
   
       if (created_at) {
         LINK += '&created_at=' + created_at;
       }
+      if (name_file) LINK += `&name_file=${name_file}`;
+      
       if (name_category) LINK += `&name_category=${name_category}`;
+
       const URL =
         baseUrl +
         '/document/showByUserFiltered/' +
@@ -73,7 +77,12 @@ export class DocumentService {
         '/?page=' +
         page +
         LINK;
-      return this.http.get<any>(URL);
+      // return this.http.get<any>(URL);
+
+      return this.http.get<any>(URL, this.headers)
+        .pipe(
+          map((resp:{ok: boolean, documents: Document}) => resp.documents)
+          );
     }
 
 

@@ -6,7 +6,7 @@ import { MenuFooterComponent } from '../../../shared/menu-footer/menu-footer.com
 import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { LateralComponent } from '../../../components/lateral/lateral.component';
 import { DocumentService } from '../../../services/document.service';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Usuario } from '../../../models/usuario.model';
 import { AuthService } from '../../../services/auth.service';
@@ -36,6 +36,7 @@ export class DocumentsComponent {
   pageTitle= 'Documents';
   isLoading:boolean = false;
   isRefreshing = false;
+  isSearching = false;
 
   valid_form_success = false;
     public text_validation = '';
@@ -46,12 +47,16 @@ export class DocumentsComponent {
   public file_selected:any;
   public user_files:Document[]= [];
   public user_filesfiltered:Document[]= [];
-  public name_category!:string;
-  public created_at!:any;
+  public document!:Document;
+  public name_category:string = '';
+  public name_file:string = '';
+  public created_at!:string;
   user_id!:number;
   user!:Usuario;
 
   currentPage = 1;
+
+  searchForm!:FormGroup;
 
   constructor(
     private authService: AuthService,
@@ -66,30 +71,52 @@ export class DocumentsComponent {
   }
   ngOnInit(): void {
     this.user_id = this.user.id;
+    this.validarFormularioPerfil();
     this.getdocumentsbyUser();
+    this.getdocumentsbyUserFilter();
   }
 
+  validarFormularioPerfil(){
+    if (!this.searchForm) {
+      this.searchForm = this.fb.group({
+        name_category: [''],
+        created_at: [''],
+        name_file: [''],
+        user_id: [this.user.id],
+      });
+    }
+  }
+  
 
+  searchData(){
+    const formValue = this.searchForm.value;
+    this.isSearching = true;
+    this.name_file = this.name_file.toLowerCase();
+    // this.characters = this.characters.filter((character: any) => {
+    //   return character.name.toLowerCase().includes(this.search);
+    //   });
+    this.getdocumentsbyUserFilter();
+    } 
 
-  // getdocumentsbyUser(){
-  //   this.isLoading = true;
-  //   this.currentPage;
-  //   this.documentService.getAllClientReportByPatient(
-  //     this.user_id, 
-  //     this.currentPage,
-  //     this.created_at,
-  //     this.name_category).subscribe((resp:any)=>{
-  //     // console.log(resp);
-  //     this.FILES =resp.data
-  //     this.isLoading = false;
-  //     //agrupamos por name_category
-  //     this.FILES.forEach((element: any) => {
-  //       if(!this.user_files.find((doc:Document)=>doc.name_category==element.name_category)){
-  //         this.user_files.push(element);
-  //         }
-  //     });
-  //   })
-  // }
+  getdocumentsbyUserFilter(){
+    this.isLoading = true;
+    this.currentPage;
+    this.name_category = this.searchForm.value.name_category;
+    this.created_at = this.searchForm.value.created_at;
+    this.name_file = this.searchForm.value.name_file;
+    this.documentService.getAllClientReportByPatient(
+      this.user_id, 
+      this.currentPage,
+      this.created_at,
+      this.name_category,
+      this.name_file,
+    ).subscribe((resp:any)=>{
+      console.log(resp);
+      this.FILES =resp.data;
+      this.isLoading = false;
+     
+    })
+  }
   getdocumentsbyUser(){
     this.isLoading = true;
     this.currentPage;
@@ -236,17 +263,15 @@ closeModalDoc(){
     this.ngOnInit();
   }
 
-  searchData(user_id: any) {
-    // this.dataSource.filter = value.trim().toLowerCase();
-    // this.patientList = this.dataSource.filteredData;
-    // this.combinedList = [];
+  resetSearch(): void {
     // this.pageSelection = [];
     // this.limit = this.pageSize;
     // this.skip = 0;
-    this.currentPage = 1;
-    user_id;
-    this.getdocumentsbyUser();
+    // this.currentPage = 1;
+    this.isSearching = false;
+    this.searchForm.reset();
   }
+  
 
 
 }
