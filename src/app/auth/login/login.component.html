@@ -11,6 +11,17 @@
         <div class="input-field">
           <i class="fa fa-user"></i>
           <input type="text" formControlName="email" placeholder="{{'auth.email'|translate}}" />
+          @if(registerForm.controls['email'].touched){
+                      
+            <div class="text-danger">
+              @if(registerForm.controls['email'].errors?.['required']){
+                  <span >{{'formulario.Field Required'|translate}}</span>
+              }
+              @if(registerForm.controls['email'].errors?.['minlength']){
+                  <span >{{'formulario.3 Charecters Minimal'|translate}}</span>
+              }
+            </div>
+        }
         </div>
         <div class="input-field">
           <i class="fa fa-lock"></i>
@@ -19,6 +30,17 @@
             formControlName="password"
             placeholder="Password"
           />
+          @if(registerForm.controls['password'].touched){
+                      
+            <div class="text-danger">
+              @if(registerForm.controls['password'].errors?.['required']){
+                  <span >{{'formulario.Field Required'|translate}}</span>
+              }
+              @if(registerForm.controls['password'].errors?.['minlength']){
+                  <span >{{'formulario.3 Charecters Minimal'|translate}}</span>
+              }
+            </div>
+        }
         </div>
         <div class="row">
           <div class="form-check rememb">
@@ -83,10 +105,32 @@
             formControlName="username"
             placeholder="{{'auth.Username'|translate}}"
           />
+          @if(registerForm.controls['username'].touched){
+                      
+            <div class="text-danger">
+              @if(registerForm.controls['username'].errors?.['required']){
+                  <span >{{'formulario.Field Required'|translate}}</span>
+              }
+              @if(registerForm.controls['username'].errors?.['minlength']){
+                  <span >{{'formulario.3 Charecters Minimal'|translate}}</span>
+              }
+            </div>
+        }
         </div>
         <div class="input-field">
           <i class="fa fa-envelope"></i>
           <input type="email" formControlName="email" placeholder="{{'auth.email'|translate}}" />
+          @if(registerForm.controls['email'].touched){
+                      
+            <div class="text-danger">
+              @if(registerForm.controls['email'].errors?.['required']){
+                  <span >{{'formulario.Field Required'|translate}}</span>
+              }
+              @if(registerForm.controls['email'].errors?.['minlength']){
+                  <span >{{'formulario.3 Charecters Minimal'|translate}}</span>
+              }
+            </div>
+        }
         </div>
         <div class="input-field">
           <i class="fa fa-lock"></i>
@@ -95,6 +139,17 @@
             formControlName="password"
             placeholder="{{'auth.password'|translate}}"
           />
+          @if(registerForm.controls['password'].touched){
+                      
+            <div class="text-danger">
+              @if(registerForm.controls['password'].errors?.['required']){
+                  <span >{{'formulario.Field Required'|translate}}</span>
+              }
+              @if(registerForm.controls['password'].errors?.['minlength']){
+                  <span >{{'formulario.3 Charecters Minimal'|translate}}</span>
+              }
+            </div>
+        }
         </div>
         <div class="input-field">
           <i class="fa fa-lock"></i>
@@ -103,6 +158,17 @@
             formControlName="confirmPassword"
             placeholder="{{'auth.confirm-password'|translate}}"
           />
+          @if(registerForm.controls['confirmPassword'].touched){
+                      
+            <div class="text-danger">
+              @if(registerForm.controls['confirmPassword'].errors?.['required']){
+                  <span >{{'formulario.Field Required'|translate}}</span>
+              }
+              @if(registerForm.controls['confirmPassword'].errors?.['minlength']){
+                  <span >{{'formulario.3 Charecters Minimal'|translate}}</span>
+              }
+            </div>
+        }
         </div>
         <div class="input-field">
           <i class="fa fa-user"></i>
@@ -125,6 +191,14 @@
                 formControlName="terminos"
                 type="checkbox"
               />
+              @if(registerForm.controls['terminos'].touched){
+                      
+                <div class="text-danger">
+                  @if(registerForm.controls['terminos'].errors?.['required']){
+                      <span >{{'formulario.Field Required'|translate}}</span>
+                  }
+                </div>
+            }
               <label for="checkbox-signup">
                 {{'terminos.agree'|translate}}
                 <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#exampleModal"

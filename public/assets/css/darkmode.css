@@ -254,3 +254,21 @@
     border: 1px solid #ccc;
     color: var(--blanco);
 }
+
+.darkmode .back .fa {
+    color: var(--gris);
+}
+
+.darkmode .left-image{
+    filter: invert();
+}
+
+.darkmode .back h1::before {
+    border-top: 1px solid var(--gris);
+}
+
+.darkmode .categorylist h2 {
+    background-color: #000;
+    color: var(--fondo-footer);
+    border: 1px solid #333;
+}

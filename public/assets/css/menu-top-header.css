@@ -254,6 +254,7 @@
 }
 
 .usermenu .logointerno {
+   padding-top: 10px;
     margin-bottom: 20px;
 }
 
@@ -269,6 +270,7 @@
     margin-left: 5px;
     margin-top: 4px;
 }
+
 
 @media (width < 668px) {
     .header .menu {

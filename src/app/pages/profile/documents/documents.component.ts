@@ -162,6 +162,7 @@ closeModalDoc(){
   
 
   save(){
+    this.text_success = '';
     this.text_validation = '';
     if(!this.name_category){
       this.text_validation = 'Es requerido ingresar un nombre de categoria';
@@ -202,7 +203,7 @@ closeModalDoc(){
             }else{
               this.isLoading = false
               // Swal.fire('Actualizado', this.text_success, 'success' );
-                this.text_success = 'Se guardó la informacion del Laboratorio con la cita'
+                this.text_success = 'Se guardó el recurso con éxito';
               // this.text_success = 'actualizado correctamente';
               Swal.fire({
                 position: "top-end",

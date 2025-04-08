@@ -16,6 +16,7 @@ infiniteScroll
 
  </div>
   
+ <app-loading *ngIf="isLoading" ></app-loading>
 
  <div class="container-fluid">
   <div class="row">
@@ -103,13 +104,12 @@ infiniteScroll
                 </div>
               </form>
         </form>
-      <app-loading *ngIf="isLoading" ></app-loading>
 
 
 
       <div class="carousel-inner-data" *ngIf="!isLoading">
           <div class="post navTabs" *ngIf="characters.length > 0 else message">
-              <div class=" itemFav" *ngFor="let character of characters; trackby: trackByCharacterId">
+              <div class=" itemFav scrollinganimate" *ngFor="let character of characters; trackby: trackByCharacterId">
                   <div class="group  itemFav lastposthome">
                       <a href="lawyer-profile.html">
                           <img [src]="character.image" alt="">

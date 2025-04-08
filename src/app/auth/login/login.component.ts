@@ -8,6 +8,7 @@ import { ModalCondicionesComponent } from '../../components/modal-condiciones/mo
 import { NgIf } from '@angular/common';
 import { PwaNotifInstallerComponent } from '../../shared/pwa-notif-installer/pwa-notif-installer.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { PlacesService } from '../../services/places.service';
 declare const gapi: any;
 
 
@@ -25,6 +26,8 @@ export class LoginComponent implements OnInit {
   username = new FormControl();
   email = new FormControl();
   password = new FormControl();
+  confirmPassword = new FormControl();
+  role = new FormControl();
   n_doc = new FormControl();
   remember = new FormControl();
   terminos = new FormControl();
@@ -54,7 +57,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private placesServices: PlacesService
     
   ) {
 
@@ -73,7 +77,8 @@ export class LoginComponent implements OnInit {
       email: [ '', [Validators.required, Validators.email] ],
       password: ['', Validators.required],
       password2: ['', Validators.required],
-      // role: ['GUEST'],
+      confirmPassword: ['', Validators.required],
+      role: ['', Validators.required],
       terminos: [false, Validators.required],
   
     }, {
@@ -104,7 +109,7 @@ ngOnInit(){
 
 login(){ 
   if(!this.loginForm){
-    // Swal.fire('Error', 'Favor ingresar datos', 'error');
+    Swal.fire('Error', 'Favor ingresar datos', 'error');
     return;
   }
 

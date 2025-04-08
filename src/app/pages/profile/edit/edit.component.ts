@@ -16,6 +16,7 @@ import { LoadingComponent } from '../../../shared/loading/loading.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PaisService } from '../../../services/pais.service';
 import { Pais } from '../../../models/pais';
+import { PlacesService } from '../../../services/places.service';
 
 @Component({
   selector: 'app-edit',
@@ -117,6 +118,7 @@ export class EditComponent {
       private fb: FormBuilder,
       private specialityService: SpecialitiesService,
       public paisService: PaisService,
+      private placesServices: PlacesService
     ) {
       this.user = this.authService.getUser();
     }

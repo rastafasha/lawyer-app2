@@ -15,6 +15,7 @@ import { Pais } from '../../models/pais';
 import { Speciality } from '../../models/speciality.model';
 import { SpecialitiesService } from '../../services/specialities.service';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PlacesService } from '../../services/places.service';
 
 @Component({
   selector: 'app-search',
@@ -46,6 +47,7 @@ export class SearchComponent {
   private paisService = inject(PaisService);
   private specialityService = inject(SpecialitiesService);
   private fb = inject(FormBuilder);
+  private placesServices = inject(PlacesService);
 
   // searchForm: FormGroup = new FormGroup({
   //   pais: new FormControl('', ),
