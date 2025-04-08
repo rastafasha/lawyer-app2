@@ -7,6 +7,7 @@ import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
 import { LoadingComponent } from '../../shared/loading/loading.component';
 import { FavoritoService } from '../../services/favorito.service';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-favorites',
@@ -18,6 +19,7 @@ import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
     BackButtnComponent,
     LoadingComponent,
     InfiniteScrollDirective,
+    TranslateModule
   ],
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.css'

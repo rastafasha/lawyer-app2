@@ -110,7 +110,12 @@
                                   <!-- País -->
                                   <div class="col-md-4">
                                     <label for="validationCustom02" class="form-label">{{'formulario.Country'|translate}}</label>
-                                    <input type="text" formControlName="pais" class="form-control" id="validationCustom02"  required>
+                                    <!-- <input type="text" formControlName="pais" class="form-control" id="validationCustom02"  required> -->
+                                    <select class="form-control" formControlName="pais"  >
+                                        <option *ngFor="let data of paises" [value]="data.code">
+                                        {{data.title}}
+                                        </option>
+                                        </select>
                                     @if(userForm.controls['pais'].touched){
                       
                                         <div class="text-danger">

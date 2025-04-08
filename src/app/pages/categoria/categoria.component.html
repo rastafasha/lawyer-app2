@@ -11,14 +11,14 @@ infiniteScroll
 <div class="pull-down-indicator" *ngIf="isRefreshing">
   <app-loading  ></app-loading>
   <p class="text-center">
-      refrescando ...
+      {{'Refreshing'|translate}} ...
   </p>
 </div>
   <div class="container-fluid">
     <div class="row">
       <div class="col-xs-12 col-sm-9 col-md-9">
         <app-backButtn [pageTitle]="pageTitle" [Title]="Title"></app-backButtn>
-        <h5>Abogados</h5>
+        <!-- <h5>Abogados</h5> -->
         <app-loading *ngIf="isLoading" [loadingTitle]="loadingTitle"></app-loading>
         <div class="post navTabs" *ngIf="!isLoading" >
           <div class=" itemFav shadow "  *ngFor="let item of profiles">
