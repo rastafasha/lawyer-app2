@@ -272,17 +272,6 @@
 }
 
 
-@media (width < 668px) {
-    .header .menu {
-        display: none;
-    }
-}
-
-@media (width > 768px) {
-    .header .sidemenu {
-        width: 20%;
-    }
-}
 
  .menuright {
     height: 40px;
@@ -315,4 +304,26 @@
 .globoblack {
     display: none;
     
+}
+
+
+@media (min-width : 668px) {
+    .header .menu {
+        display: none;
+    }
+}
+
+@media (max-width : 768px) {
+    .header .sidemenu {
+        width: 20%;
+    }
+    .menuright {
+        width: 0px;
+        padding-right: 20px;
+        margin-left: -30px;
+    }
+
+    .menu-top .logointerno #logoNuevo {
+        margin-left: 10px;
+    }
 }

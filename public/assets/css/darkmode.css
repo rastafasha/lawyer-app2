@@ -259,9 +259,9 @@
     color: var(--gris);
 }
 
-.darkmode .left-image{
+/* .darkmode .left-image{
     filter: invert();
-}
+} */
 
 .darkmode .back h1::before {
     border-top: 1px solid var(--gris);
