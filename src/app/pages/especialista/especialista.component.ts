@@ -107,10 +107,10 @@ export class EspecialistaComponent {
       const datos = {
         "status": VALUE
       }
-      
+      this.isLoading = true;
       this.profileService.updateProfileStatus(datos, this.profile.id).subscribe(
         resp =>{
-          console.log(resp);
+          this.isLoading = false;
           this.ngOnInit();
         }
       )

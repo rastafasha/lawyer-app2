@@ -10,7 +10,7 @@
         <h2 class="title">{{'auth.login'|translate}}</h2>
         <div class="input-field">
           <i class="fa fa-user"></i>
-          <input type="text" formControlName="email" placeholder="Email" />
+          <input type="text" formControlName="email" placeholder="{{'auth.email'|translate}}" />
         </div>
         <div class="input-field">
           <i class="fa fa-lock"></i>
@@ -81,19 +81,19 @@
           <input
             type="text"
             formControlName="username"
-            placeholder="Username"
+            placeholder="{{'auth.Username'|translate}}"
           />
         </div>
         <div class="input-field">
           <i class="fa fa-envelope"></i>
-          <input type="email" formControlName="email" placeholder="Email" />
+          <input type="email" formControlName="email" placeholder="{{'auth.email'|translate}}" />
         </div>
         <div class="input-field">
           <i class="fa fa-lock"></i>
           <input
             type="password"
             formControlName="password"
-            placeholder="Password"
+            placeholder="{{'auth.password'|translate}}"
           />
         </div>
         <div class="input-field">
@@ -101,7 +101,7 @@
           <input
             type="password"
             formControlName="confirmPassword"
-            placeholder="Comfirmar Password"
+            placeholder="{{'auth.confirm-password'|translate}}"
           />
         </div>
         <div class="input-field">
@@ -113,7 +113,7 @@
           >
             <option>-- Select --</option>
             <option value="GUEST">{{'auth.User'|translate}}</option>
-            <option value="MEMBER">{{'auth.Member'|translate}}</option>
+            <option value="MEMBER">{{'Lawyer'|translate}}</option>
           </select>
         </div>
 

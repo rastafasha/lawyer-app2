@@ -7,7 +7,7 @@ import { AuthService } from '../../services/auth.service';
 import { ModalCondicionesComponent } from '../../components/modal-condiciones/modal-condiciones.component';
 import { NgIf } from '@angular/common';
 import { PwaNotifInstallerComponent } from '../../shared/pwa-notif-installer/pwa-notif-installer.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 declare const gapi: any;
 
 
@@ -45,6 +45,8 @@ export class LoginComponent implements OnInit {
 
   errors:any = null;
   registerForm!: FormGroup;
+  langs: string[] = [];
+  public activeLang = 'es';
 
   
 
@@ -52,8 +54,19 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthService,
+    private translate: TranslateService
     
   ) {
+
+    // this.translate.setDefaultLang('es');
+    this.translate.setDefaultLang(this.activeLang);
+    this.translate.use('es');
+    this.translate.addLangs(["es", "en"]);
+    this.langs = this.translate.getLangs();
+    translate.get(this.langs).subscribe(res =>{
+      console.log(res);
+    })
+    // console.log(this.translate);
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       username: ['', Validators.required],
@@ -70,6 +83,12 @@ export class LoginComponent implements OnInit {
   }
   
 ngOnInit(){
+
+  const lang = localStorage.getItem('lang');
+    if (lang) {
+      this.activeLang = lang;
+      this.translate.use(lang);
+      }
   
   this.loginForm = this.fb.group({
     email: [ localStorage.getItem('email') || '', [Validators.required, Validators.email] ],

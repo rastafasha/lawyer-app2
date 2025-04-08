@@ -6,6 +6,7 @@
     "Spanish": "Spanish",
     "Directory": "Directory",
     "Analytics": "Analytics",
+    "Lawyer":"Lawyer",
     "and": "and",
     "company": "Company",
     "featured": "Featured",
@@ -116,6 +117,7 @@
         "Remember Me": "Remember Me",
         "User": "User",
         "Member": "Member",
+        "Username": "Username",
 
         "email": "Email",
         "email-required": "Email is required",
