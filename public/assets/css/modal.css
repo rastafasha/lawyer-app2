@@ -1,5 +1,6 @@
 .modal {
-    /* top: 0px !important; */
+    margin-top: -100px !important;
+    
     border-radius: 60px 60px 0px 0px;
 
 }
@@ -133,6 +134,14 @@
     border-radius: 20px;
 }
 
+
+@media (min-width:768px) {
+    .modal {
+        margin-top: -100px !important;
+        
+    
+    }
+}
 
 
 

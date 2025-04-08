@@ -22,18 +22,12 @@
         </a>
         <div class="div1">
           <h5 style="margin: 0; padding: 0">{{ item.username }}</h5>
-          <p style="margin: 0; padding: 0">{{ item.roles[0].name }}</p>
+          <p style="margin: 0; padding: 0">{{ item.roles[0].name |translate  }}</p>
           <p style="margin: 0; padding: 0">{{ item.profile?.ciudad }}</p>
           <!-- <h5 style="margin: 0; padding: 0;">{{item.profiles.status}}</h5> -->
-          <span class="badge bg-primary" *ngIf="item.profile?.status === 1"
-            >Pendiente</span
-          >
-          <span class="badge bg-success" *ngIf="item.profile?.status === 2"
-            >Verificado</span
-          >
-          <span class="badge bg-danger" *ngIf="item.profile?.status === 3"
-            >Por revisar</span
-          >
+          <span class="badge  bg-primary" *ngIf="item.status === 1"> {{'Pending'|translate}}</span>
+            <span class="badge bg-success" *ngIf="item.status === 2">{{'Verified'|translate}}</span>
+            <span class="badge bg-danger" *ngIf="item.status === 3">{{'For Review'|translate}}</span>
         </div>
       </div>
     </div>

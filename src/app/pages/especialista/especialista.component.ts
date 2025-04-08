@@ -18,6 +18,7 @@ import Swal from 'sweetalert2';
 import { ImagenPipe } from '../../pipes/imagen.pipe';
 import { SkeletonLoaderComponent } from '../../shared/skeleton-loader/skeleton-loader.component';
 import { LoadingComponent } from '../../shared/loading/loading.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-especialista',
@@ -31,8 +32,8 @@ import { LoadingComponent } from '../../shared/loading/loading.component';
     FormsModule,
     ReactiveFormsModule,
     ImagenPipe,
-    // SkeletonLoaderComponent,
-    LoadingComponent
+    LoadingComponent,
+    TranslateModule
   ],
   templateUrl: './especialista.component.html',
   styleUrl: './especialista.component.scss'
@@ -51,6 +52,7 @@ export class EspecialistaComponent {
     public speciality!: Speciality;
     public solicitud!: Solicitud;
     status!:Profile ;
+    role!:Profile ;
     solicitudes_selected: any[] = [];
   
     constructor(
@@ -104,6 +106,21 @@ export class EspecialistaComponent {
 
       const datos = {
         "status": VALUE
+      }
+      
+      this.profileService.updateProfileStatus(datos, this.profile.id).subscribe(
+        resp =>{
+          console.log(resp);
+          this.ngOnInit();
+        }
+      )
+    }
+    cambiarRole(data:any){
+      const VALUE = data;
+      console.log(VALUE);
+
+      const datos = {
+        "role": VALUE
       }
       
       this.profileService.updateProfileStatus(datos, this.profile.id).subscribe(

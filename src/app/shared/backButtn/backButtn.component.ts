@@ -1,8 +1,10 @@
 import { Component, Inject, Input } from '@angular/core';
 import {  Location } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
     selector: 'app-backButtn',
     templateUrl: './backButtn.component.html',
+    imports:[TranslateModule],
     styleUrls: ['./backButtn.component.css']
 })
 export class BackButtnComponent {

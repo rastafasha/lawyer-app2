@@ -1,4 +1,5 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { MenuFooterComponent } from '../../shared/menu-footer/menu-footer.component';
 import { AvisoComponent } from '../../components/aviso/aviso.component';
@@ -21,8 +22,10 @@ import { UserService } from '../../services/usuario.service';
     AvisoComponent, CategoriaHorizontalComponent,
     SliderHorizontalComponent, ListProductsComponent,
     LateralComponent, ListProductsHComponent,
-    CommonModule, BackButtnComponent, ListaUsuariosComponent
+    CommonModule, BackButtnComponent, ListaUsuariosComponent,
+    TranslateModule
   ],
+  providers: [TranslateService],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -31,56 +34,18 @@ export class HomeComponent {
   user: Usuario;
   users: any = [];
 
+  private translate = inject(TranslateService);
+  
   constructor(
     private authService: AuthService,
   ){
     this.user = this.authService.getUser();
-
+    this.translate.use('es'); // Set default language
   }
 
   ngOnInit(){
     window.scrollTo(0, 0);
   }
 
-
-  isRefreshing = false; 
-  private startY: number = 0; 
-private currentY: number = 0; 
- 
-  @HostListener('touchstart', ['$event']) 
-  onTouchStart(event: TouchEvent) { 
-    // Logic to detect the start of a touch event 
-    this.startY = event.touches[0].clientY;
-  } 
- 
-  @HostListener('touchmove', ['$event']) 
-  onTouchMove(event: TouchEvent) { 
-    // Logic to detect the pull down gesture 
-    this.currentY = event.touches[0].clientY; 
-    const distance = this.currentY - this.startY; 
-    if (distance > 0) { 
-      // Update the UI to show the pull-down effect 
-      // e.g., increase the position of pull-down indicator 
-    } 
-  } 
- 
-  @HostListener('touchend', ['$event']) 
-  onTouchEnd(event: TouchEvent) { 
-    // Logic to handle the refresh action
-    const distance = this.currentY - this.startY; 
-    if (distance > 100) { // Adjust threshold as needed 
-      this.isRefreshing = true; 
-      this.refreshData(); 
-    }  
-  } 
- 
-  refreshData() { 
-    this.isRefreshing = true; 
-    // Simulate data fetching 
-    setTimeout(() => { 
-      this.isRefreshing = false; 
-      // Update your data here 
-    }, 2000); 
-  } 
 
 }

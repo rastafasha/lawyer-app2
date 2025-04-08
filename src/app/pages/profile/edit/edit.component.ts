@@ -13,6 +13,7 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { SpecialitiesService } from '../../../services/specialities.service';
 import Swal from 'sweetalert2';
 import { LoadingComponent } from '../../../shared/loading/loading.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit',
@@ -24,7 +25,8 @@ import { LoadingComponent } from '../../../shared/loading/loading.component';
         ReactiveFormsModule,
         FormsModule,
         NgFor,
-        LoadingComponent
+        LoadingComponent,
+        TranslateModule
   ],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.css'

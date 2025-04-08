@@ -7,8 +7,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DocumentService } from '../../../../services/document.service';
 import { Document } from '../../../../models/document.model';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ImagenPipe } from '../../../../pipes/imagen.pipe';
 import { LoadingComponent } from '../../../../shared/loading/loading.component';
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-files',
   imports: [
@@ -16,8 +16,8 @@ import { LoadingComponent } from '../../../../shared/loading/loading.component';
     HeaderComponent,
     MenuFooterComponent,
     BackButtnComponent,
-    ImagenPipe,
-    LoadingComponent
+    LoadingComponent,
+    TranslateModule
   ],
   templateUrl: './files.component.html',
   styleUrl: './files.component.scss',

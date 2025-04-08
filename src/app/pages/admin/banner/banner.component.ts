@@ -12,6 +12,7 @@ import { ImagenPipe } from '../../../pipes/imagen.pipe';
 import { LoadingComponent } from '../../../shared/loading/loading.component';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import Swal from 'sweetalert2';
+import { TranslateModule } from '@ngx-translate/core';
 declare var $:any;  
 
 @Component({
@@ -26,6 +27,7 @@ declare var $:any;
     FormsModule,
     LoadingComponent,
     InfiniteScrollDirective,
+    TranslateModule
   ],
   templateUrl: './banner.component.html',
   styleUrl: './banner.component.scss'

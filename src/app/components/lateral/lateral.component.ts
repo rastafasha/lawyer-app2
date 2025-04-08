@@ -8,7 +8,7 @@ import { Profile } from '../../models/profile.model';
   selector: 'app-lateral',
   imports: [],
   templateUrl: './lateral.component.html',
-  styleUrl: './lateral.component.css'
+  styleUrl: './lateral.component.scss'
 })
 export class LateralComponent {
   user!: Usuario;

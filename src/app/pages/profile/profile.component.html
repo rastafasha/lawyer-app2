@@ -8,15 +8,15 @@
         <div class=" itemFav shadow" *ngIf="!isLoading">
           <img [src]="profile.avatar  | imagenPipe: 'users' " alt="">
           <div class="div1">
-            <p>{{user.username}}</p>
+            <p>{{'Username'|translate}}: {{user.username}}</p>
             <p *ngIf="profile">{{profile.nombre}} {{profile.surname}}</p>
             <p>{{user.email}}</p>
-            <p *ngIf="speciality">{{speciality.title}}</p>
-            <p>{{user.roles}}</p>
+            <p *ngIf="profile.speciality_id">{{speciality.title}}</p>
+            <!-- <p>{{user.roles}}</p> -->
             <!-- <p *ngIf="profile">{{profile.status}}</p> -->
-            <span class="badge  bg-primary" *ngIf="profile.status === 1">Pendiente</span>
-            <span class="badge bg-success" *ngIf="profile.status === 2">Verificado</span>
-            <span class="badge bg-danger" *ngIf="profile.status === 3">Por revisar</span>
+            <span class="badge  bg-primary" *ngIf="profile.status === 1"> {{'Pending'|translate}}</span>
+            <span class="badge bg-success" *ngIf="profile.status === 2">{{'Verified'|translate}}</span>
+            <span class="badge bg-danger" *ngIf="profile.status === 3">{{'For Review'|translate}}</span>
             <br>
             <!-- *ngIf="user.roles[0] === 'GUEST'" -->
             <div class="reds" >
@@ -44,14 +44,14 @@
             <a [routerLink]="['/profile/edit', user.id]">
               <div class="option-admin">
                 <i class="fa fa-user"></i>
-                <p>Edit Profile</p>
+                <p>{{'Edit Profile'|translate}}</p>
               </div>
             </a>
             <!-- <a [routerLink]="['/profile/paymentmethods', user.id]" *ngIf="user.roles[0] !== 'SUPERADMIN'"> -->
             <a [routerLink]="['/profile/paymentmethods']" *ngIf="user.roles[0] === 'MEMBER'">
               <div class="option-admin">
                 <i class="fa fa-user"></i>
-                <p>payment methods</p>
+                <p> {{'Payment Methods'|translate}}</p>
               </div>
             </a>
             <!-- <a routerLink="/profile/documents/file" *ngIf="user.roles[0] !== 'SUPERADMIN'">
@@ -63,7 +63,7 @@
             <a routerLink="/profile/documents" *ngIf="user.roles[0] !== 'SUPERADMIN'">
               <div class="option-admin">
                 <i class="fa fa-user"></i>
-                <p>Documents</p>
+                <p>{{'Documents'|translate}}</p>
               </div>
             </a>
             <!-- <div class="option-admin" *ngIf="user.roles[0] !== 'SUPERADMIN'">
@@ -77,7 +77,7 @@
             <a (click)="logout()">
               <div class="option-admin">
                 <i class="fa fa-user"></i>
-                <p>Logout</p>
+                <p>{{'Logout'|translate}}</p>
               </div>
             </a>
           </div>

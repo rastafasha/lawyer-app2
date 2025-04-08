@@ -11,14 +11,15 @@ import { ProfileService } from '../../services/profile.service';
 import { ImagenPipe } from '../../pipes/imagen.pipe';
 import { LoadingComponent } from "../../shared/loading/loading.component";
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-ListaUsuarios',
     templateUrl: './ListaUsuarios.component.html',
     imports: [CommonModule, RouterModule, 
       NgIf, NgFor, ImagenPipe, LoadingComponent,
-    InfiniteScrollDirective,],
-    styleUrls: ['./ListaUsuarios.component.css']
+    InfiniteScrollDirective, TranslateModule],
+    styleUrls: ['./ListaUsuarios.component.scss']
 })
 export class ListaUsuariosComponent {
 

@@ -14,6 +14,7 @@ import { SpecialitiesService } from '../../services/specialities.service';
 import { PipesModule } from '../../pipes/pipes.module';
 import { ImagenPipe } from "../../pipes/imagen.pipe";
 import { LoadingComponent } from '../../shared/loading/loading.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   imports: [
@@ -24,7 +25,8 @@ import { LoadingComponent } from '../../shared/loading/loading.component';
     LateralComponent,
     BackButtnComponent,
     ImagenPipe,
-    LoadingComponent
+    LoadingComponent,
+    TranslateModule
 ],
   selector: 'app-profile',
   templateUrl: './profile.component.html',

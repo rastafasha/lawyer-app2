@@ -11,9 +11,9 @@ import Swal from 'sweetalert2';
 import { Usuario } from '../../../models/usuario.model';
 import { AuthService } from '../../../services/auth.service';
 import { Document } from '../../../models/document.model';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { environment } from '../../../environments/environment';
 import { LoadingComponent } from '../../../shared/loading/loading.component';
+import { TranslateModule } from '@ngx-translate/core';
 const baseUrl = environment.url_servicios;
 declare let $:any;  
 @Component({
@@ -25,9 +25,9 @@ declare let $:any;
             BackButtnComponent,
             ReactiveFormsModule,
             FormsModule,
-            PdfViewerModule,
             RouterModule,
-            LoadingComponent
+            LoadingComponent,
+            TranslateModule
   ],
   templateUrl: './documents.component.html',
   styleUrl: './documents.component.scss'

@@ -6,10 +6,11 @@ import { ProfileService } from '../../services/profile.service';
 import { Profile } from '../../models/profile.model';
 import { NgIf } from '@angular/common';
 import { LoadingComponent } from '../../shared/loading/loading.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-aviso',
-  imports: [RouterLink, NgIf, LoadingComponent],
+  imports: [RouterLink, NgIf, LoadingComponent, TranslateModule],
   templateUrl: './aviso.component.html',
   styleUrl: './aviso.component.css'
 })

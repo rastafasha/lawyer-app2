@@ -17,12 +17,9 @@
                 <div class="div1">
                   <h3>{{ profile.nombre }} {{ profile.surname }}</h3>
                   <!-- <h4>{{ user.email }}</h4> -->
-                  <span class="badge  bg-primary"
-                  *ngIf="profile.status === 1">Pendiente</span>
-                  <span class="badge bg-success"
-                  *ngIf="profile.status === 2">Verificado</span>
-                  <span class="badge bg-danger"
-                  *ngIf="profile.status === 3">Por revisar</span>
+                  <span class="badge  bg-primary" *ngIf="profile.status === 1"> {{'Pending'|translate}}</span>
+            <span class="badge bg-success" *ngIf="profile.status === 2">{{'Verified'|translate}}</span>
+            <span class="badge bg-danger" *ngIf="profile.status === 3">{{'For Review'|translate}}</span>
                   <h5 *ngIf="speciality">{{ speciality.title }}</h5>
                   <div class="stars">
 
@@ -96,6 +93,7 @@
             </div>
             <div class="col-xs-12 col-sm-6" *ngIf="!isLoading">
               <div *ngIf="user.roles[0] === 'SUPERADMIN' || user.roles[0] === 'ADMIN'">
+                <h4>{{'Status'|translate}}</h4>
                 <select
                   class="form-control form-select-solid fw-bolder"
                   name="status"
@@ -104,10 +102,24 @@
                   (change)="cambiarStatus(status)"
                   placeholder="state"
                 >
-                  <option>-- Select --</option>
-                  <option value="1">Pendiente</option>
-                  <option value="2">Verificado</option>
-                  <option value="3">Rechazado</option>
+                  <option>-- {{'Select'|translate}} --</option>
+                  <option value="1">{{'Pending'|translate}}</option>
+                  <option value="2">{{'Verified'|translate}}</option>
+                  <option value="3">{{'For Review'|translate}}</option>
+                </select>
+                <h4>{{'Role'|translate}}</h4>
+                <select
+                  class="form-control form-select-solid fw-bolder"
+                  name="role"
+                  [(ngModel)]="role"
+                  [ngModelOptions]="{ standalone: true }"
+                  (change)="cambiarRole(role)"
+                  placeholder="state"
+                >
+                  <option>-- {{'Select'|translate}} --</option>
+                  <option value="1">{{'Pending'|translate}}</option>
+                  <option value="2">{{'Verified'|translate}}</option>
+                  <option value="3">{{'For Review'|translate}}</option>
                 </select>
               </div>
               <div class="tarifas shadow" *ngIf="precios">
