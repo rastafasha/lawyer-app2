@@ -9,115 +9,157 @@
 
     </div>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-12 col-sm-9 col-md-9">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-9 col-md-9">
+    
+                    <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
+                    <app-loading *ngIf="isLoading"></app-loading>
+                    
+                    <details class="shadowSearch cuadrosearch">
+                        <summary class="">{{'Search'|translate}}</summary>
+                        <form [formGroup]="searchForm">
+                            <div class="row ">
+                                <div class="col-12 col-md-3">
+                                    <label class="labelgoogle">
+                                        <input class="form-control input" formControlName="name_file" type="search" placeholder=" " aria-label="Search">
+                                        <span class="label__name">
+                                            {{'Search'|translate}}
+                                            <i class="fa fa-search" style="margin-left: 10px;"></i>
+                                        </span>
+                                    </label>
+                                  </div>
+                              <div class="col-12 col-md-3">
+                                <label class="labelgoogle">
+                                    <input
+                                    class="form-control datetimepicker input"
+                                    formControlName="created_at"
+                                    type="date"
+                                  />
+                                    <span class="label__name">
+                                        {{'From'|translate}}
 
-                <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
-                <app-loading *ngIf="isLoading"></app-loading>
-                
-                <details class="shadowSearch cuadrosearch">
-                    <summary class="">{{'Search'|translate}}</summary>
-                    <form [formGroup]="searchForm">
-                        <div class="row search5">
-                            <div class="col-12 col-md-3">
-                                <div class="form-group local-forms">
-                                    <label>{{'Search'|translate}}</label>
-                                    <input class="form-control" formControlName="name_file" type="search" placeholder="{{'Search' |translate}}" aria-label="Search">
-
-                                </div>
-                            
+                                    </span>
+                                </label>
                               </div>
-                          <div class="col-12 col-md-3">
-                            <div class="form-group local-forms">
-                              <label>{{'From'|translate}}</label>
-                              <input
-                                class="form-control datetimepicker"
-                                formControlName="created_at"
-                                type="date"
-                              />
+                              <div class="col-12 col-md-3">
+                                <div class="input-group">
+                                  <!-- <label>{{'Category'|translate}}  </label> -->
+                                  <span class="input-group-text " id="basic-addon1">
+                                    <i class="fa fa-folder" aria-hidden="true"></i>
+                                </span>
+                                <select class="form-control"  formControlName="name_category" >
+                                    <option *ngFor="let data of user_files" [value]="data.name_category">
+                                    {{data.name_category}}
+                                    </option>
+                                </select>
+                                </div>
+                              </div>
+                              
+                              <div class="col-2 col-md-1 ">
+                                <div class="doctor-submit">
+                                  <button
+                                    type="button"
+                                    class="btn btn-primary submit-list-form "
+                                    (click)="searchData()"
+                                  >
+                                  <!-- {{'Search'|translate}} -->
+                                  <i class="fa fa-search"></i>
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="col-10 col-md-1 ">
+                                <div class="doctor-submit d-flex justify-content-center ">
+                                  <button
+                                    type="button"
+                                    class="btn btn-outline-primary submit-list-form "
+                                    (click)="resetSearch()"
+                                  >
+                                    <i class="fa fa-refresh"></i>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    class="btn btn-outline-primary submit-list-form "
+                                    data-bs-toggle="modal" data-bs-target="#add_publicidad" 
+                                  >
+                                    <i class="fa fa-plus"></i>
+                                  </button>
+                                 
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                          <div class="col-12 col-md-3">
-                            <div class="form-group local-forms">
-                              <label>{{'Category'|translate}}  </label>
-                          <select class="form-control"  formControlName="name_category" >
-                            <option *ngFor="let data of user_files" [value]="data.name_category">
-                            {{data.name_category}}
-                            </option>
-                        </select>
-                            </div>
-                          </div>
-                          
-                          <div class="col-12 col-md-2 pt-3">
-                            <div class="doctor-submit">
-                              <button
-                                type="button"
-                                class="btn btn-primary submit-list-form me-2"
-                                (click)="searchData()"
-                              >
-                              {{'Search'|translate}}
-                              </button>
-                            </div>
-                          </div>
-                          <div class="col-12 col-md-1 pt-3">
-                            <div class="doctor-submit d-flex justify-content-center ">
-                              <button
-                                type="button"
-                                class="btn btn-outline-primary submit-list-form me-2"
-                                (click)="resetSearch()"
-                              >
-                                <i class="fa fa-refresh"></i>
-                              </button>
-                              <button
-                                type="button"
-                                class="btn btn-outline-primary submit-list-form me-2"
-                                data-bs-toggle="modal" data-bs-target="#add_publicidad" 
-                              >
-                                <i class="fa fa-plus"></i>
-                              </button>
-                             
-                            </div>
-                          </div>
-                        </div>
-                      </form>
-                </details>
-
-
-                <div class="container" *ngIf="!isLoading">
-                    <!-- modal add-->
-                    <div id="add_publicidad" class="modal fade add-modal" role="dialog">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-body text-center ">
-                                    <!-- <img src="assets/img/sent.png" alt="" width="50" height="46"> -->
-                                    <h3> {{'formulario.Add Files'|translate}}</h3>
-                                    <p>{{'formulario.Allowed Files'|translate}}: jpg, jpeg, gif, pdf| {{'formulario.Max Weight'|translate}}: 1024kb</p>
-                                    <br>
-                                    <div class="col-xs-12 ">
-                                        <div class="col-12 col-sm-4">
-                                            <div class="form-group local-forms">
-                                                <label>{{'Category'|translate}}<span class="login-danger">*</span></label>
-                                                <input class="form-control" name="name_category"
-                                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="name_category"
-                                                    type="text" required>
-
+                          </form>
+                    </details>
+    
+    
+                    <div class="container" *ngIf="!isLoading">
+                        <!-- modal add-->
+                        <div id="add_publicidad" class="modal fade add-modal" role="dialog">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-body text-center ">
+                                        <!-- <img src="assets/img/sent.png" alt="" width="50" height="46"> -->
+                                        <h3> {{'formulario.Add Files'|translate}}</h3>
+                                        <p>{{'formulario.Allowed Files'|translate}}: jpg, jpeg, gif, pdf| {{'formulario.Max Weight'|translate}}: 1024kb</p>
+                                        <br>
+                                        <div class="col-xs-12 ">
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>{{'Category'|translate}}<span class="login-danger">*</span></label>
+                                                    <input class="form-control" name="name_category"
+                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="name_category"
+                                                        type="text" required>
+    
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-xl-12">
-                                            <label class="form-label">{{'formulario.Upload Files'|translate}}: *</label>
-                                        </div>
-                                        <div class="col-5">
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="customFile"
-                                                    multiple="true" (change)="processFile($event)">
-                                                <label class="custom-file-label" for="customFile">{{'formulario.Select File'|translate}}(s)</label>
+                                            <div class="col-xl-12">
+                                                <label class="form-label">{{'formulario.Upload Files'|translate}}: *</label>
                                             </div>
+                                            <div class="col-5">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="customFile"
+                                                        multiple="true" (change)="processFile($event)">
+                                                    <label class="custom-file-label" for="customFile">{{'formulario.Select File'|translate}}(s)</label>
+                                                </div>
+                                            </div>
+                                            <!-- validaciones -->
+                                            <div class="form-group row" *ngIf="text_success">
+                                                <div class="col-12">
+                                                    <div class="alert alert-success alert-dismissible fade show"
+                                                        role="alert">
+                                                        <strong>{{'formulario.Success'|translate}}!</strong>{{text_success}}.
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true"> </span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+    
+                                            <div class="form-group row" *ngIf="text_validation">
+                                                <div class="col-12">
+                                                    <div class="alert alert-warning alert-dismissible fade show"
+                                                        role="alert">
+                                                        <strong>!</strong> {{ text_validation }}.
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true"> </span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- validaciones -->
+                                            <!-- <div class="col-12 mb-5" >
+                                                <div class="doctor-submit text-end">
+                                                    <button type="button" class="btn btn-primary submit-form me-2" (click)="save()">Actualizar</button>
+                                                    
+                                                </div>
+                                            </div> -->
                                         </div>
-                                        <!-- validaciones -->
+    
                                         <div class="form-group row" *ngIf="text_success">
                                             <div class="col-12">
-                                                <div class="alert alert-success alert-dismissible fade show"
-                                                    role="alert">
+                                                <div class="alert alert-success alert-dismissible fade show" role="alert">
                                                     <strong>{{'formulario.Success'|translate}}!</strong>{{text_success}}.
                                                     <button type="button" class="btn-close" data-bs-dismiss="alert"
                                                         aria-label="Close">
@@ -126,201 +168,169 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="form-group row" *ngIf="text_validation">
-                                            <div class="col-12">
-                                                <div class="alert alert-warning alert-dismissible fade show"
-                                                    role="alert">
-                                                    <strong>!</strong> {{ text_validation }}.
-                                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true"> </span>
-                                                    </button>
-                                                </div>
-                                            </div>
+                                        <div class="m-t-20"> <a href="javascript:void(0);" (click)="closeReload()"
+                                                class="btn btn-outline-danger me-1" data-bs-dismiss="modal">{{'formulario.Close'|translate}}</a>
+                                            <button type="submit" class="btn btn-success" (click)="save()">{{'formulario.Add'|translate}}</button>
                                         </div>
-                                        <!-- validaciones -->
-                                        <!-- <div class="col-12 mb-5" >
-                                            <div class="doctor-submit text-end">
-                                                <button type="button" class="btn btn-primary submit-form me-2" (click)="save()">Actualizar</button>
-                                                
-                                            </div>
-                                        </div> -->
-                                    </div>
-
-                                    <div class="form-group row" *ngIf="text_success">
-                                        <div class="col-12">
-                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                                <strong>{{'formulario.Success'|translate}}!</strong>{{text_success}}.
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true"> </span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="m-t-20"> <a href="javascript:void(0);" (click)="closeReload()"
-                                            class="btn btn-outline-danger me-1" data-bs-dismiss="modal">{{'formulario.Close'|translate}}</a>
-                                        <button type="submit" class="btn btn-success" (click)="save()">{{'formulario.Add'|translate}}</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- modal -->
-
-
-                    <div class="row">
-                        <ul class="post col-xs-12" *ngIf="!isSearching">
-                            <li class="group carpetas ">
-                                <div class="div-group " *ngFor="let cat of user_files">
-                                    <a data-bs-toggle="modal" [attr.data-bs-target]="'#view-doc-'+cat.name_category"
-                                    (click)="getDocumentsbyCategory(cat.name_category)" style="cursor: pointer;">
-        
-                                        <div class="folder-info">
-                                            <div class="menu-opt">
-                                                <i class="fa fa-list"></i>
-                                            </div>
-                                            <i class="fa fa-folder"></i>
-                                            <h2>{{'Category'|translate}}: {{cat.name_category}}</h2>
-                                            <p> {{cat.created_at}}</p>
-                                        </div>
-                                    </a>
-        
-        
-                                    <div [attr.id]="'view-doc-'+cat.name_category" class="modal fade add-modal" role="dialog">
-                                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">{{'Category'|translate}}: {{cat.name_category}}</h5>
-                                                    <a href="javascript:void(0);" class="btn btn-outline-danger me-1"
-                                                        data-bs-dismiss="modal">{{'formulario.Close'|translate}}</a>
+                        <!-- modal -->
+    
+    
+                        <div class="row">
+                            <ul class="post col-xs-12" *ngIf="!isSearching">
+                                <li class="group carpetas ">
+                                    <div class="div-group " *ngFor="let cat of user_files">
+                                        <a data-bs-toggle="modal" [attr.data-bs-target]="'#view-doc-'+cat.name_category"
+                                        (click)="getDocumentsbyCategory(cat.name_category)" style="cursor: pointer;">
+            
+                                            <div class="folder-info">
+                                                <div class="menu-opt">
+                                                    <i class="fa fa-list"></i>
                                                 </div>
-        
-                                                <div class="modal-body text-center columnadoble">
-                                                    <ng-container *ngFor="let FILE of user_filesfiltered;let i = index">
-        
-                                                        <div class="itemlist">
-                                                            <div class="d-flex flex-stack mb-3">
-                                                                <div class="me-3">
-                                                                    <a [routerLink]="['/profile/documents/file', FILE.id]">
-                                                                        <img *ngIf="FILE.type ==='pdf'" src="assets/svg/doc.svg"
-                                                                            class="w-50px ms-n1 me-1 filesvg" alt="">
-                                                                        <img *ngIf="FILE.type ==='jpg' || FILE.type ==='jpeg'" 
-                                                                        src="assets/svg/jpg.svg" class="w-50px ms-n1 me-1 filesvg" alt="">
-                                                                        <img *ngIf="FILE.type ==='png'" src="assets/svg/png.svg"
-                                                                            class="w-50px ms-n1 me-1 filesvg" alt="">
-                                                                    </a>
+                                                <i class="fa fa-folder"></i>
+                                                <h2>{{'Category'|translate}}: {{cat.name_category}}</h2>
+                                                <p> {{cat.created_at}}</p>
+                                            </div>
+                                        </a>
+            
+            
+                                        <div [attr.id]="'view-doc-'+cat.name_category" class="modal fade add-modal" role="dialog">
+                                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">{{'Category'|translate}}: {{cat.name_category}}</h5>
+                                                        <a href="javascript:void(0);" class="btn btn-outline-danger me-1"
+                                                            data-bs-dismiss="modal">{{'formulario.Close'|translate}}</a>
+                                                    </div>
+            
+                                                    <div class="modal-body text-center columnadoble">
+                                                        <ng-container *ngFor="let FILE of user_filesfiltered;let i = index">
+            
+                                                            <div class="itemlist">
+                                                                <div class="d-flex flex-stack mb-3">
+                                                                    <div class="me-3">
+                                                                        <a [routerLink]="['/profile/documents/file', FILE.id]">
+                                                                            <img *ngIf="FILE.type ==='pdf'" src="assets/svg/doc.svg"
+                                                                                class="w-50px ms-n1 me-1 filesvg" alt="">
+                                                                            <img *ngIf="FILE.type ==='jpg' || FILE.type ==='jpeg'" 
+                                                                            src="assets/svg/jpg.svg" class="w-50px ms-n1 me-1 filesvg" alt="">
+                                                                            <img *ngIf="FILE.type ==='png'" src="assets/svg/png.svg"
+                                                                                class="w-50px ms-n1 me-1 filesvg" alt="">
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="info_itemlist">
+                                                                    <a [routerLink]="['/profile/documents/file', FILE.id]"
+                                                                        class="text-gray-800 text-hover-primary fw-bolder">{{FILE.name_file
+                                                                        | slice:0:10}}... .{{FILE.type}}</a>
+            
+                                                                    <span class="text-gray-400 fw-bolder">{{'Category'|translate}}:
+                                                                        <a href="javascript:void(0);" onclick="return false;"
+                                                                            class="text-gray-800 text-hover-primary fw-bolder">{{FILE.name_category}}</a></span>
+                                                                    <span class="text-gray-400 fw-bolder">{{'formulario.Size'|translate}}:
+                                                                        <a href="javascript:void(0);" onclick="return false;"
+                                                                            class="text-gray-800 text-hover-primary fw-bolder">{{FILE.size}}
+                                                                            </a></span>
+            
+                                                                </div>
+                                                                <div class="buttons">
+                                                                    <button class="btn btn-danger btn-sm"
+                                                                        (click)="deleteFile(FILE.id)">x</button>
+            
                                                                 </div>
                                                             </div>
-                                                            <div class="info_itemlist">
-                                                                <a [routerLink]="['/profile/documents/file', FILE.id]"
-                                                                    class="text-gray-800 text-hover-primary fw-bolder">{{FILE.name_file
-                                                                    | slice:0:10}}... .{{FILE.type}}</a>
-        
-                                                                <span class="text-gray-400 fw-bolder">{{'Category'|translate}}:
-                                                                    <a href="javascript:void(0);" onclick="return false;"
-                                                                        class="text-gray-800 text-hover-primary fw-bolder">{{FILE.name_category}}</a></span>
-                                                                <span class="text-gray-400 fw-bolder">{{'formulario.Size'|translate}}:
-                                                                    <a href="javascript:void(0);" onclick="return false;"
-                                                                        class="text-gray-800 text-hover-primary fw-bolder">{{FILE.size}}
-                                                                        </a></span>
-        
-                                                            </div>
-                                                            <div class="buttons">
-                                                                <button class="btn btn-danger btn-sm"
-                                                                    (click)="deleteFile(FILE.id)">x</button>
-        
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-        
+                                                        </ng-container>
+            
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+            
                                     </div>
-        
-                                </div>
-        
-        
-                            </li>
-                        </ul> 
-
-                        <!-- lista de todos los archivos -->
-                        <div class="col-xs-12 " *ngIf="isSearching ">
-                            <div class="row align-items-center">
-                                <div class="card card-flush">
-                                    <div class="card-header pt-7">
-
-                                        <h3 class="card-title align-items-start flex-column">
-                                            <span class="card-label fw-bolder">{{ 'File List'| translate }}</span>
-                                        </h3>
-                                        <div class="card-toolbar">
+            
+            
+                                </li>
+                            </ul> 
+    
+                            <!-- lista de todos los archivos -->
+                            <div class="col-xs-12 " *ngIf="isSearching ">
+                                <div class="row align-items-center">
+                                    <div class="card card-flush">
+                                        <div class="card-header pt-7">
+    
+                                            <h3 class="card-title align-items-start flex-column">
+                                                <span class="card-label fw-bolder">{{ 'File List'| translate }}</span>
+                                            </h3>
+                                            <div class="card-toolbar">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="hover-scroll-overlay-y pe-6 me-n6 columnadoble">
-                                            <ng-container *ngFor="let FILE of FILES;let i = index">
-
-                                                <div class="itemlist">
-                                                    <div class="d-flex flex-stack mb-3">
-                                                        <div class="me-3">
-                                                            <a [routerLink]="['/profile/documents/file', FILE.id]">
-                                                                
-                                                                <img *ngIf="FILE.type ==='pdf'" src="assets/svg/doc.svg"
-                                                                    class="w-50px ms-n1 me-1 filesvg" alt="">
-                                                                <img *ngIf="FILE.type ==='jpg' || FILE.type ==='jpeg'" 
-                                                                src="assets/svg/jpg.svg" class="w-50px ms-n1 me-1 filesvg" alt="">
-                                                                <img *ngIf="FILE.type ==='png'" src="assets/svg/png.svg"
-                                                                    class="w-50px ms-n1 me-1 filesvg" alt="">
-                                                            </a>
+                                        <div class="card-body">
+                                            <div class="hover-scroll-overlay-y pe-6 me-n6 columnadoble">
+                                                <ng-container *ngFor="let FILE of FILES;let i = index">
+    
+                                                    <div class="itemlist">
+                                                        <div class="d-flex flex-stack mb-3">
+                                                            <div class="me-3">
+                                                                <a [routerLink]="['/profile/documents/file', FILE.id]">
+                                                                    
+                                                                    <img *ngIf="FILE.type ==='pdf'" src="assets/svg/doc.svg"
+                                                                        class="w-50px ms-n1 me-1 filesvg" alt="">
+                                                                    <img *ngIf="FILE.type ==='jpg' || FILE.type ==='jpeg'" 
+                                                                    src="assets/svg/jpg.svg" class="w-50px ms-n1 me-1 filesvg" alt="">
+                                                                    <img *ngIf="FILE.type ==='png'" src="assets/svg/png.svg"
+                                                                        class="w-50px ms-n1 me-1 filesvg" alt="">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="info_itemlist">
+                                                            <a [routerLink]="['/profile/documents/file', FILE.id]"
+                                                                class="text-gray-800 text-hover-primary fw-bolder">{{FILE.name_file
+                                                                | slice:0:10}}... .{{FILE.type}}</a>
+    
+                                                            <span class="text-gray-400 fw-bolder">Categoria:
+                                                                <a href="javascript:void(0);" onclick="return false;"
+                                                                    class="text-gray-800 text-hover-primary fw-bolder">{{FILE.name_category}}</a></span>
+                                                            <span class="text-gray-400 fw-bolder">Size:
+                                                                <a href="javascript:void(0);" onclick="return false;"
+                                                                    class="text-gray-800 text-hover-primary fw-bolder">{{FILE.size}}
+                                                                    </a></span>
+    
+                                                        </div>
+                                                        <div class="buttons">
+                                                            <button class="btn btn-danger btn-sm"
+                                                                (click)="deleteFile(FILE.id)">x</button>
+    
                                                         </div>
                                                     </div>
-                                                    <div class="info_itemlist">
-                                                        <a [routerLink]="['/profile/documents/file', FILE.id]"
-                                                            class="text-gray-800 text-hover-primary fw-bolder">{{FILE.name_file
-                                                            | slice:0:10}}... .{{FILE.type}}</a>
-
-                                                        <span class="text-gray-400 fw-bolder">Categoria:
-                                                            <a href="javascript:void(0);" onclick="return false;"
-                                                                class="text-gray-800 text-hover-primary fw-bolder">{{FILE.name_category}}</a></span>
-                                                        <span class="text-gray-400 fw-bolder">Size:
-                                                            <a href="javascript:void(0);" onclick="return false;"
-                                                                class="text-gray-800 text-hover-primary fw-bolder">{{FILE.size}}
-                                                                </a></span>
-
-                                                    </div>
-                                                    <div class="buttons">
-                                                        <button class="btn btn-danger btn-sm"
-                                                            (click)="deleteFile(FILE.id)">x</button>
-
-                                                    </div>
-                                                </div>
-
-
-
-
-                                            </ng-container>
-
-
+    
+    
+    
+    
+                                                </ng-container>
+    
+    
+                                            </div>
                                         </div>
                                     </div>
+    
                                 </div>
-
                             </div>
+    
                         </div>
-
+    
                     </div>
-
+                    <!-- grupos por categoria -->
+    
+    
+    
                 </div>
-                <!-- grupos por categoria -->
-
-
-
-            </div>
-            <div class="col-xs-12 col-sm-3 col-md-3">
-                
-
+                <div class="col-xs-12 col-sm-3 col-md-3">
+                    
+    
+                </div>
             </div>
         </div>
 

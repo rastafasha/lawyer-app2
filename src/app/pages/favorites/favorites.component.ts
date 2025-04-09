@@ -8,6 +8,7 @@ import { LoadingComponent } from '../../shared/loading/loading.component';
 import { FavoritoService } from '../../services/favorito.service';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { TranslateModule } from '@ngx-translate/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-favorites',
@@ -19,7 +20,8 @@ import { TranslateModule } from '@ngx-translate/core';
     BackButtnComponent,
     LoadingComponent,
     InfiniteScrollDirective,
-    TranslateModule
+    TranslateModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.css'
@@ -30,14 +32,28 @@ export class FavoritesComponent {
   isRefreshing = false;
   isLoading = false;
   isEdnOfList = false;
+  searchForm!: FormGroup;
+  name_file ='';
 
     characters: Array<any> = [];
     nextUrl:string = '';
     private favoriteService = inject(FavoritoService);
+    private fb = inject(FormBuilder);
 
     ngOnInit():void{
       window.scrollTo(0, 0);
       this.getCharactrs();
+      this.validarFormularioPerfil();
+    }
+
+    validarFormularioPerfil(){
+      this.searchForm = this.fb.group({
+        pais: [''],
+        speciality_id: [''],
+        name_file: [''],
+        rating: [''],
+        id: [''],
+      });
     }
 
     getCharactrs(){
