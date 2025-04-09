@@ -40,8 +40,9 @@
 @import url("lawyer-profile.css");
 @import url("pricing.css");
 @import url("loginnuevo.css");
-@import url("darkmode.css");
 @import url("animating-scrolling.css");
+@import url("formulario-tipogoogle.css");
+@import url("darkmode.css");
 
 /*--------------------------------------------------------------
 # General
@@ -241,6 +242,12 @@ img {
     color: gold;
 }
 
+.cuadrosearch{
+    color: #ccc;
+    transition: all 0.3s ease;
+    padding: 15px;
+}
+
 @media (max-width: 768px) {
     .lateral{
         display: none !important;
@@ -261,3 +268,8 @@ img {
         border-radius: .25rem;
     }
 }
+
+.login-danger{
+    color: red;
+}
+

@@ -17,7 +17,7 @@
 .darkmode #logoNuevo{
     /* filter: drop-shadow(1px 1px 1px white); */
     /* filter: invert(1); */
-    filter: contrast(0.3);
+    filter: contrast(0.1);
 }
 .darkmode .header .sidemenu nav li::before {
     border-top: 1px solid var(--blanco);
@@ -271,4 +271,14 @@
     background-color: #000;
     color: var(--fondo-footer);
     border: 1px solid #333;
+}
+
+.darkmode .label__name{
+    color: #000 !important;
+}
+
+.darkmode.input:where(:focus,:not(:placeholder-shown)) + .darkmode .label__name{
+    transform: translateY(-50%) scale(.7);
+    background-color: var(--fondo-negro) !important;
+    color: #fff;
 }

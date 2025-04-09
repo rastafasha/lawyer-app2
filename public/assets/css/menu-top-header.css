@@ -161,7 +161,7 @@
     top: 0;
     left: 0;
     background: var(--blanco);
-    width: 80%;
+    width: 30%;
     height: 100vh;
     z-index: 999;
     padding: 2rem;
@@ -315,7 +315,7 @@
 
 @media (max-width : 768px) {
     .header .sidemenu {
-        width: 20%;
+        width: 80%;
     }
     .menuright {
         width: 0px;

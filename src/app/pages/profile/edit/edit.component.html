@@ -6,31 +6,37 @@
 
                 <app-backButtn [pageTitle]="pageTitle" [Title]="Title"></app-backButtn>
                 <app-loading *ngIf="isLoading" [loadingTitle]="loadingTitle"></app-loading>
-                <form   [formGroup]="userForm" *ngIf="!isLoading" >
+                <form   [formGroup]="userForm" *ngIf="!isLoading" class="container" >
                     <!-- datos -->
                     <div class="row">
-                        <div class="col-xs-12 col-sm-3">
+                        <div class="col-xs-12 col-sm-12 col-md-3">
                             <!-- Foto -->
-                            <div class="col-12 col-md-6 col-xl-6">
-                                <div class="form-group local-top-form">
-                                    <label class="local-top"> {{'formulario.Picture'|translate}}<span class="login-danger">*</span></label>
-                                    <div class="settings-btn upload-files-avator">
-                                        <input type="file" accept="image/*" name="image" id="file" (change)="loadFile($event)" class="hide-input">
-                                        <label for="file" class="upload">{{'formulario.Select a Photo'|translate}}</label>
-                                    </div>
+                            <div class="form-group local-top-form">
+                                <!-- <label class="local-top"> {{'formulario.Picture'|translate}}<span class="login-danger">*</span></label> -->
+                                <div class="settings-btn upload-files-avator">
+                                    <label for="file" class="upload labelgoogle">
+                                        <input type="file" accept="image/*" name="image" id="file" (change)="loadFile($event)" class="hide-input input">
+                                        <span class="label__name">
+                                            {{'formulario.Select a Photo'|translate}}
+                                        </span>
+                                    </label>
                                 </div>
-                                <div *ngIf="FILE_AVATAR">
-                                    <img [src]="IMAGE_PREVISUALIZA" style="width: 250px;" alt="">
-                                </div>
+                            </div>
+                            <div *ngIf="FILE_AVATAR">
+                                <img [src]="IMAGE_PREVISUALIZA" style="width: 250px;" alt="">
                             </div>
                         </div>
                         
-                        <div class="col-xs-12 col-sm-9">
-                            <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-9">
+                            <div class="row ">
                                 <!-- Nombre -->
-                                <div class="col-md-4">
-                                    <label for="validationCustom02" class="form-label">{{'formulario.First Name'|translate}}</label>
-                                    <input type="text" formControlName="nombre" class="form-control" id="validationCustom02"  required>
+                                <div class="col-md-4 ">
+                                    <label for="validationCustom02" class="form-label labelgoogle">
+                                        <input type="text" formControlName="nombre" class="form-control input" id="validationCustom02" placeholder=" " required>
+                                        <span class="label__name">
+                                            {{'formulario.First Name'|translate}} <span class="login-danger">*</span>
+                                        </span>
+                                    </label>
                                     @if(userForm.controls['nombre'].touched){
                       
                                         <div class="text-danger">
@@ -44,9 +50,14 @@
                                     }
                                   </div>
                                   <!-- Apellido -->
-                                  <div class="col-md-4">
-                                    <label for="validationCustom02" class="form-label">{{'formulario.Last Name'|translate}}</label>
-                                    <input type="text" formControlName="surname" class="form-control" id="validationCustom02"  required>
+                                  <div class="col-md-4 ">
+                                    <label for="validationCustom02" class="form-label labelgoogle">
+                                        <input type="text" formControlName="surname" class="form-control input" id="validationCustom02" placeholder=" " required>
+                                        <span class="label__name">
+                                            {{'formulario.Last Name'|translate}} <span class="login-danger">*</span>
+
+                                        </span>
+                                    </label>
                                     @if(userForm.controls['surname'].touched){
                       
                                         <div class="text-danger">
@@ -60,9 +71,13 @@
                                     }
                                   </div>
                                   <!-- Identificación -->
-                                  <div class="col-md-4">
-                                    <label for="validationCustom02" class="form-label">{{'formulario.Id Number'|translate}}</label>
-                                    <input type="text" formControlName="n_doc" class="form-control" id="validationCustom02"  required>
+                                  <div class="col-md-4 ">
+                                    <label for="validationCustom02" class="form-label labelgoogle">
+                                        <input type="text" formControlName="n_doc" class="form-control input" id="validationCustom02" placeholder=" " required>
+                                        <span class="label__name">
+                                            {{'formulario.Id Number'|translate}}<span class="login-danger">*</span>
+                                        </span>
+                                    </label>
                                     @if(userForm.controls['n_doc'].touched){
                       
                                         <div class="text-danger">
@@ -76,9 +91,13 @@
                                     }
                                   </div>
                                   <!-- Teléfono Casa -->
-                                  <div class="col-md-4">
-                                    <label for="validationCustom02" class="form-label">{{'formulario.Phome Home'|translate}}</label>
-                                    <input type="text" formControlName="telhome" class="form-control" id="validationCustom02"  required>
+                                  <div class="col-md-4 ">
+                                    <label for="validationCustom02" class="form-label labelgoogle">
+                                        <input type="text" formControlName="telhome" class="form-control input" id="validationCustom02" placeholder=" " required>
+                                        <span class="label__name">
+                                            {{'formulario.Phome Home'|translate}}<span class="login-danger">*</span>
+                                        </span>
+                                    </label>
                                     @if(userForm.controls['telhome'].touched){
                       
                                         <div class="text-danger">
@@ -92,9 +111,13 @@
                                     }
                                   </div>
                                   <!-- Teléfono Móvil -->
-                                  <div class="col-md-4">
-                                    <label for="validationCustom02" class="form-label">{{'formulario.Phome Mobile'|translate}}</label>
-                                    <input type="text" formControlName="telmovil" class="form-control" id="validationCustom02"  required>
+                                  <div class="col-md-4 ">
+                                    <label for="validationCustom02" class="form-label labelgoogle">
+                                        <input type="text" formControlName="telmovil" class="form-control input" id="validationCustom02" placeholder=" " required>
+                                        <span class="label__name">
+                                            {{'formulario.Phome Mobile'|translate}}<span class="login-danger">*</span>
+                                        </span>
+                                    </label>
                                     @if(userForm.controls['telmovil'].touched){
                       
                                         <div class="text-danger">
@@ -107,31 +130,14 @@
                                         </div>
                                     }
                                   </div>
-                                  <!-- País -->
-                                  <div class="col-md-4">
-                                    <label for="validationCustom02" class="form-label">{{'formulario.Country'|translate}}</label>
-                                    <!-- <input type="text" formControlName="pais" class="form-control" id="validationCustom02"  required> -->
-                                    <select class="form-control" formControlName="pais"  >
-                                        <option *ngFor="let data of paises" [value]="data.code">
-                                        {{data.title}}
-                                        </option>
-                                        </select>
-                                    @if(userForm.controls['pais'].touched){
-                      
-                                        <div class="text-danger">
-                                          @if(userForm.controls['pais'].errors?.['required']){
-                                              <span >{{'formulario.Field Required'|translate}}</span>
-                                          }
-                                          @if(userForm.controls['pais'].errors?.['minlength']){
-                                              <span >{{'formulario.3 Charecters Minimal'|translate}}</span>
-                                          }
-                                        </div>
-                                    }
-                                  </div>
                                   <!-- Ciudad -->
-                                  <div class="col-md-4">
-                                    <label for="validationCustom02" class="form-label">{{'formulario.City'|translate}}</label>
-                                    <input type="text" formControlName="ciudad" class="form-control" id="validationCustom02"  required>
+                                  <div class="col-md-4 ">
+                                    <label for="validationCustom02" class="form-label labelgoogle">
+                                        <input type="text" formControlName="ciudad" class="form-control input" id="validationCustom02" placeholder=" "  required>
+                                        <span class="label__name">
+                                            {{'formulario.City'|translate}}<span class="login-danger">*</span>
+                                        </span>
+                                    </label>
                                     @if(userForm.controls['ciudad'].touched){
                       
                                         <div class="text-danger">
@@ -144,37 +150,72 @@
                                         </div>
                                     }
                                   </div>
+                                  <!-- País -->
+                                  <div class="col-md-4 ">
+                                    <div class="input-group">
+                                        <!-- <label for="validationCustom02" class="form-label">{{'formulario.Country'|translate}}</label> -->
+                                        <span class="input-group-text " id="basic-addon1">
+                                            <i class="fa fa-globe" aria-hidden="true"></i><span class="login-danger">*</span>
+                                        </span>
+                                        <select class="form-control" formControlName="pais"  >
+                                            <option *ngFor="let data of paises" [value]="data.code">
+                                            {{data.title}}
+                                            </option>
+                                            </select>
+
+                                    </div>
+                                    @if(userForm.controls['pais'].touched){
+                      
+                                        <div class="text-danger">
+                                          @if(userForm.controls['pais'].errors?.['required']){
+                                              <span >{{'formulario.Field Required'|translate}}</span>
+                                          }
+                                          @if(userForm.controls['pais'].errors?.['minlength']){
+                                              <span >{{'formulario.3 Charecters Minimal'|translate}}</span>
+                                          }
+                                        </div>
+                                    }
+                                  </div>
+                                  
                                   <!-- Género -->
-                                  <div class="col-12 col-md-4 col-xl-4">
-                                    <div class="form-group select-gender">
-                                        <label class="gen-label">{{'formulario.Gender'|translate}}<span class="login-danger">*</span></label><br>
-                                        <div class="form-check-inline">
-                                            <label class="form-check-label">
-                                                <input type="radio"  value="1" formControlName="gender" class="form-check-input">{{'formulario.Male'|translate}}
+                                  <div class="col-12 col-md-4  col-xl-4">
+                                    <div class="form-group select-gender input-group gap-3">
+                                        <!-- <label class="gen-label">{{'formulario.Gender'|translate}}<span class="login-danger">*</span></label><br> -->
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                        </span>
+                                        <div class="form-check-inline ">
+                                            <label class="form-check-label ">
+                                                <input type="radio"  value="1" formControlName="gender" class="form-check-input ">{{'formulario.Male'|translate}}
                                             </label>
                                         </div>
-                                        <div class="form-check-inline">
-                                            <label class="form-check-label">
-                                                <input type="radio"  value="2" formControlName="gender" class="form-check-input">{{'formulario.Female'|translate}}
+                                        <div class="form-check-inline ">
+                                            <label class="form-check-label ">
+                                                <input type="radio"  value="2" formControlName="gender" class="form-check-input ">{{'formulario.Female'|translate}}
                                             </label>
                                         </div>
                                     </div>
                                   </div>
                                 <!-- Especialidad -->
                                   <div class="col-12 col-md-4 col-xl-4" *ngIf="user.roles[0] ==='MEMBER' && profile.status === 2">
-                                    <label for="validationCustom04" class="form-label">{{'formulario.Speciality'|translate}}</label>
-                                    <select class="form-select" formControlName="speciality_id" id="validationCustom04"  required>
-                                      <!-- <option selected disabled value="">Seleccione...</option> -->
-                                      <option *ngFor="let data of specialities" [value]="data.id">{{data.title}}</option>
-                                    </select>
+                                      <div class="input-group">
+                                        <!-- <label for="validationCustom04" class="form-label">{{'formulario.Speciality'|translate}}</label> -->
+                                        <span class="input-group-text " id="basic-addon1">
+                                            <i class="fa fa-anchor " aria-hidden="true"></i>
+                                        </span>
+                                        <select class="form-select" formControlName="speciality_id" id="validationCustom04"  required>
+                                          <!-- <option selected disabled value="">Seleccione...</option> -->
+                                          <option *ngFor="let data of specialities" [value]="data.id">{{data.title}}</option>
+                                        </select>
+                                    </div>
 
                                     <div class="invalid-feedback">
                                         {{'formulario.pleaseSelec'|translate}}
                                     </div>
                                   </div>
                                   <!-- Dirección -->
-                                  <div class="col-12">
-                                    <label for="validationCustom02" class="form-label">{{'formulario.Address'|translate}}</label>
+                                  <div class="col-12  col-sm-6">
+                                    <label for="validationCustom02" class="form-label ">{{'formulario.Address'|translate}}</label>
                                     <textarea formControlName="direccion" class="form-control" id="validationCustom02"  required></textarea>
                                     @if(userForm.controls['direccion'].touched){
                       
@@ -189,7 +230,7 @@
                                     }
                                   </div>
                                   <!-- Descripción -->
-                                  <div class="col-12">
+                                  <div class="col-12 col-sm-6">
                                     <label for="validationCustom02" class="form-label">{{'formulario.Description'|translate}}</label>
                                     <textarea formControlName="description" class="form-control" id="validationCustom02"  required></textarea>
                                     @if(userForm.controls['description'].touched){
@@ -213,45 +254,60 @@
                     <br>
                     <!-- redes sociales -->
                     <div class="row " >
-                        <h3>{{'formulario.Social Networks'|translate}}</h3>
-                        <div class="col-12 col-sm-4">  
-                            <div class="form-group local-forms">
-                            <label >{{'formulario.Icon'|translate}}<span class="login-danger">*</span></label>
-                            <select class="form-control" name="icono" 
-                            [ngModelOptions]="{standalone: true}"  [(ngModel)]="icono"
-                            (change)="onPaServiceSelect(icono)"
-                            >
-                                <option *ngFor="let ic of listIcons " value="{{ic.icon}}">
-                                  {{ic.name}} <i class="{{ic.name}}"></i>
-                                </option>
-                              </select>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-4">  
-                            <div class="form-group local-forms">
-                            <label >{{'formulario.Name'|translate}}<span class="login-danger">*</span></label>
-                            <input class="form-control" name="title" [ngModelOptions]="{standalone: true}"  [(ngModel)]="title" type="text" required>
+                        <details class="shadowSearch cuadrosearch">
+                            <summary class="">{{'formulario.Social Networks'|translate}}</summary>
+                            <div class="row">
+                                <div class="col-12 col-sm-4">  
+                                    <div class="form-group input-group ">
+                                        <!-- <label >{{'formulario.Icon'|translate}}<span class="login-danger">*</span></label> -->
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="fa fa-info-circle"></i>
+                                        </span>
+                                        <select class="form-control" name="icono" 
+                                        [ngModelOptions]="{standalone: true}"  [(ngModel)]="icono"
+                                        (change)="onPaServiceSelect(icono)"
+                                        >
+                                            <option *ngFor="let ic of listIcons " value="{{ic.icon}}">
+                                            {{ic.name}} <i class="{{ic.name}}"></i>
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-4">  
+                                    <label  class="labelgoogle">
+                                        <input class="form-control input" name="title" placeholder=" " [ngModelOptions]="{standalone: true}"  [(ngModel)]="title" type="text" required>
+                                        <span class="label__name">
+                                            {{'formulario.Name'|translate}} <span class="login-danger">*</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-12 col-sm-4" *ngIf="!iswhatsapp">  
+                                    <label class="labelgoogle">
+                                        <input class="form-control input" name="url" placeholder=" " [ngModelOptions]="{standalone: true}"  [(ngModel)]="url" type="text" required>
+                                        <span class="label__name">
+                                            {{'formulario.Address'|translate}}<span class="login-danger">*</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-12 col-sm-4" *ngIf="iswhatsapp">  
+                                    <div class="form-group ">
+                                    <label class="labelgoogle">
+                                        <input class="form-control input" placeholder=" " name="url" [ngModelOptions]="{standalone: true}"  [(ngModel)]="url" type="text" required>
+                                        <span class="label__name">
+                                            {{'formulario.Whatsapp Number'|translate}}<span class="login-danger">*</span>
 
+                                        </span>
+                                    </label>
+        
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <button class="btn btn-primary btn-sm text-end " (click)="addRedSocial()">+ {{'formulario.Add'|translate}}</button>
+                                    <!-- <button class="btn btn-danger btn-sm">x</button> -->
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-12 col-sm-4" *ngIf="!iswhatsapp">  
-                            <div class="form-group local-forms">
-                            <label >{{'formulario.Address'|translate}}<span class="login-danger">*</span></label>
-                            <input class="form-control" name="url" [ngModelOptions]="{standalone: true}"  [(ngModel)]="url" type="text" required>
-
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-4" *ngIf="iswhatsapp">  
-                            <div class="form-group local-forms">
-                            <label >{{'formulario.Whatsapp Number'|translate}}<span class="login-danger">*</span></label>
-                            <input class="form-control" name="url" [ngModelOptions]="{standalone: true}"  [(ngModel)]="url" type="text" required>
-
-                            </div>
-                        </div>
-                        <div class="col-12 mb-3">
-                            <button class="btn btn-primary btn-sm text-end " (click)="addRedSocial()">+ {{'formulario.Add'|translate}}</button>
-                            <!-- <button class="btn btn-danger btn-sm">x</button> -->
-                        </div>
+                        </details>
+                        
                         <div class="col-xs-12 ">
                             <div class="table-responsive">
                                 <table class="table mb-0 table-striped">
@@ -291,30 +347,37 @@
                     <br>
                     <!-- Tarifas -->
                     <div class="row " *ngIf="user.roles[0]==='MEMBER' && profile.status === 2" >
-                        <h3>{{'formulario.Price Sale'|translate}}</h3>
-                        
-                        <div class="row align-items-center" >
-                            <div class="col-xs-12 ">
-                                <div class="row">
+                        <details class="shadowSearch cuadrosearch">
+                            <summary>{{'formulario.Price Sale'|translate}}</summary>
+                            <div class="row">
                                     
-                                    <div class="col-12 col-sm-8">  
-                                        <div class="form-group local-forms">
-                                        <label >Item<span class="login-danger">*</span></label>
-                                        <input class="form-control" name="item_tarifa" [ngModelOptions]="{standalone: true}"  [(ngModel)]="item_tarifa" type="text" required>
+                                <div class="col-12 col-sm-10">  
+                                    <label class="labelgoogle">
+                                        <input class="form-control input" name="item_tarifa" placeholder=" " [ngModelOptions]="{standalone: true}"  [(ngModel)]="item_tarifa" type="text" required>
+                                        <span class="label__name">
+                                            Item<span class="login-danger">*</span>
+                                        </span>
+                                    </label>
+                                    <div class="form-group ">
 
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-2">
-                                        <div class="form-group local-forms">
-                                            <label >{{'formulario.Price'|translate}}<span class="login-danger">*</span></label>
-                                            <input class="form-control" name="precio" [ngModelOptions]="{standalone: true}" [(ngModel)]="precio" type="number"  >
-                                        </div>
-                                    </div>
-                                    <div class="col-12 mb-3">
-                                        <button class="btn btn-primary btn-sm text-end " (click)="addMedicamento()">+ {{'formulario.Add'|translate}}</button>
                                     </div>
                                 </div>
+                                <div class="col-12 col-sm-2">
+                                    <label class="labelgoogle">
+                                        <input class="form-control input" name="precio" placeholder=" " [ngModelOptions]="{standalone: true}" [(ngModel)]="precio" type="number"  >
+                                        <span class="label__name">
+                                            {{'formulario.Price'|translate}}<span class="login-danger">*</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <button class="btn btn-primary btn-sm text-end " (click)="addMedicamento()">+ {{'formulario.Add'|translate}}</button>
+                                </div>
                             </div>
+                        </details>
+                        
+                        <div class="row align-items-center" >
+                            
                             <div class="col-xs-12 ">
                                 <div class="table-responsive">
                                     <table class="table mb-0 table-striped">

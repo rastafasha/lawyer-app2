@@ -132,10 +132,10 @@ export class EspecialistaComponent {
     }
 
     solicitarItem(data:any){
-      if (!data || (Array.isArray(this.solicitudes_selected) && this.solicitudes_selected.length === 0)) {
-        Swal.fire('Error', 'No valid solicitudes selected', 'error');
-        return;
-      }
+      // if (!data || (Array.isArray(this.solicitudes_selected) && this.solicitudes_selected.length === 0)) {
+      //   Swal.fire('Error', 'No valid solicitudes selected', 'error');
+      //   return;
+      // }
       
       const datos = {
         id: 0,
@@ -143,8 +143,8 @@ export class EspecialistaComponent {
         "cliente_id": this.user.id,
         pedido: data,
         status: 1,
-        solicitudes_selected: this.solicitudes_selected || []
       }
+      console.log(datos);
 
       this.solicitudService.createSolicitud(datos).subscribe({
         next: (resp:any) => {

@@ -77,12 +77,12 @@ export class DocumentService {
         '/?page=' +
         page +
         LINK;
-      // return this.http.get<any>(URL);
+      return this.http.get<any>(URL);
 
-      return this.http.get<any>(URL, this.headers)
-        .pipe(
-          map((resp:{ok: boolean, documents: Document}) => resp.documents)
-          );
+      // return this.http.get<any>(URL, this.headers)
+      //   .pipe(
+      //     map((resp:{ok: boolean, documents: Document}) => resp.documents)
+      //     );
     }
 
 

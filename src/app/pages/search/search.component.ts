@@ -37,11 +37,15 @@ export class SearchComponent {
   characters: Array<any> = [];
     nextUrl:string = '';
     search!:string;
+    pais:string = '';
+    speciality_id!:number;
+    rating!:number;
 
     public paises :Pais[] = [];
     public specialities :Speciality[] = [];
 
     searchForm!:FormGroup;
+    currentPage = 1;
 
   private favoriteService = inject(FavoritoService);
   private paisService = inject(PaisService);
@@ -63,6 +67,48 @@ export class SearchComponent {
     this.getSpecialitiesList();
     this.validarFormularioPerfil();
   }
+
+
+  validarFormularioPerfil(){
+    this.searchForm = this.fb.group({
+      pais: [''],
+      speciality_id: [''],
+      rating: [''],
+      id: [''],
+    });
+  }
+  
+  onSearch(){
+    const formValue = this.searchForm.value;
+    console.log(this.searchForm.value);
+    this.getdocumentsbyUserFilter();
+    } 
+
+    getdocumentsbyUserFilter(){
+      this.isLoading = true;
+      // this.currentPage;
+      this.pais = this.searchForm.value.pais;
+      this.speciality_id = this.searchForm.value.speciality_id;
+      this.rating = this.searchForm.value.rating;
+      this.specialityService.getAllClientReportByPatient(
+        // this.currentPage,
+        this.pais, 
+        this.rating,
+        this.speciality_id,
+      ).subscribe((resp:any)=>{
+        console.log(resp);
+        this.isLoading = false;
+       
+      })
+    }
+
+    PageSize(): void {
+      // this.pageSelection = [];
+      // this.limit = this.pageSize;
+      // this.skip = 0;
+      // this.currentPage = 1;
+      this.searchForm.reset();
+    }
 
   getPaisesList(): void {
     this.paisService.getPaises().subscribe(
@@ -126,30 +172,5 @@ export class SearchComponent {
       }, 2000); 
     }
 
-    validarFormularioPerfil(){
-      this.searchForm = this.fb.group({
-        pais: [''],
-        speciality_id: [''],
-        rating: [''],
-        id: [''],
-      });
-    }
-    
-    onSearch(){
-      const formValue = this.searchForm.value;
-      console.log(this.searchForm.value);
-      // this.search = this.search.toLowerCase();
-      // this.characters = this.characters.filter((character: any) => {
-      //   return character.name.toLowerCase().includes(this.search);
-      //   });
-      } 
-
-      PageSize(): void {
-        // this.pageSelection = [];
-        // this.limit = this.pageSize;
-        // this.skip = 0;
-        // this.currentPage = 1;
-        this.searchForm.reset();
-      }
     
 }

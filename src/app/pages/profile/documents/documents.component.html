@@ -15,73 +15,72 @@
                 <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
                 <app-loading *ngIf="isLoading"></app-loading>
                 
-                <div class="row p-3 shadowSearch d-flex align-content-center">
-                    
-
-                        <form [formGroup]="searchForm">
-                            <div class="row search5">
-                                <div class="col-12 col-md-3">
-                                    <div class="form-group local-forms">
-                                        <label>{{'Search'|translate}}</label>
-                                        <input class="form-control" formControlName="name_file" type="search" placeholder="{{'Search' |translate}}" aria-label="Search">
-
-                                    </div>
-                                
-                                  </div>
-                              <div class="col-12 col-md-3">
+                <details class="shadowSearch cuadrosearch">
+                    <summary class="">{{'Search'|translate}}</summary>
+                    <form [formGroup]="searchForm">
+                        <div class="row search5">
+                            <div class="col-12 col-md-3">
                                 <div class="form-group local-forms">
-                                  <label>{{'From'|translate}}</label>
-                                  <input
-                                    class="form-control datetimepicker"
-                                    formControlName="created_at"
-                                    type="date"
-                                  />
+                                    <label>{{'Search'|translate}}</label>
+                                    <input class="form-control" formControlName="name_file" type="search" placeholder="{{'Search' |translate}}" aria-label="Search">
+
                                 </div>
+                            
                               </div>
-                              <div class="col-12 col-md-3">
-                                <div class="form-group local-forms">
-                                  <label>{{'Category'|translate}}  </label>
-                              <select class="form-control"  formControlName="name_category" >
-                                <option *ngFor="let data of user_files" [value]="data.name_category">
-                                {{data.name_category}}
-                                </option>
-                            </select>
-                                </div>
-                              </div>
-                              
-                              <div class="col-12 col-md-2 pt-3">
-                                <div class="doctor-submit">
-                                  <button
-                                    type="button"
-                                    class="btn btn-primary submit-list-form me-2"
-                                    (click)="searchData()"
-                                  >
-                                  {{'Search'|translate}}
-                                  </button>
-                                </div>
-                              </div>
-                              <div class="col-12 col-md-1 pt-3">
-                                <div class="doctor-submit d-flex justify-content-center ">
-                                  <button
-                                    type="button"
-                                    class="btn btn-outline-primary submit-list-form me-2"
-                                    (click)="resetSearch()"
-                                  >
-                                    <i class="fa fa-refresh"></i>
-                                  </button>
-                                  <button
-                                    type="button"
-                                    class="btn btn-outline-primary submit-list-form me-2"
-                                    data-bs-toggle="modal" data-bs-target="#add_publicidad" 
-                                  >
-                                    <i class="fa fa-plus"></i>
-                                  </button>
-                                 
-                                </div>
-                              </div>
+                          <div class="col-12 col-md-3">
+                            <div class="form-group local-forms">
+                              <label>{{'From'|translate}}</label>
+                              <input
+                                class="form-control datetimepicker"
+                                formControlName="created_at"
+                                type="date"
+                              />
                             </div>
-                          </form>
-                </div>
+                          </div>
+                          <div class="col-12 col-md-3">
+                            <div class="form-group local-forms">
+                              <label>{{'Category'|translate}}  </label>
+                          <select class="form-control"  formControlName="name_category" >
+                            <option *ngFor="let data of user_files" [value]="data.name_category">
+                            {{data.name_category}}
+                            </option>
+                        </select>
+                            </div>
+                          </div>
+                          
+                          <div class="col-12 col-md-2 pt-3">
+                            <div class="doctor-submit">
+                              <button
+                                type="button"
+                                class="btn btn-primary submit-list-form me-2"
+                                (click)="searchData()"
+                              >
+                              {{'Search'|translate}}
+                              </button>
+                            </div>
+                          </div>
+                          <div class="col-12 col-md-1 pt-3">
+                            <div class="doctor-submit d-flex justify-content-center ">
+                              <button
+                                type="button"
+                                class="btn btn-outline-primary submit-list-form me-2"
+                                (click)="resetSearch()"
+                              >
+                                <i class="fa fa-refresh"></i>
+                              </button>
+                              <button
+                                type="button"
+                                class="btn btn-outline-primary submit-list-form me-2"
+                                data-bs-toggle="modal" data-bs-target="#add_publicidad" 
+                              >
+                                <i class="fa fa-plus"></i>
+                              </button>
+                             
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                </details>
 
 
                 <div class="container" *ngIf="!isLoading">
