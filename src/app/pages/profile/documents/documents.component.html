@@ -15,7 +15,7 @@
     
                     <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
                     <app-loading *ngIf="isLoading"></app-loading>
-                    
+                    <!-- filtro buscador -->
                     <details class="shadowSearch cuadrosearch">
                         <summary class="">{{'Search'|translate}}</summary>
                         <form [formGroup]="searchForm">
@@ -91,7 +91,7 @@
                           </form>
                     </details>
     
-    
+                    
                     <div class="container" *ngIf="!isLoading">
                         <!-- modal add-->
                         <div id="add_publicidad" class="modal fade add-modal" role="dialog">
@@ -102,25 +102,29 @@
                                         <h3> {{'formulario.Add Files'|translate}}</h3>
                                         <p>{{'formulario.Allowed Files'|translate}}: jpg, jpeg, gif, pdf| {{'formulario.Max Weight'|translate}}: 1024kb</p>
                                         <br>
-                                        <div class="col-xs-12 ">
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>{{'Category'|translate}}<span class="login-danger">*</span></label>
-                                                    <input class="form-control" name="name_category"
-                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="name_category"
-                                                        type="text" required>
-    
-                                                </div>
+                                        <div class="row">
+                                            <div class="col-12 col-sm-6">
+                                                <label class="labelgoogle">
+                                                    <input class="form-control input" name="name_category"
+                                                    [ngModelOptions]="{standalone: true}" placeholder=" " [(ngModel)]="name_category"
+                                                    type="text" required>
+                                                    <span class="label__name">
+                                                        {{'Category'|translate}}<span class="login-danger">*</span>
+
+                                                    </span>
+                                                </label>
                                             </div>
-                                            <div class="col-xl-12">
+                                            <!-- <div class="col-xl-12">
                                                 <label class="form-label">{{'formulario.Upload Files'|translate}}: *</label>
-                                            </div>
-                                            <div class="col-5">
-                                                <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" id="customFile"
-                                                        multiple="true" (change)="processFile($event)">
-                                                    <label class="custom-file-label" for="customFile">{{'formulario.Select File'|translate}}(s)</label>
-                                                </div>
+                                            </div> -->
+                                            <div class="col-12 col-sm-6">
+                                                <label for="file" class="upload labelgoogle">
+                                                    <input type="file" class="input" id="customFile"
+                                                    multiple="true" (change)="processFile($event)">
+                                                    <span class="label__name">
+                                                        {{'formulario.Select File'|translate}}(s)
+                                                    </span>
+                                                </label>
                                             </div>
                                             <!-- validaciones -->
                                             <div class="form-group row" *ngIf="text_success">
@@ -201,7 +205,7 @@
                                             <div class="modal-dialog modal-dialog-centered modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">{{'Category'|translate}}: {{cat.name_category}}</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-folder-open"></i> {{'Category'|translate}}: {{cat.name_category}}</h5>
                                                         <a href="javascript:void(0);" class="btn btn-outline-danger me-1"
                                                             data-bs-dismiss="modal">{{'formulario.Close'|translate}}</a>
                                                     </div>

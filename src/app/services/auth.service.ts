@@ -108,12 +108,8 @@ getLocalDarkMode(){
     if(localStorage.getItem('darkmode')){
         var element = document.body;
       element.classList.add("darkmode");
-      
     }
-
   },500)
-  // console.log(this.user);
-  
 }
   
 

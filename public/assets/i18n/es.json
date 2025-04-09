@@ -38,6 +38,24 @@
     "For Review": "Revisión",
     "File Documents": "Archivo de Documentos",
     "Payment Methods": "Metodos de Pago",
+    "paymentmethod":{
+        "title":"Administre sus Metodos de pago",
+        "text":"Puede crear metodos de pago con la información de su entidad finaciera o cuenta",
+        "Transfer":"Transferencia",
+        "Bolivar Transfer":"Transferencia en Bolívares",
+        "Dollar Transfer":"Transferencia en Dólares",
+        "ID or RIF":"CI/ID or RIF",
+        "Account Type":"Tipo de Cuenta",
+        "Saving":"Cuenta de Ahorros",
+        "Cheking":"Cuenta Corriente",
+        "Account Number":"Número de Cuenta",
+        "Payment Type":"Tipo de Pago",
+        "Payment Types":"Tipos de Pago",
+        "Activate":"Activar",
+        "Options":"Opciones",
+        "Bank Name":"Nombre del Banco"
+    },
+
     "formulario":{
         "First Name": "Nombres",
         "Last Name":"Apellidos",

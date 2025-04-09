@@ -38,6 +38,25 @@
     "For Review": "For Review",
     "File Documents": "File Documents",
     "Payment Methods": "Payment Methods",
+    "paymentmethod":{
+        "title":"Manage your payment methods",
+        "text":"You can make payment methods with the following options",
+        "Transfer":"Transfer",
+        "Bolivar Transfer":"BSVES Transfer",
+        "Dollar Transfer":"USD Transfer",
+        "ID or RIF":"ID or RIF",
+        "Account Type":"Account Type",
+        "Saving":"Saving Account",
+        "Cheking":"Cheking Account",
+        "Account Number":"Account Number",
+        "Payment Type":"Payment Type",
+        "Payment Types":"Payment Types",
+        "Activate":"Activate",
+        "Options":"Options",
+        "Active":"Active",
+        "Inactive":"Inactive",
+        "Bank Name":"Bank Name"
+    },
     "formulario":{
         "First Name": "First Name",
         "Last Name":"Last Name",
@@ -91,6 +110,7 @@
         "Delete":"Delete",
         "Confirm":"Confirm",
         "Created At":"Created At",
+        
         "Save":"Save"
     },
     

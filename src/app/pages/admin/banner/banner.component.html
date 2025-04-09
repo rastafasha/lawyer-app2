@@ -111,13 +111,22 @@
                                             <h3> {{'formulario.Edit Photo'|translate}}: {{data.id}}</h3>
                                             <p>{{'formulario.Max Size'|translate}}:1920x1080 | {{'formulario.Max Weight'|translate}}: 500kb</p>
                                             <br>
-                                            <div class="col-12 col-md-6 col-xl-6">
-                                                <div class="form-group local-top-form">
+                                            <div class="row">
+                                                <!-- <div class="form-group local-top-form">
                                                     <label class="local-top">{{'formulario.Photo'|translate}} <span class="login-danger">*</span></label>
                                                     <div class="settings-btn upload-files-avator">
                                                         <input type="file" accept="image/*" name="image" id="file" (change)="loadFile($event)" class="hide-input">
                                                         <label for="file" class="upload">{{'formulario.Select File'|translate}}</label>
                                                     </div>
+                                                </div> -->
+                                                <div class="col-12 col-sm-6">
+                                                    <label for="file" class="labelgoogle">
+                                                        <input type="file" accept="image/*" class="input " id="file"
+                                                        multiple="true" (change)="loadFile($event)">
+                                                        <span class="label__name">
+                                                            {{'formulario.Select File'|translate}}(s)
+                                                        </span>
+                                                    </label>
                                                 </div>
                                                 <div *ngIf="IMAGE_PREVISUALIZA">
                                                     <img [src]="IMAGE_PREVISUALIZA" style="width: 250px;" alt="">

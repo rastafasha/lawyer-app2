@@ -51,7 +51,7 @@
               <!-- <a [routerLink]="['/profile/paymentmethods', user.id]" *ngIf="user.roles[0] !== 'SUPERADMIN'"> -->
               <a [routerLink]="['/profile/paymentmethods']" *ngIf="user.roles[0] === 'MEMBER'">
                 <div class="option-admin">
-                  <i class="fa fa-user"></i>
+                  <i class="fa fa-money"></i>
                   <p> {{'Payment Methods'|translate}}</p>
                 </div>
               </a>
@@ -63,7 +63,7 @@
               </a> -->
               <a routerLink="/profile/documents" *ngIf="user.roles[0] !== 'SUPERADMIN'">
                 <div class="option-admin">
-                  <i class="fa fa-user"></i>
+                  <i class="fa fa-briefcase"></i>
                   <p>{{'Documents'|translate}}</p>
                 </div>
               </a>
@@ -77,7 +77,7 @@
               </div> -->
               <a (click)="logout()">
                 <div class="option-admin">
-                  <i class="fa fa-user"></i>
+                  <i class="fa fa-power-off"></i>
                   <p>{{'Logout'|translate}}</p>
                 </div>
               </a>

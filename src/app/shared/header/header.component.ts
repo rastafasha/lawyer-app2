@@ -41,12 +41,7 @@ export class HeaderComponent {
     // console.log(this.translate);
   }
 
-  public cambiarLenguaje(lang:any) {
-    this.activeLang = lang;
-    this.translate.use(lang);
-    this.flag = !this.flag;
-    localStorage.setItem('lang', this.activeLang);
-  }
+  
   
   ngOnInit(): void {
     this.authService.getLocalDarkMode();
@@ -57,6 +52,13 @@ export class HeaderComponent {
       this.activeLang = lang;
       this.translate.use(lang);
       }
+  }
+
+  public cambiarLenguaje(lang:any) {
+    this.activeLang = lang;
+    this.translate.use(lang);
+    this.flag = !this.flag;
+    localStorage.setItem('lang', this.activeLang);
   }
 
   getProfile() {

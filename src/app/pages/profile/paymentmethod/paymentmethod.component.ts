@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { ActivatedRoute } from '@angular/router';
 import { LoadingComponent } from '../../../shared/loading/loading.component';
 import Swal from 'sweetalert2';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-paymentmethod',
@@ -22,7 +23,8 @@ import Swal from 'sweetalert2';
     NgFor,
     FormsModule,
     ReactiveFormsModule,
-    LoadingComponent
+    LoadingComponent,
+    TranslateModule
   ],
   templateUrl: './paymentmethod.component.html',
   styleUrl: './paymentmethod.component.scss',
