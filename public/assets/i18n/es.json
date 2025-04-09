@@ -38,6 +38,7 @@
     "For Review": "Revisión",
     "File Documents": "Archivo de Documentos",
     "Payment Methods": "Metodos de Pago",
+    "Back": "Regresar",
     "paymentmethod":{
         "title":"Administre sus Metodos de pago",
         "text":"Puede crear metodos de pago con la información de su entidad finaciera o cuenta",
