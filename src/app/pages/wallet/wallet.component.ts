@@ -48,6 +48,7 @@ export class WalletComponent {
   public clientes: any = [];
 
   option_selected:number = 1;
+  solicitud_selected:any;
 
   pedido_selected:any;
   public text_success = '';
@@ -63,7 +64,7 @@ export class WalletComponent {
     window.scrollTo(0, 0);
     this.user = this.authService.getUser();
     this.rol = this.user.roles[0];
-    // console.log(this.rol);
+    console.log(this.rol);
     if(this.rol === 'MEMBER'){
       this.getSolicitudesbyMember();
     }
@@ -73,40 +74,35 @@ export class WalletComponent {
     
   }
 
-  getSolicitudesbyGuest(){
-    this.solicitudService.getByGuest(this.user.id).subscribe((resp:any)=>{
-      this.solicitudes = resp.data;
-      this.pedido = typeof resp.pedido === 'string' 
-            ? JSON.parse(resp.pedido) || []
-            : resp.pedido || [];
-      // console.log(resp);
-    })
-  }
   getSolicitudesbyMember(){
+    this.isLoading = true;
     this.solicitudService.getByMember(this.user.id).subscribe((resp:any)=>{
-      this.solicitudes = resp.data;
+      this.solicitudes = resp;
       this.pedido = typeof resp.pedido === 'string' 
             ? JSON.parse(resp.pedido) || []
             : resp.pedido || [];
       // console.log(resp);
       // console.log(this.pedido);
+      this.isLoading = false;
     })
   }
 
-  
-
+  getSolicitudesbyGuest(){
+    this.solicitudService.getByGuest(this.user.id).subscribe((resp:any)=>{
+      this.solicitudes = resp;
+      this.pedido = typeof resp.pedido === 'string' 
+            ? JSON.parse(resp.pedido) || []
+            : resp.pedido || [];
+      // console.log('respuesta de invitado',resp);
+    })
+  }
 
   closeReload(){
     this.pedido_selected = null;
     this.ngOnInit();
   }
 
-  selectPublicidad(pedido:any){
-    this.pedido_selected = pedido;
-    // console.log(this.IMAGE_PREVISUALIZA);
-    this.pedido_selected.id;
-    // this.getPublicidad();
-  }
+  
 
   getSolicitudDetail(item:any){
     this.pedido_selected = item.id;
@@ -115,6 +111,7 @@ export class WalletComponent {
       // this.publicidadd = resp.publicidad;
       this.solicitud_users = resp.solicitud_users || [];
       this.cliente_id = resp.solicitud_users[0].cliente_id;
+      this.user_cliente_id = resp.solicitud_users[0].user_id;
       // console.log(this.solicitud_users);
       // console.log(this.cliente_id);
       // Buscamos el cliente_id dentro del array solicitud_users
@@ -126,17 +123,33 @@ export class WalletComponent {
       //     this.cliente_id = foundUser.cliente_id;
       //   }
       // }
-      this.getClienteSolicitud() 
+      
+      if(this.rol === 'MEMBER'){
+        this.getClienteSolicitud() 
+      }
+      if(this.rol === 'GUEST'){
+        this.getClienteSolicitud() 
+        console.log('soy guest');
+      }
       
     })
   }
 
   getClienteSolicitud(){
-    this.userService.showUser(this.cliente_id).subscribe((resp:any)=>{
-      // console.log(resp);
-      this.cliente = resp.user[0];
-      // console.log(this.cliente);
-    })
+    if(this.cliente_id){
+      this.userService.showUser(this.cliente_id).subscribe((resp:any)=>{
+        console.log('respuesta para miembro',resp);
+        this.cliente = resp.user[0];
+        // console.log(this.cliente);
+      })
+    }
+    if(this.user_cliente_id){
+      this.userService.showUser(this.user_cliente_id).subscribe((resp:any)=>{
+        console.log('respuesta para guest',resp);
+        this.cliente = resp.user[0];
+        // console.log(this.cliente);
+      })
+    }
   }
 
   
@@ -179,19 +192,49 @@ export class WalletComponent {
     optionSelected(value:number){
       this.option_selected = value;
       if(this.option_selected === 2){
-        this.user_member_id = this.user.id;
-        this.getClientesbyuser();
-        console.log(this.user_member_id);
         console.log('pidiendo clientes');
+        this.user_member_id = this.user.id;
+        this.user_cliente_id = this.user.id;
+        this.getClientesbyuser();
+        
+        if(this.rol === 'MEMBER'){
+          this.getClientesbyuser();
+        }
+        if(this.rol === 'GUEST'){
+          this.getContactosbyCliente();
+        }
       }
     }
 
     getClientesbyuser(){
+      this.isLoading = true;
       this.solicitudService.getByClientesUser(this.user_member_id).subscribe((resp:any)=>{
-        console.log(resp);
-        this.clientes = resp.clientes;
+        console.log('clientes',resp);
+        // this.clientes = resp.clientes;
+        this.isLoading = false;
+        
+        // console.log(this.pedido);
+      })
+      
+    }
+    getContactosbyCliente(){
+      this.isLoading = true;
+      this.solicitudService.getByContactosCliente(this.user_cliente_id).subscribe((resp:any)=>{
+        console.log('contactos',resp);
+        this.clientes = resp.users;
+        this.isLoading = false;
         
         // console.log(this.pedido);
       })
     }
+
+    solicitudSelected(solicitud:any){
+      this.solicitud_selected = solicitud;
+      this.getSolicitudDetail(solicitud);
+      console.log(solicitud);
+      this.pedido = typeof solicitud.pedido === 'string' 
+            ? JSON.parse(solicitud.pedido) || []
+            : solicitud.pedido || [];
+    }
+
 }

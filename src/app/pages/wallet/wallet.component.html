@@ -27,42 +27,69 @@ infiniteScroll
                   <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 1}" (click)="optionSelected(1)">Solicitudes</a>
               </li>
               <li>
-                  <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 2}" (click)="optionSelected(2)">Clientes</a>
+                  <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 2}" (click)="optionSelected(2)">Contactos</a>
               </li>
           </ul>
       </div>
       <div class="card" *ngIf="option_selected == 1">
-        <div  *ngFor="let item of solicitudes"  >
-          <div class="group itemFav shadow">
+        <div  *ngFor="let item of solicitudes"   >
+          <div class="group itemFav shadow" *ngIf="!solicitud_selected">
             <div class="fa fa-paypal"></div>
-            <div class="div1pagocon">
-              <details class=" cuadrosearch">
-                <summary class="" (click)="getSolicitudDetail(item)">{{item.created_at}}</summary>
-                <!-- <p>{{item.status}}</p> -->
-                <span class="badge  bg-primary" *ngIf="item.status === 1"> {{'Pending'|translate}}</span>
-                <span class="badge bg-success" *ngIf="item.status === 2">{{'Verified'|translate}}</span>
-                <span class="badge bg-danger" *ngIf="item.status === 3">{{'For Review'|translate}}</span>
-                <!-- <p>Johndoe@gmail.com</p> -->
-                <!-- <p>{{item.created_at}}</p> -->
-                <p>{{item.pedido.item_tarifa}}</p>
-                <p>{{item.pedido.precio|currency}}</p>
-                <p>{{cliente?.username}}</p>
-
-              </details>
+            <div class="div1pagocon" (click)="solicitudSelected(item)">
+              <h5 class="card-title" >{{item.created_at| date:'dd/MM/yyyy HH:mm:ss'}}</h5>
               
             </div>
+            
+            
           </div>
 
-          <!-- modal edit-->
           
         </div>
+
+        <div class="div1pagocon" *ngIf="solicitud_selected">
+          <div class="card-body">
+            
+            <h5 class="card-title">{{solicitud_selected.created_at | date:'dd/MM/yyyy HH:mm:ss'}}</h5>
+            <span class="badge  bg-primary" *ngIf="solicitud_selected.status === 1"> {{'Pending'|translate}}</span>
+            <span class="badge bg-success" *ngIf="solicitud_selected.status === 2">{{'Verified'|translate}}</span>
+            <span class="badge bg-danger" *ngIf="solicitud_selected.status === 3">{{'For Review'|translate}}</span>
+            <!-- <p>Johndoe@gmail.com</p> -->
+            <!-- <p>{{solicitud_selected.created_at}}</p> -->
+            <p>{{pedido.item_tarifa}}</p>
+            <p>{{pedido.precio|currency}}</p>
+            <p>{{cliente?.username}}</p>
+            <a [routerLink]="['/especialista/', cliente?.id]">
+              <button class="btn btn-outline-primary">
+                <i class="fa fa-eye"></i>
+              </button>
+
+            </a>
+          </div>
+        </div>
+
+        <div *ngIf="solicitud_selected">
+          <button
+            class="btn btn-primary btn-sm"
+            (click)="solicitud_selected = null"
+          >
+          {{'Back'|translate}}
+          </button>
+        </div>
       </div>
+
+
       <div class="card" *ngIf="option_selected == 2">
         <div  *ngFor="let item of clientes"  >
           <div class="group itemFav shadow">
             <div class="fa fa-paypal"></div>
             <div class="div1pagocon">
               <p>{{item.username}}</p>
+              <a [routerLink]="['/especialista/', item.id]">
+                <button class="btn btn-outline-primary">
+                  <i class="fa fa-eye"></i>
+                </button>
+
+              </a>
             </div>
           </div>
         </div>

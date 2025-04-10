@@ -50,28 +50,35 @@ export class SolicitudesService {
     const url = `${baseUrl}/solicitud/showbyUser/${usuario}`;
     return this.http.get<any>(url,this.headers)
       .pipe(
-        map((resp:{ok: boolean, solicitudes: any}) => resp.solicitudes)
+        map((resp:{ok: boolean, solicitudes: Solicitud}) => resp.solicitudes)
       )
   }
   getByGuest(usuario:any) {
     const url = `${baseUrl}/solicitud/cliente/${usuario}`;
     return this.http.get<any>(url,this.headers)
       .pipe(
-        map((resp:{ok: boolean, solicitudes: any}) => resp.solicitudes)
+        map((resp:{ok: boolean, solicitudes: Solicitud}) => resp.solicitudes)
       )
   }
   getByMember(usuario:any) {
     const url = `${baseUrl}/solicitud/user/${usuario}`;
     return this.http.get<any>(url,this.headers)
       .pipe(
-        map((resp:{ok: boolean, solicitudes: any}) => resp.solicitudes)
+        map((resp:{ok: boolean, solicitudes: Solicitud}) => resp.solicitudes)
       )
   }
   getByClientesUser(usuario:any) {
     const url = `${baseUrl}/solicitud/clientes-user/${usuario}`;
     return this.http.get<any>(url,this.headers)
       .pipe(
-        map((resp:{ok: boolean, solicitud: any}) => resp)
+        map((resp:{ok: boolean, clientes: Solicitud}) => resp.clientes)
+      )
+  }
+  getByContactosCliente(usuario:any) {
+    const url = `${baseUrl}/solicitud/contactos-cliente/${usuario}`;
+    return this.http.get<any>(url,this.headers)
+      .pipe(
+        map((resp:{ok: boolean, clientes: any}) => resp)
       )
   }
 
