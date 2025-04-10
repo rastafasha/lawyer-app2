@@ -186,7 +186,7 @@ export class EspecialistaComponent {
       // console.log(datos);
 
       const formData = new FormData();
-      formData.append("user_id", this.profile.id+'');
+      formData.append("user_id", this.profile.user_id+'');
       formData.append("cliente_id", this.user.id+'');
       formData.append("pedido", JSON.stringify(data));
       

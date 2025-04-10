@@ -13,6 +13,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UserService } from '../../services/usuario.service';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { LoadingComponent } from '../../shared/loading/loading.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ImagenPipe } from '../../pipes/imagen.pipe';
 
 @Component({
   selector: 'app-wallet',
@@ -23,7 +25,10 @@ import { LoadingComponent } from '../../shared/loading/loading.component';
     BackButtnComponent,
     NgFor, TranslateModule,
     InfiniteScrollDirective,
-    LoadingComponent, NgIf
+    LoadingComponent, NgIf,
+    FormsModule,
+    ReactiveFormsModule,
+    ImagenPipe
   ],
   templateUrl: './wallet.component.html',
   styleUrl: './wallet.component.scss'
@@ -49,6 +54,7 @@ export class WalletComponent {
 
   option_selected:number = 1;
   solicitud_selected:any = null;
+  status!:number ;
 
   pedido_selected:any;
   public text_success = '';
@@ -191,14 +197,15 @@ export class WalletComponent {
     optionSelected(value:number){
       this.option_selected = value;
       if(this.option_selected === 1){
-        this.getSolicitudesbyMember();
+
+        this.ngOnInit();
       }
       if(this.option_selected === 2){
         this.solicitud_selected = null;
         // console.log('pidiendo clientes');
         this.user_member_id = this.user.id;
         this.user_cliente_id = this.user.id;
-        this.getClientesbyuser();
+        // this.getClientesbyuser();
         
         if(this.rol === 'MEMBER'){
           this.getClientesbyuser();
@@ -236,9 +243,45 @@ export class WalletComponent {
       this.solicitud_selected = solicitud;
       this.getSolicitudDetail(solicitud);
       console.log(solicitud);
+      // this.pedido = this.solicitud_selected.pedido;
       this.pedido = typeof solicitud.pedido === 'string' 
-            ? JSON.parse(solicitud.pedido) || []
-            : solicitud.pedido || [];
+      ? JSON.parse(solicitud.pedido) || []
+      : solicitud.pedido || [];
+      console.log(this.pedido);
     }
 
+    cambiarStatus(pedido:any, status:any){debugger
+      console.log(pedido);
+      console.log(status);
+      if(status === false){
+        this.solicitud_selected.status = 1;
+      }
+      if(status === true){
+        this.solicitud_selected.status = 2;
+      }
+
+      const data ={
+        // id:this.solicitud_selected.id,
+        status: this.solicitud_selected.status,
+        pedido: this.pedido
+      }
+      
+      this.solicitudService.updateSolicitudStatus(data, this.solicitud_selected.id).subscribe((resp:any)=>{
+        console.log(resp);
+      })
+      
+    }
+    // cambiarStatus(status:any){
+    //   if(status === false){
+    //     this.solicitud_selected.status = 1;
+    //   }
+    //   if(status === true){
+    //     this.solicitud_selected.status = 2;
+    //   }
+    //   console.log(status);
+    //   this.solicitudService.updateSolicitudStatus(this.solicitud_selected.status).subscribe((resp:any)=>{
+    //     console.log(resp);
+    //   })
+      
+    // }
 }

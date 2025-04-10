@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BackButtnComponent } from '../../../shared/backButtn/backButtn.component';
 import { HeaderComponent } from '../../../shared/header/header.component';
 import { MenuFooterComponent } from '../../../shared/menu-footer/menu-footer.component';
@@ -14,6 +14,7 @@ import { Document } from '../../../models/document.model';
 import { environment } from '../../../environments/environment';
 import { LoadingComponent } from '../../../shared/loading/loading.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { SolicitudesService } from '../../../services/solicitudes.service';
 const baseUrl = environment.url_servicios;
 declare let $:any;  
 @Component({
@@ -38,6 +39,8 @@ export class DocumentsComponent {
   isRefreshing = false;
   isSearching = false;
 
+
+
   valid_form_success = false;
     public text_validation = '';
     public text_success = '';
@@ -53,11 +56,17 @@ export class DocumentsComponent {
   public created_at!:string;
   user_id!:number;
   user!:Usuario;
+  public rol?:string;
 
   currentPage = 1;
+  share:any;
 
   searchForm!:FormGroup;
-
+  document_selected:any = null;
+  public user_cliente_id!: number;
+  public user_member_id!: number;
+  public clientes: any = [];
+  private solicitudService = inject(SolicitudesService);
   constructor(
     private authService: AuthService,
     public documentService:DocumentService,
@@ -71,6 +80,7 @@ export class DocumentsComponent {
   }
   ngOnInit(): void {
     this.user_id = this.user.id;
+    this.rol = this.user.roles[0];
     this.validarFormularioPerfil();
     this.getdocumentsbyUser();
     this.getdocumentsbyUserFilter();
@@ -272,7 +282,56 @@ closeModalDoc(){
     this.isSearching = false;
     this.searchForm.reset();
   }
-  
+  // compartir archivo
+  solicitudSelected(document:any){
+    this.document_selected = document;
+    this.user_member_id = this.user.id;
+    this.user_cliente_id = this.user.id;
+    if(this.rol === 'MEMBER'){
+      this.getClientesbyuser();
+    }
+    if(this.rol === 'GUEST'){
+      this.getContactosbyCliente();
+    }
+  }
 
+  getClientesbyuser(){
+    // this.isLoading = true;
+    this.solicitudService.getByClientesUser(this.user_member_id).subscribe((resp:any)=>{
+      // console.log('clientes',resp);
+      this.clientes = resp;
+      // this.isLoading = false;
+      
+      // console.log(this.pedido);
+    })
+    
+  }
+  getContactosbyCliente(){
+    // this.isLoading = true;
+    this.solicitudService.getByContactosCliente(this.user_cliente_id).subscribe((resp:any)=>{
+      // console.log('contactos',resp);
+      this.clientes = resp.users;
+      // this.isLoading = false;
+      
+      
+      // console.log(this.pedido);
+    })
+  }
+
+  onShareIt(){
+    const data ={
+     
+      share: this.share,
+      user_id :this.user_id,
+      // profile_id :this.profile_id,
+      // // img: this.profile.img,
+      // // imagen: this.FILE_AVATAR.,
+      // avatar: this.FILE_AVATAR.name,
+      // ...this.userForm.value,
+
+      
+    }
+    console.log(data);
+  }
 
 }

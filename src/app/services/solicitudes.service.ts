@@ -90,11 +90,12 @@ export class SolicitudesService {
     return this.http.post(URL,data, {headers:headers});
   }
  
-  updateSolicitudStatus( profile_id:any,){
+  updateSolicitudStatus( data:any, solicitud_id:number){
     const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
-    const URL = baseUrl+'/solicitud/update/status/'+profile_id;
-    return this.http.put(URL,{headers:headers});
+    const URL = baseUrl+'/solicitud/update-status/'+solicitud_id;
+    return this.http.put(URL, data,{headers:headers});
   }
+
 
   deleteSolicitud(_id: string) {
     const url = `${baseUrl}/solicitud/destroy/${_id}`;
