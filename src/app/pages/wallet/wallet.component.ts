@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { MenuFooterComponent } from '../../shared/menu-footer/menu-footer.component';
 import { HeaderComponent } from '../../shared/header/header.component';
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LateralComponent } from '../../components/lateral/lateral.component';
 import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
@@ -23,10 +23,10 @@ import { LoadingComponent } from '../../shared/loading/loading.component';
     BackButtnComponent,
     NgFor, TranslateModule,
     InfiniteScrollDirective,
-    LoadingComponent
+    LoadingComponent, NgIf
   ],
   templateUrl: './wallet.component.html',
-  styleUrl: './wallet.component.css'
+  styleUrl: './wallet.component.scss'
 })
 export class WalletComponent {
   pageTitle='Agenda';
@@ -45,6 +45,9 @@ export class WalletComponent {
   public user_member_id!: number;
   public cliente_id!: any;
   public pedido: any = [];
+  public clientes: any = [];
+
+  option_selected:number = 1;
 
   pedido_selected:any;
   public text_success = '';
@@ -67,6 +70,7 @@ export class WalletComponent {
     if(this.rol === 'GUEST'){
       this.getSolicitudesbyGuest();
     }
+    
   }
 
   getSolicitudesbyGuest(){
@@ -88,6 +92,8 @@ export class WalletComponent {
       // console.log(this.pedido);
     })
   }
+
+  
 
 
   closeReload(){
@@ -168,5 +174,24 @@ export class WalletComponent {
         // Update your data here 
         this.getSolicitudesbyMember();
       }, 2000); 
+    }
+
+    optionSelected(value:number){
+      this.option_selected = value;
+      if(this.option_selected === 2){
+        this.user_member_id = this.user.id;
+        this.getClientesbyuser();
+        console.log(this.user_member_id);
+        console.log('pidiendo clientes');
+      }
+    }
+
+    getClientesbyuser(){
+      this.solicitudService.getByClientesUser(this.user_member_id).subscribe((resp:any)=>{
+        console.log(resp);
+        this.clientes = resp.clientes;
+        
+        // console.log(this.pedido);
+      })
     }
 }

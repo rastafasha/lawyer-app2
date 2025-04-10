@@ -20,7 +20,19 @@ infiniteScroll
     <div class="row">
       <div class="col-xs-12 col-sm-9 col-md-9" >
         <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
-        <div  *ngFor="let item of solicitudes">
+
+        <div class="tab-content-set">
+          <ul class="nav">
+              <li>
+                  <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 1}" (click)="optionSelected(1)">Solicitudes</a>
+              </li>
+              <li>
+                  <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 2}" (click)="optionSelected(2)">Clientes</a>
+              </li>
+          </ul>
+      </div>
+      <div class="card" *ngIf="option_selected == 1">
+        <div  *ngFor="let item of solicitudes"  >
           <div class="group itemFav shadow">
             <div class="fa fa-paypal"></div>
             <div class="div1pagocon">
@@ -44,6 +56,18 @@ infiniteScroll
           <!-- modal edit-->
           
         </div>
+      </div>
+      <div class="card" *ngIf="option_selected == 2">
+        <div  *ngFor="let item of clientes"  >
+          <div class="group itemFav shadow">
+            <div class="fa fa-paypal"></div>
+            <div class="div1pagocon">
+              <p>{{item.username}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+       
 
         
       </div>
