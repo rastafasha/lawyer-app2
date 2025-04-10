@@ -48,7 +48,7 @@ export class WalletComponent {
   public clientes: any = [];
 
   option_selected:number = 1;
-  solicitud_selected:any;
+  solicitud_selected:any = null;
 
   pedido_selected:any;
   public text_success = '';
@@ -77,11 +77,10 @@ export class WalletComponent {
   getSolicitudesbyMember(){
     this.isLoading = true;
     this.solicitudService.getByMember(this.user.id).subscribe((resp:any)=>{
-      this.solicitudes = resp;
+      this.solicitudes = resp.data;
       this.pedido = typeof resp.pedido === 'string' 
             ? JSON.parse(resp.pedido) || []
             : resp.pedido || [];
-      // console.log(resp);
       // console.log(this.pedido);
       this.isLoading = false;
     })
@@ -107,7 +106,7 @@ export class WalletComponent {
   getSolicitudDetail(item:any){
     this.pedido_selected = item.id;
     this.solicitudService.getSolicitud(this.pedido_selected).subscribe((resp:any)=>{
-      console.log(resp);
+      // console.log(resp);
       // this.publicidadd = resp.publicidad;
       this.solicitud_users = resp.solicitud_users || [];
       this.cliente_id = resp.solicitud_users[0].cliente_id;
@@ -138,14 +137,14 @@ export class WalletComponent {
   getClienteSolicitud(){
     if(this.cliente_id){
       this.userService.showUser(this.cliente_id).subscribe((resp:any)=>{
-        console.log('respuesta para miembro',resp);
+        // console.log('respuesta para miembro',resp);
         this.cliente = resp.user[0];
         // console.log(this.cliente);
       })
     }
     if(this.user_cliente_id){
       this.userService.showUser(this.user_cliente_id).subscribe((resp:any)=>{
-        console.log('respuesta para guest',resp);
+        // console.log('respuesta para guest',resp);
         this.cliente = resp.user[0];
         // console.log(this.cliente);
       })
@@ -191,8 +190,12 @@ export class WalletComponent {
 
     optionSelected(value:number){
       this.option_selected = value;
+      if(this.option_selected === 1){
+        this.getSolicitudesbyMember();
+      }
       if(this.option_selected === 2){
-        console.log('pidiendo clientes');
+        this.solicitud_selected = null;
+        // console.log('pidiendo clientes');
         this.user_member_id = this.user.id;
         this.user_cliente_id = this.user.id;
         this.getClientesbyuser();
@@ -209,8 +212,8 @@ export class WalletComponent {
     getClientesbyuser(){
       this.isLoading = true;
       this.solicitudService.getByClientesUser(this.user_member_id).subscribe((resp:any)=>{
-        console.log('clientes',resp);
-        // this.clientes = resp.clientes;
+        // console.log('clientes',resp);
+        this.clientes = resp;
         this.isLoading = false;
         
         // console.log(this.pedido);
@@ -220,9 +223,10 @@ export class WalletComponent {
     getContactosbyCliente(){
       this.isLoading = true;
       this.solicitudService.getByContactosCliente(this.user_cliente_id).subscribe((resp:any)=>{
-        console.log('contactos',resp);
+        // console.log('contactos',resp);
         this.clientes = resp.users;
         this.isLoading = false;
+        
         
         // console.log(this.pedido);
       })

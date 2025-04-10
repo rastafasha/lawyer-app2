@@ -72,7 +72,7 @@ export class DocumentService {
 
       const URL =
         baseUrl +
-        '/document/showByUserFiltered/' +
+        '/documents/showByUserFiltered/' +
         user_id +
         '/?page=' +
         page +
