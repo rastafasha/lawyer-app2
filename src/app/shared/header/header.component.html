@@ -140,8 +140,8 @@
             <ul class="menuright">
 
                 <li>
-                    <img class="globowhite"  (click)="darkMode('dark')" src="./assets/svg/luna.svg" alt="">
-                    <img class="globoblack"  (click)="darkMode('dark')" src="./assets/svg/sol.svg" alt="">
+                    <img class="globowhite"  (click)="onDarkMode('dark')" src="./assets/svg/luna.svg" alt="">
+                    <img class="globoblack"  (click)="onDarkMode('dark')" src="./assets/svg/sol.svg" alt="">
                 </li>
             </ul>
             <!-- <div class="flags">
@@ -150,8 +150,8 @@
             </div> -->
             <div class="dropdown">
                 <div class="flags">
-                    <img *ngIf="activeLang === 'es'" class="left-image" style="width: 20px;" [src]="'assets/images/venezuela.png'" >
-                    <img *ngIf="activeLang == 'en'" class="left-image" style="width: 20px;" [src]="'assets/images/usa.png'" >
+                    <img *ngIf="activeLang === 'es'" class="left-image" style="width: 30px;" [src]="'assets/images/venezuela.png'" >
+                    <img *ngIf="activeLang == 'en'" class="left-image" style="width: 30px;" [src]="'assets/images/usa.png'" >
                 </div>
                 <!-- <span>{{'Language'|translate}}</span> -->
                 <div class="dropdown-content">

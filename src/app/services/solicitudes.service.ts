@@ -34,15 +34,15 @@ export class SolicitudesService {
     const url = `${baseUrl}/solicitudes`;
     return this.http.get<any>(url,this.headers)
       .pipe(
-        map((resp:{ok: boolean, profiles: Solicitud}) => resp.profiles)
+        map((resp:{ok: boolean, solicutudes: Solicitud}) => resp.solicutudes)
       )
   }
 
-  getSolicitud(_id: Solicitud) {
-    const url = `${baseUrl}/solicitud/show/${_id}`;
+  getSolicitud(id: Solicitud) {
+    const url = `${baseUrl}/solicitud/show/${id}`;
     return this.http.get<any>(url, this.headers)
       .pipe(
-        map((resp:{ok: boolean, profile: Solicitud}) => resp.profile)
+        map((resp:{ok: boolean, solicitud: Solicitud}) => resp.solicitud)
         );
   }
 
@@ -50,7 +50,28 @@ export class SolicitudesService {
     const url = `${baseUrl}/solicitud/showbyUser/${usuario}`;
     return this.http.get<any>(url,this.headers)
       .pipe(
-        map((resp:{ok: boolean, profile: any}) => resp)
+        map((resp:{ok: boolean, solicitudes: any}) => resp.solicitudes)
+      )
+  }
+  getByGuest(usuario:any) {
+    const url = `${baseUrl}/solicitud/cliente/${usuario}`;
+    return this.http.get<any>(url,this.headers)
+      .pipe(
+        map((resp:{ok: boolean, solicitudes: any}) => resp.solicitudes)
+      )
+  }
+  getByMember(usuario:any) {
+    const url = `${baseUrl}/solicitud/user/${usuario}`;
+    return this.http.get<any>(url,this.headers)
+      .pipe(
+        map((resp:{ok: boolean, solicitudes: any}) => resp.solicitudes)
+      )
+  }
+  getByClientesUser(usuario:any) {
+    const url = `${baseUrl}/solicitud/clientes-user/${usuario}`;
+    return this.http.get<any>(url,this.headers)
+      .pipe(
+        map((resp:{ok: boolean, solicitud: any}) => resp)
       )
   }
 

@@ -17,7 +17,7 @@
 .darkmode #logoNuevo{
     /* filter: drop-shadow(1px 1px 1px white); */
     /* filter: invert(1); */
-    filter: contrast(0.1);
+    filter: contrast(0);
 }
 .darkmode .header .sidemenu nav li::before {
     border-top: 1px solid var(--blanco);
@@ -106,8 +106,8 @@
 
 .darkmode .globoblack {
     display: block;
-    height: 24px;
-    width: 24px;
+    height: 35px;
+    width: 35px;
     margin-top: 17px;
     
 }
@@ -240,10 +240,11 @@
 .darkmode .shadowSearch {
     border: 1px solid #333;
     background-color: var(--fondo-negro);
-    padding: 5px;
+    
     border-radius: 14px;
     box-shadow: none;
     margin-bottom: 30px;
+    padding: 15px;
     filter: drop-shadow(2px 4px 6px black);
 }
 .darkmode label {

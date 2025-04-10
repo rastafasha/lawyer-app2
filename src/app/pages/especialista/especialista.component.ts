@@ -16,7 +16,6 @@ import { SolicitudesService } from '../../services/solicitudes.service';
 import { Solicitud } from '../../models/solicitud.model';
 import Swal from 'sweetalert2';
 import { ImagenPipe } from '../../pipes/imagen.pipe';
-import { SkeletonLoaderComponent } from '../../shared/skeleton-loader/skeleton-loader.component';
 import { LoadingComponent } from '../../shared/loading/loading.component';
 import { TranslateModule } from '@ngx-translate/core';
 

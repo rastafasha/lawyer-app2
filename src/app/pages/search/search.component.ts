@@ -38,6 +38,7 @@ export class SearchComponent {
     nextUrl:string = '';
     search!:string;
     pais:string = '';
+    name_file:string = '';
     speciality_id!:number;
     rating!:number;
 
@@ -66,6 +67,7 @@ export class SearchComponent {
     this.getPaisesList();
     this.getSpecialitiesList();
     this.validarFormularioPerfil();
+    this.searchForm.reset();
   }
 
 
@@ -73,6 +75,7 @@ export class SearchComponent {
     this.searchForm = this.fb.group({
       pais: [''],
       speciality_id: [''],
+      name_file: [''],
       rating: [''],
       id: [''],
     });
@@ -114,7 +117,7 @@ export class SearchComponent {
     this.paisService.getPaises().subscribe(
       (res:any) =>{
         this.paises = res.paises;
-        console.log(res);
+        // console.log(res);
       }
     );
   }
@@ -122,7 +125,7 @@ export class SearchComponent {
   getSpecialitiesList(){
     this.specialityService.getSpecialitys().subscribe((resp:any)=>{
       this.specialities = resp;
-      console.log(resp);
+      // console.log(resp);
     })
   }
 
@@ -155,11 +158,11 @@ export class SearchComponent {
     });
   }
 
+  trackByCharacterId: TrackByFunction<any>  = (index: number, character: any) => character.id;
   onScrollUp(){
     this.refreshData(); 
   }
 
-  trackByCharacterId: TrackByFunction<any>  = (index: number, character: any) => character.id;
 
 
     refreshData() { 

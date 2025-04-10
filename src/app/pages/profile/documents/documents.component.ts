@@ -74,6 +74,7 @@ export class DocumentsComponent {
     this.validarFormularioPerfil();
     this.getdocumentsbyUser();
     this.getdocumentsbyUserFilter();
+    this.searchForm.reset();
   }
 
   validarFormularioPerfil(){

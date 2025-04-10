@@ -11,7 +11,6 @@ import { SpecialitiesService } from '../../services/specialities.service';
 import { Usuario } from '../../models/usuario.model';
 import { Speciality } from '../../models/speciality.model';
 import { ImagenPipe } from '../../pipes/imagen.pipe';
-import { SkeletonLoaderComponent } from '../../shared/skeleton-loader/skeleton-loader.component';
 import { LoadingComponent } from '../../shared/loading/loading.component';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { TranslateModule } from '@ngx-translate/core';
@@ -36,7 +35,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class CategoriaComponent {
   pageTitle = 'Especialidad';
-  user: Usuario;
+  user!: Usuario;
   profiles: Profile[] = [];
   speciality!:Speciality;
   Title!: string;
@@ -62,7 +61,7 @@ export class CategoriaComponent {
     private specialityService: SpecialitiesService,
     
   ){
-    this.user = this.authService.getUser();
+    // this.user = this.authService.getUser();
   }
 
   ngOnInit() {

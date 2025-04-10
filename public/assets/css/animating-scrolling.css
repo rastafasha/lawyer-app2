@@ -70,7 +70,7 @@
 
 @keyframes enhance-header {
     to {
-        background: rgba(205, 205, 205, 0.4);
+        /* background: rgba(205, 205, 205, 0.4); */
         backdrop-filter: blur(60px);
         
         /* font-size: 12px; */

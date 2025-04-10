@@ -85,7 +85,7 @@ export class HeaderComponent {
     this.authService.logout();
   }
 
-  darkMode(dark:string){
+  onDarkMode(dark:string){
     var element = document.body;
 
     const classExists = document.getElementsByClassName(

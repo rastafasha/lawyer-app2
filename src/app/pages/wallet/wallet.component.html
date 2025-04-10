@@ -1,54 +1,58 @@
 <app-header></app-header>
-<section class="wallet home">
-  <div class="container-fluid">
+<section class="wallet home"
+infiniteScroll 
+[infiniteScrollDistance]="2"  [infiniteScrollUpDistance]="2" 
+[infiniteScrollThrottle]=" 50"
+(scrolled)="onScrollDown()" (scrolledUp)="onScrollUp()"
+
+[class.refreshing]="isRefreshing"
+>
+<div class="pull-down-indicator" *ngIf="isRefreshing">
+    <app-loading  ></app-loading>
+    <p class="text-center">
+      {{'Refreshing'|translate}} ...
+    </p>
+ </div>
+  
+ <app-loading *ngIf="isLoading" ></app-loading>
+  <div class="container-fluid" *ngIf="!isLoading">
    <div class="container">
     <div class="row">
-      <div class="col-xs-12 col-sm-9 col-md-9">
+      <div class="col-xs-12 col-sm-9 col-md-9" >
         <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
-        <div class="paggrop">
-          <a routerLink="/wallet-payment">
-            <div class="group itemFav shadow">
-              <div class="fa fa-paypal"></div>
-              <div class="div1pagocon">
-                <p>John Doe.</p>
+        <div  *ngFor="let item of solicitudes">
+          <div class="group itemFav shadow">
+            <div class="fa fa-paypal"></div>
+            <div class="div1pagocon">
+              <details class=" cuadrosearch">
+                <summary class="" (click)="getSolicitudDetail(item)">{{item.created_at}}</summary>
+                <!-- <p>{{item.status}}</p> -->
+                <span class="badge  bg-primary" *ngIf="item.status === 1"> {{'Pending'|translate}}</span>
+                <span class="badge bg-success" *ngIf="item.status === 2">{{'Verified'|translate}}</span>
+                <span class="badge bg-danger" *ngIf="item.status === 3">{{'For Review'|translate}}</span>
                 <!-- <p>Johndoe@gmail.com</p> -->
-                <p>Pay with: Paypal</p>
-              </div>
-            </div>
-          </a>
+                <!-- <p>{{item.created_at}}</p> -->
+                <p>{{item.pedido.item_tarifa}}</p>
+                <p>{{item.pedido.precio|currency}}</p>
+                <p>{{cliente?.username}}</p>
 
-          <a routerLink="/wallet-payment">
-            <div class="group itemFav shadow">
-              <div class="fa fa-credit-card"></div>
-              <div class="div1pagocon">
-                <p>John Doe.</p>
-                <!-- <p>Johndoe@gmail.com</p> -->
-                <p>Pay with: Credit Card</p>
-              </div>
+              </details>
+              
             </div>
-          </a>
-          <a routerLink="/wallet-payment.html">
-            <div class="group itemFav shadow">
-              <div class="fa fa-money"></div>
-              <div class="div1pagocon">
-                <p>John Doe.</p>
-                <!-- <p>Johndoe@gmail.com</p> -->
-                <p>Pay with: Bank Transfer</p>
-              </div>
-            </div>
-          </a>
+          </div>
+
+          <!-- modal edit-->
+          
         </div>
 
-        <div class="botonera">
-          <div class="button btn-simple-gray">Edit</div>
-          <div class="button btn-full-red">Add</div>
-        </div>
-        <br /><br />
-        <hr />
-        <div class="clear"></div>
+        
+      </div>
+
+      <!-- lateral -->
+      <div class="col-xs-12 col-sm-3 col-md-3">
         <h5>Order Recents</h5>
 
-        <div class="paggrop">
+        <div class="paggrop col-xs-12">
           <div class="ordenes">
             <a routerLink="/orders">
               <img [src]="'users/3.jpg'" alt="" />
@@ -63,26 +67,8 @@
               </div>
             </div>
           </div>
-          <div class="ordenes">
-            <a routerLink="/orders">
-              <img [src]="'users/3.jpg'" alt="" />
-            </a>
-            <div class="div1">
-              <div class="info">
-                <p>John Doe.</p>
-                <p>Lorem ipsum dolor sit amet consectetur...</p>
-                <div class="div1-order">
-                  <h3>$53.00</h3>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-
-      <!-- lateral -->
-      <div class="col-xs-12 col-sm-3 col-md-3">
-        <app-lateral></app-lateral>
+        <!-- <app-lateral></app-lateral> -->
 
     </div>
       <!-- lateral -->

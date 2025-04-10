@@ -44,6 +44,7 @@ export class FavoritesComponent {
       window.scrollTo(0, 0);
       this.getCharactrs();
       this.validarFormularioPerfil();
+      this.searchForm.reset();
     }
 
     validarFormularioPerfil(){

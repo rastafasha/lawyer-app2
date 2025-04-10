@@ -15,8 +15,8 @@ declare const gapi: any;
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, ModalCondicionesComponent,
-     NgIf, TranslateModule
-    //  PwaNotifInstallerComponent
+     NgIf, TranslateModule,
+     PwaNotifInstallerComponent
     ],
   templateUrl: './login.component.html',
   styleUrls: [ './login.component.css' ]
@@ -88,7 +88,7 @@ export class LoginComponent implements OnInit {
   }
   
 ngOnInit(){
-
+  
   const lang = localStorage.getItem('lang');
     if (lang) {
       this.activeLang = lang;
@@ -207,6 +207,7 @@ switchRegistrologin(){
   if (container) {
     container.classList.toggle("sign-up-mode");
   }
+  window.scrollTo(0, 0);
 }
 
 
