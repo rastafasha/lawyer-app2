@@ -15,7 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './aviso.component.css'
 })
 export class AvisoComponent {
-  user: Usuario;
+  user!: Usuario;
   user_id!: number;
   isLoading:boolean = false;
   public profile: Profile = new Profile();

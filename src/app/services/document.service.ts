@@ -53,6 +53,39 @@ export class DocumentService {
           map((resp:{ok: boolean, documents: Document}) => resp.documents)
           );
     }
+
+    getAllClientReportByPatient(
+      user_id :number,
+      page = 1,
+      created_at = '',
+      name_category?: string,
+      name_file?: string
+    ) {
+      let LINK = '';
+  
+      if (created_at) {
+        LINK += '&created_at=' + created_at;
+      }
+      if (name_file) LINK += `&name_file=${name_file}`;
+      
+      if (name_category) LINK += `&name_category=${name_category}`;
+
+      const URL =
+        baseUrl +
+        '/document/showByUserFiltered/' +
+        user_id +
+        '/?page=' +
+        page +
+        LINK;
+      return this.http.get<any>(URL);
+
+      // return this.http.get<any>(URL, this.headers)
+      //   .pipe(
+      //     map((resp:{ok: boolean, documents: Document}) => resp.documents)
+      //     );
+    }
+
+
     getDocumentsByUserCategory(user_id: number, name_category:string) {
       const url = `${baseUrl}/document/showByCategory/${user_id}/${name_category}`;
       return this.http.get<any>(url, this.headers)

@@ -6,7 +6,6 @@ import { SpecialitiesService } from '../../services/specialities.service';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ImagenPipe } from '../../pipes/imagen.pipe';
-import { SkeletonLoaderComponent } from '../../shared/skeleton-loader/skeleton-loader.component';
 import { LoadingComponent } from '../../shared/loading/loading.component';
 
 @Component({

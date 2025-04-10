@@ -11,12 +11,11 @@ import { LateralComponent } from '../../components/lateral/lateral.component';
 import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { MenuFooterComponent } from '../../shared/menu-footer/menu-footer.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SolicitudesService } from '../../services/solicitudes.service';
 import { Solicitud } from '../../models/solicitud.model';
 import Swal from 'sweetalert2';
 import { ImagenPipe } from '../../pipes/imagen.pipe';
-import { SkeletonLoaderComponent } from '../../shared/skeleton-loader/skeleton-loader.component';
 import { LoadingComponent } from '../../shared/loading/loading.component';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -54,6 +53,17 @@ export class EspecialistaComponent {
     status!:Profile ;
     role!:Profile ;
     solicitudes_selected: any[] = [];
+
+    userForm: FormGroup = new FormGroup({
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('',[Validators.required, Validators.minLength(3)]),
+      userName: new FormControl('', [Validators.email, Validators.required]),
+      city: new FormControl(''),
+      state: new FormControl('Caracas'),
+      zipCode: new FormControl(''),
+      isAgree: new FormControl(false),
+  
+      });
   
     constructor(
       private authService: AuthService,
@@ -61,6 +71,7 @@ export class EspecialistaComponent {
       private specialityService: SpecialitiesService,
       private solicitudService: SolicitudesService,
       private activatedRoute: ActivatedRoute,
+      private fb: FormBuilder,
     ) {
       this.user = this.authService.getUser();
     }
@@ -70,7 +81,7 @@ export class EspecialistaComponent {
       this.activatedRoute.params.subscribe(({ id }) => {
         this.getProfile(id);
       });
-
+      // this.validarFormularioPerfil();
       
     }
   
@@ -107,10 +118,10 @@ export class EspecialistaComponent {
       const datos = {
         "status": VALUE
       }
-      
+      this.isLoading = true;
       this.profileService.updateProfileStatus(datos, this.profile.id).subscribe(
         resp =>{
-          console.log(resp);
+          this.isLoading = false;
           this.ngOnInit();
         }
       )
@@ -131,22 +142,47 @@ export class EspecialistaComponent {
       )
     }
 
-    solicitarItem(data:any){
-      if (!data || (Array.isArray(this.solicitudes_selected) && this.solicitudes_selected.length === 0)) {
-        Swal.fire('Error', 'No valid solicitudes selected', 'error');
-        return;
-      }
-      
-      const datos = {
-        id: 0,
-        "user_id": this.profile.id,
-        "cliente_id": this.user.id,
-        pedido: data,
-        status: 1,
-        solicitudes_selected: this.solicitudes_selected || []
-      }
+    // validarFormularioPerfil(){
+    //   this.userForm = this.fb.group({
+    //     nombre: ['', Validators.required],
+    //     surname: ['', Validators.required],
+    //     pais: [''],
+    //     estado: [''],
+    //     ciudad: [''],
+    //     telhome: ['', Validators.required],
+    //     telmovil: ['', Validators.required],
+    //     speciality_id: ['', Validators.required],
+    //     direccion: [''],
+    //     n_doc: [''],
+    //     gender: [''],
+    //     description: ['', Validators.required],
+    //     usuario: [this.user.id],
+    //     id: [''],
+    //   });
+    // }
 
-      this.solicitudService.createSolicitud(datos).subscribe({
+    solicitarItem(data:any){
+      // if (!data || (Array.isArray(this.solicitudes_selected) && this.solicitudes_selected.length === 0)) {
+      //   Swal.fire('Error', 'No valid solicitudes selected', 'error');
+      //   return;
+      // }
+      
+      // const datos = {
+      //   id: 0,
+      //   "user_id": this.profile.id,
+      //   "cliente_id": this.user.id,
+      //   pedido: data,
+      //   status: 1,
+      // }
+      // console.log(datos);
+
+      const formData = new FormData();
+      formData.append("user_id", this.profile.id+'');
+      formData.append("cliente_id", this.user.id+'');
+      formData.append("pedido", JSON.stringify(data));
+      
+
+      this.solicitudService.createSolicitud(formData).subscribe({
         next: (resp:any) => {
           this.solicitud = resp;
           Swal.fire('Éxito!', 'Solicitud creada correctamente', 'success');

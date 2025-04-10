@@ -44,7 +44,7 @@ export class UserService {
   }
   showUser(user_id:any){
     const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
-    const URL = url_servicios+"/users/show/"+user_id;
+    const URL = url_servicios+"/user/show/"+user_id;
     return this.http.get(URL,{headers:headers});
   }
   editUser(data:any, user_id:any){

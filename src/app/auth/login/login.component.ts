@@ -7,15 +7,16 @@ import { AuthService } from '../../services/auth.service';
 import { ModalCondicionesComponent } from '../../components/modal-condiciones/modal-condiciones.component';
 import { NgIf } from '@angular/common';
 import { PwaNotifInstallerComponent } from '../../shared/pwa-notif-installer/pwa-notif-installer.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { PlacesService } from '../../services/places.service';
 declare const gapi: any;
 
 
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, ModalCondicionesComponent,
-     NgIf, TranslateModule
-    //  PwaNotifInstallerComponent
+     NgIf, TranslateModule,
+     PwaNotifInstallerComponent
     ],
   templateUrl: './login.component.html',
   styleUrls: [ './login.component.css' ]
@@ -25,6 +26,8 @@ export class LoginComponent implements OnInit {
   username = new FormControl();
   email = new FormControl();
   password = new FormControl();
+  confirmPassword = new FormControl();
+  role = new FormControl();
   n_doc = new FormControl();
   remember = new FormControl();
   terminos = new FormControl();
@@ -45,6 +48,8 @@ export class LoginComponent implements OnInit {
 
   errors:any = null;
   registerForm!: FormGroup;
+  langs: string[] = [];
+  public activeLang = 'es';
 
   
 
@@ -52,15 +57,28 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthService,
+    private translate: TranslateService,
+    private placesServices: PlacesService
     
   ) {
+
+    // this.translate.setDefaultLang('es');
+    this.translate.setDefaultLang(this.activeLang);
+    this.translate.use('es');
+    this.translate.addLangs(["es", "en"]);
+    this.langs = this.translate.getLangs();
+    translate.get(this.langs).subscribe(res =>{
+      console.log(res);
+    })
+    // console.log(this.translate);
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       username: ['', Validators.required],
       email: [ '', [Validators.required, Validators.email] ],
       password: ['', Validators.required],
       password2: ['', Validators.required],
-      // role: ['GUEST'],
+      confirmPassword: ['', Validators.required],
+      role: ['', Validators.required],
       terminos: [false, Validators.required],
   
     }, {
@@ -70,6 +88,12 @@ export class LoginComponent implements OnInit {
   }
   
 ngOnInit(){
+  
+  const lang = localStorage.getItem('lang');
+    if (lang) {
+      this.activeLang = lang;
+      this.translate.use(lang);
+      }
   
   this.loginForm = this.fb.group({
     email: [ localStorage.getItem('email') || '', [Validators.required, Validators.email] ],
@@ -85,7 +109,7 @@ ngOnInit(){
 
 login(){ 
   if(!this.loginForm){
-    // Swal.fire('Error', 'Favor ingresar datos', 'error');
+    Swal.fire('Error', 'Favor ingresar datos', 'error');
     return;
   }
 
@@ -183,6 +207,7 @@ switchRegistrologin(){
   if (container) {
     container.classList.toggle("sign-up-mode");
   }
+  window.scrollTo(0, 0);
 }
 
 

@@ -104,16 +104,10 @@ export class AuthService {
 }
 
 getLocalDarkMode(){
-  setTimeout(()=>{
-    if(localStorage.getItem('darkmode')){
-        var element = document.body;
-      element.classList.add("darkmode");
-      
-    }
-
-  },500)
-  // console.log(this.user);
-  
+  if(localStorage.getItem('darkmode')){
+    var element = document.body;
+  element.classList.add("darkmode");
+}
 }
   
 

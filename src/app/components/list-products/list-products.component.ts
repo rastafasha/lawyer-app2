@@ -1,8 +1,6 @@
 import { Component, TrackByFunction } from '@angular/core';
 import { Profile } from '../../models/profile.model';
-import { AuthService } from '../../services/auth.service';
 import { ProfileService } from '../../services/profile.service';
-import { SpecialitiesService } from '../../services/specialities.service';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ImagenPipe } from '../../pipes/imagen.pipe';

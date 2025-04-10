@@ -5,7 +5,6 @@ import { AuthService } from '../../services/auth.service';
 import { Usuario } from '../../models/usuario.model';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SkeletonLoaderComponent } from '../../shared/skeleton-loader/skeleton-loader.component';
 import { LoadingComponent } from '../../shared/loading/loading.component';
 
 @Component({
@@ -20,12 +19,12 @@ import { LoadingComponent } from '../../shared/loading/loading.component';
 export class CategoriaHorizontalComponent {
   public isLoading:boolean = false;
   public specialities: Speciality[]= [];
-  user: Usuario;
+  user!: Usuario;
   constructor(
     private specialitiesService: SpecialitiesService,
     private authService: AuthService
   ) {
-    this.user = this.authService.getUser();
+    // this.user = this.authService.getUser();
    }
 
 ngOnInit() {

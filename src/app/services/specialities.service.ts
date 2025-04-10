@@ -36,6 +36,38 @@ export class SpecialitiesService {
         map((resp:{ok: boolean, specialities: Speciality[]}) => resp.specialities)
       )
   }
+
+  getAllClientReportByPatient(
+        
+        // created_at = '',
+        // page = 1,
+        pais = '',
+        rating?: number,
+        speciality_id?: number
+      ) {
+        let LINK = '';
+    
+        // if (pais) LINK += `&pais=${pais}`;
+        if (pais) {
+          LINK += '&pais=' + pais;
+        }
+        if (speciality_id) LINK += `&speciality_id=${speciality_id}`;
+        if (rating) LINK += `&rating=${rating}`;
+        
+  
+        const URL =
+          baseUrl +
+          '/speciality/showByUserFiltered/' +
+          
+          LINK;
+        // return this.http.get<any>(URL);
+  
+        return this.http.get<any>(URL, this.headers)
+          .pipe(
+            map((resp:{ok: boolean, documents: Document}) => resp.documents)
+            );
+      }
+
   getSpecialitysMayorCero() {
     const url = `${baseUrl}/specialities/filtradoMayorCero`;
     return this.http.get<any>(url,this.headers)

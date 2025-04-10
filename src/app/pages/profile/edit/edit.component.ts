@@ -1,5 +1,5 @@
 import { CommonModule, NgFor } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Type } from '@angular/core';
 import { BackButtnComponent } from '../../../shared/backButtn/backButtn.component';
 import { HeaderComponent } from '../../../shared/header/header.component';
 import { MenuFooterComponent } from '../../../shared/menu-footer/menu-footer.component';
@@ -14,6 +14,9 @@ import { SpecialitiesService } from '../../../services/specialities.service';
 import Swal from 'sweetalert2';
 import { LoadingComponent } from '../../../shared/loading/loading.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { PaisService } from '../../../services/pais.service';
+import { Pais } from '../../../models/pais';
+import { PlacesService } from '../../../services/places.service';
 
 @Component({
   selector: 'app-edit',
@@ -85,6 +88,9 @@ export class EditComponent {
     text_validation: any = null;
     iconoSeleccionado:any;
 
+    public paises :Pais[] = [];
+    
+
     public listIcons = [
       { icon: 'fa fa-facebook', name: 'Facebook' },
       { icon: 'fa fa-instagram', name: 'Instagram' },
@@ -111,6 +117,8 @@ export class EditComponent {
       private profileService: ProfileService,
       private fb: FormBuilder,
       private specialityService: SpecialitiesService,
+      public paisService: PaisService,
+      private placesServices: PlacesService
     ) {
       this.user = this.authService.getUser();
     }
@@ -124,9 +132,19 @@ export class EditComponent {
       this.validarFormularioPerfil();
       this.getProfile();
       this.getSpecialitys();
+      this.getPaisesList();
       this.activatedRoute.params.subscribe( ({id}) => this.iniciarFormularioPerfil(id));
       this.Title = this.user.username;
       
+    }
+
+    getPaisesList(): void {
+      this.paisService.getPaises().subscribe(
+        (res:any) =>{
+          this.paises = res.paises;
+          console.log(res);
+        }
+      );
     }
 
     getProfile(){

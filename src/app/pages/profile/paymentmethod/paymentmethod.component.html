@@ -3,438 +3,522 @@
 
 <section class="user" >
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-xs-12">
-        <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
-        <app-loading *ngIf="isLoading"></app-loading>
-        <h3>Active o desactive las opciones de la app</h3>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat nobis
-          at aperiam molestiae ab, quibusdam quidem laborum debitis, qui
-          accusamus fuga sequi cupiditate! Neque placeat, perspiciatis
-          voluptatem consequatur porro hic!
-        </p>
-        <div
-          class="tab-pane"
-          id="address"
-          role="tabpanel"
-          aria-labelledby="address-tab"
-          *ngIf="!isLoading"
-        >
-          <div class="row">
-            <div class="col-xs-12 col-sm-5" *ngIf="!tipoSeleccionado">
-              <form class="rbt-profile-row rbt-default-form row row--15">
-                <div class="form-group col-xs-12">
-                  <label for="exampleInputEmail0"
-                    >Tipo de Pago<span class="required">*</span></label
-                  >
-                  <select
-                    name="tipo"
-                    id="input"
-                    class="form-control"
-                    [ngModelOptions]="{ standalone: true }"
-                    [(ngModel)]="tipo"
-                    (change)="selectedTypeEdit($event.target)"
-                  >
-                    <option value="seleccione">Seleccione</option>
-                    <option value="Transferencia Dólares">
-                      Transferencia Dólares
-                    </option>
-                    <option value="Transferencia Bolivares">
-                      Transferencia Bolívares
-                    </option>
-                    <option value="pagomovil">Pago Móvil</option>
-                    <option value="zelle">Zelle</option>
-                  </select>
-                </div>
-                <div class="clear"></div>
-
-                <!-- transferencia -->
-                <div
-                  *ngIf="pagoSeleccionado == 'Transferencia Dólares'"
-                  class="card p-3"
-                >
-                  <div class="card-body">
-                    <h4>Transferencia</h4>
-                    <div class="row">
-                      <div class="form-group col-xs-12">
-                        <label for="exampleInputEmail1"
-                          >Tipo de Cuenta<span class="required">*</span></label
-                        >
-                        <select
-                          name="bankAccountType"
-                          id="input"
-                          class="form-control"
-                          [ngModelOptions]="{ standalone: true }"
-                          [(ngModel)]="bankAccountType"
-                        >
-                          <option value="">Seleccione</option>
-                          <option value="ahorro">Ahorro</option>
-                          <option value="corriente">Corriente</option>
-                        </select>
-                      </div>
-                      <div class="form-group col-xs-12">
-                        <label for="exampleInputEmail1">Num. de Cuenta</label>
-                        <input
-                          [ngModelOptions]="{ standalone: true }"
-                          [(ngModel)]="bankAccount"
-                          name="bankAccount"
-                          type="text"
-                          class="form-control"
-                        />
-                      </div>
-                      <div class="form-group col-xs-12">
-                        <label for="exampleInputEmail1">Nombre del Banco</label>
-                        <input
-                          [ngModelOptions]="{ standalone: true }"
-                          [(ngModel)]="bankName"
-                          name="bankName"
-                          type="text"
-                          class="form-control"
-                        />
-                      </div>
-                      <div class="form-group col-xs-12">
-                        <label for="exampleInputEmail1">Ci/iD ó RIF</label>
-                        <input
-                          [ngModelOptions]="{ standalone: true }"
-                          [(ngModel)]="ciorif"
-                          name="ciorif"
-                          type="text"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                    <input
-                      type="hidden"
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
+          <app-loading *ngIf="isLoading"></app-loading>
+          <h3>{{'paymentmethod.title'|translate}}</h3>
+          <p>
+            {{'paymentmethod.text'|translate}}
+            
+          </p>
+          <div
+            class="tab-pane"
+            id="address"
+            role="tabpanel"
+            aria-labelledby="address-tab"
+            *ngIf="!isLoading"
+          >
+            <div class="row">
+              <!-- tipos de pago -->
+              <div class="col-xs-12 col-sm-5" *ngIf="!tipoSeleccionado">
+                <form class="rbt-profile-row rbt-default-form row row--15">
+                  <div class="form-group mb-3">
+                    <label for="exampleInputEmail0"
+                      >{{'paymentmethod.Payment Types'|translate}}</label
+                    >
+                    <select
+                      name="tipo"
+                      id="input"
+                      class="form-control"
                       [ngModelOptions]="{ standalone: true }"
-                      [(ngModel)]="id"
-                    />
-                    <button (click)="save()" class="btn btn-primary">
-                      Guardar
-                    </button>
+                      [(ngModel)]="tipo"
+                      (change)="selectedTypeEdit($event.target)"
+                    >
+                      <option value="seleccione">{{'Select'|translate}}</option>
+                      <option value="Transferencia Dólares">
+                        {{'paymentmethod.Dollar Transfer'|translate}}
+                      </option>
+                      <option value="Transferencia Bolivares">
+                        {{'paymentmethod.Bolivar Transfer'|translate}}
+                      </option>
+                      <option value="pagomovil">Pago Móvil</option>
+                      <option value="zelle">Zelle</option>
+                    </select>
                   </div>
-                </div>
-                <!-- transferencia -->
-                <!-- transferencia -->
-                <div
-                  *ngIf="pagoSeleccionado == 'Transferencia Bolivares'"
-                  class="card p-3"
-                >
-                  <div class="card-body">
-                    <h4>Transferencia</h4>
-                    <div class="row">
-                      <div class="form-group col-xs-12">
-                        <label for="exampleInputEmail1">Nombre del Banco</label>
-                        <input
-                          [ngModelOptions]="{ standalone: true }"
-                          [(ngModel)]="bankName"
-                          name="bankName"
-                          type="text"
-                          class="form-control"
-                        />
+                  <div class="clear"></div>
+  
+                  <!-- transferencia dolares-->
+                  <div
+                    *ngIf="pagoSeleccionado == 'Transferencia Dólares'"
+                    class="card p-3"
+                  >
+                    <div class="card-body">
+                      <h4>{{'paymentmethod.Dollar Transfer'|translate}}</h4>
+                      <div class="row">
+                        <div class="form-group col-xs-12">
+                          <label class="labelgoogle" for="exampleInputEmail1">
+                            <input
+                            [ngModelOptions]="{ standalone: true }"
+                            [(ngModel)]="bankName"
+                            name="bankName"
+                            type="text"
+                            class="form-control input"
+                            placeholder=" "
+                          />
+                            <span class="label__name">
+                              {{'paymentmethod.Bank Name'|translate}}<span class="login-danger">*</span>
+                            </span>
+                          </label>
+                          
+                        </div>
+                        <div class="form-group col-xs-12 mb-3">
+                          <label  for="exampleInputEmail1"
+                            >{{'paymentmethod.Account Type'|translate}}  <span class="login-danger">*</span>
+                            </label
+                          >
+                          <select
+                            name="bankAccountType"
+                            id="input"
+                            class="form-control"
+                            [ngModelOptions]="{ standalone: true }"
+                            [(ngModel)]="bankAccountType"
+                          >
+                          <option value="">{{'Select'|translate}}</option>
+                          <option value="ahorro">{{'paymentmethod.Saving'|translate}} </option>
+                          <option value="corriente">{{'paymentmethod.Checking'|translate}}</option>
+                          </select>
+                        </div>
+                        <div class="form-group col-xs-12">
+                          <label class="labelgoogle" for="exampleInputEmail1">
+                            <input
+                            [ngModelOptions]="{ standalone: true }"
+                            [(ngModel)]="bankAccount"
+                            name="bankAccount"
+                            type="text"
+                            class="form-control input"
+                            placeholder=" "
+                          />
+                            <span class="label__name">
+                              {{'paymentmethod.Account Number'|translate}}<span class="login-danger">*</span>
+                            </span>
+                          </label>
+                          
+                        </div>
+                        
+                        <div class="form-group col-xs-12">
+                          <label class="labelgoogle" for="exampleInputEmail1">
+                            <input
+                            [ngModelOptions]="{ standalone: true }"
+                            [(ngModel)]="ciorif"
+                            name="ciorif"
+                            type="text"
+                            class="form-control input"
+                            placeholder=" "
+                          />
+                            <span class="label__name">
+                              {{'paymentmethod.ID or RIF'|translate}}  <span class="login-danger">*</span>
+                            </span>
+                          </label>
+                          
+                        </div>
                       </div>
-                      <div class="form-group col-xs-12">
-                        <label for="exampleInputEmail1"
-                          >Tipo de Cuenta<span class="required">*</span></label
-                        >
-                        <select
-                          name="bankAccountType"
-                          id="input"
-                          class="form-control"
-                          [ngModelOptions]="{ standalone: true }"
-                          [(ngModel)]="bankAccountType"
-                        >
-                          <option value="">Seleccione</option>
-                          <option value="ahorro">Ahorro</option>
-                          <option value="corriente">Corriente</option>
-                        </select>
-                      </div>
-                      <div class="form-group col-xs-12">
-                        <label for="exampleInputEmail1">Num de Cuenta</label>
-                        <input
-                          [ngModelOptions]="{ standalone: true }"
-                          [(ngModel)]="bankAccount"
-                          name="bankAccount"
-                          type="text"
-                          class="form-control"
-                        />
-                      </div>
-                      <div class="form-group col-xs-12">
-                        <label for="exampleInputEmail1">Ci/iD ó RIF</label>
-                        <input
-                          [ngModelOptions]="{ standalone: true }"
-                          [(ngModel)]="ciorif"
-                          name="ciorif"
-                          type="text"
-                          class="form-control"
-                        />
-                      </div>
+                      <input
+                        type="hidden"
+                        [ngModelOptions]="{ standalone: true }"
+                        [(ngModel)]="id"
+                      />
+                      <button (click)="save()" class="btn btn-primary">
+                        {{'formulario.Save'|translate}} 
+                      </button>
                     </div>
-                    <input
-                      type="hidden"
-                      [ngModelOptions]="{ standalone: true }"
-                      [(ngModel)]="id"
-                    />
-                    <button (click)="save()" class="btn btn-primary">
-                      Guardar
-                    </button>
                   </div>
-                </div>
-                <!-- transferencia -->
-                <!-- pagomovil -->
-                <div *ngIf="pagoSeleccionado == 'pagomovil'" class="card p-3">
-                  <div class="card-body">
-                    <h4>Pago Móvil</h4>
-                    <div class="row">
-                      <div class="form-group col-xs-12">
-                        <label for="exampleInputEmail1">Nombre del Banco</label>
-                        <input
-                          [ngModelOptions]="{ standalone: true }"
-                          [(ngModel)]="bankName"
-                          name="bankName"
-                          type="text"
-                          class="form-control"
-                        />
+                  <!-- transferencia -->
+                  <!-- transferencia bolivares-->
+                  <div
+                    *ngIf="pagoSeleccionado == 'Transferencia Bolivares'"
+                    class="card p-3"
+                  >
+                    <div class="card-body">
+                      <h4>{{'paymentmethod.Bolivar Transfer'|translate}}</h4>
+                      <div class="row">
+                        <div class="form-group col-xs-12">
+                          <label class="labelgoogle" for="exampleInputEmail1">
+                            <input
+                            [ngModelOptions]="{ standalone: true }"
+                            [(ngModel)]="bankName"
+                            name="bankName"
+                            type="text"
+                            class="form-control input"
+                            placeholder=" "
+                          />
+                            <span class="label__name">
+                              {{'paymentmethod.Bank Name'|translate}} <span class="login-danger">*</span>
+                            </span>
+                          </label>
+                          
+                        </div>
+                        <div class="form-group col-xs-12 mb-3">
+                          <label for="exampleInputEmail1"
+                            > {{'paymentmethod.Account Type'|translate}} <span class="login-danger">*</span></label
+                          >
+                          <select
+                            name="bankAccountType"
+                            id="input"
+                            class="form-control"
+                            [ngModelOptions]="{ standalone: true }"
+                            [(ngModel)]="bankAccountType"
+                          >
+                            <option value="">{{'Select'|translate}}</option>
+                            <option value="ahorro">{{'paymentmethod.Saving'|translate}} </option>
+                            <option value="corriente">{{'paymentmethod.Checking'|translate}}</option>
+                          </select>
+                        </div>
+                        <div class="form-group col-xs-12">
+                          <label class="labelgoogle" for="exampleInputEmail1">
+                            <input
+                            [ngModelOptions]="{ standalone: true }"
+                            [(ngModel)]="bankAccount"
+                            name="bankAccount"
+                            type="text"
+                            class="form-control input"
+                            placeholder=" "
+                          />
+                            <span class="label__name">
+                              {{'paymentmethod.Account Number'|translate}} <span class="login-danger">*</span>
+                            </span>
+                          </label>
+                         
+                        </div>
+                        <div class="form-group col-xs-12">
+                          <label class="labelgoogle" for="exampleInputEmail1">
+                            <input
+                            [ngModelOptions]="{ standalone: true }"
+                            [(ngModel)]="ciorif"
+                            name="ciorif"
+                            type="text"
+                            class="form-control input"
+                            placeholder=" "
+                          />
+                            <span class="label__name">
+                              {{'paymentmethod.ID or RIF'|translate}} <span class="login-danger">*</span>
+                            </span>
+                          </label>
+                          
+                        </div>
                       </div>
-                      <div class="form-group col-xs-12 col-sm-6">
-                        <label for="exampleInputEmail1">Ci o RIF</label>
-                        <input
-                          [ngModelOptions]="{ standalone: true }"
-                          [(ngModel)]="ciorif"
-                          name="ciorif"
-                          type="text"
-                          class="form-control"
-                        />
-                      </div>
-                      <div class="form-group col-xs-12 col-sm-6">
-                        <label for="exampleInputEmail1">Télefono</label>
-                        <input
-                          [ngModelOptions]="{ standalone: true }"
-                          [(ngModel)]="phone"
-                          name="phone"
-                          type="text"
-                          class="form-control"
-                        />
-                      </div>
+                      <input
+                        type="hidden"
+                        [ngModelOptions]="{ standalone: true }"
+                        [(ngModel)]="id"
+                      />
+                      <button (click)="save()" class="btn btn-primary">
+                        {{'formulario.Save'|translate}} 
+                      </button>
                     </div>
-                    <!-- <input type="hidden" [ngModelOptions]="{standalone: true}" [(ngModel)]="id"> -->
-                    <button (click)="save()" class="btn btn-primary">
-                      Guardar
-                    </button>
                   </div>
-                </div>
-                <!-- pagomovil  -->
-                <!-- zelle -->
-                <div *ngIf="pagoSeleccionado == 'zelle'" class="card p-3">
-                  <div class="card-body">
-                    <h4>Zelle</h4>
-                    <div class="row">
-                      <div class="form-group col-xs-12">
-                        <label for="exampleInputEmail1">Nombre del Banco</label>
-                        <input
-                          [ngModelOptions]="{ standalone: true }"
-                          [(ngModel)]="bankName"
-                          name="bankName"
-                          type="text"
-                          class="form-control"
-                        />
+                  <!-- transferencia -->
+                  <!-- pagomovil -->
+                  <div *ngIf="pagoSeleccionado == 'pagomovil'" class="card p-3">
+                    <div class="card-body">
+                      <h4>Pago Móvil</h4>
+                      <div class="row">
+                        <div class="form-group col-xs-12">
+                          <label class="labelgoogle" for="exampleInputEmail1">
+                            <input
+                            [ngModelOptions]="{ standalone: true }"
+                            [(ngModel)]="bankName"
+                            name="bankName"
+                            type="text"
+                            class="form-control input"
+                            placeholder=" "
+                          />
+                            <span class="label__name">
+                              {{'paymentmethod.Bank Name'|translate}}  <span class="login-danger">*</span>
+                            </span>
+                          </label>
+                          
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6">
+                          <label  class="labelgoogle" for="exampleInputEmail1">
+                            <input
+                            [ngModelOptions]="{ standalone: true }"
+                            [(ngModel)]="ciorif"
+                            name="ciorif"
+                            type="text"
+                            class="form-control input"
+                            placeholder=" "
+                          />
+                            <span class="label__name">
+                              {{'paymentmethod.ID or RIF'|translate}}  <span class="login-danger">*</span>
+                            </span>  
+                          </label>
+                          
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6">
+                          <label class="labelgoogle" for="exampleInputEmail1">
+                            <input
+                            [ngModelOptions]="{ standalone: true }"
+                            [(ngModel)]="phone"
+                            name="phone"
+                            type="text"
+                            class="form-control input"
+                            placeholder=" "
+                          />
+                            <span class="label__name">
+                              {{'formulario.Phome Mobile'|translate}} <span class="login-danger">*</span>
+                            </span>
+                          </label>
+                          
+                        </div>
                       </div>
-                      <div class="form-group col-xs-12">
-                        <label for="exampleInputEmail1"
-                          >Nombre de Usuario</label
-                        >
-                        <input
-                          [ngModelOptions]="{ standalone: true }"
-                          [(ngModel)]="username"
-                          name="username"
-                          type="text"
-                          class="form-control"
-                        />
-                      </div>
-                      <div class="form-group col-xs-12">
-                        <label for="exampleInputEmail1">email</label>
-                        <input
-                          [ngModelOptions]="{ standalone: true }"
-                          [(ngModel)]="email"
-                          name="email"
-                          type="text"
-                          class="form-control"
-                        />
-                      </div>
-                      <div class="form-group col-xs-12">
-                        <label for="exampleInputEmail1">Ci/iD ó RIF</label>
-                        <input
-                          [ngModelOptions]="{ standalone: true }"
-                          [(ngModel)]="ciorif"
-                          name="ciorif"
-                          type="text"
-                          class="form-control"
-                        />
-                      </div>
+                      <!-- <input type="hidden" [ngModelOptions]="{standalone: true}" [(ngModel)]="id"> -->
+                      <button (click)="save()" class="btn btn-primary">
+                        {{'formulario.Save'|translate}} 
+                      </button>
                     </div>
-
-                    <!-- <input type="hidden" [ngModelOptions]="{standalone: true}" [(ngModel)]="id"> -->
-                    <button (click)="save()" class="btn btn-primary">
-                      Guardar
-                    </button>
                   </div>
-                </div>
-                <!-- zelle  -->
-              </form>
-            </div>
-            <div class="col-xs-12 col-sm-7" *ngIf="!tipoSeleccionado">
-                <table class=" table table-responsive table-striped table-responsive-sm">
-                    <thead>
-                      <tr>
-                        <th>Tipo</th>
-                        <th>Nombre</th>
-                        <th>Status</th>
-                        <th>Activar</th>
-                        <th>Opciones</th>
-                      </tr>
-                    </thead>
-
-                    <tbody>
-                      <ng-container *ngFor="let tipodepago of tiposdepagosuser">
+                  <!-- pagomovil  -->
+                  <!-- zelle -->
+                  <div *ngIf="pagoSeleccionado == 'zelle'" class="card p-3">
+                    <div class="card-body">
+                      <h4>Zelle</h4>
+                      <div class="row">
+                        <div class="form-group col-xs-12">
+                          <label class="labelgoogle" for="exampleInputEmail1">
+                            <input
+                            [ngModelOptions]="{ standalone: true }"
+                            [(ngModel)]="bankName"
+                            name="bankName"
+                            type="text"
+                            class="form-control input"
+                            placeholder=" "
+                          />
+                            <span class="label__name">
+                              {{'paymentmethod.Bank Name'|translate}} <span class="login-danger">*</span>
+                            </span>
+                            </label>
+                         
+                        </div>
+                        <div class="form-group col-xs-12">
+                          <label class="labelgoogle" for="exampleInputEmail1"
+                            >
+                            <input
+                            [ngModelOptions]="{ standalone: true }"
+                            [(ngModel)]="username"
+                            name="username"
+                            type="text"
+                            class="form-control input"
+                            placeholder=" "
+                          />
+                            <span class="label__name">
+                              {{'formulario.Username'|translate}} 
+                            </span>
+                          </label>
+                          
+                        </div>
+                        <div class="form-group col-xs-12">
+                          <label class="labelgoogle" for="exampleInputEmail1">
+                            <input
+                            [ngModelOptions]="{ standalone: true }"
+                            [(ngModel)]="email"
+                            name="email"
+                            type="text"
+                            class="form-control input"
+                            placeholder=" "
+                          />
+                            <span class="label__name">
+                              {{'auth.email'|translate}} <span class="login-danger">*</span>
+                            </span>
+                          </label>
+                          
+                        </div>
+                        <div class="form-group col-xs-12">
+                          <label class="labelgoogle" for="exampleInputEmail1">
+                            <input
+                            [ngModelOptions]="{ standalone: true }"
+                            [(ngModel)]="ciorif"
+                            name="ciorif"
+                            type="text"
+                            class="form-control input"
+                            placeholder=" "
+                          />
+                            <span class="label__name">
+                              {{'paymentmethod.ID or RIF'|translate}}
+                            </span>
+                          </label>
+                          
+                        </div>
+                      </div>
+  
+                      <!-- <input type="hidden" [ngModelOptions]="{standalone: true}" [(ngModel)]="id"> -->
+                      <button (click)="save()" class="btn btn-primary">
+                        Guardar
+                      </button>
+                    </div>
+                  </div>
+                  <!-- zelle  -->
+                </form>
+              </div>
+              <!-- lista de tipos -->
+              <div class="col-xs-12 col-sm-7" *ngIf="!tipoSeleccionado">
+                <div class="table-responsive">
+                  <table class=" table table-striped ">
+                      <thead>
                         <tr>
-                          <td>{{ tipodepago.tipo }}</td>
-                          <td>{{ tipodepago.bankName }}</td>
-                          <td>
-                            <span
-                              class="badge bg-success"
-                              *ngIf="tipodepago.status === 'ACTIVE'"
-                              >Activo</span
-                            >
-                            <span
-                              class="badge bg-danger"
-                              *ngIf="tipodepago.status === 'INACTIVE'"
-                              >Inactivo</span
-                            >
-                          </td>
-                          <td>
-                            <!-- <div class="status-toggle d-flex justify-content-between align-items-center">
-                                                            <input type="checkbox"  class="check"  [checked]="{'check': tipodepago.status === 'ACTIVO'}" [ngModelOptions]="{standalone: true}" [(ngModel)]="tipodepago.status" (change)="cambiarStatus(tipodepago)">
-                                                            <label  class="checktoggle">checkbox</label>
-                                                        </div> -->
-
-                            <select
-                              class="form-control form-select-solid fw-bolder"
-                              name="status"
-                              [ngModelOptions]="{ standalone: true }"
-                              [(ngModel)]="tipodepago.status"
-                              (change)="cambiarStatus(tipodepago)"
-                              placeholder="status"
-                            >
-                              <option value="">Seleccione</option>
-                              <option value="ACTIVE">Activo</option>
-                              <option value="INACTIVE">Inactivo</option>
-                            </select>
-                          </td>
-                          <td>
-                            <a
-                              class="btn btn-outline-primary btn-sm"
-                              href="#"
-                              onclick="return false;"
-                              (click)="selectedType(tipodepago)"
-                              title="Edit"
-                              ><i class="fa fa-eye pl--0"></i
-                            ></a>
-                            <a
-                              class="btn btn-outline-danger btn-sm"
-                              href="#"
-                              onclick="return false;"
-                              (click)="deleteTipoPago(tipodepago)"
-                              title="delete"
-                              ><i class="fa fa-trash pl--0"></i
-                            ></a>
-                          </td>
+                          <th>{{'paymentmethod.Payment Type'|translate}}</th>
+                          <th>{{'paymentmethod.Bank Name'|translate}}</th>
+                          <th>Status </th>
+                          <th>{{'paymentmethod.Activate'|translate}}</th>
+                          <th> {{'paymentmethod.Options'|translate}}</th>
                         </tr>
-                      </ng-container>
-                    </tbody>
-                  </table>
+                      </thead>
+  
+                      <tbody>
+                        <ng-container *ngFor="let tipodepago of tiposdepagosuser">
+                          <tr>
+                            <td>{{ tipodepago.tipo }}</td>
+                            <td>{{ tipodepago.bankName }}</td>
+                            <td>
+                              <span
+                                class="badge bg-success"
+                                *ngIf="tipodepago.status === 'ACTIVE'"
+                                >{{'paymentmethod.Active'|translate}}</span
+                              >
+                              <span
+                                class="badge bg-danger"
+                                *ngIf="tipodepago.status === 'INACTIVE'"
+                                >{{'paymentmethod.Inactive'|translate}}</span
+                              >
+                            </td>
+                            <td>
+                              <!-- <div class="status-toggle d-flex justify-content-between align-items-center">
+                                                              <input type="checkbox"  class="check"  [checked]="{'check': tipodepago.status === 'ACTIVO'}" [ngModelOptions]="{standalone: true}" [(ngModel)]="tipodepago.status" (change)="cambiarStatus(tipodepago)">
+                                                              <label  class="checktoggle">checkbox</label>
+                                                          </div> -->
+  
+                              <select
+                                class="form-control form-select-solid fw-bolder"
+                                name="status"
+                                [ngModelOptions]="{ standalone: true }"
+                                [(ngModel)]="tipodepago.status"
+                                (change)="cambiarStatus(tipodepago)"
+                                placeholder="status"
+                              >
+                                <option value="">{{'Select'|translate}}</option>
+                                <option value="ACTIVE">{{'paymentmethod.Active'|translate}}</option>
+                                <option value="INACTIVE">{{'paymentmethod.Inactive'|translate}}</option>
+                              </select>
+                            </td>
+                            <td>
+                              <a
+                                class="btn btn-outline-primary btn-sm"
+                                href="#"
+                                onclick="return false;"
+                                (click)="selectedType(tipodepago)"
+                                title="Edit"
+                                ><i class="fa fa-eye pl--0"></i
+                              ></a>
+                              <a
+                                class="btn btn-outline-danger btn-sm"
+                                href="#"
+                                onclick="return false;"
+                                (click)="deleteTipoPago(tipodepago)"
+                                title="delete"
+                                ><i class="fa fa-trash pl--0"></i
+                              ></a>
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="row" *ngIf="tipoSeleccionado">
-            <div class="card">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6 col-md-6">
-                    <div class="rbt-form-group">
-                      <b> Tipo de Pago</b><br />
-                      {{ tipoSeleccionado.tipo }}
+            <div class="row" *ngIf="tipoSeleccionado">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                      <div class="rbt-form-group">
+                        <b> {{'paymentmethod.Payment Type'|translate}}</b><br />
+                        {{ tipoSeleccionado.tipo }}
+                      </div>
                     </div>
-                  </div>
-                  <br />
-                  <div
-                    class="col-xs-12 col-sm-6 col-md-6"
-                    *ngIf="tipoSeleccionado.email"
-                  >
-                    <div class="rbt-form-group">
-                      <b> Email</b><br />
-                      {{ tipoSeleccionado.email }}
+                    <br />
+                    <div
+                      class="col-xs-12 col-sm-6 col-md-6"
+                      *ngIf="tipoSeleccionado.email"
+                    >
+                      <div class="rbt-form-group">
+                        <b> {{'auth.email'|translate}}</b><br />
+                        {{ tipoSeleccionado.email }}
+                      </div>
                     </div>
-                  </div>
-                  <div
-                    class="col-xs-12 col-sm-6 col-md-6"
-                    *ngIf="tipoSeleccionado.ciorif"
-                  >
-                    <div class="rbt-form-group">
-                      <b> ci orif</b><br />
-                      {{ tipoSeleccionado.ciorif }}
+                    <div
+                      class="col-xs-12 col-sm-6 col-md-6"
+                      *ngIf="tipoSeleccionado.ciorif"
+                    >
+                      <div class="rbt-form-group">
+                        <b> {{'paymentmethod.CI or RIF'|translate}}</b><br />
+                        {{ tipoSeleccionado.ciorif }}
+                      </div>
                     </div>
-                  </div>
-                  <br />
-                  <div
-                    class="col-xs-12 col-sm-6 col-md-6"
-                    *ngIf="tipoSeleccionado.phone"
-                  >
-                    <div class="rbt-form-group">
-                      <b> Teléfono</b><br />
-                      {{ tipoSeleccionado.phone }}
+                    <br />
+                    <div
+                      class="col-xs-12 col-sm-6 col-md-6"
+                      *ngIf="tipoSeleccionado.phone"
+                    >
+                      <div class="rbt-form-group">
+                        <b> {{'formulario.Phome Mobile'|translate}}</b><br />
+                        {{ tipoSeleccionado.phone }}
+                      </div>
                     </div>
-                  </div>
-                  <div
-                    class="col-xs-12 col-sm-6 col-md-6"
-                    *ngIf="tipoSeleccionado.bankName"
-                  >
-                    <div class="rbt-form-group">
-                      <b> Nombre del Banco</b><br />
-                      {{ tipoSeleccionado.bankName }}
+                    <div
+                      class="col-xs-12 col-sm-6 col-md-6"
+                      *ngIf="tipoSeleccionado.bankName"
+                    >
+                      <div class="rbt-form-group">
+                        <b> {{'paymentmethod.Bank Name'|translate}}</b><br />
+                        {{ tipoSeleccionado.bankName }}
+                      </div>
                     </div>
-                  </div>
-                  <br />
-                  <div
-                    class="col-xs-12 col-sm-6 col-md-6"
-                    *ngIf="tipoSeleccionado.bankAccount"
-                  >
-                    <div class="rbt-form-group">
-                      <b> Cuenta Bancaria</b><br />
-                      {{ tipoSeleccionado.bankAccount }}
+                    <br />
+                    <div
+                      class="col-xs-12 col-sm-6 col-md-6"
+                      *ngIf="tipoSeleccionado.bankAccount"
+                    >
+                      <div class="rbt-form-group">
+                        <b> {{'paymentmethod.Account Number'|translate}}</b><br />
+                        {{ tipoSeleccionado.bankAccount }}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <div *ngIf="tipoSeleccionado">
+              <button
+                class="btn btn-primary btn-sm"
+                (click)="tipoSeleccionado = null"
+              >
+              {{'Back'|translate}}
+              </button>
+            </div>
+            <!-- Start Profile Row  -->
+  
+            <!-- End Profile Row  -->
           </div>
-          <div *ngIf="tipoSeleccionado">
-            <button
-              class="btn btn-primary btn-sm"
-              (click)="tipoSeleccionado = null"
-            >
-              Regresar
-            </button>
-          </div>
-          <!-- Start Profile Row  -->
-
-          <!-- End Profile Row  -->
         </div>
+        <!---side bar responsive table-->
+        <!-- <div class="col-xs-12 col-sm-3 col-md-3">
+                  <app-lateral></app-lateral>
+        
+              </div> -->
+        <!---side bar responsive table-->
       </div>
-      <!---side bar responsive table-->
-      <!-- <div class="col-xs-12 col-sm-3 col-md-3">
-                <app-lateral></app-lateral>
-      
-            </div> -->
-      <!---side bar responsive table-->
     </div>
   </div>
 </section>

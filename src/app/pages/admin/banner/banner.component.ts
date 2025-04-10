@@ -127,6 +127,7 @@ export class BannerComponent {
   }
 
   addPublicidad(){
+    this.text_success = " ";
     const formData = new FormData();
     formData.append('imagen', this.FILE_AVATAR);
 
@@ -151,6 +152,7 @@ export class BannerComponent {
     this.closeReload();
   }
   editPublicidad(publicidad:any){
+    this.text_success = " ";
     const formData = new FormData();
     formData.append('imagen', this.FILE_AVATAR);
     // formData.append('id', this.publicidad_id);

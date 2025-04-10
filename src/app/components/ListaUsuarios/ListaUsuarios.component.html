@@ -21,8 +21,8 @@
           <img [src]="item.profile?.avatar | imagenPipe : 'users'" alt="" />
         </a>
         <div class="div1">
-          <h5 style="margin: 0; padding: 0">{{ item.username }}</h5>
-          <p style="margin: 0; padding: 0">{{ item.roles[0].name |translate  }}</p>
+          <h5 style="margin: 0; padding: 0">{{ item.username | lowercase }}</h5>
+          <p style="margin: 0; padding: 0">{{ item.roles[0].name |translate | lowercase }}</p>
           <p style="margin: 0; padding: 0">{{ item.profile?.ciudad }}</p>
           <!-- <h5 style="margin: 0; padding: 0;">{{item.profiles.status}}</h5> -->
           <span class="badge  bg-primary" *ngIf="item.status === 1"> {{'Pending'|translate}}</span>

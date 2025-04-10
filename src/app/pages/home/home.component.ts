@@ -31,7 +31,7 @@ import { UserService } from '../../services/usuario.service';
 })
 export class HomeComponent {
   pageTitle = 'Home';
-  user: Usuario;
+  user!: Usuario;
   users: any = [];
 
   private translate = inject(TranslateService);

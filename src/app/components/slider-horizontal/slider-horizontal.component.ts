@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { BannerService } from '../../services/banner.service';
 import { Banner } from '../../models/banner.model';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { SkeletonLoaderComponent } from '../../shared/skeleton-loader/skeleton-loader.component';
 import { LoadingComponent } from '../../shared/loading/loading.component';
 
 @Component({
