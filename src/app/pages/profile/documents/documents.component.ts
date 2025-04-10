@@ -64,6 +64,7 @@ export class DocumentsComponent {
   searchForm!:FormGroup;
   document_selected:any = null;
   public user_cliente_id!: number;
+  public cliente_id!: number;
   public user_member_id!: number;
   public clientes: any = [];
   private solicitudService = inject(SolicitudesService);
@@ -318,20 +319,18 @@ closeModalDoc(){
     })
   }
 
-  onShareIt(){
+  onShareIt(){debugger
     const data ={
-     
-      share: this.share,
-      user_id :this.user_id,
-      // profile_id :this.profile_id,
-      // // img: this.profile.img,
-      // // imagen: this.FILE_AVATAR.,
-      // avatar: this.FILE_AVATAR.name,
-      // ...this.userForm.value,
-
-      
+      document_id : this.document_selected,
+      user_id : this.user.id,
+      cliente_id : this.share,
     }
-    console.log(data);
+    
+    
+    // console.log(data);
+    this.documentService.shareDocument(data).subscribe((resp:any)=>{
+
+    })
   }
 
 }

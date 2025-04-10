@@ -123,4 +123,8 @@ export class DocumentService {
       const url = `${baseUrl}/document/destroy/${_id}`;
       return this.http.delete(url, this.headers);
     }
+    shareDocument(data:any) {
+      const url = `${baseUrl}/document/share/`;
+      return this.http.post(url, data, this.headers);
+    }
 }
