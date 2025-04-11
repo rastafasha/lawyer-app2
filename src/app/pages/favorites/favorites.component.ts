@@ -9,6 +9,12 @@ import { FavoritoService } from '../../services/favorito.service';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FavoritesService } from '../../services/favorites.service';
+import { Usuario } from '../../models/usuario.model';
+import { AuthService } from '../../services/auth.service';
+import { Favorite } from '../../models/favorite.model';
+import { Profile } from '../../models/profile.model';
+import { ImagenPipe } from '../../pipes/imagen.pipe';
 
 @Component({
   selector: 'app-favorites',
@@ -22,6 +28,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
     InfiniteScrollDirective,
     TranslateModule,
     ReactiveFormsModule,
+    ImagenPipe
   ],
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.css'
@@ -34,10 +41,14 @@ export class FavoritesComponent {
   isEdnOfList = false;
   searchForm!: FormGroup;
   name_file ='';
-
+  user!:Usuario;
+    rol!:string;
     characters: Array<any> = [];
+    favorites: Array<Favorite> = [];
     nextUrl:string = '';
     private favoriteService = inject(FavoritoService);
+    private favoritesService = inject(FavoritesService);
+    private authService = inject(AuthService);
     private fb = inject(FormBuilder);
 
     ngOnInit():void{
@@ -45,6 +56,16 @@ export class FavoritesComponent {
       this.getCharactrs();
       this.validarFormularioPerfil();
       this.searchForm.reset();
+
+    this.user = this.authService.getUser();
+    this.rol = this.user.roles[0];
+    console.log(this.rol);
+    if(this.rol === 'MEMBER'){
+      this.favoritesByUser();
+    }
+    if(this.rol === 'GUEST'){
+      this.favoritesByCliente();
+    }
     }
 
     validarFormularioPerfil(){
@@ -66,6 +87,23 @@ export class FavoritesComponent {
           this.isLoading = false;
       })
     }
+
+
+    favoritesByUser(){
+      this.favoritesService.getByUser(this.user.id).subscribe((resp:any)=>{
+        console.log('respuesta member',resp);
+        this.favorites = resp;
+      })
+    }
+    favoritesByCliente(){
+      this.favoritesService.getByCliente(this.user.id).subscribe((resp:any)=>{
+        console.log('respuesta guest',resp);
+        this.favorites = resp.favorites.data;
+        console.log('favorites guest',this.favorites);
+
+      })
+    }
+
 
     onScrollDown(){
       if (!this.nextUrl || this.isLoading) return;

@@ -89,6 +89,7 @@ export class WalletComponent {
             : resp.pedido || [];
       // console.log(this.pedido);
       this.isLoading = false;
+      
     })
   }
 
@@ -145,6 +146,7 @@ export class WalletComponent {
       this.userService.showUser(this.cliente_id).subscribe((resp:any)=>{
         // console.log('respuesta para miembro',resp);
         this.cliente = resp.user[0];
+        // this.status = resp.status;
         // console.log(this.cliente);
       })
     }
@@ -152,6 +154,7 @@ export class WalletComponent {
       this.userService.showUser(this.user_cliente_id).subscribe((resp:any)=>{
         // console.log('respuesta para guest',resp);
         this.cliente = resp.user[0];
+        // this.status = resp.status;
         // console.log(this.cliente);
       })
     }
