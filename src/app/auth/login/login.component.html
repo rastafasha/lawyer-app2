@@ -28,7 +28,7 @@
           <input
             type="password"
             formControlName="password"
-            placeholder="Password"
+            placeholder="{{'auth.password'|translate}}"
           />
           @if(registerForm.controls['password'].touched){
                       
@@ -41,6 +41,18 @@
               }
             </div>
         }
+        </div>
+        <div class="input-field">
+          <i class="fa fa-user"></i>
+          <select
+            class="form-control "
+            formControlName="role"
+            placeholder="state"
+          >
+            <option>-- Select --</option>
+            <option value="GUEST">{{'auth.User'|translate}}</option>
+            <option value="MEMBER">{{'Lawyer'|translate}}</option>
+          </select>
         </div>
         <div class="row">
           <div class="form-check rememb">
@@ -63,7 +75,7 @@
         </div>
         <input
           type="submit"
-          value="Login"
+          value="{{'auth.signin'|translate}}"
           (click)="login()"
           class="btn solid"
         />
@@ -265,7 +277,7 @@
           id="sign-up-btn"
           (click)="switchRegistrologin()"
         >
-        {{'auth.signup'|translate}}!
+        {{'auth.signup'|translate}}
         </button>
       </div>
       <img src="./assets/images/login.svg" class="image" alt="" />
@@ -279,7 +291,7 @@
           id="sign-in-btn"
           (click)="switchRegistrologin()"
         >
-        {{'formulario.Enter'|translate}}
+        {{'auth.signin'|translate}}
         </button>
       </div>
       <img src="./assets/images/register.svg" class="image" alt="" />

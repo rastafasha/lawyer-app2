@@ -57,12 +57,31 @@ export class AuthService {
   }
 
 
-  login(email:string,password:string){
+  login(email:string,password:string, role:string){
 
     // return this.http.post<any>(`${this.serverUrl}/login`, {email: email, password: password}, { withCredentials: false })
 
     let URL = url_servicios+"/login";
-    return this.http.post(URL, {email: email,password: password})
+    return this.http.post(URL, {email: email,password: password, role: role})
+    .pipe(
+      map((auth:any) => {
+        console.log(auth);
+        const result = this.guardarLocalStorage(auth.user, auth.access_token);
+        return result;
+      }),
+      catchError((error:any) => {
+        console.log(error);
+        return of(undefined);
+      })
+    )
+
+  }
+  loginGuest(email:string,password:string, role:string){
+
+    // return this.http.post<any>(`${this.serverUrl}/login`, {email: email, password: password}, { withCredentials: false })
+
+    let URL = url_servicios+"/loginguest";
+    return this.http.post(URL, {email: email,password: password, role:role})
     .pipe(
       map((auth:any) => {
         console.log(auth);
@@ -79,6 +98,15 @@ export class AuthService {
 
   crearUsuario(formData: RegisterForm){
     let URL = url_servicios+"/register";
+    return this.http.post(URL, formData)
+    .pipe(map(user => {
+      localStorage.setItem('auth_token', JSON.stringify(user));
+
+      return user;
+    }));
+  }
+  crearUsuarioGuest(formData: RegisterForm){
+    let URL = url_servicios+"/registerguest";
     return this.http.post(URL, formData)
     .pipe(map(user => {
       localStorage.setItem('auth_token', JSON.stringify(user));

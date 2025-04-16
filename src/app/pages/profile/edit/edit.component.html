@@ -7,7 +7,7 @@
     
                     <app-backButtn [pageTitle]="pageTitle" [Title]="Title"></app-backButtn>
                     <app-loading *ngIf="isLoading" [loadingTitle]="loadingTitle"></app-loading>
-                    <form   [formGroup]="userForm" *ngIf="!isLoading"  >
+                    <form   [formGroup]="userForm" *ngIf="!isLoading" class="formulario"  >
                         <!-- datos -->
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-3">
@@ -190,45 +190,12 @@
                                                     <input type="radio"  value="1" formControlName="gender" class="form-check-input ">{{'formulario.Male'|translate}}
                                                 </label>
                                             </div>
-                                            <div class="form-check-inline ">
+                                            <!-- <div class="form-check-inline ">
                                                 <label class="form-check-label ">
                                                     <input type="radio"  value="2" formControlName="gender" class="form-check-input ">{{'formulario.Female'|translate}}
                                                 </label>
-                                            </div>
+                                            </div> -->
                                         </div>
-                                      </div>
-                                    <!-- Especialidad -->
-                                      <div class="col-12 col-md-4 col-xl-4" *ngIf="user.roles[0] ==='MEMBER' && profile.status === 2">
-                                          <div class="input-group">
-                                            <!-- <label for="validationCustom04" class="form-label">{{'formulario.Speciality'|translate}}</label> -->
-                                            <span class="input-group-text " id="basic-addon1">
-                                                <i class="fa fa-anchor " aria-hidden="true"></i>
-                                            </span>
-                                            <select class="form-select" formControlName="speciality_id" id="validationCustom04"  required>
-                                              <!-- <option selected disabled value="">Seleccione...</option> -->
-                                              <option *ngFor="let data of specialities" [value]="data.id">{{data.title}}</option>
-                                            </select>
-                                        </div>
-    
-                                        <div class="invalid-feedback">
-                                            {{'formulario.pleaseSelec'|translate}}
-                                        </div>
-                                      </div>
-                                      <!-- Dirección -->
-                                      <div class="col-12  col-sm-6">
-                                        <label for="validationCustom02" class="form-label ">{{'formulario.Address'|translate}}</label>
-                                        <textarea formControlName="direccion" class="form-control" id="validationCustom02"  required></textarea>
-                                        @if(userForm.controls['direccion'].touched){
-                          
-                                            <div class="text-danger">
-                                              @if(userForm.controls['direccion'].errors?.['required']){
-                                                  <span >{{'formulario.Field Required'|translate}}</span>
-                                              }
-                                              @if(userForm.controls['direccion'].errors?.['minlength']){
-                                                  <span >{{'formulario.3 Charecters Minimal'|translate}}</span>
-                                              }
-                                            </div>
-                                        }
                                       </div>
                                       <!-- Descripción -->
                                       <div class="col-12 col-sm-6">

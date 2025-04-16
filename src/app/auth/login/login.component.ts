@@ -14,7 +14,8 @@ declare const gapi: any;
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, ModalCondicionesComponent,
+  imports: [ReactiveFormsModule, 
+    ModalCondicionesComponent,
      NgIf, TranslateModule,
      PwaNotifInstallerComponent
     ],
@@ -98,7 +99,8 @@ ngOnInit(){
   this.loginForm = this.fb.group({
     email: [ localStorage.getItem('email') || '', [Validators.required, Validators.email] ],
     password: ['', Validators.required],
-    remember: [false]
+    remember: [false],
+    role: ['']
 
   });
   this.authService.getLocalStorage();
@@ -112,34 +114,66 @@ login(){
     Swal.fire('Error', 'Favor ingresar datos', 'error');
     return;
   }
-
-  this.authService.login(
-    this.loginForm.value.email ? this.loginForm.value.email : '' ,
-    this.loginForm.value.password ? this.loginForm.value.password: ''
-
-  ).subscribe(
-    (resp:any) =>{
-      if(this.loginForm.get('remember')?.value){
-        localStorage.setItem('email', this.loginForm.get('email')?.value);
-        // document.location.reload();
+  if(this.loginForm.value.role === 'MEMBER'){
+    this.authService.login(
+      this.loginForm.value.email ? this.loginForm.value.email : '' ,
+      this.loginForm.value.password ? this.loginForm.value.password: '',
+      this.loginForm.value.role ? this.loginForm.value.role: ''
+  
+    ).subscribe(
+      (resp:any) =>{
+        if(this.loginForm.get('remember')?.value){
+          localStorage.setItem('email', this.loginForm.get('email')?.value);
+          // document.location.reload();
+          
+        }else{
+          localStorage.removeItem('email');
+        }
+        this.authService.getLocalStorage();
+        if(localStorage.getItem('user')){
+          setTimeout(()=>{
+            this.router.navigateByUrl('/app');
+          },500)
+  
+        }
         
-      }else{
-        localStorage.removeItem('email');
+      },(error) => {
+        Swal.fire('Error', error.error.msg, 'error');
+        this.errors = error.error.msg;
+        document.location.reload();
       }
-      this.authService.getLocalStorage();
-      if(localStorage.getItem('user')){
-        setTimeout(()=>{
-          this.router.navigateByUrl('/app');
-        },500)
-
+      )
+  }else{
+    this.authService.loginGuest(
+      this.loginForm.value.email ? this.loginForm.value.email : '' ,
+      this.loginForm.value.password ? this.loginForm.value.password: '',
+      this.loginForm.value.role ? this.loginForm.value.role: ''
+  
+    ).subscribe(
+      (resp:any) =>{
+        if(this.loginForm.get('remember')?.value){
+          localStorage.setItem('email', this.loginForm.get('email')?.value);
+          // document.location.reload();
+          
+        }else{
+          localStorage.removeItem('email');
+        }
+        this.authService.getLocalStorage();
+        if(localStorage.getItem('user')){
+          setTimeout(()=>{
+            this.router.navigateByUrl('/app');
+          },500)
+  
+        }
+        
+      },(error) => {
+        Swal.fire('Error', error.error.msg, 'error');
+        this.errors = error.error.msg;
+        document.location.reload();
       }
-      
-    },(error) => {
-      Swal.fire('Error', error.error.msg, 'error');
-      this.errors = error.error.msg;
-      document.location.reload();
-    }
-    )
+      )
+  }
+  
     // console.log(this.user)
 }
 
@@ -153,15 +187,29 @@ crearUsuario(){
   //   return;
   // }
 
-  this.authService.crearUsuario(this.registerForm.value).subscribe(
-    resp =>{
-      Swal.fire('Registrado!', `Ya puedes ingresar`, 'success');
-      this.ngOnInit();
-    },(error) => {
-      Swal.fire('Error', error.error.msg, 'error');
-      this.errors = error.error;
-    }
-  );
+  if(this.registerForm.value.role === 'MEMBER'){
+    this.authService.crearUsuario(this.registerForm.value).subscribe(
+      resp =>{
+        Swal.fire('Registrado!', `Ya puedes ingresar`, 'success');
+        this.ngOnInit();
+      },(error) => {
+        Swal.fire('Error', error.error.msg, 'error');
+        this.errors = error.error;
+      }
+    );
+  }else{
+    this.authService.crearUsuarioGuest(this.registerForm.value).subscribe(
+      resp =>{
+        Swal.fire('Registrado!', `Ya puedes ingresar`, 'success');
+        this.ngOnInit();
+      },(error) => {
+        Swal.fire('Error', error.error.msg, 'error');
+        this.errors = error.error;
+      }
+    );
+
+  }
+
   return false;
 }
 
@@ -179,7 +227,7 @@ aceptaTerminos(){
 
 passwordNoValido(){
   const pass1 = this.registerForm.get('password')?.value;
-  const pass2 = this.registerForm.get('password2')?.value;
+  const pass2 = this.registerForm.get('confirmPassword')?.value;
 
   if((pass1 !== pass2) && this.formSumitted){
     return true;
