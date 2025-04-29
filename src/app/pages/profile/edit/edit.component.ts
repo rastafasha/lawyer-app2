@@ -130,7 +130,7 @@ export class EditComponent {
       // this.closeMenu();
       this.user_id = this.user.id;
       this.validarFormularioPerfil();
-      // this.getProfile();
+      
       this.getSpecialitys();
       this.getPaisesList();
       this.activatedRoute.params.subscribe( ({id}) => this.iniciarFormularioPerfil(id));
@@ -204,7 +204,7 @@ export class EditComponent {
           });
           this.profileSeleccionado = resp.profile;
           // console.log('profileSeleccionado',this.profileSeleccionado);
-
+          this.getProfile();
         }
 
       );
