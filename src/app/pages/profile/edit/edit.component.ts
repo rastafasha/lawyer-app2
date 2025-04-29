@@ -130,7 +130,7 @@ export class EditComponent {
       // this.closeMenu();
       this.user_id = this.user.id;
       this.validarFormularioPerfil();
-      this.getProfile();
+      // this.getProfile();
       this.getSpecialitys();
       this.getPaisesList();
       this.activatedRoute.params.subscribe( ({id}) => this.iniciarFormularioPerfil(id));
@@ -184,25 +184,25 @@ export class EditComponent {
   iniciarFormularioPerfil(id:string){
     if (!id == null || !id == undefined || id) {
       this.profileService.getByUser(id).subscribe(
-        (res:any) => {
+        (resp:any) => {
           this.userForm.patchValue({
-            id: res.id,
-            nombre: this.profile.nombre,
-            surname: this.profile.surname,
+            id: resp.id,
+            nombre: resp.profile.nombre,
+            surname: resp.profile.surname,
             
-            direccion: this.profile.direccion,
-            description: this.profile.description,
-            pais: this.profile.pais,
-            estado: this.profile.estado,
-            ciudad: this.profile.ciudad,
-            gender: this.profile.gender,
-            n_doc: this.profile.n_doc,
-            telhome: this.profile.telhome,
-            telmovil: this.profile.telmovil,
-            speciality_id: this.profile.speciality_id,
+            direccion: resp.profile.direccion,
+            description: resp.profile.description,
+            pais: resp.profile.pais,
+            estado: resp.profile.estado,
+            ciudad: resp.profile.ciudad,
+            gender: resp.profile.gender,
+            n_doc: resp.profile.n_doc,
+            telhome: resp.profile.telhome,
+            telmovil: resp.profile.telmovil,
+            speciality_id: resp.profile.speciality_id,
             usuario: this.user.id,
           });
-          this.profileSeleccionado = res.profile;
+          this.profileSeleccionado = resp.profile;
           // console.log('profileSeleccionado',this.profileSeleccionado);
 
         }

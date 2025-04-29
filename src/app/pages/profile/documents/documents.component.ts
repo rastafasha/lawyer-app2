@@ -84,7 +84,7 @@ export class DocumentsComponent {
     this.rol = this.user.roles[0];
     this.validarFormularioPerfil();
     this.getdocumentsbyUser();
-    this.getdocumentsbyUserFilter();
+    // this.getdocumentsbyUserFilter();
     this.searchForm.reset();
   }
 

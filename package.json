@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start:prod": "ng build && lite-server -p 8080 --baseDir dist/lawyer-app2",
+    "start:dev": "ng serve --port 4203",
+    "start:prod": "ng build && lite-server -p 8080 --baseDir dist/browser/lawyer-app2",
     "build": "ng build",
     "build:laflecha": "ng build --configuration laflecha",
     "watch": "ng build --watch --configuration development",
