@@ -18,6 +18,7 @@ export class Profile {
   avatar: string = "";
   status: number = 1;
   gender: number = 1 ;
+  lang: string = "";
   // status: string = "";
   rating: number = 0;
   speciality_title: string = "";

@@ -67,21 +67,7 @@ export class SolicitudesService {
         map((resp:{ok: boolean, solicitudes: Solicitud}) => resp.solicitudes)
       )
   }
-  getByClientesUser(usuario:any) {
-    const url = `${baseUrl}/solicitud/clientes-user/${usuario}`;
-    return this.http.get<any>(url,this.headers)
-      .pipe(
-        map((resp:{ok: boolean, clientes: Solicitud}) => resp.clientes)
-      )
-  }
-  getByContactosCliente(usuario:any) {
-    const url = `${baseUrl}/solicitud/contactos-cliente/${usuario}`;
-    return this.http.get<any>(url,this.headers)
-      .pipe(
-        map((resp:{ok: boolean, clientes: any}) => resp)
-      )
-  }
-
+  
   
 
   createSolicitud(data:any){

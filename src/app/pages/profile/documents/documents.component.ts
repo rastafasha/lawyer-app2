@@ -15,6 +15,7 @@ import { environment } from '../../../environments/environment';
 import { LoadingComponent } from '../../../shared/loading/loading.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { SolicitudesService } from '../../../services/solicitudes.service';
+import { ClientService } from '../../../services/client.service';
 const baseUrl = environment.url_servicios;
 declare let $:any;  
 @Component({
@@ -71,6 +72,7 @@ export class DocumentsComponent {
   constructor(
     private authService: AuthService,
     public documentService:DocumentService,
+    public clientService:ClientService,
     public router: Router,
     public ativatedRoute: ActivatedRoute,
     public fb: FormBuilder,
@@ -176,6 +178,7 @@ export class DocumentsComponent {
     this.documentService.deleteDocument(FILE).subscribe((resp:any)=>{
       // this.getAppointment();
       this.getdocumentsbyUser();
+      // this.ngOnInit();
     })
     this.FilesAdded.splice(FILE,1);
   }
@@ -197,6 +200,7 @@ closeModalDoc(){
       $("body").removeClass();
       $("body").removeAttr("style");
       this.file_selected = null;
+      this.ngOnInit();
 }
   
 
@@ -288,17 +292,14 @@ closeModalDoc(){
     this.document_selected = document;
     this.user_member_id = this.user.id;
     this.user_cliente_id = this.user.id;
-    if(this.rol === 'MEMBER'){
-      this.getClientesbyuser();
-    }
-    if(this.rol === 'GUEST'){
-      this.getContactosbyCliente();
-    }
+    this.getClientesbyuser();
+    this.getContactosbyCliente();
+    
   }
 
   getClientesbyuser(){
     // this.isLoading = true;
-    this.solicitudService.getByClientesUser(this.user_member_id).subscribe((resp:any)=>{
+    this.clientService.getClientsByUser(this.user_member_id).subscribe((resp:any)=>{
       // console.log('clientes',resp);
       this.clientes = resp;
       // this.isLoading = false;
@@ -309,8 +310,8 @@ closeModalDoc(){
   }
   getContactosbyCliente(){
     // this.isLoading = true;
-    this.solicitudService.getByContactosCliente(this.user_cliente_id).subscribe((resp:any)=>{
-      // console.log('contactos',resp);
+    this.clientService.getByContactosCliente(this.user_cliente_id).subscribe((resp:any)=>{
+      console.log('contactos',resp);
       this.clientes = resp.users;
       // this.isLoading = false;
       
@@ -319,11 +320,11 @@ closeModalDoc(){
     })
   }
 
-  onShareIt(){debugger
+  onShareIt(){
     const data ={
       document_id : this.document_selected,
       user_id : this.user.id,
-      cliente_id : this.share,
+      client_id : this.share,
     }
     
     

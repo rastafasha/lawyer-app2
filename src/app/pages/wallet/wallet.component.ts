@@ -15,6 +15,7 @@ import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { LoadingComponent } from '../../shared/loading/loading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImagenPipe } from '../../pipes/imagen.pipe';
+import { ClientService } from '../../services/client.service';
 
 @Component({
   selector: 'app-wallet',
@@ -46,9 +47,9 @@ export class WalletComponent {
   public rol?:string;
   public solicitudes: Solicitud[]=[];
   public solicitud_users: SolicitudesUsers[]=[];
-  public user_cliente_id!: number;
+  public user_client_id!: number;
   public user_member_id!: number;
-  public cliente_id!: any;
+  public client_id!: any;
   public pedido: any = [];
   public clientes: any = [];
 
@@ -61,6 +62,7 @@ export class WalletComponent {
   public text_validation = '';
 
   private solicitudService = inject(SolicitudesService);
+  private clientService = inject(ClientService);
   private authService = inject(AuthService);
   private userService = inject(UserService);
 
@@ -116,17 +118,17 @@ export class WalletComponent {
       // console.log(resp);
       // this.publicidadd = resp.publicidad;
       this.solicitud_users = resp.solicitud_users || [];
-      this.cliente_id = resp.solicitud_users[0].cliente_id;
-      this.user_cliente_id = resp.solicitud_users[0].user_id;
-      // console.log(this.solicitud_users);
-      // console.log(this.cliente_id);
-      // Buscamos el cliente_id dentro del array solicitud_users
+      this.client_id = resp.solicitud_users[0].client_id;
+      this.user_client_id = resp.solicitud_users[0].user_id;
+      console.log(this.solicitud_users);
+      // console.log(this.client_id);
+      // Buscamos el client_id dentro del array solicitud_users
       // if (Array.isArray(this.solicitud_users)) {
       //   const foundUser = this.solicitud_users.find((element:any) => 
-      //     element.cliente_id === this.cliente_id
+      //     element.client_id === this.client_id
       //   );
       //   if (foundUser) {
-      //     this.cliente_id = foundUser.cliente_id;
+      //     this.client_id = foundUser.client_id;
       //   }
       // }
       
@@ -142,16 +144,16 @@ export class WalletComponent {
   }
 
   getClienteSolicitud(){
-    if(this.cliente_id){
-      this.userService.showUser(this.cliente_id).subscribe((resp:any)=>{
+    if(this.client_id){
+      this.userService.showUser(this.client_id).subscribe((resp:any)=>{
         // console.log('respuesta para miembro',resp);
         this.cliente = resp.user[0];
         // this.status = resp.status;
         // console.log(this.cliente);
       })
     }
-    if(this.user_cliente_id){
-      this.userService.showUser(this.user_cliente_id).subscribe((resp:any)=>{
+    if(this.user_client_id){
+      this.userService.showUser(this.user_client_id).subscribe((resp:any)=>{
         // console.log('respuesta para guest',resp);
         this.cliente = resp.user[0];
         // this.status = resp.status;
@@ -207,21 +209,17 @@ export class WalletComponent {
         this.solicitud_selected = null;
         // console.log('pidiendo clientes');
         this.user_member_id = this.user.id;
-        this.user_cliente_id = this.user.id;
+        this.user_client_id = this.user.id;
         // this.getClientesbyuser();
+        this.getClientesbyuser();
+        this.getContactosbyCliente();
         
-        if(this.rol === 'MEMBER'){
-          this.getClientesbyuser();
-        }
-        if(this.rol === 'GUEST'){
-          this.getContactosbyCliente();
-        }
       }
     }
 
     getClientesbyuser(){
       this.isLoading = true;
-      this.solicitudService.getByClientesUser(this.user_member_id).subscribe((resp:any)=>{
+      this.clientService.getClientsByUser(this.user_member_id).subscribe((resp:any)=>{
         // console.log('clientes',resp);
         this.clientes = resp;
         this.isLoading = false;
@@ -232,7 +230,7 @@ export class WalletComponent {
     }
     getContactosbyCliente(){
       this.isLoading = true;
-      this.solicitudService.getByContactosCliente(this.user_cliente_id).subscribe((resp:any)=>{
+      this.clientService.getByContactosCliente(this.user_client_id).subscribe((resp:any)=>{
         // console.log('contactos',resp);
         this.clientes = resp.users;
         this.isLoading = false;
