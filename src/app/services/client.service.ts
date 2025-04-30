@@ -39,7 +39,7 @@ export class ClientService {
       )
   }
 
-  getClient(id:Client) {
+  getClient(id:any) {
     const url = `${baseUrl}/client/show/${id}`;
     return this.http.get<any>(url, this.headers)
       .pipe(

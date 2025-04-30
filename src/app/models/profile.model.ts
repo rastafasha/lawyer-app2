@@ -1,6 +1,7 @@
 export class Profile {
   id!: number;
   user_id!: number;
+  client_id!: number;
   speciality_id!: number;
   nombre: string = "";
   username: string = "";
@@ -17,7 +18,7 @@ export class Profile {
   telmovil: string = "";
   avatar: string = "";
   status: number = 1;
-  gender: number = 1 ;
+  gender: number = 0 ;
   lang: string = "";
   // status: string = "";
   rating: number = 0;

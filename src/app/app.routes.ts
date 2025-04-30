@@ -31,7 +31,7 @@ export const routes: Routes = [
     {path: 'especialista/:id', component: EspecialistaComponent},
     
     {path: 'clientprofile/:id', component: ClientprofileComponent},
-    {path: 'chat', component: ChatComponent},
+    {path: 'chat/:id', component: ChatComponent},
 
     
     //user

@@ -8,12 +8,17 @@ import { ProfileService } from '../../services/profile.service';
 import { FormsModule } from '@angular/forms';
 import { Usuario } from '../../models/usuario.model';
 import { Client } from '../../models/client.model';
+import { NgFor, NgIf } from '@angular/common';
+import { ClientService } from '../../services/client.service';
+import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
 
 @Component({
   selector: 'app-chat',
   imports: [
     HeaderComponent,
-    FormsModule
+    FormsModule,
+    NgIf, NgFor,
+    BackButtnComponent
   ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
@@ -23,6 +28,7 @@ export class ChatComponent {
   public message:string = '';
   public messages:any =[];
   public user_selected!:any;
+  pageTitle='Chat';
 
   public user!: Usuario;
   public user_id!: number;
@@ -33,13 +39,14 @@ export class ChatComponent {
     private chatService: ChatService,
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
+    private clientService: ClientService,
     private profileService: ProfileService,
   ){
 
   }
 
   ngOnInit(){
-    this.activatedRoute.params.subscribe( ({id}) => this.getUserProfile(id));
+    this.activatedRoute.params.subscribe( ({id}) => this.getUser(id));
     this.listMessage();
   }
 
@@ -55,26 +62,12 @@ export class ChatComponent {
     // })
   }
 
+  getUser(id:string){
+    this.clientService.getClient(id).subscribe((resp:any)=>{
+      this.user = resp;
+      this.user_id = resp.id;
+      console.log(this.user);
+    })
+      }
   
-  getUserProfile(id:string){
-    // this.isLoading = true;
-    if (!id == null || !id == undefined || id) {
-      this.profileService.getByUser(id).subscribe(
-        (res:any) => {
-          this.user_selected = res;
-          // console.log(res);
-
-          // this.ageRange = res.preferencia_edad;
-          // this.distanceRange = res.preferencia_distancia;
-          // // console.log('user_selected',this.user_selected);
-          // this.isLoading = false;
-
-        }
-
-      );
-    } else {
-      // this.pageTitle = 'Crear Perfil';
-    }
-
-  }
 }

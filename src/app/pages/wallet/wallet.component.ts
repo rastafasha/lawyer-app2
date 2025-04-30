@@ -175,7 +175,6 @@ export class WalletComponent {
         this.user_client_id = this.user.id;
         // this.getClientesbyuser();
         this.getClientesbyuser();
-        this.getContactosbyCliente();
         
       }
     }
@@ -191,17 +190,7 @@ export class WalletComponent {
       })
       
     }
-    getContactosbyCliente(){
-      this.isLoading = true;
-      this.clientService.getByContactosCliente(this.user_client_id).subscribe((resp:any)=>{
-        // console.log('contactos',resp);
-        this.clientes = resp.users;
-        this.isLoading = false;
-        
-        
-        // console.log(this.pedido);
-      })
-    }
+    
 
     solicitudSelected(solicitud:any){
       this.solicitud_selected = solicitud;
