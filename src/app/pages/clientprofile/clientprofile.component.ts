@@ -119,7 +119,12 @@ export class ClientprofileComponent {
       }
     
       addClient(){
-        this.clientService.addClienttoUser(this.client).subscribe({
+
+        const formData = new FormData();
+      formData.append("client_id", this.client.id+'');
+      formData.append("user_id", this.user.id+'');
+
+        this.clientService.addClienttoUser(formData).subscribe({
           next: (resp:any) => {
             this.client = resp;
             Swal.fire('Éxito!', 'Cliente creado correctamente', 'success');

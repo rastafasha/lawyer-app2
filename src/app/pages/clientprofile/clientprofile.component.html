@@ -12,83 +12,91 @@
 
           <div class="col-xs-12 col-sm-6" *ngIf="!isLoading">
             <div class=" itemFav shadow">
-              <img *ngIf="!profile.avatar" [src]="profile.avatar  | imagenPipe: 'users' " alt="">
-              <img *ngIf="profile.avatar" [src]="profile.avatar  " alt="">
-              <div *ngIf="!profile">
-                <h2>No hay datos</h2>
-              </div>
-              <div class="div1" *ngIf="profile">
-                <h3>{{ profile.nombre }} {{ profile.surname }}</h3>
-                <!-- <h4>{{ user.email }}</h4> -->
-                <span class="badge  bg-primary" *ngIf="profile.status === 1"> {{'Pending'|translate}}</span>
-          <span class="badge bg-success" *ngIf="profile.status === 2">{{'Verified'|translate}}</span>
-          <span class="badge bg-danger" *ngIf="profile.status === 3">{{'For Review'|translate}}</span>
-                <h5 *ngIf="speciality">{{ speciality.title }}</h5>
-                <div class="stars">
+              <div class="fototext">
 
-                  <ul class="star-rating" *ngIf="profile.rating === 5">
+                <img *ngIf="!profile.avatar" [src]="profile.avatar  | imagenPipe: 'users' " alt="">
+                <img *ngIf="profile.avatar" [src]="profile.avatar  " alt="">
+                <div *ngIf="!profile">
+                  <h2>No hay datos</h2>
+                </div>
+                <div class="div1" *ngIf="profile">
+                  <h3>{{ profile.nombre }} {{ profile.surname }}</h3>
+                  <!-- <h4>{{ user.email }}</h4> -->
+                  <span class="badge  bg-primary" *ngIf="profile.status === 1"> {{'Pending'|translate}}</span>
+            <span class="badge bg-success" *ngIf="profile.status === 2">{{'Verified'|translate}}</span>
+            <span class="badge bg-danger" *ngIf="profile.status === 3">{{'For Review'|translate}}</span>
+                  
+                  <div class="stars">
+  
+                    <ul class="star-rating" *ngIf="profile.rating === 5">
+                      <li class="active"><i class="fa fa-star "></i></li>
+                      <li class="active"><i class="fa fa-star "></i></li>
+                      <li class="active"><i class="fa fa-star "></i></li>
+                      <li class="active"><i class="fa fa-star "></i></li>
+                      <li class="active"><i class="fa fa-star "></i></li>
+                  </ul>
+                  <ul class="star-rating" *ngIf="profile.rating >= 4 && profile.rating < 5">
                     <li class="active"><i class="fa fa-star "></i></li>
                     <li class="active"><i class="fa fa-star "></i></li>
                     <li class="active"><i class="fa fa-star "></i></li>
                     <li class="active"><i class="fa fa-star "></i></li>
+                    <li ><i class="fa fa-star "></i></li>
+                  </ul>
+                  <ul class="star-rating" *ngIf="profile.rating >= 3 && profile.rating < 4">
                     <li class="active"><i class="fa fa-star "></i></li>
-                </ul>
-                <ul class="star-rating" *ngIf="profile.rating >= 4 && profile.rating < 5">
-                  <li class="active"><i class="fa fa-star "></i></li>
-                  <li class="active"><i class="fa fa-star "></i></li>
-                  <li class="active"><i class="fa fa-star "></i></li>
-                  <li class="active"><i class="fa fa-star "></i></li>
-                  <li ><i class="fa fa-star "></i></li>
-                </ul>
-                <ul class="star-rating" *ngIf="profile.rating >= 3 && profile.rating < 4">
-                  <li class="active"><i class="fa fa-star "></i></li>
-                  <li class="active"><i class="fa fa-star "></i></li>
-                  <li class="active"><i class="fa fa-star "></i></li>
-                  <li ><i class="fa fa-star "></i></li>
-                  <li ><i class="fa fa-star "></i></li>
-                </ul>
-                <ul class="star-rating" *ngIf="profile.rating >= 2 && profile.rating < 3">
-                  <li class="active"><i class="fa fa-star "></i></li>
-                  <li class="active"><i class="fa fa-star "></i></li>
-                  <li ><i class="fa fa-star "></i></li>
-                  <li ><i class="fa fa-star "></i></li>
-                  <li ><i class="fa fa-star "></i></li>
-                </ul>
-                <ul class="star-rating" *ngIf="profile.rating >= 1 && profile.rating < 2">
-                  <li class="active"><i class="fa fa-star "></i></li>
-                  <li ><i class="fa fa-star "></i></li>
-                  <li ><i class="fa fa-star "></i></li>
-                  <li ><i class="fa fa-star "></i></li>
-                  <li ><i class="fa fa-star "></i></li>
-                </ul>
-                <ul class="star-rating" *ngIf="profile.rating >= 0 && profile.rating < 1">
-                  <li ><i class="fa fa-star "></i></li>
-                  <li ><i class="fa fa-star "></i></li>
-                  <li ><i class="fa fa-star "></i></li>
-                  <li ><i class="fa fa-star "></i></li>
-                  <li ><i class="fa fa-star "></i></li>
-                </ul>
-              </div>
-                
-                <p>{{ profile.description }}</p>
-                <div class="reds">
-                  <div class="cont" *ngFor="let red of redessociales" >
-                    <a *ngIf="red.icono === 'fa fa-whatsapp'" 
-                    href="`https://wa.me/`{{red.url}}`?text=Estoy%20interesado%20en%20el%20producto%20en%20la%20flechaapp,%20favor%20ampliar%20informacion`"
-                    target="_blank" rel="noopener noreferrer">
-                      <div class="option-admin">
-                        <i [class]="red.icono"></i>
-                        <!-- <p>{{ red.title }}</p> -->
-                      </div>
-                    </a>
-                    <a  *ngIf="red.icono !== 'fa fa-whatsapp'" [href]="red.url" target="_blank" rel="noopener noreferrer">
-                      <div class="option-admin">
-                        <i [class]="red.icono"></i>
-                        <!-- <p>{{ red.title }}</p> -->
-                      </div>
-                    </a>
+                    <li class="active"><i class="fa fa-star "></i></li>
+                    <li class="active"><i class="fa fa-star "></i></li>
+                    <li ><i class="fa fa-star "></i></li>
+                    <li ><i class="fa fa-star "></i></li>
+                  </ul>
+                  <ul class="star-rating" *ngIf="profile.rating >= 2 && profile.rating < 3">
+                    <li class="active"><i class="fa fa-star "></i></li>
+                    <li class="active"><i class="fa fa-star "></i></li>
+                    <li ><i class="fa fa-star "></i></li>
+                    <li ><i class="fa fa-star "></i></li>
+                    <li ><i class="fa fa-star "></i></li>
+                  </ul>
+                  <ul class="star-rating" *ngIf="profile.rating >= 1 && profile.rating < 2">
+                    <li class="active"><i class="fa fa-star "></i></li>
+                    <li ><i class="fa fa-star "></i></li>
+                    <li ><i class="fa fa-star "></i></li>
+                    <li ><i class="fa fa-star "></i></li>
+                    <li ><i class="fa fa-star "></i></li>
+                  </ul>
+                  <ul class="star-rating" *ngIf="profile.rating >= 0 && profile.rating < 1">
+                    <li ><i class="fa fa-star "></i></li>
+                    <li ><i class="fa fa-star "></i></li>
+                    <li ><i class="fa fa-star "></i></li>
+                    <li ><i class="fa fa-star "></i></li>
+                    <li ><i class="fa fa-star "></i></li>
+                  </ul>
+                </div>
+                  
+                  <p>{{ profile.description }}</p>
+                  <div class="reds">
+                    <div class="cont" *ngFor="let red of redessociales" >
+                      <a *ngIf="red.icono === 'fa fa-whatsapp'" 
+                      href="`https://wa.me/`{{red.url}}`?text=Estoy%20interesado%20en%20el%20producto%20en%20la%20flechaapp,%20favor%20ampliar%20informacion`"
+                      target="_blank" rel="noopener noreferrer">
+                        <div class="option-admin">
+                          <i [class]="red.icono"></i>
+                          <!-- <p>{{ red.title }}</p> -->
+                        </div>
+                      </a>
+                      <a  *ngIf="red.icono !== 'fa fa-whatsapp'" [href]="red.url" target="_blank" rel="noopener noreferrer">
+                        <div class="option-admin">
+                          <i [class]="red.icono"></i>
+                          <!-- <p>{{ red.title }}</p> -->
+                        </div>
+                      </a>
+                    </div>
+  
                   </div>
-
+                  <div class="options">
+                    <button type="button" (click)="addClient()" class="btn btn-primary">
+                      Add to Contacts
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

@@ -72,13 +72,8 @@ export class WalletComponent {
     window.scrollTo(0, 0);
     this.user = this.authService.getUser();
     this.rol = this.user.roles[0];
-    console.log(this.rol);
-    if(this.rol === 'MEMBER'){
-      this.getSolicitudesbyMember();
-    }
-    if(this.rol === 'GUEST'){
-      this.getSolicitudesbyGuest();
-    }
+    this.getSolicitudesbyMember();
+    
     
   }
 
@@ -95,15 +90,6 @@ export class WalletComponent {
     })
   }
 
-  getSolicitudesbyGuest(){
-    this.solicitudService.getByGuest(this.user.id).subscribe((resp:any)=>{
-      this.solicitudes = resp;
-      this.pedido = typeof resp.pedido === 'string' 
-            ? JSON.parse(resp.pedido) || []
-            : resp.pedido || [];
-      // console.log('respuesta de invitado',resp);
-    })
-  }
 
   closeReload(){
     this.pedido_selected = null;
@@ -115,30 +101,11 @@ export class WalletComponent {
   getSolicitudDetail(item:any){
     this.pedido_selected = item.id;
     this.solicitudService.getSolicitud(this.pedido_selected).subscribe((resp:any)=>{
-      // console.log(resp);
-      // this.publicidadd = resp.publicidad;
       this.solicitud_users = resp.solicitud_users || [];
       this.client_id = resp.solicitud_users[0].client_id;
       this.user_client_id = resp.solicitud_users[0].user_id;
-      console.log(this.solicitud_users);
-      // console.log(this.client_id);
-      // Buscamos el client_id dentro del array solicitud_users
-      // if (Array.isArray(this.solicitud_users)) {
-      //   const foundUser = this.solicitud_users.find((element:any) => 
-      //     element.client_id === this.client_id
-      //   );
-      //   if (foundUser) {
-      //     this.client_id = foundUser.client_id;
-      //   }
-      // }
       
-      if(this.rol === 'MEMBER'){
-        this.getClienteSolicitud() 
-      }
-      if(this.rol === 'GUEST'){
-        this.getClienteSolicitud() 
-        console.log('soy guest');
-      }
+      this.getClienteSolicitud() 
       
     })
   }
@@ -148,16 +115,12 @@ export class WalletComponent {
       this.userService.showUser(this.client_id).subscribe((resp:any)=>{
         // console.log('respuesta para miembro',resp);
         this.cliente = resp.user[0];
-        // this.status = resp.status;
-        // console.log(this.cliente);
       })
     }
     if(this.user_client_id){
       this.userService.showUser(this.user_client_id).subscribe((resp:any)=>{
         // console.log('respuesta para guest',resp);
         this.cliente = resp.user[0];
-        // this.status = resp.status;
-        // console.log(this.cliente);
       })
     }
   }
