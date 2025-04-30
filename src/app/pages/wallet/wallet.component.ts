@@ -214,7 +214,7 @@ export class WalletComponent {
       console.log(this.pedido);
     }
 
-    cambiarStatus(pedido:any, status:any){debugger
+    cambiarStatus(pedido:any, status:any){
       console.log(pedido);
       console.log(status);
       if(status === false){

@@ -17,6 +17,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { PaymentmethodComponent } from './pages/profile/paymentmethod/paymentmethod.component';
 import { BannerComponent } from './pages/admin/banner/banner.component';
 import { ClientprofileComponent } from './pages/clientprofile/clientprofile.component';
+import { ChatComponent } from './pages/chat/chat.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -30,6 +31,7 @@ export const routes: Routes = [
     {path: 'especialista/:id', component: EspecialistaComponent},
     
     {path: 'clientprofile/:id', component: ClientprofileComponent},
+    {path: 'chat', component: ChatComponent},
 
     
     //user

@@ -177,8 +177,8 @@ export class DocumentsComponent {
   deleteFile(FILE:any){
     this.documentService.deleteDocument(FILE).subscribe((resp:any)=>{
       // this.getAppointment();
-      this.getdocumentsbyUser();
-      // this.ngOnInit();
+      // this.getdocumentsbyUser();
+      this.ngOnInit();
     })
     this.FilesAdded.splice(FILE,1);
   }
@@ -286,6 +286,7 @@ closeModalDoc(){
     // this.currentPage = 1;
     this.isSearching = false;
     this.searchForm.reset();
+    this.ngOnInit();
   }
   // compartir archivo
   solicitudSelected(document:any){
@@ -293,7 +294,6 @@ closeModalDoc(){
     this.user_member_id = this.user.id;
     this.user_cliente_id = this.user.id;
     this.getClientesbyuser();
-    this.getContactosbyCliente();
     
   }
 
@@ -308,17 +308,7 @@ closeModalDoc(){
     })
     
   }
-  getContactosbyCliente(){
-    // this.isLoading = true;
-    this.clientService.getByContactosCliente(this.user_cliente_id).subscribe((resp:any)=>{
-      console.log('contactos',resp);
-      this.clientes = resp.users;
-      // this.isLoading = false;
-      
-      
-      // console.log(this.pedido);
-    })
-  }
+  
 
   onShareIt(){
     const data ={
@@ -330,7 +320,13 @@ closeModalDoc(){
     
     // console.log(data);
     this.documentService.shareDocument(data).subscribe((resp:any)=>{
-
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: this.text_success,
+        showConfirmButton: false,
+        timer: 1500
+      });
     })
   }
 

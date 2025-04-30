@@ -1,7 +1,7 @@
 import { CommonModule, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
 import { LateralComponent } from '../../components/lateral/lateral.component';
@@ -34,7 +34,8 @@ import { ClientService } from '../../services/client.service';
     ReactiveFormsModule,
     ImagenPipe,
     LoadingComponent,
-    TranslateModule
+    TranslateModule,
+    RouterModule
   ],
   templateUrl: './clientprofile.component.html',
   styleUrl: './clientprofile.component.scss'
