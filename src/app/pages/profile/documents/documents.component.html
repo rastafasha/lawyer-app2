@@ -150,8 +150,7 @@
                             </div>
                         </div>
                         <!-- modal -->
-    
-    
+                            <!-- carpetas -->
                         <div class="row">
                             <div class="container">
                                 <div class=" col-xs-12" *ngIf="!isSearching">
@@ -171,7 +170,7 @@
                                                 </div>
                                             </a>
                 
-                
+                                            <!-- modal -->
                                             <div [attr.id]="'view-doc-'+cat.name_category" class="modal fade add-modal" role="dialog">
                                                 <div class="modal-dialog modal-dialog-centered modal-lg">
                                                     <div class="modal-content">
@@ -185,7 +184,7 @@
                                                             <ng-container *ngFor="let FILE of user_filesfiltered;let i = index">
                 
                                                                 <div class="itemlist">
-                                                                    <div class="d-flex flex-stack mb-3">
+                                                                    <div class="d-flex flex-stack mb-3" *ngIf="!document_selected" >
                                                                         <div class="me-3">
                                                                             <a [routerLink]="['/profile/documents/file', FILE.id]">
                                                                                 <img *ngIf="FILE.type ==='pdf'|| FILE.type ==='doc' || 
@@ -219,15 +218,16 @@
                                                                         (click)="solicitudSelected(FILE.id)">Share</button>
                 
                                                                     </div>
-                                                                    <div class="share__options" *ngIf="document_selected">
+
+                                                                    <div class="share__options" *ngIf="document_selected === FILE.id">
                                                                         <select class="form-control"  [ngModelOptions]="{standalone: true}"  [(ngModel)]="share" >
-                                                                            <option *ngFor="let data of clientes" [value]="data.id">
-                                                                            {{data.username}}
+                                                                            <option *ngFor="let document of clientes" [value]="document.id">
+                                                                            {{document.username}}
                                                                             </option>
                                                                         </select>
                                                                         <button
                                                                           class="btn btn-primary btn-sm"
-                                                                          (click)="onShareIt()">
+                                                                          (click)="onShareIt(document_selected)">
                                                                         >
                                                                         Share
                                                                         </button>
@@ -238,14 +238,7 @@
                                                                         {{'Back'|translate}}
                                                                         </button>
                                                                     </div>
-                                                                    <!-- <div *ngIf="document_selected">
-                                                                        <button
-                                                                          class="btn btn-primary btn-sm"
-                                                                          (click)="document_selected = null"
-                                                                        >
-                                                                        {{'Back'|translate}}
-                                                                        </button>
-                                                                      </div> -->
+                                                                    
                                                                 </div>
                                                             </ng-container>
                 
@@ -253,7 +246,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                
+                                            <!-- modal -->
                                         </div>
                 
                 

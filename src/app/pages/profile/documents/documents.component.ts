@@ -310,7 +310,10 @@ closeModalDoc(){
   }
   
 
-  onShareIt(){
+  onShareIt(document:any){
+    this.document_selected = document;
+    // console.log(this.share);
+
     const data ={
       document_id : this.document_selected,
       user_id : this.user.id,
