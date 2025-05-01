@@ -14,25 +14,33 @@ import { Usuario } from '../../models/usuario.model';
 import { AuthService } from '../../services/auth.service';
 import { ListaUsuariosComponent } from '../../components/ListaUsuarios/ListaUsuarios.component';
 import { UserService } from '../../services/usuario.service';
+import { SolicitudesRecentsComponent } from '../../components/solicitudes-recents/solicitudes-recents.component';
+import { FichaprofileComponent } from '../../components/fichaprofile/fichaprofile.component';
+import { Profile } from '../../models/profile.model';
 
 @Component({
   selector: 'app-home',
   imports: [
     HeaderComponent, MenuFooterComponent,
-    AvisoComponent, CategoriaHorizontalComponent,
-    SliderHorizontalComponent, ListProductsComponent,
-    LateralComponent, ListProductsHComponent,
+    AvisoComponent, 
+    SliderHorizontalComponent, 
+    LateralComponent, 
+    SolicitudesRecentsComponent,
     CommonModule, BackButtnComponent, ListaUsuariosComponent,
-    TranslateModule
+    TranslateModule,
+    FichaprofileComponent
   ],
   providers: [TranslateService],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.scss'
 })
 export class HomeComponent {
   pageTitle = 'Home';
   user!: Usuario;
   users: any = [];
+  isLoading = false;
+  profile: Profile = new Profile();
+  redessociales: any;
 
   private translate = inject(TranslateService);
   

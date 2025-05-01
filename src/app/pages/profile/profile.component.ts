@@ -15,6 +15,7 @@ import { PipesModule } from '../../pipes/pipes.module';
 import { ImagenPipe } from "../../pipes/imagen.pipe";
 import { LoadingComponent } from '../../shared/loading/loading.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { FichaprofileComponent } from '../../components/fichaprofile/fichaprofile.component';
 
 @Component({
   imports: [
@@ -26,7 +27,8 @@ import { TranslateModule } from '@ngx-translate/core';
     BackButtnComponent,
     ImagenPipe,
     LoadingComponent,
-    TranslateModule
+    TranslateModule,
+    FichaprofileComponent
 ],
   selector: 'app-profile',
   templateUrl: './profile.component.html',

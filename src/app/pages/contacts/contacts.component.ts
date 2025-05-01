@@ -1,26 +1,25 @@
-import { Component, inject } from '@angular/core';
-import { MenuFooterComponent } from '../../shared/menu-footer/menu-footer.component';
-import { HeaderComponent } from '../../shared/header/header.component';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { LateralComponent } from '../../components/lateral/lateral.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
+import { ImagenPipe } from '../../pipes/imagen.pipe';
 import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
+import { HeaderComponent } from '../../shared/header/header.component';
+import { LoadingComponent } from '../../shared/loading/loading.component';
+import { MenuFooterComponent } from '../../shared/menu-footer/menu-footer.component';
+import Swal from 'sweetalert2';
+import { Profile, RedesSociales } from '../../models/profile.model';
 import { Solicitud, SolicitudesUsers } from '../../models/solicitud.model';
-import { SolicitudesService } from '../../services/solicitudes.service';
 import { Usuario } from '../../models/usuario.model';
 import { AuthService } from '../../services/auth.service';
-import { TranslateModule } from '@ngx-translate/core';
-import { UserService } from '../../services/usuario.service';
-import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
-import { LoadingComponent } from '../../shared/loading/loading.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ImagenPipe } from '../../pipes/imagen.pipe';
 import { ClientService } from '../../services/client.service';
-import { Profile, RedesSociales } from '../../models/profile.model';
-import Swal from 'sweetalert2';
+import { SolicitudesService } from '../../services/solicitudes.service';
+import { UserService } from '../../services/usuario.service';
 
 @Component({
-  selector: 'app-wallet',
+  selector: 'app-contacts',
   imports: [
     MenuFooterComponent, HeaderComponent,
     CommonModule, RouterLink, 
@@ -33,11 +32,11 @@ import Swal from 'sweetalert2';
     ReactiveFormsModule,
     ImagenPipe
   ],
-  templateUrl: './wallet.component.html',
-  styleUrl: './wallet.component.scss'
+  templateUrl: './contacts.component.html',
+  styleUrl: './contacts.component.scss'
 })
-export class WalletComponent {
-  pageTitle='Solicitudes';
+export class ContactsComponent {
+  pageTitle='Contactos';
 
   loadingTitle!:string;
   isRefreshing = false;
@@ -58,10 +57,10 @@ export class WalletComponent {
   option_selected:number = 1;
   solicitud_selected:any = null;
   cliente_selected:any = null;
-  pedido_selected:any;
   status!:number ;
-  profile!:Profile;
 
+  pedido_selected:any;
+  profile!:Profile;
   public text_success = '';
   public text_validation = '';
 
@@ -78,50 +77,16 @@ export class WalletComponent {
     window.scrollTo(0, 0);
     this.user = this.authService.getUser();
     this.rol = this.user.roles[0];
-    this.getSolicitudesbyMember();
+    
+    this.getClientesbyuser()
     
     
-  }
-
-  getSolicitudesbyMember(){
-    this.isLoading = true;
-    this.solicitudService.getByMember(this.user.id).subscribe((resp:any)=>{
-      this.solicitudes = resp.data;
-      this.pedido = typeof resp.pedido === 'string' 
-            ? JSON.parse(resp.pedido) || []
-            : resp.pedido || [];
-      // console.log(this.pedido);
-      this.isLoading = false;
-      
-    })
   }
 
 
   closeReload(){
     this.pedido_selected = null;
     this.ngOnInit();
-  }
-
-  
-
-  getSolicitudDetail(item:any){
-    this.pedido_selected = item.id;
-    this.solicitudService.getSolicitud(this.pedido_selected).subscribe((resp:any)=>{
-      this.solicitud_users = resp.solicitud_users || [];
-      this.client_id = resp.solicitud_users[0].client_id;
-      this.user_client_id = resp.solicitud_users[0].user_id;
-      console.log(resp.solicitud_users);
-      this.getClienteSolicitud() 
-      
-    })
-  }
-
-  getClienteSolicitud(){
-    this.clientService.getClient(this.client_id).subscribe((resp:any)=>{
-      console.log('respuesta para miembro',resp);
-      this.cliente = resp[0];
-      this.profile = resp[0].profile;
-    })
   }
 
   
@@ -157,30 +122,15 @@ export class WalletComponent {
       setTimeout(() => { 
         this.isRefreshing = false; 
         // Update your data here 
-        this.getSolicitudesbyMember();
+        this.getClientesbyuser();
       }, 2000); 
     }
 
-    optionSelected(value:number){
-      this.option_selected = value;
-      if(this.option_selected === 1){
-
-        this.ngOnInit();
-      }
-      if(this.option_selected === 2){
-        this.solicitud_selected = null;
-        // console.log('pidiendo clientes');
-        this.user_member_id = this.user.id;
-        this.user_client_id = this.user.id;
-        // this.getClientesbyuser();
-        this.getClientesbyuser();
-        
-      }
-    }
+    
 
     getClientesbyuser(){
       this.isLoading = true;
-      this.clientService.getClientsByUser(this.user_member_id).subscribe((resp:any)=>{
+      this.clientService.getClientsByUser(this.user.id).subscribe((resp:any)=>{
         // console.log('clientes',resp);
         this.clientes = resp;
         this.isLoading = false;
@@ -191,18 +141,23 @@ export class WalletComponent {
     }
     
 
-    solicitudSelected(solicitud:any){
-      this.solicitud_selected = solicitud;
-      this.getSolicitudDetail(solicitud);
-      console.log(solicitud);
-      // this.pedido = this.solicitud_selected.pedido;
-      this.pedido = typeof solicitud.pedido === 'string' 
-      ? JSON.parse(solicitud.pedido) || []
-      : solicitud.pedido || [];
-      console.log(this.pedido);
+
+    clienteSelected(cliente:any){
+      this.cliente_selected = cliente;
+      console.log(this.cliente_selected);
+      this.getClienteContact();
     }
 
-  
+    getClienteContact(){
+      this.clientService.getClient(this.cliente_selected.id).subscribe((resp:any)=>{
+        console.log('respuesta para contact',resp);
+        this.cliente = resp[0];
+        this.profile = resp[0].profile;
+        this.redessociales = typeof resp[0].profile.redessociales === 'string' 
+        ? JSON.parse(resp[0].profile.redessociales) || []
+        : resp.profile.redessociales || [];
+      })
+    }
 
     cambiarStatus(pedido:any, status:any){
       console.log(pedido);
@@ -246,4 +201,35 @@ export class WalletComponent {
     
           }
 
+          deleteContact(){
+            const formData = new FormData();
+            formData.append("client_id", this.cliente.id+'');
+            formData.append("user_id", this.user.id+'');
+    
+            this.clientService.removeClient(this.cliente.id, this.user.id).subscribe({
+              next: (resp:any) => {
+                this.cliente = resp;
+                Swal.fire('Éxito!', 'Cliente eliminado correctamente', 'success');
+                this.ngOnInit();
+              }
+              ,error: (err) => {
+                Swal.fire('Error', 'Error al eliminar el cliente', 'error');
+                console.error(err);
+              }
+            });
+          }
+
+          onRatingChanged(event:any){
+            console.log(event);
+            this.solicitud_selected.rating = event;
+            const data ={
+              // id:this.solicitud_selected.id,
+              rating: this.solicitud_selected.rating,
+              pedido: this.pedido
+            }
+            
+            this.solicitudService.updateSolicitudStatus(data, this.solicitud_selected.id).subscribe((resp:any)=>{
+              console.log(resp);
+            })
+          }
 }

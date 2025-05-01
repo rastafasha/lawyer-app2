@@ -17,17 +17,19 @@
     <div class="clear"></div>
     <div style="margin-top: 120px;" *ngIf="messages">
       <ul *ngFor="let message of messages">
-        <li class="other">
+        <li class="other" >
               <!-- <div class="avatar"><img [src]="'./assets/images/foto-perfil.jpg'" draggable="false"/></div> -->
             <div class="msg">
               <p>{{message}}</p>
+              <p>{{message.message_users.client_id}}</p>
               <time>{{message.created_at}}</time>
             </div>
           </li>
-        <li class="self">
+        <li class="self" >
           <!-- <div class="avatar"><img [src]="'./assets/images/foto-perfil2.jpg'" draggable="false"/></div> -->
           <div class="msg">
             <p>{{message}}</p>
+            <p>{{message.message_users.user_id}}</p>
             <time>{{message.created_at}}</time>
           </div>
         </li>

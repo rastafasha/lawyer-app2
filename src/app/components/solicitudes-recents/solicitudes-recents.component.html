@@ -1,25 +1,10 @@
-<app-header></app-header>
-<section class="wallet home" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollUpDistance]="2"
-  [infiniteScrollThrottle]=" 50" (scrolled)="onScrollDown()" (scrolledUp)="onScrollUp()"
-  [class.refreshing]="isRefreshing">
-  <div class="pull-down-indicator" *ngIf="isRefreshing">
-    <app-loading></app-loading>
-    <p class="text-center">
-      {{'Refreshing'|translate}} ...
-    </p>
-  </div>
-
-  <app-loading *ngIf="isLoading"></app-loading>
-  <div class="container-fluid" *ngIf="!isLoading">
+<app-loading *ngIf="isLoading"></app-loading>
+  <div class="container-fluid mt-5" *ngIf="!isLoading">
     <div class="container">
       <div class="row">
-        <div class="col-xs-12 ">
-          <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
-
-         
-          <div class="card" >
+        <div class="card" >
             <!-- solicitudes -->
-            <div *ngFor="let item of solicitudes">
+            <div *ngFor="let item of solicitudes|slice: 0:3" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
               <div class="group itemFav shadow" *ngIf="!solicitud_selected">
                 <div class="fa fa-paypal"></div>
                 <div class="div1pagocon" (click)="solicitudSelected(item)">
@@ -46,17 +31,10 @@
                 <div class="tarjeta_producto">
                   <div class="tp_tope">
                     <h5 class="card-title">{{solicitud_selected.created_at | date:'dd/MM/yyyy HH:mm:ss'}}</h5>
-                  <span class="badge  bg-primary" *ngIf="solicitud_selected.status === 1"> {{'Pending'|translate}}</span>
-                  <span class="badge bg-success" *ngIf="solicitud_selected.status === 2">{{'Verified'|translate}}</span>
-                  <span class="badge bg-danger" *ngIf="solicitud_selected.status === 3">{{'For Review'|translate}}</span>
-                  <div class="checkbox-wrapper-6">
-                    <!-- <p>{{'Start'|translate}}</p> -->
-                    <input class="tgl tgl-light" id="cb1-6" type="checkbox" name="status"
-                      (change)="cambiarStatus(solicitud_selected, status)" [(ngModel)]="status"
-                      [ngModelOptions]="{ standalone: true }" />
-                    <label class="tgl-btn" for="cb1-6"></label>
-
-                  </div>
+                    <span class="badge  bg-primary" *ngIf="solicitud_selected.status === 1"> {{'Pending'|translate}}</span>
+                    <span class="badge bg-success" *ngIf="solicitud_selected.status === 2">{{'Verified'|translate}}</span>
+                    <span class="badge bg-danger" *ngIf="solicitud_selected.status === 3">{{'For Review'|translate}}</span>
+                
                   </div>
                   <div class="tp_description">
                     <p> {{'Description'|translate}}:{{solicitud_selected.pedido.item_tarifa}}</p>
@@ -65,9 +43,7 @@
                   </div>
                 </div>
                 <div class="tarjetacliente">
-                  <div class="tc_imagem">
-                    <img *ngIf="!profile.avatar" [src]="profile.avatar  | imagenPipe: 'users' " alt="">
-                  </div>
+                  
 
                   <div class="tc_info">
                     <p>{{'Username'|translate}}: {{cliente.username}}</p>
@@ -75,9 +51,9 @@
                     <p>{{'Country'|translate}}: {{profile.pais}}</p>
                   </div>
                   <div class="tc_actions">
-                    <button type="button" (click)="addClient()" class="btn btn-primary">
+                    <!-- <button type="button" (click)="addClient()" class="btn btn-primary">
                       <i class="fa fa-user-plus"></i>
-                    </button>
+                    </button> -->
                     <!-- <button type="button" [routerLink]="['/chat/', profile.client_id]" class="btn btn-primary">
                       <i class="fa fa-comment" aria-hidden="true"></i>
                     </button> -->
@@ -102,38 +78,6 @@
             </div>
           </div>
 
-          
-
-
-
-        </div>
-
-        <!-- lateral -->
-        <!-- <div class="col-xs-12 col-sm-3 col-md-3">
-        <h5>Order Recents</h5>
-
-        <div class="paggrop col-xs-12">
-          <div class="ordenes">
-            <a routerLink="/orders">
-              <img [src]="'users/3.jpg'" alt="" />
-            </a>
-            <div class="div1">
-              <div class="info">
-                <p>John Doe.</p>
-                <p>Lorem ipsum dsadas</p>
-                <div class="div1-order">
-                  <h3>$53.00</h3>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <app-lateral></app-lateral>
-
-    </div> -->
-        <!-- lateral -->
       </div>
     </div>
   </div>
-</section>
-<app-menu-footer></app-menu-footer>

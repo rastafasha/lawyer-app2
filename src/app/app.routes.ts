@@ -18,6 +18,7 @@ import { PaymentmethodComponent } from './pages/profile/paymentmethod/paymentmet
 import { BannerComponent } from './pages/admin/banner/banner.component';
 import { ClientprofileComponent } from './pages/clientprofile/clientprofile.component';
 import { ChatComponent } from './pages/chat/chat.component';
+import { ContactsComponent } from './pages/contacts/contacts.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -32,6 +33,7 @@ export const routes: Routes = [
     
     {path: 'clientprofile/:id', component: ClientprofileComponent},
     {path: 'chat/:id', component: ChatComponent},
+    {path: 'contacts', component: ContactsComponent},
 
     
     //user
@@ -46,7 +48,7 @@ export const routes: Routes = [
     {path: 'admin/banners', component: BannerComponent},
 
     //wallet
-    {path: 'wallet', component: WalletComponent},
+    {path: 'solicitudes', component: WalletComponent},
     {path: 'wallet-payment', component: PaymentComponent},
     {path: 'orders', component: OrderComponent},
 

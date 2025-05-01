@@ -51,7 +51,7 @@ export class ChatComponent {
   }
 
   public sendMessage() {
-    if (this.message.length < 0) {
+    if (this.message.length < 0 || this.message == '') {
       return;
     }
     this.chatService.sendMessage(this.message);
