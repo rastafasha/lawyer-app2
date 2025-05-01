@@ -14,10 +14,11 @@ import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
 import { MessageService } from '../../services/message.service';
 import { Profile } from '../../models/profile.model';
 import { AuthService } from '../../services/auth.service';
+import { ImagenPipe } from '../../pipes/imagen.pipe';
 
 @Component({
   selector: 'app-chat',
-  imports: [HeaderComponent, FormsModule, NgIf, NgFor, BackButtnComponent],
+  imports: [HeaderComponent, FormsModule, NgIf, NgFor, BackButtnComponent, ImagenPipe],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
