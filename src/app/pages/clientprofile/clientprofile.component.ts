@@ -139,7 +139,7 @@ export class ClientprofileComponent {
 
       }
       removeClient(client: Client){
-        this.clientService.removeClient(client.id).subscribe({
+        this.clientService.removeClient(client.id, this.user.id).subscribe({
           next: (resp:any) => {
             this.client = resp;
             Swal.fire('Éxito!', 'Cliente eliminado correctamente', 'success');

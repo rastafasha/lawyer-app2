@@ -72,8 +72,8 @@ export class ClientService {
   }
  
 
-  removeClient(_id: number) {
-    const url = `${baseUrl}/client/removeClientFromUser/${_id}`;
+  removeClient(client_id: number, user_id:number) {
+    const url = `${baseUrl}/client/removeClientFromUser/${client_id}/${user_id}`;
     return this.http.delete(url, this.headers);
   }
 }

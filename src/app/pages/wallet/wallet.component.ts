@@ -16,6 +16,8 @@ import { LoadingComponent } from '../../shared/loading/loading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImagenPipe } from '../../pipes/imagen.pipe';
 import { ClientService } from '../../services/client.service';
+import { Profile, RedesSociales } from '../../models/profile.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-wallet',
@@ -55,11 +57,15 @@ export class WalletComponent {
 
   option_selected:number = 1;
   solicitud_selected:any = null;
+  cliente_selected:any = null;
   status!:number ;
 
   pedido_selected:any;
+  profile!:Profile;
   public text_success = '';
   public text_validation = '';
+
+  public redessociales!: RedesSociales[];
 
   private solicitudService = inject(SolicitudesService);
   private clientService = inject(ClientService);
@@ -104,25 +110,18 @@ export class WalletComponent {
       this.solicitud_users = resp.solicitud_users || [];
       this.client_id = resp.solicitud_users[0].client_id;
       this.user_client_id = resp.solicitud_users[0].user_id;
-      
+      console.log(resp.solicitud_users);
       this.getClienteSolicitud() 
       
     })
   }
 
   getClienteSolicitud(){
-    if(this.client_id){
-      this.userService.showUser(this.client_id).subscribe((resp:any)=>{
-        // console.log('respuesta para miembro',resp);
-        this.cliente = resp.user[0];
-      })
-    }
-    if(this.user_client_id){
-      this.userService.showUser(this.user_client_id).subscribe((resp:any)=>{
-        // console.log('respuesta para guest',resp);
-        this.cliente = resp.user[0];
-      })
-    }
+    this.clientService.getClient(this.client_id).subscribe((resp:any)=>{
+      console.log('respuesta para miembro',resp);
+      this.cliente = resp[0];
+      this.profile = resp[0].profile;
+    })
   }
 
   
@@ -203,6 +202,23 @@ export class WalletComponent {
       console.log(this.pedido);
     }
 
+    clienteSelected(cliente:any){
+      this.cliente_selected = cliente;
+      console.log(this.cliente_selected);
+      this.getClienteContact();
+    }
+
+    getClienteContact(){
+      this.clientService.getClient(this.cliente_selected.id).subscribe((resp:any)=>{
+        console.log('respuesta para contact',resp);
+        this.cliente = resp[0];
+        this.profile = resp[0].profile;
+        this.redessociales = typeof resp[0].profile.redessociales === 'string' 
+        ? JSON.parse(resp[0].profile.redessociales) || []
+        : resp.profile.redessociales || [];
+      })
+    }
+
     cambiarStatus(pedido:any, status:any){
       console.log(pedido);
       console.log(status);
@@ -224,17 +240,42 @@ export class WalletComponent {
       })
       
     }
-    // cambiarStatus(status:any){
-    //   if(status === false){
-    //     this.solicitud_selected.status = 1;
-    //   }
-    //   if(status === true){
-    //     this.solicitud_selected.status = 2;
-    //   }
-    //   console.log(status);
-    //   this.solicitudService.updateSolicitudStatus(this.solicitud_selected.status).subscribe((resp:any)=>{
-    //     console.log(resp);
-    //   })
-      
-    // }
+
+    addClient(){
+    
+            const formData = new FormData();
+          formData.append("client_id", this.cliente.id+'');
+          formData.append("user_id", this.user.id+'');
+    
+            this.clientService.addClienttoUser(formData).subscribe({
+              next: (resp:any) => {
+                this.cliente = resp;
+                Swal.fire('Éxito!', 'Cliente creado correctamente', 'success');
+                this.ngOnInit();
+              }
+              ,error: (err) => {
+                Swal.fire('Error', 'Error al crear el cliente', 'error');
+                console.error(err);
+              }
+            });
+    
+          }
+
+          deleteContact(){
+            const formData = new FormData();
+            formData.append("client_id", this.cliente.id+'');
+            formData.append("user_id", this.user.id+'');
+    
+            this.clientService.removeClient(this.cliente.id, this.user.id).subscribe({
+              next: (resp:any) => {
+                this.cliente = resp;
+                Swal.fire('Éxito!', 'Cliente eliminado correctamente', 'success');
+                this.ngOnInit();
+              }
+              ,error: (err) => {
+                Swal.fire('Error', 'Error al eliminar el cliente', 'error');
+                console.error(err);
+              }
+            });
+          }
 }
