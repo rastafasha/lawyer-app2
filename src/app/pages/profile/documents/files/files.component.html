@@ -11,6 +11,11 @@
                   <div class="card shadow p-2">
                     <p>{{'formulario.Name'|translate}}: {{FILE.name_file }}</p>
                     <p>{{'Category'|translate}}: {{FILE.name_category }}</p>
+                    <div class="actions">
+                      <button class="btn btn-primary btn-sm"[routerLink]="['/documents/pdf/edit/', FILE.id]">
+                        <i class="fa fa-pencil"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <div class="col-xs-12 col-md-10" *ngIf="FILE.type !== 'pdf'">

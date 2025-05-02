@@ -19,6 +19,7 @@ import { BannerComponent } from './pages/admin/banner/banner.component';
 import { ClientprofileComponent } from './pages/clientprofile/clientprofile.component';
 import { ChatComponent } from './pages/chat/chat.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
+import { EditorPdfComponent } from './pages/profile/documents/editor-pdf/editor-pdf.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -40,8 +41,12 @@ export const routes: Routes = [
     {path: 'profile', component: ProfileComponent},
     {path: 'profile/settings', component: SettingsComponent},
     {path: 'profile/edit/:id', component: EditComponent},
+
     {path: 'profile/documents', component: DocumentsComponent},
     {path: 'profile/documents/file/:id', component: FilesComponent},
+
+    {path: 'documents/pdf/create/', component: EditorPdfComponent},
+    {path: 'documents/pdf/edit/:id', component: EditorPdfComponent},
     
     {path: 'profile/paymentmethods', component: PaymentmethodComponent},
     

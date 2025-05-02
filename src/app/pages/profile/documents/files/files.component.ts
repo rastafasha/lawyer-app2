@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { BackButtnComponent } from '../../../../shared/backButtn/backButtn.component';
 import { HeaderComponent } from '../../../../shared/header/header.component';
 import { MenuFooterComponent } from '../../../../shared/menu-footer/menu-footer.component';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
 import { DocumentService } from '../../../../services/document.service';
 import { Document } from '../../../../models/document.model';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -17,7 +17,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MenuFooterComponent,
     BackButtnComponent,
     LoadingComponent,
-    TranslateModule
+    TranslateModule,
+    RouterModule
   ],
   templateUrl: './files.component.html',
   styleUrl: './files.component.scss',
