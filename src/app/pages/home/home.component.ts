@@ -19,6 +19,9 @@ import { FichaprofileComponent } from '../../components/fichaprofile/fichaprofil
 import { Profile } from '../../models/profile.model';
 import { ClientService } from '../../services/client.service';
 import { Client } from '../../models/client.model';
+import { ProfileService } from '../../services/profile.service';
+import { Speciality } from '../../models/speciality.model';
+import { SpecialitiesService } from '../../services/specialities.service';
 
 @Component({
   selector: 'app-home',
@@ -47,9 +50,13 @@ export class HomeComponent {
   user_id!:number;
   client!:Client;
 
+  public speciality_profile!: Speciality;
+    public speciality!: Speciality ;
+
   private translate = inject(TranslateService);
-  private userService = inject(UserService);
+  private profileService = inject(ProfileService);
   private authService = inject(AuthService);
+  private specialityService = inject(SpecialitiesService);
   
   constructor(
   ){
@@ -65,17 +72,24 @@ export class HomeComponent {
   }
 
   getClienteProfile(){
-    this.userService.showUser(this.user_id).subscribe((resp:any)=>{
-      console.log('respuesta para miembro',resp);
-      this.client = resp.user[0];
-      this.profile = resp.user[0].profile;
-      
+    
+    this.profileService.getByUser(this.user.id).subscribe((resp:any) => {
+      // console.log(resp);
+      this.profile = resp.profile || null;
+      this.redessociales = typeof resp.profile.redessociales === 'string' 
+            ? JSON.parse(resp.profile.redessociales) || []
+            : resp.profile.redessociales || [];
+      this.speciality_profile = resp.profile.speciality_id;
+      this.isLoading = false;
+      this.getSpeciality();
+    })
+  }
 
-      this.redessociales = typeof resp.user[0].profile.redessociales === 'string' 
-            ? JSON.parse(resp.user[0].profile.redessociales) || []
-            : resp.user[0].profile.redessociales || [];
+  getSpeciality(){
+    this.specialityService.getSpeciality(this.speciality_profile).subscribe((resp:any) => {
+      console.log(resp);
+      this.speciality = resp.title || null;
 
-            console.log(this.redessociales);
     })
   }
 

@@ -49,7 +49,7 @@ export class RatingStarComponent {
         this.hoverRating = 0;
     }
 
-    onClick(star: number) {debugger
+    onClick(star: number) {
         this.rating = star;
         this.ratingChanged.emit(this.rating);
         console.log(this.rating);

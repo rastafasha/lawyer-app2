@@ -43,7 +43,7 @@ export class ProfileComponent {
   public isLoading:boolean = false;
     loadingTitle!:string;
 
-  public profile: Profile = new Profile();
+  public profile!: Profile ;
   public redessociales: RedesSociales [] =[];
 
   constructor(

@@ -12,6 +12,7 @@ import { MenuFooterComponent } from '../../shared/menu-footer/menu-footer.compon
 import { LateralComponent } from '../lateral/lateral.component';
 import { AuthService } from '../../services/auth.service';
 import { RatingStarComponent } from '../ratingStar/ratingStar.component';
+import { Speciality } from '../../models/speciality.model';
 
 @Component({
     selector: 'app-fichaprofile',
@@ -33,6 +34,7 @@ export class FichaprofileComponent implements OnChanges {
     @Input() isLoading!: boolean;
     @Input() profile!: Profile;
     @Input() user!:  Usuario;
+    @Input() speciality!: Speciality;
     @Input() redessociales: any;
 
     private authService = inject(AuthService);

@@ -6,6 +6,7 @@
                 <p>{{'Username'|translate}}: {{user.username}}</p>
                 <p *ngIf="profile">{{profile.nombre}} {{profile.surname}}</p>
                 <p>{{user.email}}</p>
+                <p>{{speciality}}</p>
                 <span class="badge  bg-primary" *ngIf="profile.status === 1"> {{'Pending'|translate}}</span>
                 <span class="badge bg-success" *ngIf="profile.status === 2">{{'Verified'|translate}}</span>
                 <span class="badge bg-danger" *ngIf="profile.status === 3">{{'For Review'|translate}}</span>
