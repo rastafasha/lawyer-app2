@@ -43,7 +43,6 @@ export class FichaprofileComponent implements OnChanges {
     ngOnInit() {
         this.redessociales;
         this.profile;
-        console.log(this.profile);
     }
 
     ngOnChanges(changes: SimpleChanges) {

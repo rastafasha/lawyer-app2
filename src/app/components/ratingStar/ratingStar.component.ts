@@ -32,8 +32,6 @@ export class RatingStarComponent {
     }
 
     ngOnInit() {
-        console.log(this.profile);
-        console.log(this.client);
         this.client_id = this.profile.client_id;
         this.user_id = this.profile.user_id;
         if (this.profile && this.profile.rating) {
@@ -52,7 +50,6 @@ export class RatingStarComponent {
     onClick(star: number) {
         this.rating = star;
         this.ratingChanged.emit(this.rating);
-        console.log(this.rating);
 
         const formData = new FormData();
         formData.append('user_id', this.user.id + '');

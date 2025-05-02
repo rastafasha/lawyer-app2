@@ -66,7 +66,6 @@ export class HomeComponent {
 
   ngOnInit(){
     window.scrollTo(0, 0);
-    console.log(this.user);
     this.user_id = this.user.id;
     this.getClienteProfile()
   }
@@ -87,7 +86,7 @@ export class HomeComponent {
 
   getSpeciality(){
     this.specialityService.getSpeciality(this.speciality_profile).subscribe((resp:any) => {
-      console.log(resp);
+      
       this.speciality = resp.title || null;
 
     })
