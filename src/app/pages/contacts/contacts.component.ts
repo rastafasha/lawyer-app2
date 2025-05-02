@@ -1,5 +1,5 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -17,6 +17,7 @@ import { AuthService } from '../../services/auth.service';
 import { ClientService } from '../../services/client.service';
 import { SolicitudesService } from '../../services/solicitudes.service';
 import { UserService } from '../../services/usuario.service';
+import { RatingStarComponent } from '../../components/ratingStar/ratingStar.component';
 
 @Component({
   selector: 'app-contacts',
@@ -30,7 +31,8 @@ import { UserService } from '../../services/usuario.service';
     LoadingComponent, NgIf,
     FormsModule,
     ReactiveFormsModule,
-    ImagenPipe
+    ImagenPipe,
+    RatingStarComponent
   ],
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.scss'
@@ -42,9 +44,11 @@ export class ContactsComponent {
   isRefreshing = false;
   isLoading = false;
   isEdnOfList = false;
-
+  
+  public client!: Usuario;
+  public user_selected!: Usuario;
+  public client_selected!: Usuario;
   public user!: Usuario;
-  public cliente!: Usuario;
   public rol?:string;
   public solicitudes: Solicitud[]=[];
   public solicitud_users: SolicitudesUsers[]=[];
@@ -151,7 +155,7 @@ export class ContactsComponent {
     getClienteContact(){
       this.clientService.getClient(this.cliente_selected.id).subscribe((resp:any)=>{
         console.log('respuesta para contact',resp);
-        this.cliente = resp[0];
+        this.client= resp[0];
         this.profile = resp[0].profile;
         this.redessociales = typeof resp[0].profile.redessociales === 'string' 
         ? JSON.parse(resp[0].profile.redessociales) || []
@@ -184,12 +188,12 @@ export class ContactsComponent {
     addClient(){
     
             const formData = new FormData();
-          formData.append("client_id", this.cliente.id+'');
+          formData.append("client_id", this.client.id+'');
           formData.append("user_id", this.user.id+'');
     
             this.clientService.addClienttoUser(formData).subscribe({
               next: (resp:any) => {
-                this.cliente = resp;
+                this.client = resp;
                 Swal.fire('Éxito!', 'Cliente creado correctamente', 'success');
                 this.ngOnInit();
               }
@@ -203,17 +207,17 @@ export class ContactsComponent {
 
           deleteContact(){
             const formData = new FormData();
-            formData.append("client_id", this.cliente.id+'');
+            formData.append("client_id", this.client.id+'');
             formData.append("user_id", this.user.id+'');
     
-            this.clientService.removeClient(this.cliente.id, this.user.id).subscribe({
+            this.clientService.removeClient(this.client.id, this.user.id).subscribe({
               next: (resp:any) => {
-                this.cliente = resp;
-                Swal.fire('Éxito!', 'Cliente eliminado correctamente', 'success');
+                this.client = resp;
+                Swal.fire('Éxito!', 'client eliminado correctamente', 'success');
                 this.ngOnInit();
               }
               ,error: (err) => {
-                Swal.fire('Error', 'Error al eliminar el cliente', 'error');
+                Swal.fire('Error', 'Error al eliminar el client', 'error');
                 console.error(err);
               }
             });

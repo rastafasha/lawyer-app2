@@ -53,51 +53,9 @@
 
                 <div class="tarjetacliente">
                   <div class="tc_tope">
-                    <div class="stars" (change)="onRatingChanged($event)">
-  
-                      <ul class="star-rating" *ngIf="profile.rating === 5">
-                        <li class="active"><i class="fa fa-star "></i></li>
-                        <li class="active"><i class="fa fa-star "></i></li>
-                        <li class="active"><i class="fa fa-star "></i></li>
-                        <li class="active"><i class="fa fa-star "></i></li>
-                        <li class="active"><i class="fa fa-star "></i></li>
-                    </ul>
-                    <ul class="star-rating" *ngIf="profile.rating >= 4 && profile.rating < 5">
-                      <li class="active"><i class="fa fa-star "></i></li>
-                      <li class="active"><i class="fa fa-star "></i></li>
-                      <li class="active"><i class="fa fa-star "></i></li>
-                      <li class="active"><i class="fa fa-star "></i></li>
-                      <li ><i class="fa fa-star "></i></li>
-                    </ul>
-                    <ul class="star-rating" *ngIf="profile.rating >= 3 && profile.rating < 4">
-                      <li class="active"><i class="fa fa-star "></i></li>
-                      <li class="active"><i class="fa fa-star "></i></li>
-                      <li class="active"><i class="fa fa-star "></i></li>
-                      <li ><i class="fa fa-star "></i></li>
-                      <li ><i class="fa fa-star "></i></li>
-                    </ul>
-                    <ul class="star-rating" *ngIf="profile.rating >= 2 && profile.rating < 3">
-                      <li class="active"><i class="fa fa-star "></i></li>
-                      <li class="active"><i class="fa fa-star "></i></li>
-                      <li ><i class="fa fa-star "></i></li>
-                      <li ><i class="fa fa-star "></i></li>
-                      <li ><i class="fa fa-star "></i></li>
-                    </ul>
-                    <ul class="star-rating" *ngIf="profile.rating >= 1 && profile.rating < 2">
-                      <li class="active"><i class="fa fa-star "></i></li>
-                      <li ><i class="fa fa-star "></i></li>
-                      <li ><i class="fa fa-star "></i></li>
-                      <li ><i class="fa fa-star "></i></li>
-                      <li ><i class="fa fa-star "></i></li>
-                    </ul>
-                    <ul class="star-rating" *ngIf="profile.rating >= 0 && profile.rating < 1">
-                      <li ><i class="fa fa-star "></i></li>
-                      <li ><i class="fa fa-star "></i></li>
-                      <li ><i class="fa fa-star "></i></li>
-                      <li ><i class="fa fa-star "></i></li>
-                      <li ><i class="fa fa-star "></i></li>
-                    </ul>
-                    </div>
+                    
+                    <app-ratingStar *ngIf="profile && user" [profile]="profile" ></app-ratingStar>
+
                     <div class="tc_actions">
                       <button type="button" (click)="deleteContact()" class="btn btn-danger">
                         <i class="fa fa-trash"></i>
@@ -113,7 +71,7 @@
                     </div>
   
                     <div class="tc_info">
-                      <p>{{'Username'|translate}}: {{cliente.username}}</p>
+                      <p>{{'Username'|translate}}: {{client.username}}</p>
                       <p>{{'Name'|translate}}: {{profile.nombre}} {{profile.surname}}</p>
                       <p>{{'Country'|translate}}: {{profile.pais}}</p>
   

@@ -92,6 +92,11 @@ export class ProfileService {
     const URL = baseUrl+'/profile/update/'+profile_id;
     return this.http.post(URL,data,{headers:headers});
   }
+  updateProfileRating( data:any){
+
+    const url = `${baseUrl}/profile/update/rating/`;
+    return this.http.put(url,  data, this.headers);
+  }
   updateProfileStatus( data:any, profile_id:number){
 
     const url = `${baseUrl}/profile/update/status/${profile_id}`;

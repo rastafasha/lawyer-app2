@@ -13,7 +13,7 @@
           <app-aviso></app-aviso>
           <!-- aviso falta info -->
           
-          <app-fichaprofile  [isLoading]="isLoading" [profile]="profile" [user]="user" [redessociales]="redessociales"></app-fichaprofile>
+          <app-fichaprofile *ngIf="profile && user" [isLoading]="isLoading" [profile]="profile" [user]="user" [redessociales]="redessociales"></app-fichaprofile>
 
           <app-solicitudes-recents></app-solicitudes-recents>
           <!---Slider-->
