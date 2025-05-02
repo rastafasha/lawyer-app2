@@ -10,6 +10,7 @@ import { Profile } from '../../models/profile.model';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-solicitudes-recents',
@@ -18,7 +19,8 @@ import { FormsModule } from '@angular/forms';
     BackButtnComponent,
     CommonModule,
     TranslateModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ],
   templateUrl: './solicitudes-recents.component.html',
   styleUrl: './solicitudes-recents.component.scss'
@@ -33,6 +35,7 @@ export class SolicitudesRecentsComponent {
   
     public user!: Usuario;
     public cliente!: Usuario;
+    public client_id!: number;
     public rol?:string;
     public solicitudes: Solicitud[]=[];
     public solicitud_users: SolicitudesUsers[]=[];
@@ -86,9 +89,18 @@ export class SolicitudesRecentsComponent {
     this.pedido_selected = item.id;
     this.solicitudService.getSolicitud(this.pedido_selected).subscribe((resp:any)=>{
       this.solicitud_users = resp.solicitud_users || [];
-      
+      this.client_id = resp.solicitud_users[0].client_id;
       console.log(resp.solicitud_users);
-      
+
+      this.getClienteSolicitud();
+    })
+  }
+
+  getClienteSolicitud(){
+    this.clientService.getClient(this.client_id).subscribe((resp:any)=>{
+      console.log('respuesta para miembro',resp);
+      this.cliente = resp[0];
+      this.profile = resp[0].profile;
     })
   }
 

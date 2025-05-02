@@ -51,7 +51,7 @@ export class WalletComponent {
   public solicitud_users: SolicitudesUsers[]=[];
   public user_client_id!: number;
   public user_member_id!: number;
-  public client_id!: any;
+  public client_id!: number;
   public pedido: any = [];
   public clientes: any = [];
 
