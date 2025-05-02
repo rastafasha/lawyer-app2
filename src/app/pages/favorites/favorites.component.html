@@ -126,26 +126,63 @@
       
       
               <div class="carousel-inner-data" *ngIf="!isLoading">
-                  <div class="post navTabs" *ngIf="characters.length > 0 else message">
-                      <div class=" itemFav scrollinganimate" *ngFor="let character of characters; trackby: trackByCharacterId">
+                  <div class="post navTabs" *ngIf="favorites.length > 0 else message">
+                      <div class=" itemFav scrollinganimate" *ngFor="let character of favorites; trackby: trackByCharacterId">
                           <div class="group  itemFav lastposthome">
                               <a href="lawyer-profile.html">
-                                  <img [src]="character.image" alt="">
+                                  <!-- <img [src]="character.profile.avatar" alt=""> -->
+                                  <img *ngIf="!character.profile.avatar" [src]="character.profile.avatar  | imagenPipe: 'profiles' " alt="">
                               </a>
                               <div class="div1">
-                                  <p>{{character.name}}</p>
-                                  <p>{{character.species}}</p>
-                                  <p>{{character.gender}}</p>
+                                  <p>{{character.profile.nombre}} {{character.profile.surname}}</p>
+                                  <p>{{character.profile.email}}</p>
+                                  <!-- <p>{{character.profile.gender}}</p> -->
                                   <!-- <p>Lorem ipsum dolor sit amet consectetur...</p> -->
                                   <div class="stars">
-                                      <ul>
-                                          <li class="active"><i class="fa fa-star"></i></li>
-                                          <li class="active"><i class="fa fa-star"></i></li>
-                                          <li class="active"><i class="fa fa-star"></i></li>
-                                          <li class="active"><i class="fa fa-star"></i></li>
-                                          <li><i class="fa fa-star"></i></li>
-                                      </ul>
-                                  </div>
+
+                                    <ul class="star-rating" *ngIf="character.profile.rating === 5">
+                                      <li class="active"><i class="fa fa-star "></i></li>
+                                      <li class="active"><i class="fa fa-star "></i></li>
+                                      <li class="active"><i class="fa fa-star "></i></li>
+                                      <li class="active"><i class="fa fa-star "></i></li>
+                                      <li class="active"><i class="fa fa-star "></i></li>
+                                  </ul>
+                                  <ul class="star-rating" *ngIf="character.profile.rating >= 4 && character.profile.rating < 5">
+                                    <li class="active"><i class="fa fa-star "></i></li>
+                                    <li class="active"><i class="fa fa-star "></i></li>
+                                    <li class="active"><i class="fa fa-star "></i></li>
+                                    <li class="active"><i class="fa fa-star "></i></li>
+                                    <li ><i class="fa fa-star "></i></li>
+                                  </ul>
+                                  <ul class="star-rating" *ngIf="character.profile.rating >= 3 && character.profile.rating < 4">
+                                    <li class="active"><i class="fa fa-star "></i></li>
+                                    <li class="active"><i class="fa fa-star "></i></li>
+                                    <li class="active"><i class="fa fa-star "></i></li>
+                                    <li ><i class="fa fa-star "></i></li>
+                                    <li ><i class="fa fa-star "></i></li>
+                                  </ul>
+                                  <ul class="star-rating" *ngIf="character.profile.rating >= 2 && character.profile.rating < 3">
+                                    <li class="active"><i class="fa fa-star "></i></li>
+                                    <li class="active"><i class="fa fa-star "></i></li>
+                                    <li ><i class="fa fa-star "></i></li>
+                                    <li ><i class="fa fa-star "></i></li>
+                                    <li ><i class="fa fa-star "></i></li>
+                                  </ul>
+                                  <ul class="star-rating" *ngIf="character.profile.rating >= 1 && character.profile.rating < 2">
+                                    <li class="active"><i class="fa fa-star "></i></li>
+                                    <li ><i class="fa fa-star "></i></li>
+                                    <li ><i class="fa fa-star "></i></li>
+                                    <li ><i class="fa fa-star "></i></li>
+                                    <li ><i class="fa fa-star "></i></li>
+                                  </ul>
+                                  <ul class="star-rating" *ngIf="character.profile.rating >= 0 && character.profile.rating < 1">
+                                    <li ><i class="fa fa-star "></i></li>
+                                    <li ><i class="fa fa-star "></i></li>
+                                    <li ><i class="fa fa-star "></i></li>
+                                    <li ><i class="fa fa-star "></i></li>
+                                    <li ><i class="fa fa-star "></i></li>
+                                  </ul>
+                                </div>
                               </div>
                           </div>
                       </div>

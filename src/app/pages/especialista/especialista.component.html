@@ -14,7 +14,10 @@
             <div class=" itemFav shadow">
               <img *ngIf="!profile.avatar" [src]="profile.avatar  | imagenPipe: 'users' " alt="">
               <img *ngIf="profile.avatar" [src]="profile.avatar  " alt="">
-              <div class="div1">
+              <div *ngIf="!profile">
+                <h2>No hay datos</h2>
+              </div>
+              <div class="div1" *ngIf="profile">
                 <h3>{{ profile.nombre }} {{ profile.surname }}</h3>
                 <!-- <h4>{{ user.email }}</h4> -->
                 <span class="badge  bg-primary" *ngIf="profile.status === 1"> {{'Pending'|translate}}</span>

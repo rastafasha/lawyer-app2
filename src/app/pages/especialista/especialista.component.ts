@@ -53,6 +53,7 @@ export class EspecialistaComponent {
     status!:Profile ;
     role!:Profile ;
     solicitudes_selected: any[] = [];
+    toastr: any;
 
     userForm: FormGroup = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
@@ -64,6 +65,7 @@ export class EspecialistaComponent {
       isAgree: new FormControl(false),
   
       });
+  
   
     constructor(
       private authService: AuthService,
@@ -90,17 +92,24 @@ export class EspecialistaComponent {
       this.loadingTitle = 'Cargando perfil';
       this.profileService.getByUser(id).subscribe((resp:any) => {
         // console.log(resp);
-        this.profile = resp.profile;
-        this.redessociales = typeof resp.profile.redessociales === 'string' 
-            ? JSON.parse(resp.profile.redessociales) || []
-            : resp.profile.redessociales || [];
+        if(resp.status === '404' || resp.ok === false){
+          alert('no hay perfil')
+          this.isLoading = false;
+        }
+        this.profile = resp.profile  || [];
+        if(this.profile){
 
-            this.precios = typeof resp.profile.precios === 'string' 
-            ? JSON.parse(resp.profile.precios) || []
-            : resp.profile.precios || [];
-        this.speciality_profile = resp.profile.speciality_id;
-        this.getSpeciality();
-        this.isLoading = false;
+          this.redessociales = typeof resp.profile.redessociales === 'string' 
+              ? JSON.parse(resp.profile.redessociales) || []
+              : resp.profile.redessociales || [];
+  
+              this.precios = typeof resp.profile.precios === 'string' 
+              ? JSON.parse(resp.profile.precios) || []
+              : resp.profile.precios || [];
+          this.speciality_profile = resp.profile.speciality_id;
+          this.getSpeciality();
+          this.isLoading = false;
+        }
       })
     }
   
@@ -177,7 +186,7 @@ export class EspecialistaComponent {
       // console.log(datos);
 
       const formData = new FormData();
-      formData.append("user_id", this.profile.id+'');
+      formData.append("user_id", this.profile.user_id+'');
       formData.append("cliente_id", this.user.id+'');
       formData.append("pedido", JSON.stringify(data));
       

@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private translate: TranslateService,
-    private placesServices: PlacesService
+    // private placesServices: PlacesService
     
   ) {
 
@@ -179,7 +179,7 @@ aceptaTerminos(){
 
 passwordNoValido(){
   const pass1 = this.registerForm.get('password')?.value;
-  const pass2 = this.registerForm.get('password2')?.value;
+  const pass2 = this.registerForm.get('confirmPassword')?.value;
 
   if((pass1 !== pass2) && this.formSumitted){
     return true;

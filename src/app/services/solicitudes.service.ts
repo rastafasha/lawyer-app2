@@ -50,31 +50,24 @@ export class SolicitudesService {
     const url = `${baseUrl}/solicitud/showbyUser/${usuario}`;
     return this.http.get<any>(url,this.headers)
       .pipe(
-        map((resp:{ok: boolean, solicitudes: any}) => resp.solicitudes)
+        map((resp:{ok: boolean, solicitudes: Solicitud}) => resp.solicitudes)
       )
   }
   getByGuest(usuario:any) {
     const url = `${baseUrl}/solicitud/cliente/${usuario}`;
     return this.http.get<any>(url,this.headers)
       .pipe(
-        map((resp:{ok: boolean, solicitudes: any}) => resp.solicitudes)
+        map((resp:{ok: boolean, solicitudes: Solicitud}) => resp.solicitudes)
       )
   }
   getByMember(usuario:any) {
     const url = `${baseUrl}/solicitud/user/${usuario}`;
     return this.http.get<any>(url,this.headers)
       .pipe(
-        map((resp:{ok: boolean, solicitudes: any}) => resp.solicitudes)
+        map((resp:{ok: boolean, solicitudes: Solicitud}) => resp.solicitudes)
       )
   }
-  getByClientesUser(usuario:any) {
-    const url = `${baseUrl}/solicitud/clientes-user/${usuario}`;
-    return this.http.get<any>(url,this.headers)
-      .pipe(
-        map((resp:{ok: boolean, solicitud: any}) => resp)
-      )
-  }
-
+  
   
 
   createSolicitud(data:any){
@@ -83,11 +76,12 @@ export class SolicitudesService {
     return this.http.post(URL,data, {headers:headers});
   }
  
-  updateSolicitudStatus( profile_id:any,){
+  updateSolicitudStatus( data:any, solicitud_id:number){
     const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
-    const URL = baseUrl+'/solicitud/update/status/'+profile_id;
-    return this.http.put(URL,{headers:headers});
+    const URL = baseUrl+'/solicitud/update-status/'+solicitud_id;
+    return this.http.put(URL, data,{headers:headers});
   }
+
 
   deleteSolicitud(_id: string) {
     const url = `${baseUrl}/solicitud/destroy/${_id}`;

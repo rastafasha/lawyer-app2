@@ -1,0 +1,61 @@
+<app-loading *ngIf="isLoading" [loadingTitle]="loadingTitle"></app-loading>
+          <div class=" itemFav shadow" *ngIf="!isLoading">
+            <div class="fototext">
+              <img [src]="profile.avatar  | imagenPipe: 'users' " alt="">
+              <div class="div1">
+                <p>{{'Username'|translate}}: {{user.username}}</p>
+                <p *ngIf="profile">{{profile.nombre}} {{profile.surname}}</p>
+                <p>{{user.email}}</p>
+                <p>{{speciality}}</p>
+                <span class="badge  bg-primary" *ngIf="profile.status === 1"> {{'Pending'|translate}}</span>
+                <span class="badge bg-success" *ngIf="profile.status === 2">{{'Verified'|translate}}</span>
+                <span class="badge bg-danger" *ngIf="profile.status === 3">{{'For Review'|translate}}</span>
+                <br>
+              </div>
+              
+              <app-ratingStar [profile]="profile"></app-ratingStar>
+            </div>
+            <div class="reds" >
+              <div class="cont" *ngFor="let red of redessociales" >
+                <a *ngIf="red.icono === 'fa fa-whatsapp'" 
+                    href="https://wa.me/{{red.url}}?text=Estoy%20interesado%20en%20el%20producto%20en%20la%20flechaapp,%20favor%20ampliar%20informacion"
+                    target="_blank" rel="noopener noreferrer">
+                      <div class="option-admin">
+                        <i [class]="red.icono"></i>
+                      </div>
+                    </a>
+                    <a  *ngIf="red.icono !== 'fa fa-whatsapp'" [href]="red.url" target="_blank" rel="noopener noreferrer">
+                      <div class="option-admin">
+                        <i [class]="red.icono"></i>
+                      </div>
+                    </a>
+              </div>
+
+            </div>
+            <div class="admin-services">
+              <a [routerLink]="['/profile/edit', user.id]">
+                <div class="option-admin">
+                  <i class="fa fa-user"></i>
+                  <p>{{'Edit Profile'|translate}}</p>
+                </div>
+              </a>
+              <a [routerLink]="['/profile/paymentmethods']" *ngIf="user.roles[0] === 'MEMBER'">
+                <div class="option-admin">
+                  <i class="fa fa-money"></i>
+                  <p> {{'Payment Methods'|translate}}</p>
+                </div>
+              </a>
+              <a routerLink="/profile/documents" *ngIf="user.roles[0] !== 'SUPERADMIN'">
+                <div class="option-admin">
+                  <i class="fa fa-briefcase"></i>
+                  <p>{{'Documents'|translate}}</p>
+                </div>
+              </a>
+              <a (click)="logout()">
+                <div class="option-admin">
+                  <i class="fa fa-power-off"></i>
+                  <p>{{'Logout'|translate}}</p>
+                </div>
+              </a>
+            </div>
+          </div>

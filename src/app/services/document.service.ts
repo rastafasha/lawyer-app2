@@ -72,17 +72,15 @@ export class DocumentService {
 
       const URL =
         baseUrl +
-        '/document/showByUserFiltered/' +
+        '/documents/showByUserFiltered/' +
         user_id +
         '/?page=' +
         page +
         LINK;
-      return this.http.get<any>(URL);
-
-      // return this.http.get<any>(URL, this.headers)
-      //   .pipe(
-      //     map((resp:{ok: boolean, documents: Document}) => resp.documents)
-      //     );
+      return this.http.get<any>(URL, this.headers)
+        .pipe(
+          map((resp:{ok: boolean, documents: Document}) => resp.documents)
+          );
     }
 
 
@@ -122,5 +120,9 @@ export class DocumentService {
     deleteDocument(_id: string) {
       const url = `${baseUrl}/document/destroy/${_id}`;
       return this.http.delete(url, this.headers);
+    }
+    shareDocument(data:any) {
+      const url = `${baseUrl}/document/share/`;
+      return this.http.post(url, data, this.headers);
     }
 }

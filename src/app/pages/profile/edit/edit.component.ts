@@ -13,7 +13,7 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { SpecialitiesService } from '../../../services/specialities.service';
 import Swal from 'sweetalert2';
 import { LoadingComponent } from '../../../shared/loading/loading.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PaisService } from '../../../services/pais.service';
 import { Pais } from '../../../models/pais';
 import { PlacesService } from '../../../services/places.service';
@@ -89,6 +89,11 @@ export class EditComponent {
     iconoSeleccionado:any;
 
     public paises :Pais[] = [];
+
+    langs: string[] = [];
+  public activeLang = 'es';
+  flag = false;
+  lang!:string;
     
 
     public listIcons = [
@@ -118,7 +123,8 @@ export class EditComponent {
       private fb: FormBuilder,
       private specialityService: SpecialitiesService,
       public paisService: PaisService,
-      private placesServices: PlacesService
+      private placesServices: PlacesService,
+      private translate: TranslateService,
     ) {
       this.user = this.authService.getUser();
     }
@@ -130,7 +136,7 @@ export class EditComponent {
       // this.closeMenu();
       this.user_id = this.user.id;
       this.validarFormularioPerfil();
-      this.getProfile();
+      
       this.getSpecialitys();
       this.getPaisesList();
       this.activatedRoute.params.subscribe( ({id}) => this.iniciarFormularioPerfil(id));
@@ -184,27 +190,28 @@ export class EditComponent {
   iniciarFormularioPerfil(id:string){
     if (!id == null || !id == undefined || id) {
       this.profileService.getByUser(id).subscribe(
-        (res:any) => {
+        (resp:any) => {
           this.userForm.patchValue({
-            id: res.id,
-            nombre: this.profile.nombre,
-            surname: this.profile.surname,
+            id: resp.id,
+            nombre: resp.profile.nombre,
+            surname: resp.profile.surname,
             
-            direccion: this.profile.direccion,
-            description: this.profile.description,
-            pais: this.profile.pais,
-            estado: this.profile.estado,
-            ciudad: this.profile.ciudad,
-            gender: this.profile.gender,
-            n_doc: this.profile.n_doc,
-            telhome: this.profile.telhome,
-            telmovil: this.profile.telmovil,
-            speciality_id: this.profile.speciality_id,
+            direccion: resp.profile.direccion,
+            description: resp.profile.description,
+            pais: resp.profile.pais,
+            estado: resp.profile.estado,
+            ciudad: resp.profile.ciudad,
+            gender: resp.profile.gender,
+            n_doc: resp.profile.n_doc,
+            telhome: resp.profile.telhome,
+            telmovil: resp.profile.telmovil,
+            lang: resp.profile.lang,
+            speciality_id: resp.profile.speciality_id,
             usuario: this.user.id,
           });
-          this.profileSeleccionado = res.profile;
+          this.profileSeleccionado = resp.profile;
           // console.log('profileSeleccionado',this.profileSeleccionado);
-
+          this.getProfile();
         }
 
       );
@@ -229,6 +236,7 @@ export class EditComponent {
       direccion: [''],
       n_doc: [''],
       gender: [''],
+      lang: [''],
       description: ['', Validators.required],
       usuario: [this.user.id],
       id: [''],
@@ -375,43 +383,17 @@ export class EditComponent {
       
     }
     if (this.tarifas) {
-      // formData.append("precios", this.tarifas);
       formData.append("precios", JSON.stringify(this.tarifas));
 
     }
     if (this.FILE_AVATAR) {
       formData.append("imagen", this.FILE_AVATAR);
     }
+    if (this.lang) {
+      formData.append("lang", this.lang);
+    }
 
-    // const formValue = this.userForm.value;
-
-    // const data ={
-    //   redessociales: this.redessociales,
-    //   precios: this.tarifas,
-
-    //   nombre: formValue.nombre,
-    //   apellidos: formValue.apellidos,
-    //   pais: formValue.pais,
-    //   estado: formValue.estado,
-
-    //   ciudad: formValue.ciudad,
-    //   telhome: formValue.telhome,
-    //   telmovil: formValue.telmovil,
-    //   shortdescription: formValue.shortdescription,
-    //   usuario: this.user.id,
-    //   id: formValue.id,
-    //   user_id :this.user_id,
-    //   profile_id :this.profile_id,
-    //   // img: this.profile.img,
-    //   // imagen: this.FILE_AVATAR.,
-    //   avatar: this.FILE_AVATAR.name,
-    //   ...this.userForm.value,
-
-      
-    // }
-
-    // console.log(formValue);
-    // console.log(data);
+   
 
     if(this.profile_id){
       this.profileService.updateProfile( formData, this.profile_id).subscribe((resp:any) => {
@@ -432,5 +414,14 @@ export class EditComponent {
     }
 
   }
+
+  public cambiarLenguaje(lang:any) {
+    this.activeLang = lang;
+    this.translate.use(lang);
+    this.flag = !this.flag;
+    localStorage.setItem('lang', this.activeLang);
+    this.userForm.patchValue({ lang: lang });
+  }
+  
 
 }

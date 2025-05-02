@@ -1,79 +1,115 @@
 <app-header></app-header>
-<section class="wallet home"
-infiniteScroll 
-[infiniteScrollDistance]="2"  [infiniteScrollUpDistance]="2" 
-[infiniteScrollThrottle]=" 50"
-(scrolled)="onScrollDown()" (scrolledUp)="onScrollUp()"
-
-[class.refreshing]="isRefreshing"
->
-<div class="pull-down-indicator" *ngIf="isRefreshing">
-    <app-loading  ></app-loading>
+<section class="wallet home" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollUpDistance]="2"
+  [infiniteScrollThrottle]=" 50" (scrolled)="onScrollDown()" (scrolledUp)="onScrollUp()"
+  [class.refreshing]="isRefreshing">
+  <div class="pull-down-indicator" *ngIf="isRefreshing">
+    <app-loading></app-loading>
     <p class="text-center">
       {{'Refreshing'|translate}} ...
     </p>
- </div>
-  
- <app-loading *ngIf="isLoading" ></app-loading>
+  </div>
+
+  <app-loading *ngIf="isLoading"></app-loading>
   <div class="container-fluid" *ngIf="!isLoading">
-   <div class="container">
-    <div class="row">
-      <div class="col-xs-12 col-sm-9 col-md-9" >
-        <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 ">
+          <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
 
-        <div class="tab-content-set">
-          <ul class="nav">
-              <li>
-                  <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 1}" (click)="optionSelected(1)">Solicitudes</a>
-              </li>
-              <li>
-                  <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 2}" (click)="optionSelected(2)">Clientes</a>
-              </li>
-          </ul>
-      </div>
-      <div class="card" *ngIf="option_selected == 1">
-        <div  *ngFor="let item of solicitudes"  >
-          <div class="group itemFav shadow">
-            <div class="fa fa-paypal"></div>
-            <div class="div1pagocon">
-              <details class=" cuadrosearch">
-                <summary class="" (click)="getSolicitudDetail(item)">{{item.created_at}}</summary>
-                <!-- <p>{{item.status}}</p> -->
-                <span class="badge  bg-primary" *ngIf="item.status === 1"> {{'Pending'|translate}}</span>
-                <span class="badge bg-success" *ngIf="item.status === 2">{{'Verified'|translate}}</span>
-                <span class="badge bg-danger" *ngIf="item.status === 3">{{'For Review'|translate}}</span>
-                <!-- <p>Johndoe@gmail.com</p> -->
-                <!-- <p>{{item.created_at}}</p> -->
-                <p>{{item.pedido.item_tarifa}}</p>
-                <p>{{item.pedido.precio|currency}}</p>
-                <p>{{cliente?.username}}</p>
+         
+          <div class="card" >
+            <!-- solicitudes -->
+            <div *ngFor="let item of solicitudes">
+              <div class="group itemFav shadow" *ngIf="!solicitud_selected">
+                <div class="fa fa-paypal"></div>
+                <div class="div1pagocon" (click)="solicitudSelected(item)">
 
-              </details>
-              
+                  <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="card-title">{{item.created_at| date:'dd/MM/yyyy HH:mm:ss'}}</h5>
+                    <div class="status_verified">
+                      <span class="badge  bg-primary" *ngIf="item.status === 1"> {{'Pending'|translate}}</span>
+                      <span class="badge bg-success" *ngIf="item.status === 2">{{'Verified'|translate}}</span>
+                      <span class="badge bg-danger" *ngIf="item.status === 3">{{'For Review'|translate}}</span>
+                    </div>
+
+                    <button class="btn btn-outline-primary">
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- ver solicitud -->
+            <div class="div1pagocon" *ngIf="solicitud_selected">
+              <div class="card-body">
+
+                <div class="tarjeta_producto">
+                  <div class="tp_tope">
+                    <h5 class="card-title">{{solicitud_selected.created_at | date:'dd/MM/yyyy HH:mm:ss'}}</h5>
+                  <span class="badge  bg-primary" *ngIf="solicitud_selected.status === 1"> {{'Pending'|translate}}</span>
+                  <span class="badge bg-success" *ngIf="solicitud_selected.status === 2">{{'Verified'|translate}}</span>
+                  <span class="badge bg-danger" *ngIf="solicitud_selected.status === 3">{{'For Review'|translate}}</span>
+                  <div class="checkbox-wrapper-6">
+                    <!-- <p>{{'Start'|translate}}</p> -->
+                    <input class="tgl tgl-light" id="cb1-6" type="checkbox" name="status"
+                      (change)="cambiarStatus(solicitud_selected, status)" [(ngModel)]="status"
+                      [ngModelOptions]="{ standalone: true }" />
+                    <label class="tgl-btn" for="cb1-6"></label>
+
+                  </div>
+                  </div>
+                  <div class="tp_description">
+                    <p> {{'Description'|translate}}:{{solicitud_selected.pedido.item_tarifa}}</p>
+                    <p>{{'Price'|translate}}:{{solicitud_selected.pedido.precio|currency}}</p>
+                    <p> {{'Quantity'|translate}}:{{pedido.quantity}}</p>
+                  </div>
+                </div>
+                <div class="tarjetacliente">
+                  <div class="tc_imagem">
+                    <img *ngIf="!profile.avatar" [src]="profile.avatar  | imagenPipe: 'users' " alt="">
+                  </div>
+
+                  <div class="tc_info">
+                    <p>{{'Username'|translate}}: {{cliente.username}}</p>
+                    <p>{{'Name'|translate}}: {{profile.nombre}} {{profile.surname}}</p>
+                    <p>{{'Country'|translate}}: {{profile.pais}}</p>
+                  </div>
+                  <div class="tc_actions">
+                    <button type="button" (click)="addClient()" class="btn btn-primary">
+                      <i class="fa fa-user-plus"></i>
+                    </button>
+                    <!-- <button type="button" [routerLink]="['/chat/', profile.client_id]" class="btn btn-primary">
+                      <i class="fa fa-comment" aria-hidden="true"></i>
+                    </button> -->
+                  </div>
+
+                </div>
+
+                <div class="d-flex justify-content-end align-items-center gap-5">
+                  <!-- <a [routerLink]="['/clientprofile/', client_id]">
+                    <button class="btn btn-outline-primary">
+                      <i class="fa fa-eye"></i>
+                    </button>
+
+                  </a> -->
+                  
+                  <button class="btn btn-primary btn-sm" (click)="solicitud_selected = null">
+                    {{'Back'|translate}}
+                  </button>
+                </div>
+
+              </div>
             </div>
           </div>
 
-          <!-- modal edit-->
           
-        </div>
-      </div>
-      <div class="card" *ngIf="option_selected == 2">
-        <div  *ngFor="let item of clientes"  >
-          <div class="group itemFav shadow">
-            <div class="fa fa-paypal"></div>
-            <div class="div1pagocon">
-              <p>{{item.username}}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-       
 
-        
-      </div>
 
-      <!-- lateral -->
-      <div class="col-xs-12 col-sm-3 col-md-3">
+
+        </div>
+
+        <!-- lateral -->
+        <!-- <div class="col-xs-12 col-sm-3 col-md-3">
         <h5>Order Recents</h5>
 
         <div class="paggrop col-xs-12">
@@ -92,12 +128,12 @@ infiniteScroll
             </div>
           </div>
         </div>
-        <!-- <app-lateral></app-lateral> -->
+        <app-lateral></app-lateral>
 
+    </div> -->
+        <!-- lateral -->
+      </div>
     </div>
-      <!-- lateral -->
-    </div>
-   </div>
   </div>
 </section>
 <app-menu-footer></app-menu-footer>

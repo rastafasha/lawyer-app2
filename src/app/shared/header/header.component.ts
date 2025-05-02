@@ -36,7 +36,7 @@ export class HeaderComponent {
     this.translate.addLangs(["es", "en"]);
     this.langs = this.translate.getLangs();
     translate.get(this.langs).subscribe(res =>{
-      console.log(res);
+      // console.log(res);
     })
     // console.log(this.translate);
   }

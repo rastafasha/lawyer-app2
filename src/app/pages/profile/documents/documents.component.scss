@@ -53,6 +53,34 @@
     padding: 15px;
 }
 
+.share__options{
+    display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding: 0px;
+        gap: 20px;
+        width: 100%;
+}
+
+.modal{
+    top:30px
+}
+
+.tab-content-set{
+    & .nav{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 20px;
+        
+    }
+    & li {
+
+    }
+}
+
+
 @media (max-width: 768px) {
     .columnadoble{
         column-count: 1;

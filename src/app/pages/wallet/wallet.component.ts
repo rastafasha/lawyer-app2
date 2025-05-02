@@ -13,6 +13,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UserService } from '../../services/usuario.service';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { LoadingComponent } from '../../shared/loading/loading.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ImagenPipe } from '../../pipes/imagen.pipe';
+import { ClientService } from '../../services/client.service';
+import { Profile, RedesSociales } from '../../models/profile.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-wallet',
@@ -23,13 +28,16 @@ import { LoadingComponent } from '../../shared/loading/loading.component';
     BackButtnComponent,
     NgFor, TranslateModule,
     InfiniteScrollDirective,
-    LoadingComponent, NgIf
+    LoadingComponent, NgIf,
+    FormsModule,
+    ReactiveFormsModule,
+    ImagenPipe
   ],
   templateUrl: './wallet.component.html',
   styleUrl: './wallet.component.scss'
 })
 export class WalletComponent {
-  pageTitle='Agenda';
+  pageTitle='Solicitudes';
 
   loadingTitle!:string;
   isRefreshing = false;
@@ -41,19 +49,26 @@ export class WalletComponent {
   public rol?:string;
   public solicitudes: Solicitud[]=[];
   public solicitud_users: SolicitudesUsers[]=[];
-  public user_cliente_id!: number;
+  public user_client_id!: number;
   public user_member_id!: number;
-  public cliente_id!: any;
+  public client_id!: number;
   public pedido: any = [];
   public clientes: any = [];
 
   option_selected:number = 1;
-
+  solicitud_selected:any = null;
+  cliente_selected:any = null;
   pedido_selected:any;
+  status!:number ;
+  profile!:Profile;
+
   public text_success = '';
   public text_validation = '';
 
+  public redessociales!: RedesSociales[];
+
   private solicitudService = inject(SolicitudesService);
+  private clientService = inject(ClientService);
   private authService = inject(AuthService);
   private userService = inject(UserService);
 
@@ -63,37 +78,23 @@ export class WalletComponent {
     window.scrollTo(0, 0);
     this.user = this.authService.getUser();
     this.rol = this.user.roles[0];
-    // console.log(this.rol);
-    if(this.rol === 'MEMBER'){
-      this.getSolicitudesbyMember();
-    }
-    if(this.rol === 'GUEST'){
-      this.getSolicitudesbyGuest();
-    }
+    this.getSolicitudesbyMember();
+    
     
   }
 
-  getSolicitudesbyGuest(){
-    this.solicitudService.getByGuest(this.user.id).subscribe((resp:any)=>{
-      this.solicitudes = resp.data;
-      this.pedido = typeof resp.pedido === 'string' 
-            ? JSON.parse(resp.pedido) || []
-            : resp.pedido || [];
-      // console.log(resp);
-    })
-  }
   getSolicitudesbyMember(){
+    this.isLoading = true;
     this.solicitudService.getByMember(this.user.id).subscribe((resp:any)=>{
       this.solicitudes = resp.data;
       this.pedido = typeof resp.pedido === 'string' 
             ? JSON.parse(resp.pedido) || []
             : resp.pedido || [];
-      // console.log(resp);
       // console.log(this.pedido);
+      this.isLoading = false;
+      
     })
   }
-
-  
 
 
   closeReload(){
@@ -101,41 +102,25 @@ export class WalletComponent {
     this.ngOnInit();
   }
 
-  selectPublicidad(pedido:any){
-    this.pedido_selected = pedido;
-    // console.log(this.IMAGE_PREVISUALIZA);
-    this.pedido_selected.id;
-    // this.getPublicidad();
-  }
+  
 
   getSolicitudDetail(item:any){
     this.pedido_selected = item.id;
     this.solicitudService.getSolicitud(this.pedido_selected).subscribe((resp:any)=>{
-      console.log(resp);
-      // this.publicidadd = resp.publicidad;
       this.solicitud_users = resp.solicitud_users || [];
-      this.cliente_id = resp.solicitud_users[0].cliente_id;
-      // console.log(this.solicitud_users);
-      // console.log(this.cliente_id);
-      // Buscamos el cliente_id dentro del array solicitud_users
-      // if (Array.isArray(this.solicitud_users)) {
-      //   const foundUser = this.solicitud_users.find((element:any) => 
-      //     element.cliente_id === this.cliente_id
-      //   );
-      //   if (foundUser) {
-      //     this.cliente_id = foundUser.cliente_id;
-      //   }
-      // }
+      this.client_id = resp.solicitud_users[0].client_id;
+      this.user_client_id = resp.solicitud_users[0].user_id;
+      console.log(resp.solicitud_users);
       this.getClienteSolicitud() 
       
     })
   }
 
   getClienteSolicitud(){
-    this.userService.showUser(this.cliente_id).subscribe((resp:any)=>{
-      // console.log(resp);
-      this.cliente = resp.user[0];
-      // console.log(this.cliente);
+    this.clientService.getClient(this.client_id).subscribe((resp:any)=>{
+      console.log('respuesta para miembro',resp);
+      this.cliente = resp[0];
+      this.profile = resp[0].profile;
     })
   }
 
@@ -178,20 +163,87 @@ export class WalletComponent {
 
     optionSelected(value:number){
       this.option_selected = value;
+      if(this.option_selected === 1){
+
+        this.ngOnInit();
+      }
       if(this.option_selected === 2){
+        this.solicitud_selected = null;
+        // console.log('pidiendo clientes');
         this.user_member_id = this.user.id;
+        this.user_client_id = this.user.id;
+        // this.getClientesbyuser();
         this.getClientesbyuser();
-        console.log(this.user_member_id);
-        console.log('pidiendo clientes');
+        
       }
     }
 
     getClientesbyuser(){
-      this.solicitudService.getByClientesUser(this.user_member_id).subscribe((resp:any)=>{
-        console.log(resp);
-        this.clientes = resp.clientes;
+      this.isLoading = true;
+      this.clientService.getClientsByUser(this.user_member_id).subscribe((resp:any)=>{
+        // console.log('clientes',resp);
+        this.clientes = resp;
+        this.isLoading = false;
         
         // console.log(this.pedido);
       })
+      
     }
+    
+
+    solicitudSelected(solicitud:any){
+      this.solicitud_selected = solicitud;
+      this.getSolicitudDetail(solicitud);
+      console.log(solicitud);
+      // this.pedido = this.solicitud_selected.pedido;
+      this.pedido = typeof solicitud.pedido === 'string' 
+      ? JSON.parse(solicitud.pedido) || []
+      : solicitud.pedido || [];
+      console.log(this.pedido);
+    }
+
+  
+
+    cambiarStatus(pedido:any, status:any){
+      console.log(pedido);
+      console.log(status);
+      if(status === false){
+        this.solicitud_selected.status = 1;
+      }
+      if(status === true){
+        this.solicitud_selected.status = 2;
+      }
+
+      const data ={
+        // id:this.solicitud_selected.id,
+        status: this.solicitud_selected.status,
+        pedido: this.pedido
+      }
+      
+      this.solicitudService.updateSolicitudStatus(data, this.solicitud_selected.id).subscribe((resp:any)=>{
+        console.log(resp);
+      })
+      
+    }
+
+    addClient(){
+    
+            const formData = new FormData();
+          formData.append("client_id", this.cliente.id+'');
+          formData.append("user_id", this.user.id+'');
+    
+            this.clientService.addClienttoUser(formData).subscribe({
+              next: (resp:any) => {
+                this.cliente = resp;
+                Swal.fire('Éxito!', 'Cliente creado correctamente', 'success');
+                this.ngOnInit();
+              }
+              ,error: (err) => {
+                Swal.fire('Error', 'Error al crear el cliente', 'error');
+                console.error(err);
+              }
+            });
+    
+          }
+
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BackButtnComponent } from '../../../shared/backButtn/backButtn.component';
 import { HeaderComponent } from '../../../shared/header/header.component';
 import { MenuFooterComponent } from '../../../shared/menu-footer/menu-footer.component';
@@ -14,6 +14,8 @@ import { Document } from '../../../models/document.model';
 import { environment } from '../../../environments/environment';
 import { LoadingComponent } from '../../../shared/loading/loading.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { SolicitudesService } from '../../../services/solicitudes.service';
+import { ClientService } from '../../../services/client.service';
 const baseUrl = environment.url_servicios;
 declare let $:any;  
 @Component({
@@ -38,6 +40,8 @@ export class DocumentsComponent {
   isRefreshing = false;
   isSearching = false;
 
+
+
   valid_form_success = false;
     public text_validation = '';
     public text_success = '';
@@ -53,14 +57,22 @@ export class DocumentsComponent {
   public created_at!:string;
   user_id!:number;
   user!:Usuario;
+  public rol?:string;
 
   currentPage = 1;
+  share:any;
 
   searchForm!:FormGroup;
-
+  document_selected:any = null;
+  public user_cliente_id!: number;
+  public cliente_id!: number;
+  public user_member_id!: number;
+  public clientes: any = [];
+  private solicitudService = inject(SolicitudesService);
   constructor(
     private authService: AuthService,
     public documentService:DocumentService,
+    public clientService:ClientService,
     public router: Router,
     public ativatedRoute: ActivatedRoute,
     public fb: FormBuilder,
@@ -71,9 +83,10 @@ export class DocumentsComponent {
   }
   ngOnInit(): void {
     this.user_id = this.user.id;
+    this.rol = this.user.roles[0];
     this.validarFormularioPerfil();
     this.getdocumentsbyUser();
-    this.getdocumentsbyUserFilter();
+    // this.getdocumentsbyUserFilter();
     this.searchForm.reset();
   }
 
@@ -164,7 +177,8 @@ export class DocumentsComponent {
   deleteFile(FILE:any){
     this.documentService.deleteDocument(FILE).subscribe((resp:any)=>{
       // this.getAppointment();
-      this.getdocumentsbyUser();
+      // this.getdocumentsbyUser();
+      this.ngOnInit();
     })
     this.FilesAdded.splice(FILE,1);
   }
@@ -186,6 +200,7 @@ closeModalDoc(){
       $("body").removeClass();
       $("body").removeAttr("style");
       this.file_selected = null;
+      this.ngOnInit();
 }
   
 
@@ -271,8 +286,51 @@ closeModalDoc(){
     // this.currentPage = 1;
     this.isSearching = false;
     this.searchForm.reset();
+    this.ngOnInit();
+  }
+  // compartir archivo
+  solicitudSelected(document:any){
+    this.document_selected = document;
+    this.user_member_id = this.user.id;
+    this.user_cliente_id = this.user.id;
+    this.getClientesbyuser();
+    
+  }
+
+  getClientesbyuser(){
+    // this.isLoading = true;
+    this.clientService.getClientsByUser(this.user_member_id).subscribe((resp:any)=>{
+      // console.log('clientes',resp);
+      this.clientes = resp;
+      // this.isLoading = false;
+      
+      // console.log(this.pedido);
+    })
+    
   }
   
 
+  onShareIt(document:any){
+    this.document_selected = document;
+    // console.log(this.share);
+
+    const data ={
+      document_id : this.document_selected,
+      user_id : this.user.id,
+      client_id : this.share,
+    }
+    
+    
+    // console.log(data);
+    this.documentService.shareDocument(data).subscribe((resp:any)=>{
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: this.text_success,
+        showConfirmButton: false,
+        timer: 1500
+      });
+    })
+  }
 
 }
