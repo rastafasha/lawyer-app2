@@ -46,6 +46,7 @@ export class DocumentService {
           map((resp:{ok: boolean, document: Document}) => resp.document)
           );
     }
+
     getDocumentsByUser(_id: number) {
       const url = `${baseUrl}/documents/showbyuser/${_id}`;
       return this.http.get<any>(url, this.headers)
@@ -122,7 +123,8 @@ export class DocumentService {
       return this.http.delete(url, this.headers);
     }
     shareDocument(data:any) {
+      const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
       const url = `${baseUrl}/documents/share/`;
-      return this.http.post(url, data, this.headers);
+      return this.http.post(url, data, {headers:headers});
     }
 }
