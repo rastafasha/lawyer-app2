@@ -15,32 +15,8 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './aviso.component.css'
 })
 export class AvisoComponent {
-  // user!: Usuario;
+  @Input() profile!: Profile;
+  @Input() user!:  Usuario;
   user_id!: number;
-   @Input() profile!: Profile;
-    @Input() user!:  Usuario;
   isLoading:boolean = false;
-  // public profile: Profile = new Profile();
-  constructor(
-    private authService: AuthService,
-    private profileService: ProfileService,
-  ) {
-    // this.user = this.authService.getUser();
-  }
-  ngOnInit() {
-    // this.user_id = this.user.id;
-  }
-  getProfile() {
-    this.isLoading = true;
-    this.profileService.getByUser(this.user_id).subscribe({
-      next: (res) => {
-        this.profile = res.profile;
-        // console.log(this.profile);
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    });
-  }
 }

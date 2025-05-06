@@ -29,7 +29,8 @@
                     <div class="status_verified">
                       <span class="badge  bg-primary" *ngIf="item.status === 1"> {{'Pending'|translate}}</span>
                       <span class="badge bg-success" *ngIf="item.status === 2">{{'Verified'|translate}}</span>
-                      <span class="badge bg-danger" *ngIf="item.status === 3">{{'For Review'|translate}}</span>
+                      <span class="badge bg-warning" *ngIf="item.status === 3">{{'For Review'|translate}}</span>
+                      <span class="badge bg-success" *ngIf="item.status === 4">{{'Finished'|translate}}</span>
                     </div>
 
                     <button class="btn btn-outline-primary">
@@ -49,13 +50,16 @@
                     <h5 class="card-title">{{solicitud_selected.created_at | date:'dd/MM/yyyy HH:mm:ss'}}</h5>
                   <span class="badge  bg-primary" *ngIf="solicitud_selected.status === 1"> {{'Pending'|translate}}</span>
                   <span class="badge bg-success" *ngIf="solicitud_selected.status === 2">{{'Verified'|translate}}</span>
-                  <span class="badge bg-danger" *ngIf="solicitud_selected.status === 3">{{'For Review'|translate}}</span>
+                  <span class="badge bg-warning" *ngIf="solicitud_selected.status === 3">{{'For Review'|translate}}</span>
+                  <span class="badge bg-success" *ngIf="solicitud_selected.status === 4">{{'Finished'|translate}}</span>
                   <div class="checkbox-wrapper-6">
                     <!-- <p>{{'Start'|translate}}</p> -->
-                    <input class="tgl tgl-light" id="cb1-6" type="checkbox" name="status"
+                    <!-- <input class="tgl tgl-light" id="cb1-6" type="checkbox" name="status"
                       (change)="cambiarStatus(solicitud_selected, status)" [(ngModel)]="status"
                       [ngModelOptions]="{ standalone: true }" />
-                    <label class="tgl-btn" for="cb1-6"></label>
+                    <label class="tgl-btn" for="cb1-6"></label> -->
+
+                    
 
                   </div>
                   </div>
@@ -63,6 +67,20 @@
                     <p> {{'Description'|translate}}:{{solicitud_selected.pedido.item_tarifa}}</p>
                     <p>{{'Price'|translate}}:{{solicitud_selected.pedido.precio|currency}}</p>
                     <!-- <p> {{'Quantity'|translate}}:{{pedido.quantity}}</p> -->
+                    <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="role"
+                    [(ngModel)]="status"
+                    [ngModelOptions]="{ standalone: true }"
+                    (change)="cambiarStatus(status)"
+                    placeholder="state"
+                  >
+                    <option>-- {{'Select'|translate}} --</option>
+                    <option value="1">{{'Pending'|translate}}</option>
+                    <option value="2">{{'Verified'|translate | lowercase}}</option>
+                    <option value="3">{{'For Review'|translate | lowercase}}</option>
+                    <option value="4">{{'Finished'|translate | lowercase}}</option>
+                  </select>
                   </div>
                 </div>
                 <div class="tarjetacliente">

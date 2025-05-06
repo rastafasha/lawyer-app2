@@ -57,7 +57,7 @@ export class WalletComponent {
   solicitud_selected:any = null;
   client_selected:any = null;
   pedido_selected:any;
-  status!:number ;
+  status!:Profile ;
   profile!:Profile;
 
   public text_success = '';
@@ -88,8 +88,8 @@ export class WalletComponent {
       this.pedido = typeof resp.pedido === 'string' 
             ? JSON.parse(resp.pedido) || []
             : resp.pedido || [];
-      // console.log(this.pedido);
       this.isLoading = false;
+
       
     })
   }
@@ -109,6 +109,7 @@ export class WalletComponent {
       this.client_id = resp.solicitud_users[0].client_id;
       this.user_client_id = resp.solicitud_users[0].user_id;
       // console.log(resp.solicitud_users);
+      this.status = resp.solicitud_users[0].status;
       this.getClienteSolicitud() 
       
     })
@@ -116,7 +117,7 @@ export class WalletComponent {
 
   getClienteSolicitud(){
     this.clientService.getClient(this.client_id).subscribe((resp:any)=>{
-      console.log('respuesta para miembro',resp);
+      // console.log('respuesta para miembro',resp);
       this.client = resp[0];
       this.profile = resp[0].profile;
       this.client_user_id = resp[0].clients_user[0].id;
@@ -160,22 +161,7 @@ export class WalletComponent {
       }, 2000); 
     }
 
-    optionSelected(value:number){
-      this.option_selected = value;
-      if(this.option_selected === 1){
-
-        this.ngOnInit();
-      }
-      if(this.option_selected === 2){
-        this.solicitud_selected = null;
-        // console.log('pidiendo clientes');
-        this.user_member_id = this.user.id;
-        this.user_client_id = this.user.id;
-        // this.getClientesbyuser();
-        
-        
-      }
-    }
+   
 
    
     
@@ -183,8 +169,6 @@ export class WalletComponent {
     solicitudSelected(solicitud:any){
       this.solicitud_selected = solicitud;
       this.getSolicitudDetail(solicitud);
-      // console.log(solicitud);
-      // this.pedido = this.solicitud_selected.pedido;
       this.pedido = typeof solicitud.pedido === 'string' 
       ? JSON.parse(solicitud.pedido) || []
       : solicitud.pedido || [];
@@ -193,24 +177,17 @@ export class WalletComponent {
 
   
 
-    cambiarStatus(pedido:any, status:any){
-      // console.log(pedido);
-      // console.log(status);
-      if(status === false){
-        this.solicitud_selected.status = 1;
-      }
-      if(status === true){
-        this.solicitud_selected.status = 2;
-      }
-
+    cambiarStatus(status:any){
+      console.log(status);
       const data ={
-        // id:this.solicitud_selected.id,
-        status: this.solicitud_selected.status,
+        status: status,
         pedido: this.pedido
       }
       
       this.solicitudService.updateSolicitudStatus(data, this.solicitud_selected.id).subscribe((resp:any)=>{
-        // console.log(resp);
+        
+        this.solicitud_selected = null
+        this.ngOnInit();
       })
       
     }
