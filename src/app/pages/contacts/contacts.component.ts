@@ -148,13 +148,13 @@ export class ContactsComponent {
 
     clienteSelected(cliente:any){
       this.cliente_selected = cliente;
-      console.log(this.cliente_selected);
+      // console.log(this.cliente_selected);
       this.getClienteContact();
     }
 
     getClienteContact(){
       this.clientService.getClient(this.cliente_selected.id).subscribe((resp:any)=>{
-        console.log('respuesta para contact',resp);
+        // console.log('respuesta para contact',resp);
         this.client= resp[0];
         this.profile = resp[0].profile;
         this.redessociales = typeof resp[0].profile.redessociales === 'string' 
@@ -164,8 +164,8 @@ export class ContactsComponent {
     }
 
     cambiarStatus(pedido:any, status:any){
-      console.log(pedido);
-      console.log(status);
+      // console.log(pedido);
+      // console.log(status);
       if(status === false){
         this.solicitud_selected.status = 1;
       }
@@ -210,7 +210,7 @@ export class ContactsComponent {
             formData.append("client_id", this.client.id+'');
             formData.append("user_id", this.user.id+'');
     
-            this.clientService.removeClient(this.client.id, this.user.id).subscribe({
+            this.clientService.removeClient( this.user.id, this.client.id).subscribe({
               next: (resp:any) => {
                 this.client = resp;
                 Swal.fire('Éxito!', 'client eliminado correctamente', 'success');

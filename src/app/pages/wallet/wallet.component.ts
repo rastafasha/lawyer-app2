@@ -2,8 +2,6 @@ import { Component, inject } from '@angular/core';
 import { MenuFooterComponent } from '../../shared/menu-footer/menu-footer.component';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { LateralComponent } from '../../components/lateral/lateral.component';
 import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
 import { Solicitud, SolicitudesUsers } from '../../models/solicitud.model';
 import { SolicitudesService } from '../../services/solicitudes.service';
@@ -23,8 +21,7 @@ import Swal from 'sweetalert2';
   selector: 'app-wallet',
   imports: [
     MenuFooterComponent, HeaderComponent,
-    CommonModule, RouterLink, 
-    // LateralComponent,
+    CommonModule,
     BackButtnComponent,
     NgFor, TranslateModule,
     InfiniteScrollDirective,
@@ -45,21 +42,22 @@ export class WalletComponent {
   isEdnOfList = false;
 
   public user!: Usuario;
-  public cliente!: Usuario;
+  public client!: Usuario;
   public rol?:string;
   public solicitudes: Solicitud[]=[];
   public solicitud_users: SolicitudesUsers[]=[];
   public user_client_id!: number;
   public user_member_id!: number;
   public client_id!: number;
+  public client_user_id!: number;
   public pedido: any = [];
-  public clientes: any = [];
+  public clients: any = [];
 
   option_selected:number = 1;
   solicitud_selected:any = null;
-  cliente_selected:any = null;
+  client_selected:any = null;
   pedido_selected:any;
-  status!:number ;
+  status!:Profile ;
   profile!:Profile;
 
   public text_success = '';
@@ -90,8 +88,8 @@ export class WalletComponent {
       this.pedido = typeof resp.pedido === 'string' 
             ? JSON.parse(resp.pedido) || []
             : resp.pedido || [];
-      // console.log(this.pedido);
       this.isLoading = false;
+
       
     })
   }
@@ -110,7 +108,8 @@ export class WalletComponent {
       this.solicitud_users = resp.solicitud_users || [];
       this.client_id = resp.solicitud_users[0].client_id;
       this.user_client_id = resp.solicitud_users[0].user_id;
-      console.log(resp.solicitud_users);
+      // console.log(resp.solicitud_users);
+      this.status = resp.solicitud_users[0].status;
       this.getClienteSolicitud() 
       
     })
@@ -118,9 +117,10 @@ export class WalletComponent {
 
   getClienteSolicitud(){
     this.clientService.getClient(this.client_id).subscribe((resp:any)=>{
-      console.log('respuesta para miembro',resp);
-      this.cliente = resp[0];
+      // console.log('respuesta para miembro',resp);
+      this.client = resp[0];
       this.profile = resp[0].profile;
+      this.client_user_id = resp[0].clients_user[0].id;
     })
   }
 
@@ -161,67 +161,33 @@ export class WalletComponent {
       }, 2000); 
     }
 
-    optionSelected(value:number){
-      this.option_selected = value;
-      if(this.option_selected === 1){
+   
 
-        this.ngOnInit();
-      }
-      if(this.option_selected === 2){
-        this.solicitud_selected = null;
-        // console.log('pidiendo clientes');
-        this.user_member_id = this.user.id;
-        this.user_client_id = this.user.id;
-        // this.getClientesbyuser();
-        this.getClientesbyuser();
-        
-      }
-    }
-
-    getClientesbyuser(){
-      this.isLoading = true;
-      this.clientService.getClientsByUser(this.user_member_id).subscribe((resp:any)=>{
-        // console.log('clientes',resp);
-        this.clientes = resp;
-        this.isLoading = false;
-        
-        // console.log(this.pedido);
-      })
-      
-    }
+   
     
 
     solicitudSelected(solicitud:any){
       this.solicitud_selected = solicitud;
       this.getSolicitudDetail(solicitud);
-      console.log(solicitud);
-      // this.pedido = this.solicitud_selected.pedido;
       this.pedido = typeof solicitud.pedido === 'string' 
       ? JSON.parse(solicitud.pedido) || []
       : solicitud.pedido || [];
-      console.log(this.pedido);
+      // console.log(this.pedido);
     }
 
   
 
-    cambiarStatus(pedido:any, status:any){
-      console.log(pedido);
+    cambiarStatus(status:any){
       console.log(status);
-      if(status === false){
-        this.solicitud_selected.status = 1;
-      }
-      if(status === true){
-        this.solicitud_selected.status = 2;
-      }
-
       const data ={
-        // id:this.solicitud_selected.id,
-        status: this.solicitud_selected.status,
+        status: status,
         pedido: this.pedido
       }
       
       this.solicitudService.updateSolicitudStatus(data, this.solicitud_selected.id).subscribe((resp:any)=>{
-        console.log(resp);
+        
+        this.solicitud_selected = null
+        this.ngOnInit();
       })
       
     }
@@ -229,12 +195,12 @@ export class WalletComponent {
     addClient(){
     
             const formData = new FormData();
-          formData.append("client_id", this.cliente.id+'');
+          formData.append("client_id", this.client.id+'');
           formData.append("user_id", this.user.id+'');
     
             this.clientService.addClienttoUser(formData).subscribe({
               next: (resp:any) => {
-                this.cliente = resp;
+                this.client = resp;
                 Swal.fire('Éxito!', 'Cliente creado correctamente', 'success');
                 this.ngOnInit();
               }
@@ -245,5 +211,23 @@ export class WalletComponent {
             });
     
           }
+
+          deleteContact(){
+                      const formData = new FormData();
+                      formData.append("client_id", this.client.id+'');
+                      formData.append("user_id", this.user.id+'');
+              
+                      this.clientService.removeClient( this.user.id, this.client.id).subscribe({
+                        next: (resp:any) => {
+                          this.client = resp;
+                          Swal.fire('Éxito!', 'client eliminado correctamente', 'success');
+                          this.ngOnInit();
+                        }
+                        ,error: (err) => {
+                          Swal.fire('Error', 'Error al eliminar el client', 'error');
+                          console.error(err);
+                        }
+                      });
+                    }
 
 }

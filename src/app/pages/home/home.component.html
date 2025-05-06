@@ -10,12 +10,12 @@
         
         <div *ngIf="user.roles[0] === 'MEMBER' || user.roles[0] === 'GUEST'">
           <!-- aviso falta info -->
-          <app-aviso></app-aviso>
+          <app-aviso  [profile]="profile" [user]="user"></app-aviso>
           <!-- aviso falta info -->
           
           <app-fichaprofile *ngIf="profile && user" [isLoading]="isLoading" [profile]="profile" [user]="user" [redessociales]="redessociales" [speciality]="speciality"></app-fichaprofile>
 
-          <app-solicitudes-recents></app-solicitudes-recents>
+          <app-solicitudes-recents  [user]="user"></app-solicitudes-recents>
           <!---Slider-->
           <app-slider-horizontal></app-slider-horizontal>
           <!---Slider-->

@@ -11,11 +11,9 @@ import { ProfileService } from '../../services/profile.service';
 import { Profile, RedesSociales } from '../../models/profile.model';
 import { Speciality } from '../../models/speciality.model';
 import { SpecialitiesService } from '../../services/specialities.service';
-import { PipesModule } from '../../pipes/pipes.module';
 import { ImagenPipe } from "../../pipes/imagen.pipe";
 import { LoadingComponent } from '../../shared/loading/loading.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { FichaprofileComponent } from '../../components/fichaprofile/fichaprofile.component';
 
 @Component({
   imports: [
@@ -27,8 +25,7 @@ import { FichaprofileComponent } from '../../components/fichaprofile/fichaprofil
     BackButtnComponent,
     ImagenPipe,
     LoadingComponent,
-    TranslateModule,
-    FichaprofileComponent
+    TranslateModule
 ],
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -42,6 +39,7 @@ export class ProfileComponent {
   public speciality!: Speciality ;
   public isLoading:boolean = false;
     loadingTitle!:string;
+  public rating!: number;
 
   public profile!: Profile ;
   public redessociales: RedesSociales [] =[];
@@ -64,13 +62,15 @@ export class ProfileComponent {
     this.isLoading = true;
     this.loadingTitle = 'Loading Profile...';
     this.profileService.getByUser(this.user.id).subscribe((resp:any) => {
-      // console.log(resp);
+      console.log(resp);
       this.profile = resp.profile || null;
       this.redessociales = typeof resp.profile.redessociales === 'string' 
             ? JSON.parse(resp.profile.redessociales) || []
             : resp.profile.redessociales || [];
       this.speciality_profile = resp.profile.speciality_id;
       this.isLoading = false;
+      this.rating = resp.profile.rating;
+      console.log(this.rating);
       this.getSpeciality();
       // setTimeout(() => {
       // }
@@ -81,7 +81,7 @@ export class ProfileComponent {
   getSpeciality(){
     this.specialityService.getSpeciality(this.speciality_profile).subscribe((resp:any) => {
       // console.log(resp);
-      this.speciality = resp || null;
+      this.speciality = resp.title || null;
 
     })
   }

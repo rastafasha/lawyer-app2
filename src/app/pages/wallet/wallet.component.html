@@ -21,7 +21,7 @@
             <!-- solicitudes -->
             <div *ngFor="let item of solicitudes">
               <div class="group itemFav shadow" *ngIf="!solicitud_selected">
-                <div class="fa fa-paypal"></div>
+                <div class="fa fa-bookmark"></div>
                 <div class="div1pagocon" (click)="solicitudSelected(item)">
 
                   <div class="d-flex justify-content-between align-items-center">
@@ -29,7 +29,8 @@
                     <div class="status_verified">
                       <span class="badge  bg-primary" *ngIf="item.status === 1"> {{'Pending'|translate}}</span>
                       <span class="badge bg-success" *ngIf="item.status === 2">{{'Verified'|translate}}</span>
-                      <span class="badge bg-danger" *ngIf="item.status === 3">{{'For Review'|translate}}</span>
+                      <span class="badge bg-warning" *ngIf="item.status === 3">{{'For Review'|translate}}</span>
+                      <span class="badge bg-success" *ngIf="item.status === 4">{{'Finished'|translate}}</span>
                     </div>
 
                     <button class="btn btn-outline-primary">
@@ -45,37 +46,59 @@
 
                 <div class="tarjeta_producto">
                   <div class="tp_tope">
+                    <div class="fa fa-bookmark text-warning"></div>
                     <h5 class="card-title">{{solicitud_selected.created_at | date:'dd/MM/yyyy HH:mm:ss'}}</h5>
                   <span class="badge  bg-primary" *ngIf="solicitud_selected.status === 1"> {{'Pending'|translate}}</span>
                   <span class="badge bg-success" *ngIf="solicitud_selected.status === 2">{{'Verified'|translate}}</span>
-                  <span class="badge bg-danger" *ngIf="solicitud_selected.status === 3">{{'For Review'|translate}}</span>
+                  <span class="badge bg-warning" *ngIf="solicitud_selected.status === 3">{{'For Review'|translate}}</span>
+                  <span class="badge bg-success" *ngIf="solicitud_selected.status === 4">{{'Finished'|translate}}</span>
                   <div class="checkbox-wrapper-6">
                     <!-- <p>{{'Start'|translate}}</p> -->
-                    <input class="tgl tgl-light" id="cb1-6" type="checkbox" name="status"
+                    <!-- <input class="tgl tgl-light" id="cb1-6" type="checkbox" name="status"
                       (change)="cambiarStatus(solicitud_selected, status)" [(ngModel)]="status"
                       [ngModelOptions]="{ standalone: true }" />
-                    <label class="tgl-btn" for="cb1-6"></label>
+                    <label class="tgl-btn" for="cb1-6"></label> -->
+
+                    
 
                   </div>
                   </div>
                   <div class="tp_description">
                     <p> {{'Description'|translate}}:{{solicitud_selected.pedido.item_tarifa}}</p>
                     <p>{{'Price'|translate}}:{{solicitud_selected.pedido.precio|currency}}</p>
-                    <p> {{'Quantity'|translate}}:{{pedido.quantity}}</p>
+                    <!-- <p> {{'Quantity'|translate}}:{{pedido.quantity}}</p> -->
+                    <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="role"
+                    [(ngModel)]="status"
+                    [ngModelOptions]="{ standalone: true }"
+                    (change)="cambiarStatus(status)"
+                    placeholder="state"
+                  >
+                    <option>-- {{'Select'|translate}} --</option>
+                    <option value="1">{{'Pending'|translate}}</option>
+                    <option value="2">{{'Verified'|translate | lowercase}}</option>
+                    <option value="3">{{'For Review'|translate | lowercase}}</option>
+                    <option value="4">{{'Finished'|translate | lowercase}}</option>
+                  </select>
                   </div>
                 </div>
                 <div class="tarjetacliente">
                   <div class="tc_imagem">
-                    <img *ngIf="!profile.avatar" [src]="profile.avatar  | imagenPipe: 'users' " alt="">
+                    <img [src]="profile.avatar  | imagenPipe: 'users' " alt="">
                   </div>
 
                   <div class="tc_info">
-                    <p>{{'Username'|translate}}: {{cliente.username}}</p>
+                    <p>{{'Username'|translate}}: {{client.username}}</p>
                     <p>{{'Name'|translate}}: {{profile.nombre}} {{profile.surname}}</p>
                     <p>{{'Country'|translate}}: {{profile.pais}}</p>
                   </div>
                   <div class="tc_actions">
-                    <button type="button" (click)="addClient()" class="btn btn-primary">
+                  <!-- si existe la relacion de cliente con el usuario usamos el id del cliente -->
+                    <button *ngIf="client_user_id === client_id" type="button" (click)="deleteContact()" class="btn btn-danger">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                    <button *ngIf="client_user_id !== client_id" type="button" (click)="addClient()" class="btn btn-primary">
                       <i class="fa fa-user-plus"></i>
                     </button>
                     <!-- <button type="button" [routerLink]="['/chat/', profile.client_id]" class="btn btn-primary">
