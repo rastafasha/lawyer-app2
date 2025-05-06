@@ -138,18 +138,22 @@ export class ClientprofileComponent {
         });
 
       }
-      removeClient(client: Client){
-        this.clientService.removeClient(client.id, this.user.id).subscribe({
-          next: (resp:any) => {
-            this.client = resp;
-            Swal.fire('Éxito!', 'Cliente eliminado correctamente', 'success');
-            this.ngOnInit();
-          }
-          ,error: (err) => {
-            Swal.fire('Error', 'Error al eliminar el cliente', 'error');
-            console.error(err);
-          }
-        });
+      removeClient(){
+      //   const formData = new FormData();
+      // formData.append("client_id", this.client.id+'');
+      // formData.append("user_id", this.user.id+'');
+      
+      //   this.clientService.removeClient(formData).subscribe({
+      //     next: (resp:any) => {
+      //       this.client = resp;
+      //       Swal.fire('Éxito!', 'Cliente eliminado correctamente', 'success');
+      //       this.ngOnInit();
+      //     }
+      //     ,error: (err) => {
+      //       Swal.fire('Error', 'Error al eliminar el cliente', 'error');
+      //       console.error(err);
+      //     }
+      //   });
       }
   
 }

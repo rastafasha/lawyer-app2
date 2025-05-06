@@ -1,11 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { ClientService } from '../../services/client.service';
 import { SolicitudesService } from '../../services/solicitudes.service';
 import { Solicitud, SolicitudesUsers } from '../../models/solicitud.model';
 import { Usuario } from '../../models/usuario.model';
 import { LoadingComponent } from '../../shared/loading/loading.component';
-import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
 import { Profile } from '../../models/profile.model';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -16,7 +15,6 @@ import { RouterModule } from '@angular/router';
   selector: 'app-solicitudes-recents',
   imports: [
     LoadingComponent,
-    BackButtnComponent,
     CommonModule,
     TranslateModule,
     FormsModule,
@@ -27,14 +25,13 @@ import { RouterModule } from '@angular/router';
 })
 export class SolicitudesRecentsComponent {
   pageTitle='Solicitudes';
-  
+    @Input() user!:  Usuario;
     loadingTitle!:string;
     isRefreshing = false;
     isLoading = false;
     isEdnOfList = false;
   
-    public user!: Usuario;
-    public cliente!: Usuario;
+    public client!: Usuario;
     public client_id!: number;
     public rol?:string;
     public solicitudes: Solicitud[]=[];
@@ -77,12 +74,12 @@ export class SolicitudesRecentsComponent {
   solicitudSelected(solicitud:any){
     this.solicitud_selected = solicitud;
     this.getSolicitudDetail(solicitud);
-    console.log(solicitud);
+    // console.log(solicitud);
     // this.pedido = this.solicitud_selected.pedido;
     this.pedido = typeof solicitud.pedido === 'string' 
     ? JSON.parse(solicitud.pedido) || []
     : solicitud.pedido || [];
-    console.log(this.pedido);
+    // console.log(this.pedido);
   }
 
   getSolicitudDetail(item:any){
@@ -90,7 +87,7 @@ export class SolicitudesRecentsComponent {
     this.solicitudService.getSolicitud(this.pedido_selected).subscribe((resp:any)=>{
       this.solicitud_users = resp.solicitud_users || [];
       this.client_id = resp.solicitud_users[0].client_id;
-      console.log(resp.solicitud_users);
+      // console.log(resp.solicitud_users);
 
       this.getClienteSolicitud();
     })
@@ -98,8 +95,8 @@ export class SolicitudesRecentsComponent {
 
   getClienteSolicitud(){
     this.clientService.getClient(this.client_id).subscribe((resp:any)=>{
-      console.log('respuesta para miembro',resp);
-      this.cliente = resp[0];
+      // console.log('respuesta para miembro',resp);
+      this.client = resp[0];
       this.profile = resp[0].profile;
     })
   }

@@ -11,11 +11,9 @@ import { ProfileService } from '../../services/profile.service';
 import { Profile, RedesSociales } from '../../models/profile.model';
 import { Speciality } from '../../models/speciality.model';
 import { SpecialitiesService } from '../../services/specialities.service';
-import { PipesModule } from '../../pipes/pipes.module';
 import { ImagenPipe } from "../../pipes/imagen.pipe";
 import { LoadingComponent } from '../../shared/loading/loading.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { FichaprofileComponent } from '../../components/fichaprofile/fichaprofile.component';
 
 @Component({
   imports: [
@@ -27,8 +25,7 @@ import { FichaprofileComponent } from '../../components/fichaprofile/fichaprofil
     BackButtnComponent,
     ImagenPipe,
     LoadingComponent,
-    TranslateModule,
-    FichaprofileComponent
+    TranslateModule
 ],
   selector: 'app-profile',
   templateUrl: './profile.component.html',

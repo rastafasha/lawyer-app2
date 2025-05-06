@@ -67,16 +67,20 @@
                 </div>
                 <div class="tarjetacliente">
                   <div class="tc_imagem">
-                    <img *ngIf="!profile.avatar" [src]="profile.avatar  | imagenPipe: 'users' " alt="">
+                    <img [src]="profile.avatar  | imagenPipe: 'users' " alt="">
                   </div>
 
                   <div class="tc_info">
-                    <p>{{'Username'|translate}}: {{cliente.username}}</p>
+                    <p>{{'Username'|translate}}: {{client.username}}</p>
                     <p>{{'Name'|translate}}: {{profile.nombre}} {{profile.surname}}</p>
                     <p>{{'Country'|translate}}: {{profile.pais}}</p>
                   </div>
                   <div class="tc_actions">
-                    <button type="button" (click)="addClient()" class="btn btn-primary">
+                  <!-- si existe la relacion de cliente con el usuario usamos el id del cliente -->
+                    <button *ngIf="client_user_id === client_id" type="button" (click)="deleteContact()" class="btn btn-danger">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                    <button *ngIf="client_user_id !== client_id" type="button" (click)="addClient()" class="btn btn-primary">
                       <i class="fa fa-user-plus"></i>
                     </button>
                     <!-- <button type="button" [routerLink]="['/chat/', profile.client_id]" class="btn btn-primary">
