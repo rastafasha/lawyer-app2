@@ -23,7 +23,7 @@ import { RatingStarComponent } from '../../components/ratingStar/ratingStar.comp
   selector: 'app-contacts',
   imports: [
     MenuFooterComponent, HeaderComponent,
-    CommonModule, RouterLink, 
+    CommonModule,
     // LateralComponent,
     BackButtnComponent,
     NgFor, TranslateModule,
