@@ -25,12 +25,12 @@ export class FichaprofileComponent implements OnChanges {
     @Input() loadingTitle!: string;
     @Input() isLoading!: boolean;
     @Input() profile!: Profile;
-    @Input() user!:  Usuario;
+    @Input() user!: any;
     @Input() speciality!: Speciality;
     @Input() redessociales: any;
 
     private authService = inject(AuthService);
-    constructor () {}
+    constructor() { }
 
     ngOnInit() {
         this.redessociales;

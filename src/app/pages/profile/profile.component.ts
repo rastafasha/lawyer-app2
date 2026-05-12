@@ -33,48 +33,44 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class ProfileComponent {
   pageTitle= 'Profile';
-  public user!: Usuario;
+  public user!: any;
   // public profile!: Profile;
   public speciality_profile!: Speciality;
   public speciality!: Speciality ;
   public isLoading:boolean = false;
-    loadingTitle!:string;
+  loadingTitle!:string;
   public rating!: number;
 
   public profile!: Profile ;
-  public redessociales: RedesSociales [] =[];
+  public redssociales: RedesSociales [] =[];
 
   constructor(
     private authService: AuthService,
     private profileService: ProfileService,
     private specialityService: SpecialitiesService,
   ) {
-    this.user = this.authService.getUser();
+    this.user = this.authService.getLocalStorage();
   }
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
-    this.user = this.authService.getUser();
     this.getProfile();
   }
 
   getProfile(){
     this.isLoading = true;
     this.loadingTitle = 'Loading Profile...';
-    this.profileService.getByUser(this.user.id).subscribe((resp:any) => {
+    this.profileService.getByUser(this.user.uid).subscribe((resp:any) => {
       console.log(resp);
       this.profile = resp.profile || null;
-      this.redessociales = typeof resp.profile.redessociales === 'string' 
-            ? JSON.parse(resp.profile.redessociales) || []
-            : resp.profile.redessociales || [];
+      this.redssociales = typeof resp.profile.redssociales === 'string' 
+            ? JSON.parse(resp.profile.redssociales) || []
+            : resp.profile.redssociales || [];
       this.speciality_profile = resp.profile.speciality_id;
       this.isLoading = false;
       this.rating = resp.profile.rating;
       console.log(this.rating);
       this.getSpeciality();
-      // setTimeout(() => {
-      // }
-      // , 5000);
     })
   }
 

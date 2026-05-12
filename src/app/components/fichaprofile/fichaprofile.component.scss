@@ -38,3 +38,12 @@
      display: flex;
      justify-content: flex-start;
  }
+
+ @media (max-width: 600px) {
+    .fototext{
+            display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: baseline;
+    }
+ }

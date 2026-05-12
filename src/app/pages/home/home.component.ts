@@ -13,12 +13,9 @@ import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
 import { Usuario } from '../../models/usuario.model';
 import { AuthService } from '../../services/auth.service';
 import { ListaUsuariosComponent } from '../../components/ListaUsuarios/ListaUsuarios.component';
-import { UserService } from '../../services/usuario.service';
 import { SolicitudesRecentsComponent } from '../../components/solicitudes-recents/solicitudes-recents.component';
 import { FichaprofileComponent } from '../../components/fichaprofile/fichaprofile.component';
 import { Profile } from '../../models/profile.model';
-import { ClientService } from '../../services/client.service';
-import { Client } from '../../models/client.model';
 import { ProfileService } from '../../services/profile.service';
 import { Speciality } from '../../models/speciality.model';
 import { SpecialitiesService } from '../../services/specialities.service';
@@ -28,7 +25,7 @@ import { SpecialitiesService } from '../../services/specialities.service';
   imports: [
     HeaderComponent, MenuFooterComponent,
     AvisoComponent, 
-    SliderHorizontalComponent, 
+    // SliderHorizontalComponent, 
     LateralComponent, 
     SolicitudesRecentsComponent,
     CommonModule, BackButtnComponent, ListaUsuariosComponent,
@@ -42,13 +39,13 @@ import { SpecialitiesService } from '../../services/specialities.service';
 })
 export class HomeComponent {
   pageTitle = 'Home';
-  user!: Usuario;
+  user!: any;
   users: any = [];
   isLoading = false;
-  profile: Profile = new Profile();
+  profile!: Profile;
   redessociales: any;
   user_id!:number;
-  client!:Client;
+  client!:Usuario;
 
   public speciality_profile!: Speciality;
     public speciality!: Speciality ;
@@ -60,19 +57,19 @@ export class HomeComponent {
   
   constructor(
   ){
-    this.user = this.authService.getUser();
+    this.user = this.authService.getLocalStorage();
     this.translate.use('es'); // Set default language
   }
 
   ngOnInit(){
     window.scrollTo(0, 0);
-    this.user_id = this.user.id;
+    this.user_id = this.user.uid;
     this.getClienteProfile()
   }
 
   getClienteProfile(){
     
-    this.profileService.getByUser(this.user.id).subscribe((resp:any) => {
+    this.profileService.getByUser(this.user_id).subscribe((resp:any) => {
       // console.log(resp);
       this.profile = resp.profile || null;
       this.redessociales = typeof resp.profile.redessociales === 'string' 
@@ -86,7 +83,6 @@ export class HomeComponent {
 
   getSpeciality(){
     this.specialityService.getSpeciality(this.speciality_profile).subscribe((resp:any) => {
-      
       this.speciality = resp.title || null;
 
     })

@@ -34,31 +34,31 @@ import Swal from 'sweetalert2';
   styleUrl: './wallet.component.scss'
 })
 export class WalletComponent {
-  pageTitle='Solicitudes';
+  pageTitle = 'Solicitudes';
 
-  loadingTitle!:string;
+  loadingTitle!: string;
   isRefreshing = false;
   isLoading = false;
   isEdnOfList = false;
 
-  public user!: Usuario;
+  public user!: any;
   public client!: Usuario;
-  public rol?:string;
-  public solicitudes: Solicitud[]=[];
-  public solicitud_users: SolicitudesUsers[]=[];
-  public user_client_id!: number;
-  public user_member_id!: number;
-  public client_id!: number;
-  public client_user_id!: number;
+  public rol?: string;
+  public solicitudes: Solicitud[] = [];
+  public solicitud_users: SolicitudesUsers[] = [];
+  public user_client_id!: string;
+  public user_member_id!: string;
+  public client_id!: string;
+  public client_user_id!: string;
   public pedido: any = [];
   public clients: any = [];
 
-  option_selected:number = 1;
-  solicitud_selected:any = null;
-  client_selected:any = null;
-  pedido_selected:any;
-  status!:Profile ;
-  profile!:Profile;
+  option_selected: number = 1;
+  solicitud_selected: any = null;
+  client_selected: any = null;
+  pedido_selected: any;
+  status!: Profile;
+  profile!: Profile;
 
   public text_success = '';
   public text_validation = '';
@@ -70,53 +70,53 @@ export class WalletComponent {
   private authService = inject(AuthService);
   private userService = inject(UserService);
 
-  
 
-  ngOnInit(){
+
+  ngOnInit() {
     window.scrollTo(0, 0);
-    this.user = this.authService.getUser();
-    this.rol = this.user.roles[0];
+    this.user = this.authService.getLocalStorage();
+    this.rol = this.user.role;
     this.getSolicitudesbyMember();
-    
-    
+
+
   }
 
-  getSolicitudesbyMember(){
+  getSolicitudesbyMember() {
     this.isLoading = true;
-    this.solicitudService.getByMember(this.user.id).subscribe((resp:any)=>{
+    this.solicitudService.getByMember(this.user.id).subscribe((resp: any) => {
       this.solicitudes = resp.data;
-      this.pedido = typeof resp.pedido === 'string' 
-            ? JSON.parse(resp.pedido) || []
-            : resp.pedido || [];
+      this.pedido = typeof resp.pedido === 'string'
+        ? JSON.parse(resp.pedido) || []
+        : resp.pedido || [];
       this.isLoading = false;
 
-      
+
     })
   }
 
 
-  closeReload(){
+  closeReload() {
     this.pedido_selected = null;
     this.ngOnInit();
   }
 
-  
 
-  getSolicitudDetail(item:any){
+
+  getSolicitudDetail(item: any) {
     this.pedido_selected = item.id;
-    this.solicitudService.getSolicitud(this.pedido_selected).subscribe((resp:any)=>{
+    this.solicitudService.getSolicitud(this.pedido_selected).subscribe((resp: any) => {
       this.solicitud_users = resp.solicitud_users || [];
       this.client_id = resp.solicitud_users[0].client_id;
       this.user_client_id = resp.solicitud_users[0].user_id;
       // console.log(resp.solicitud_users);
       this.status = resp.solicitud_users[0].status;
-      this.getClienteSolicitud() 
-      
+      this.getClienteSolicitud()
+
     })
   }
 
-  getClienteSolicitud(){
-    this.clientService.getClient(this.client_id).subscribe((resp:any)=>{
+  getClienteSolicitud() {
+    this.clientService.getClient(this.client_id).subscribe((resp: any) => {
       // console.log('respuesta para miembro',resp);
       this.client = resp[0];
       this.profile = resp[0].profile;
@@ -124,9 +124,9 @@ export class WalletComponent {
     })
   }
 
-  
 
-  onScrollDown(){
+
+  onScrollDown() {
     // if (!this.nextUrl || this.isLoading) return;
     // this.favoriteService.getCharacters(this.nextUrl).subscribe({
     //   next: (resp: any) => {
@@ -145,89 +145,86 @@ export class WalletComponent {
     // });
   }
 
-  onScrollUp(){
-    this.refreshData(); 
+  onScrollUp() {
+    this.refreshData();
   }
 
 
 
-    refreshData() { 
-      this.isRefreshing = true; 
-      // Simulate data fetching 
-      setTimeout(() => { 
-        this.isRefreshing = false; 
-        // Update your data here 
-        this.getSolicitudesbyMember();
-      }, 2000); 
-    }
+  refreshData() {
+    this.isRefreshing = true;
+    // Simulate data fetching 
+    setTimeout(() => {
+      this.isRefreshing = false;
+      // Update your data here 
+      this.getSolicitudesbyMember();
+    }, 2000);
+  }
 
-   
 
-   
-    
 
-    solicitudSelected(solicitud:any){
-      this.solicitud_selected = solicitud;
-      this.getSolicitudDetail(solicitud);
-      this.pedido = typeof solicitud.pedido === 'string' 
+
+
+
+  solicitudSelected(solicitud: any) {
+    this.solicitud_selected = solicitud;
+    this.getSolicitudDetail(solicitud);
+    this.pedido = typeof solicitud.pedido === 'string'
       ? JSON.parse(solicitud.pedido) || []
       : solicitud.pedido || [];
-      // console.log(this.pedido);
+    // console.log(this.pedido);
+  }
+
+
+
+  cambiarStatus(status: any) {
+    console.log(status);
+    const data = {
+      status: status,
+      pedido: this.pedido
     }
 
-  
+    this.solicitudService.updateSolicitudStatus(data, this.solicitud_selected.id).subscribe((resp: any) => {
 
-    cambiarStatus(status:any){
-      console.log(status);
-      const data ={
-        status: status,
-        pedido: this.pedido
-      }
-      
-      this.solicitudService.updateSolicitudStatus(data, this.solicitud_selected.id).subscribe((resp:any)=>{
-        
-        this.solicitud_selected = null
+      this.solicitud_selected = null
+      this.ngOnInit();
+    })
+
+  }
+
+  addClient() {
+    const formData = new FormData();
+    formData.append("client_id", this.client.uid + '');
+    formData.append("user_id", this.user.uid + '');
+
+    this.clientService.addClienttoUser(formData).subscribe({
+      next: (resp: any) => {
+        this.client = resp;
+        Swal.fire('Éxito!', 'Cliente creado correctamente', 'success');
         this.ngOnInit();
-      })
-      
-    }
+      }
+      , error: (err) => {
+        Swal.fire('Error', 'Error al crear el cliente', 'error');
+        console.error(err);
+      }
+    });
+  }
 
-    addClient(){
-    
-            const formData = new FormData();
-          formData.append("client_id", this.client.id+'');
-          formData.append("user_id", this.user.id+'');
-    
-            this.clientService.addClienttoUser(formData).subscribe({
-              next: (resp:any) => {
-                this.client = resp;
-                Swal.fire('Éxito!', 'Cliente creado correctamente', 'success');
-                this.ngOnInit();
-              }
-              ,error: (err) => {
-                Swal.fire('Error', 'Error al crear el cliente', 'error');
-                console.error(err);
-              }
-            });
-    
-          }
+  deleteContact() {
+    const formData = new FormData();
+    formData.append("client_id", this.client.uid + '');
 
-          deleteContact(){
-                      const formData = new FormData();
-                      formData.append("client_id", this.client.id+'');
-                      formData.append("user_id", this.user.id+'');
-              
-                      this.clientService.removeClient( this.user.id, this.client.id).subscribe({
-                        next: (resp:any) => {
-                          this.client = resp;
-                          Swal.fire('Éxito!', 'client eliminado correctamente', 'success');
-                          this.ngOnInit();
-                        }
-                        ,error: (err) => {
-                          Swal.fire('Error', 'Error al eliminar el client', 'error');
-                          console.error(err);
-                        }
-                      });
-                    }
+    this.clientService.removeClient(this.client_id).subscribe({
+      next: (resp: any) => {
+        this.client = resp;
+        Swal.fire('Éxito!', 'client eliminado correctamente', 'success');
+        this.ngOnInit();
+      }
+      , error: (err) => {
+        Swal.fire('Error', 'Error al eliminar el client', 'error');
+        console.error(err);
+      }
+    });
+  }
 
 }

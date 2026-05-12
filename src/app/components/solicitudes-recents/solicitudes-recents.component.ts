@@ -24,78 +24,73 @@ import { RouterModule } from '@angular/router';
   styleUrl: './solicitudes-recents.component.scss'
 })
 export class SolicitudesRecentsComponent {
-  pageTitle='Solicitudes';
-    @Input() user!:  Usuario;
-    loadingTitle!:string;
-    isRefreshing = false;
-    isLoading = false;
-    isEdnOfList = false;
-  
-    public client!: Usuario;
-    public client_id!: number;
-    public rol?:string;
-    public solicitudes: Solicitud[]=[];
-    public solicitud_users: SolicitudesUsers[]=[];
-    public pedido: any = [];
-    solicitud_selected:any = null;
+  pageTitle = 'Solicitudes';
+  @Input() user!: any;
+  loadingTitle!: string;
+  isRefreshing = false;
+  isLoading = false;
+  isEdnOfList = false;
 
-    option_selected:number = 1;
-      cliente_selected:any = null;
-      pedido_selected:any;
-      status!:number ;
-      profile!:Profile;
+  public client!: Usuario;
+  public client_id!: number;
+  public rol?: string;
+  public solicitudes: Solicitud[] = [];
+  public solicitud_users: SolicitudesUsers[] = [];
+  public pedido: any = [];
+  solicitud_selected: any = null;
+
+  option_selected: number = 1;
+  cliente_selected: any = null;
+  pedido_selected: any;
+  status!: number;
+  profile!: Profile;
 
   private solicitudService = inject(SolicitudesService);
   private clientService = inject(ClientService);
   private authService = inject(AuthService);
 
-  ngOnInit(){
+  ngOnInit() {
     window.scrollTo(0, 0);
-    this.user = this.authService.getUser();
-    this.rol = this.user.roles[0];
+    this.user = this.authService.getLocalStorage();
+    this.rol = this.user.role;
     this.getSolicitudesbyMember();
-    
-    
+
+
   }
 
-  getSolicitudesbyMember(){
+  getSolicitudesbyMember() {
     this.isLoading = true;
-    this.solicitudService.getByMember(this.user.id).subscribe((resp:any)=>{
+    this.solicitudService.getByMember(this.user.id).subscribe((resp: any) => {
       this.solicitudes = resp.data;
-      this.pedido = typeof resp.pedido === 'string' 
-            ? JSON.parse(resp.pedido) || []
-            : resp.pedido || [];
+      this.pedido = typeof resp.pedido === 'string'
+        ? JSON.parse(resp.pedido) || []
+        : resp.pedido || [];
       // console.log(this.pedido);
       this.isLoading = false;
-      
+
     })
   }
 
-  solicitudSelected(solicitud:any){
+  solicitudSelected(solicitud: any) {
     this.solicitud_selected = solicitud;
     this.getSolicitudDetail(solicitud);
-    // console.log(solicitud);
-    // this.pedido = this.solicitud_selected.pedido;
-    this.pedido = typeof solicitud.pedido === 'string' 
-    ? JSON.parse(solicitud.pedido) || []
-    : solicitud.pedido || [];
-    // console.log(this.pedido);
+    this.pedido = typeof solicitud.pedido === 'string'
+      ? JSON.parse(solicitud.pedido) || []
+      : solicitud.pedido || [];
   }
 
-  getSolicitudDetail(item:any){
+  getSolicitudDetail(item: any) {
     this.pedido_selected = item.id;
-    this.solicitudService.getSolicitud(this.pedido_selected).subscribe((resp:any)=>{
+    this.solicitudService.getSolicitud(this.pedido_selected).subscribe((resp: any) => {
       this.solicitud_users = resp.solicitud_users || [];
       this.client_id = resp.solicitud_users[0].client_id;
-      // console.log(resp.solicitud_users);
 
       this.getClienteSolicitud();
     })
   }
 
-  getClienteSolicitud(){
-    this.clientService.getClient(this.client_id).subscribe((resp:any)=>{
-      // console.log('respuesta para miembro',resp);
+  getClienteSolicitud() {
+    this.clientService.getClient(this.client_id).subscribe((resp: any) => {
       this.client = resp[0];
       this.profile = resp[0].profile;
     })

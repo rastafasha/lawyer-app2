@@ -21,7 +21,7 @@ import { ChatComponent } from './pages/chat/chat.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
 
 export const routes: Routes = [
-    {path: '', component: HomeComponent},
+    {path: 'home', canActivate: [AuthGuard], component: HomeComponent},
     {path: 'login', component: LoginComponent},
     
     {path: 'favorites', component: FavoritesComponent},
@@ -52,5 +52,5 @@ export const routes: Routes = [
     {path: 'wallet-payment', component: PaymentComponent},
     {path: 'orders', component: OrderComponent},
 
-    {path: '**', redirectTo: '', pathMatch: 'full'},
+    {path: '**', redirectTo: 'home', pathMatch: 'full'},
 ];

@@ -3,10 +3,10 @@
   <div class="card ">
     <div class="card-body-top">
       <div class=" fotoperfil">
-        <img *ngIf="!profile.avatar" [src]="profile.avatar  | imagenPipe: 'users' " alt="">
+        <img *ngIf="profile" [src]="(profile.img ||'') | imagenPipe: 'profiles' " alt="">
       </div>
       <div class="perfil">
-        <h2 class="name">{{client.username}} </h2>
+        <h2 class="name">{{client.usuario?.username}} </h2>
         <h4 class="job-title">{{profile.ciudad}}, {{profile.pais}}</h4>
       </div>
       <div class="actions">

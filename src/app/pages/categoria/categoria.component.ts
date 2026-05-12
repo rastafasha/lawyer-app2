@@ -19,48 +19,42 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'app-categoria',
   imports: [
     MenuFooterComponent,
-        HeaderComponent,
-        CommonModule,
-        LateralComponent,
-        BackButtnComponent,
-        NgFor,
-        RouterModule,
-        ImagenPipe,
-        LoadingComponent,
-        InfiniteScrollDirective,
-        TranslateModule
+    HeaderComponent,
+    CommonModule,
+    LateralComponent,
+    BackButtnComponent,
+    NgFor,
+    RouterModule,
+    ImagenPipe,
+    LoadingComponent,
+    InfiniteScrollDirective,
+    TranslateModule
   ],
   templateUrl: './categoria.component.html',
   styleUrl: './categoria.component.scss'
 })
 export class CategoriaComponent {
   pageTitle = 'Especialidad';
-  user!: Usuario;
+  user!: any;
   profiles: Profile[] = [];
-  speciality!:Speciality;
+  speciality!: Speciality;
   Title!: string;
-  public isLoading:boolean = false;
-
-  loadingTitle!:string;
-
-    isEdnOfList = false;
-    
-    isRefreshing = false;
-    private startY: number = 0;
-    private currentY: number = 0;
-    currentPage = 1;
-    itemsPerPage = 10;
-    hasMore = true;
-
-    nextUrl!:number ;
+  public isLoading: boolean = false;
+  loadingTitle!: string;
+  isEdnOfList = false;
+  isRefreshing = false;
+  private startY: number = 0;
+  private currentY: number = 0;
+  hasMore = true;
+  nextUrl!: number;
+  currentPage = 1;
+  itemsPerPage = 10;
 
   constructor(
-    private authService: AuthService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
     private specialityService: SpecialitiesService,
-    
-  ){
+
+  ) {
     // this.user = this.authService.getUser();
   }
 

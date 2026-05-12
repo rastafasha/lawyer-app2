@@ -26,8 +26,8 @@ import { ClientService } from '../../services/client.service';
   imports: [
     CommonModule,
     HeaderComponent,
-    MenuFooterComponent, 
-    LateralComponent, 
+    MenuFooterComponent,
+    LateralComponent,
     BackButtnComponent,
     NgFor,
     FormsModule,
@@ -41,119 +41,114 @@ import { ClientService } from '../../services/client.service';
   styleUrl: './clientprofile.component.scss'
 })
 export class ClientprofileComponent {
-  pageTitle= 'Profile';
-      public user!: Usuario;
-      public client!: Client;
-  
-      public isLoading:boolean = false;
-      loadingTitle!:string;
-      // public profile!: Profile;
-      public profile: Profile = new Profile();
-      public redessociales!: RedesSociales[];
-      public precios!: Precios[];
-      public speciality_profile!: Speciality;
-      public speciality!: Speciality;
-      public solicitud!: Solicitud;
-      status!:Profile ;
-      role!:Profile ;
-      solicitudes_selected: any[] = [];
-      toastr: any;
-  
-      userForm: FormGroup = new FormGroup({
-        firstName: new FormControl('', [Validators.required]),
-        lastName: new FormControl('',[Validators.required, Validators.minLength(3)]),
-        userName: new FormControl('', [Validators.email, Validators.required]),
-        city: new FormControl(''),
-        state: new FormControl('Caracas'),
-        zipCode: new FormControl(''),
-        isAgree: new FormControl(false),
-    
-        });
-    
-    
-      constructor(
-        private authService: AuthService,
-        private profileService: ProfileService,
-        private specialityService: SpecialitiesService,
-        private solicitudService: SolicitudesService,
-        private clientService: ClientService,
-        private activatedRoute: ActivatedRoute,
-        private fb: FormBuilder,
-      ) {
-        this.user = this.authService.getUser();
+  pageTitle = 'Profile';
+  public user!: any;
+  public client!: Client;
+
+  public isLoading: boolean = false;
+  loadingTitle!: string;
+  // public profile!: Profile;
+  public profile!: Profile;
+  public redessociales!: RedesSociales[];
+  public precios!: Precios[];
+  public speciality_profile!: Speciality;
+  public speciality!: Speciality;
+  public solicitud!: Solicitud;
+  status!: Profile;
+  role!: Profile;
+  solicitudes_selected: any[] = [];
+  toastr: any;
+
+  userForm: FormGroup = new FormGroup({
+    firstName: new FormControl('', [Validators.required]),
+    lastName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    userName: new FormControl('', [Validators.email, Validators.required]),
+    city: new FormControl(''),
+    state: new FormControl('Caracas'),
+    zipCode: new FormControl(''),
+    isAgree: new FormControl(false),
+
+  });
+
+
+  constructor(
+    private authService: AuthService,
+    private _clientService: ClientService,
+    private activatedRoute: ActivatedRoute,
+  ) {
+    this.user = this.authService.getLocalStorage();
+  }
+
+  ngOnInit(): void {
+    window.scrollTo(0, 0);
+    this.activatedRoute.params.subscribe(({ id }) => {
+      this.getClient(id);
+    });
+    // this.validarFormularioPerfil();
+
+  }
+
+  getClient(id: any) {
+    this.isLoading = true;
+    this.loadingTitle = 'Cargando cliente';
+    this._clientService.getClient(id).subscribe((resp: any) => {
+      if (resp.status === '404' || resp.ok === false) {
+        alert('no hay cliente')
+        this.isLoading = false;
       }
-    
-      ngOnInit(): void {
-        window.scrollTo(0, 0);
-        this.activatedRoute.params.subscribe(({ id }) => {
-          this.getClient(id);
-        });
-        // this.validarFormularioPerfil();
-        
+      this.client = resp;
+      this.profile = resp.profile;
+      if (this.client) {
+        this.isLoading = false;
       }
 
-      getClient(id:any){
-        this.isLoading = true;
-        this.loadingTitle = 'Cargando cliente';
-        this.clientService.getClient(id).subscribe((resp:any) => {
-          console.log(resp);
-          if(resp.status === '404' || resp.ok === false){
-            alert('no hay cliente')
-            this.isLoading = false;
-          }
-          this.client = resp[0]  ;
-          this.profile = resp[0].profile ;
-          if(this.client){
-            this.isLoading = false;
-          }
+      if (this.profile) {
 
-          if(this.profile){
-  
-            this.redessociales = typeof resp[0].profile.redessociales === 'string' 
-                ? JSON.parse(resp[0].profile.redessociales) || []
-                : resp.profile.redessociales || [];
-    
-            this.isLoading = false;
-          }
-        })
+        this.redessociales = typeof resp.profile.redessociales === 'string'
+          ? JSON.parse(resp.profile.redessociales) || []
+          : resp.profile.redessociales || [];
 
+        this.isLoading = false;
       }
-    
-      addClient(){
+    })
 
-        const formData = new FormData();
-      formData.append("client_id", this.client.id+'');
-      formData.append("user_id", this.user.id+'');
+  }
 
-        this.clientService.addClienttoUser(formData).subscribe({
-          next: (resp:any) => {
-            this.client = resp;
-            Swal.fire('Éxito!', 'Cliente creado correctamente', 'success');
-            this.ngOnInit();
-          }
-          ,error: (err) => {
-            Swal.fire('Error', 'Error al crear el cliente', 'error');
-            console.error(err);
-          }
-        });
+  addClient() {
 
+    const formData = new FormData();
+    formData.append("client_id", this.client.id + '');
+    formData.append("user_id", this.user.id + '');
+
+    this._clientService.addClienttoUser(formData).subscribe({
+      next: (resp: any) => {
+        this.client = resp;
+        Swal.fire('Éxito!', 'Cliente creado correctamente', 'success');
+        this.ngOnInit();
       }
-      removeClient(){
-      //   const formData = new FormData();
-      // formData.append("client_id", this.client.id+'');
-      // formData.append("user_id", this.user.id+'');
-      
-      //   this.clientService.removeClient(formData).subscribe({
-      //     next: (resp:any) => {
-      //       this.client = resp;
-      //       Swal.fire('Éxito!', 'Cliente eliminado correctamente', 'success');
-      //       this.ngOnInit();
-      //     }
-      //     ,error: (err) => {
-      //       Swal.fire('Error', 'Error al eliminar el cliente', 'error');
-      //       console.error(err);
-      //     }
-      //   });
+      , error: (err) => {
+        Swal.fire('Error', 'Error al crear el cliente', 'error');
+        console.error(err);
       }
-  
+    });
+
+  }
+  removeClient() {
+    //   const formData = new FormData();
+    // formData.append("client_id", this.client.id+'');
+    // formData.append("user_id", this.user.id+'');
+
+    //   this.clientService.removeClient(formData).subscribe({
+    //     next: (resp:any) => {
+    //       this.client = resp;
+    //       Swal.fire('Éxito!', 'Cliente eliminado correctamente', 'success');
+    //       this.ngOnInit();
+    //     }
+    //     ,error: (err) => {
+    //       Swal.fire('Error', 'Error al eliminar el cliente', 'error');
+    //       console.error(err);
+    //     }
+    //   });
+  }
+
 }

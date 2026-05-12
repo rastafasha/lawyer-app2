@@ -1,4 +1,4 @@
-<div class="menu-footer" *ngIf="user.roles[0] === 'SUPERADMIN'">
+<div class="menu-footer" *ngIf="user.role === 'SUPERADMIN'">
     <ul>
 
         <li >
@@ -28,7 +28,7 @@
             </li>
     </ul>
 </div>
-<div class="menu-footer" *ngIf="user.roles[0] !== 'SUPERADMIN'">
+<div class="menu-footer" *ngIf="user.role !== 'SUPERADMIN'">
     <ul>
 
         <li >

@@ -4,7 +4,6 @@ import { MenuFooterComponent } from '../../shared/menu-footer/menu-footer.compon
 import { ActivatedRoute } from '@angular/router';
 import { ChatService } from '../../services/chat.service';
 import { UserService } from '../../services/usuario.service';
-import { ProfileService } from '../../services/profile.service';
 import { FormsModule } from '@angular/forms';
 import { Usuario } from '../../models/usuario.model';
 import { Client } from '../../models/client.model';
@@ -29,7 +28,7 @@ export class ChatComponent {
   public user_selected!: any;
   pageTitle = 'Chat';
 
-  public user!: Usuario;
+  public user!: any;
   public user_id!: number;
   public client!: Client;
   public client_id!: number;
@@ -39,11 +38,11 @@ export class ChatComponent {
     private chatService: ChatService,
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
-    private clientService: ClientService,
+    private _clientService: ClientService,
     private messageService: MessageService,
     private authService: AuthService
   ) {
-    this.user = this.authService.getUser();
+    this.user = this.authService.getLocalStorage();
   }
 
   ngOnInit() {
@@ -61,10 +60,10 @@ export class ChatComponent {
   }
 
   getUser(id: string) {
-    this.clientService.getClient(id).subscribe((resp: any) => {
-      this.client = resp[0];
-      this.profile = resp[0].profile;
-      this.client_id = resp[0].profile.client_id;
+    this._clientService.getClient(id).subscribe((resp: any) => {
+      this.client = resp;
+      this.profile = resp.profile;
+      this.client_id = resp.profile.client_id;
     });
     setTimeout(() => {
       this.listMessage();
@@ -76,13 +75,12 @@ export class ChatComponent {
       .getByUser(this.user.id, this.client_id)
       .subscribe((resp: any) => {
         this.messages = resp;
-        console.log(this.messages);
       });
   }
 
   enviarMensaje(data: any) {
     const formData = new FormData();
-    formData.append('user_id', this.user.id + '');
+    formData.append('user_id', this.user.uid + '');
     formData.append('cliente_id', this.client_id + '');
     formData.append('message', this.message);
 

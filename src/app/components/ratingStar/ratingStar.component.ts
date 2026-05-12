@@ -3,8 +3,6 @@ import { Profile } from '../../models/profile.model';
 import { NgFor } from '@angular/common';
 import { ProfileService } from '../../services/profile.service';
 import { AuthService } from '../../services/auth.service';
-import { Usuario } from '../../models/usuario.model';
-import { Client } from '../../models/client.model';
 
 @Component({
     selector: 'app-ratingStar',
@@ -14,26 +12,26 @@ import { Client } from '../../models/client.model';
 })
 export class RatingStarComponent {
     @Input() profile!: Profile;
-    @Input() client!: Client ;
+    @Input() client!: string;
     @Output() ratingChanged: EventEmitter<number> = new EventEmitter<number>();
-    user!:Usuario;
+    user!: any;
     private profileService = inject(ProfileService);
     private authService = inject(AuthService);
 
     rating: number = 0;
     hoverRating: number = 0;
-    client_id: number = 0;
-    user_id: number = 0;
+    client_id!: string;
+    user_id!: string;
 
     constructor(
     ) {
-        this.user = this.authService.getUser()
+        this.user = this.authService.getLocalStorage();
 
     }
 
     ngOnInit() {
-        this.client_id = this.profile.client_id;
-        this.user_id = this.profile.user_id;
+        this.client_id = this.profile.usuario?.uid || '';
+        this.user_id = this.profile.usuario?.uid || '';
         if (this.profile && this.profile.rating) {
             this.rating = this.profile.rating;
         }
@@ -52,7 +50,7 @@ export class RatingStarComponent {
         this.ratingChanged.emit(this.rating);
 
         const formData = new FormData();
-        formData.append('user_id', this.user.id + '');
+        formData.append('user_id', this.user.uid + '');
         formData.append('client_id', this.client_id + '');
         formData.append('rating', this.rating + '');
 

@@ -9,17 +9,17 @@
           <app-loading *ngIf="isLoading" [loadingTitle]="loadingTitle"></app-loading>
           <div class=" itemFav shadow" *ngIf="!isLoading">
             <div class="fototext">
-              <img [src]="profile.avatar  | imagenPipe: 'users' " alt="">
+              <img [src]="(profile.img|| '')  | imagenPipe: 'users' " alt="">
               <div class="div1">
                 <p>{{'Username'|translate}}: {{user.username}}</p>
-                <p *ngIf="profile">{{profile.nombre}} {{profile.surname}}</p>
+                <p *ngIf="profile">{{profile.first_name}} {{profile.last_name}}</p>
                 <p>{{user.email}}</p>
                 <p>{{speciality}}</p>
-                <span class="badge  bg-primary" *ngIf="profile.status === 1"> {{'Pending'|translate}}</span>
-                <span class="badge bg-success" *ngIf="profile.status === 2">{{'Verified'|translate}}</span>
-                <span class="badge bg-danger" *ngIf="profile.status === 3">{{'For Review'|translate}}</span>
-                
-                <div class="stars">
+                <span class="badge  bg-primary" *ngIf="profile.status === 'PENDING'"> {{'Pending'|translate}}</span>
+                <span class="badge bg-success" *ngIf="profile.status === 'VERIFIED'">{{'Verified'|translate}}</span>
+                <span class="badge bg-danger" *ngIf="profile.status === 'REVIEW'">{{'For Review'|translate}}</span>
+
+                <!-- <div class="stars">
                   <ul class="star-rating" *ngIf="profile.rating === 5">
                     <li class="active"><i class="fa fa-star"></i></li>
                     <li class="active"><i class="fa fa-star"></i></li>
@@ -27,90 +27,76 @@
                     <li class="active"><i class="fa fa-star"></i></li>
                     <li class="active"><i class="fa fa-star"></i></li>
                   </ul>
-                  <ul
-                    class="star-rating"
-                    *ngIf="profile.rating >= 4 && profile.rating < 5"
-                  >
+                  <ul class="star-rating" *ngIf="profile.rating >= 4 && profile.rating < 5">
                     <li class="active"><i class="fa fa-star"></i></li>
                     <li class="active"><i class="fa fa-star"></i></li>
                     <li class="active"><i class="fa fa-star"></i></li>
                     <li class="active"><i class="fa fa-star"></i></li>
                     <li><i class="fa fa-star"></i></li>
                   </ul>
-                  <ul
-                    class="star-rating"
-                    *ngIf="profile.rating >= 3 && profile.rating < 4"
-                  >
+                  <ul class="star-rating" *ngIf="profile.rating >= 3 && profile.rating < 4">
                     <li class="active"><i class="fa fa-star"></i></li>
                     <li class="active"><i class="fa fa-star"></i></li>
                     <li class="active"><i class="fa fa-star"></i></li>
                     <li><i class="fa fa-star"></i></li>
                     <li><i class="fa fa-star"></i></li>
                   </ul>
-                  <ul
-                    class="star-rating"
-                    *ngIf="profile.rating >= 2 && profile.rating < 3"
-                  >
+                  <ul class="star-rating" *ngIf="profile.rating >= 2 && profile.rating < 3">
                     <li class="active"><i class="fa fa-star"></i></li>
                     <li class="active"><i class="fa fa-star"></i></li>
                     <li><i class="fa fa-star"></i></li>
                     <li><i class="fa fa-star"></i></li>
                     <li><i class="fa fa-star"></i></li>
                   </ul>
-                  <ul
-                    class="star-rating"
-                    *ngIf="profile.rating >= 1 && profile.rating < 2"
-                  >
+                  <ul class="star-rating" *ngIf="profile.rating >= 1 && profile.rating < 2">
                     <li class="active"><i class="fa fa-star"></i></li>
                     <li><i class="fa fa-star"></i></li>
                     <li><i class="fa fa-star"></i></li>
                     <li><i class="fa fa-star"></i></li>
                     <li><i class="fa fa-star"></i></li>
                   </ul>
-                  <ul
-                    class="star-rating"
-                    *ngIf="profile.rating >= 0 && profile.rating < 1"
-                  >
+                  <ul class="star-rating" *ngIf="profile.rating >= 0 && profile.rating < 1">
                     <li><i class="fa fa-star"></i></li>
                     <li><i class="fa fa-star"></i></li>
                     <li><i class="fa fa-star"></i></li>
                     <li><i class="fa fa-star"></i></li>
                     <li><i class="fa fa-star"></i></li>
                   </ul>
-                </div>
+                </div> -->
               </div>
             </div>
-            <div class="reds" >
-              <div class="cont" *ngFor="let red of redessociales" >
-                <a *ngIf="red.icono === 'fa fa-whatsapp'" 
-                    href="https://wa.me/{{red.url}}?text=Estoy%20interesado%20en%20el%20producto%20en%20la%20flechaapp,%20favor%20ampliar%20informacion"
-                    target="_blank" rel="noopener noreferrer">
-                      <div class="option-admin">
-                        <i [class]="red.icono"></i>
-                      </div>
-                    </a>
-                    <a  *ngIf="red.icono !== 'fa fa-whatsapp'" [href]="red.url" target="_blank" rel="noopener noreferrer">
-                      <div class="option-admin">
-                        <i [class]="red.icono"></i>
-                      </div>
-                    </a>
+            <div class="reds">
+              <div class="cont" *ngFor="let red of redssociales">
+                <a *ngIf="red.icono === 'fa fa-whatsapp'"
+                  href="https://wa.me/{{red.name_red}}?text=Estoy%20interesado%20en%20el%20producto%20en%20la%20flechaapp,%20favor%20ampliar%20informacion"
+                  target="_blank" rel="noopener noreferrer">
+                  <div class="option-admin">
+                    <i [class]="red.icono"></i>
+                  </div>
+                </a>
+                <a *ngIf="red.icono !== 'fa fa-whatsapp'" [href]="red.name_red" target="_blank"
+                  rel="noopener noreferrer">
+                  <div class="option-admin">
+                    <i [class]="red.icono"></i>
+                  </div>
+                </a>
               </div>
 
             </div>
             <div class="admin-services">
-              <a [routerLink]="['/profile/edit', user.id]">
+              <a [routerLink]="['/profile/edit', user.uid]">
                 <div class="option-admin">
                   <i class="fa fa-user"></i>
                   <p>{{'Edit Profile'|translate}}</p>
                 </div>
               </a>
-              <a [routerLink]="['/profile/paymentmethods']" *ngIf="user.roles[0] === 'MEMBER'">
+              <a [routerLink]="['/profile/paymentmethods']" *ngIf="user.role === 'MEMBER'">
                 <div class="option-admin">
                   <i class="fa fa-money"></i>
                   <p> {{'Payment Methods'|translate}}</p>
                 </div>
               </a>
-              <a routerLink="/profile/documents" *ngIf="user.roles[0] !== 'SUPERADMIN'">
+              <a routerLink="/profile/documents" *ngIf="user.role !== 'SUPERADMIN'">
                 <div class="option-admin">
                   <i class="fa fa-briefcase"></i>
                   <p>{{'Documents'|translate}}</p>
@@ -124,22 +110,22 @@
               </a>
             </div>
           </div>
-  
+
           <!--banner publicidad-->
           <div class="banner-rectangular">
             <img src="https://picsum.photos/seed/1920/120" alt="" />
           </div>
           <!--banner publicidad-->
         </div>
-  
+
         <!-- lateral -->
         <div class="col-xs-12 col-sm-3 col-md-3">
           <app-lateral></app-lateral>
-  
-      </div>
+
+        </div>
         <!-- lateral -->
       </div>
     </div>
-   </div>
+  </div>
 </section>
 <app-menu-footer></app-menu-footer>

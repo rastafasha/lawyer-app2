@@ -39,12 +39,10 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class EspecialistaComponent {
   pageTitle= 'Profile';
-    public user!: Usuario;
-
+    public user!: any;
     public isLoading:boolean = false;
     loadingTitle!:string;
-    // public profile!: Profile;
-    public profile: Profile = new Profile();
+    public profile!: Profile;
     public redessociales!: RedesSociales[];
     public precios!: Precios[];
     public speciality_profile!: Speciality;
@@ -54,6 +52,7 @@ export class EspecialistaComponent {
     role!:Profile ;
     solicitudes_selected: any[] = [];
     toastr: any;
+    profile_id!:string;
 
     userForm: FormGroup = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
@@ -75,7 +74,7 @@ export class EspecialistaComponent {
       private activatedRoute: ActivatedRoute,
       private fb: FormBuilder,
     ) {
-      this.user = this.authService.getUser();
+      this.user = this.authService.getLocalStorage();
     }
   
     ngOnInit(): void {
@@ -96,7 +95,8 @@ export class EspecialistaComponent {
           alert('no hay perfil')
           this.isLoading = false;
         }
-        this.profile = resp.profile  || [];
+        this.profile = resp || [];
+        this.profile_id = this.profile._id || '';
         if(this.profile){
 
           this.redessociales = typeof resp.profile.redessociales === 'string' 
@@ -122,13 +122,12 @@ export class EspecialistaComponent {
 
     cambiarStatus(data:any){
       const VALUE = data;
-      console.log(VALUE);
 
       const datos = {
         "status": VALUE
       }
       this.isLoading = true;
-      this.profileService.updateProfileStatus(datos, this.profile.id).subscribe(
+      this.profileService.updateProfileStatus(datos, this.profile_id).subscribe(
         resp =>{
           this.isLoading = false;
           this.ngOnInit();
@@ -143,7 +142,7 @@ export class EspecialistaComponent {
         "role": VALUE
       }
       
-      this.profileService.updateProfileStatus(datos, this.profile.id).subscribe(
+      this.profileService.updateProfileStatus(datos, this.profile_id).subscribe(
         resp =>{
           console.log(resp);
           this.ngOnInit();
@@ -171,22 +170,9 @@ export class EspecialistaComponent {
     // }
 
     solicitarItem(data:any){
-      // if (!data || (Array.isArray(this.solicitudes_selected) && this.solicitudes_selected.length === 0)) {
-      //   Swal.fire('Error', 'No valid solicitudes selected', 'error');
-      //   return;
-      // }
-      
-      // const datos = {
-      //   id: 0,
-      //   "user_id": this.profile.id,
-      //   "cliente_id": this.user.id,
-      //   pedido: data,
-      //   status: 1,
-      // }
-      // console.log(datos);
 
       const formData = new FormData();
-      formData.append("user_id", this.profile.user_id+'');
+      formData.append("user_id", this.profile._id+'');
       formData.append("cliente_id", this.user.id+'');
       formData.append("pedido", JSON.stringify(data));
       

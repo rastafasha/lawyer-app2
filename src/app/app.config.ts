@@ -8,6 +8,7 @@ import { provideServiceWorker } from '@angular/service-worker';
 import { HttpRequest, HttpHandlerFn, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HttpInterceptor } from '@angular/common/http';
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }

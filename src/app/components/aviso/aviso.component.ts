@@ -16,7 +16,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class AvisoComponent {
   @Input() profile!: Profile;
-  @Input() user!:  Usuario;
+  @Input() user!:  any;
   user_id!: number;
   isLoading:boolean = false;
 }
