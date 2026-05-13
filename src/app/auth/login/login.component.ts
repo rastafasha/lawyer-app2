@@ -118,7 +118,7 @@ export class LoginComponent implements OnInit {
 
         this.router.navigateByUrl('/home');
       }, (err) => {
-        // Swal.fire('Error', err.error.msg, 'error');
+        Swal.fire('Error', err.error.msg, 'error');
       }
     )
 

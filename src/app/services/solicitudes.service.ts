@@ -39,29 +39,22 @@ export class SolicitudesService {
   }
 
   getSolicitud(id: Solicitud) {
-    const url = `${baseUrl}/solicitud/show/${id}`;
+    const url = `${baseUrl}/solicitudes/${id}`;
     return this.http.get<any>(url, this.headers)
       .pipe(
         map((resp:{ok: boolean, solicitud: Solicitud}) => resp.solicitud)
         );
   }
 
-  getByUser(usuario:any) {
-    const url = `${baseUrl}/solicitud/showbyUser/${usuario}`;
-    return this.http.get<any>(url,this.headers)
-      .pipe(
-        map((resp:{ok: boolean, solicitudes: Solicitud}) => resp.solicitudes)
-      )
-  }
   getByGuest(usuario:any) {
-    const url = `${baseUrl}/solicitud/cliente/${usuario}`;
+    const url = `${baseUrl}/solicitudes/cliente/${usuario}`;
     return this.http.get<any>(url,this.headers)
       .pipe(
         map((resp:{ok: boolean, solicitudes: Solicitud}) => resp.solicitudes)
       )
   }
   getByMember(usuario:any) {
-    const url = `${baseUrl}/solicitud/user/${usuario}`;
+    const url = `${baseUrl}/solicitudes/user/${usuario}`;
     return this.http.get<any>(url,this.headers)
       .pipe(
         map((resp:{ok: boolean, solicitudes: Solicitud}) => resp.solicitudes)
@@ -72,19 +65,19 @@ export class SolicitudesService {
 
   createSolicitud(data:any){
     const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
-    const URL = baseUrl+'/solicitud/store';
-    return this.http.post(URL,data, {headers:headers});
+    const URL = baseUrl+'/solicitudes/store';
+    return this.http.post(URL,data, this.headers);
   }
  
   updateSolicitudStatus( data:any, solicitud_id:number){
     const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
-    const URL = baseUrl+'/solicitud/update-status/'+solicitud_id;
-    return this.http.put(URL, data,{headers:headers});
+    const URL = baseUrl+'/solicitudes/update-status/'+solicitud_id;
+    return this.http.put(URL, data,this.headers);
   }
 
 
   deleteSolicitud(_id: string) {
-    const url = `${baseUrl}/solicitud/destroy/${_id}`;
+    const url = `${baseUrl}/solicitudes/destroy/${_id}`;
     return this.http.delete(url, this.headers);
   }
 }

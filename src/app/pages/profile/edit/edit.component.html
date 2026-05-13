@@ -237,16 +237,16 @@
 
                                     <!-- Especialidad -->
                                     <div class="col-12 col-md-4 col-xl-4"
-                                        *ngIf="user.role ==='MEMBER' && profile.status === 'VERIFIED'">
+                                        *ngIf="user.role ==='MEMBER'">
                                         <div class="input-group">
                                             <span class="input-group-text " id="basic-addon1">
                                                 <i class="fa fa-anchor " aria-hidden="true"></i>
                                             </span>
-                                            <select class="form-select" formControlName="speciality"
+                                            <select class="form-select" formControlName="especialidad"
                                                 id="validationCustom04" required>
                                                 <option selected disabled value="">Seleccione...</option>
-                                                <option *ngFor="let data of specialities" [value]="data.id">
-                                                    {{data.title}}</option>
+                                                <option *ngFor="let data of specialities" [value]="data._id">
+                                                    {{data.nombre}}</option>
                                             </select>
                                         </div>
 
@@ -428,7 +428,7 @@
                                         </label>
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <button class="btn btn-primary btn-sm text-end " (click)="addRedSocial()">+
+                                        <button class="btn btn-primary btn-sm text-end " (click)="addTarifa()">+
                                             {{'formulario.Add'|translate}}</button>
                                     </div>
                                 </div>
@@ -457,7 +457,7 @@
                                                     </td>
                                                     <td>
                                                         <button class="btn btn-danger btn-sm text-end"
-                                                            (click)="deletered(i)">x</button>
+                                                            (click)="deleteTarifa(i)">x</button>
                                                     </td>
                                                 </tr>
 

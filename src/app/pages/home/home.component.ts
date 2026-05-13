@@ -75,7 +75,7 @@ export class HomeComponent {
       this.redessociales = typeof resp.profile.redessociales === 'string' 
             ? JSON.parse(resp.profile.redessociales) || []
             : resp.profile.redessociales || [];
-      this.speciality_profile = resp.profile.speciality_id;
+      this.speciality_profile = resp.profile.especialidad;
       this.isLoading = false;
       this.getSpeciality();
     })
@@ -83,7 +83,7 @@ export class HomeComponent {
 
   getSpeciality(){
     this.specialityService.getSpeciality(this.speciality_profile).subscribe((resp:any) => {
-      this.speciality = resp.title || null;
+      this.speciality = resp.nombre || null;
 
     })
   }

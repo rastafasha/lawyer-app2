@@ -37,7 +37,7 @@ export const routes: Routes = [
 
     
     //user
-    {path: 'profile', component: ProfileComponent},
+    {path: 'profile', canActivate: [AuthGuard], component: ProfileComponent},
     {path: 'profile/settings', component: SettingsComponent},
     {path: 'profile/edit/:id', component: EditComponent},
     {path: 'profile/documents', component: DocumentsComponent},

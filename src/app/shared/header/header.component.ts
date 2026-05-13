@@ -38,7 +38,6 @@ export class HeaderComponent {
     translate.get(this.langs).subscribe(res => {
       // console.log(res);
     })
-    console.log(this.usuario);
   }
 
 
@@ -64,8 +63,9 @@ export class HeaderComponent {
   getProfile() {
     if (!this.usuario?.uid) return;
 
-    this.profileService.getByUser(this.usuario.uid).subscribe((resp: any) => {
-      this.profile = resp;
+    this.profileService.getByUser(this.usuario?.uid).subscribe((resp: any) => {
+      this.profile = resp.profile;
+      console.log(resp)
     });
   }
 

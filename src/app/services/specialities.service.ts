@@ -115,7 +115,7 @@ export class SpecialitiesService {
   }
 
   updatespeciality(speciality:Speciality) {
-    const url = `${baseUrl}/specialities/update/${speciality.id}`;
+    const url = `${baseUrl}/specialities/update/${speciality._id}`;
     return this.http.put(url, speciality, this.headers);
   }
 

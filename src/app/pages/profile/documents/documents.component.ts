@@ -132,7 +132,7 @@ export class DocumentsComponent {
     this.currentPage;
     this.documentService.getDocumentsByUser(
       this.user_id).subscribe((resp: any) => {
-        this.FILES = resp.data
+        this.FILES = resp
         this.isLoading = false;
         //agrupamos por name_category
         this.FILES.forEach((element: any) => {

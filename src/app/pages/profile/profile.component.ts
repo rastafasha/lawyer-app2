@@ -61,15 +61,13 @@ export class ProfileComponent {
     this.isLoading = true;
     this.loadingTitle = 'Loading Profile...';
     this.profileService.getByUser(this.user.uid).subscribe((resp:any) => {
-      console.log(resp);
       this.profile = resp.profile || null;
       this.redssociales = typeof resp.profile.redssociales === 'string' 
             ? JSON.parse(resp.profile.redssociales) || []
             : resp.profile.redssociales || [];
-      this.speciality_profile = resp.profile.speciality_id;
+      this.speciality_profile = resp.profile.especialidad;
       this.isLoading = false;
       this.rating = resp.profile.rating;
-      console.log(this.rating);
       this.getSpeciality();
     })
   }
@@ -77,7 +75,7 @@ export class ProfileComponent {
   getSpeciality(){
     this.specialityService.getSpeciality(this.speciality_profile).subscribe((resp:any) => {
       // console.log(resp);
-      this.speciality = resp.title || null;
+      this.speciality = resp.nombre || null;
 
     })
   }

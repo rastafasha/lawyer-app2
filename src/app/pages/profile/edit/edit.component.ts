@@ -167,6 +167,8 @@ export class EditComponent {
       telmovil: ['', Validators.required],
       shortdescription: ['', Validators.required],
       redssociales: [''],
+      especialidad: [''],
+      precios: [''],
       usuario: [this.user.uid],
       id: [''],
     });
@@ -192,6 +194,8 @@ export class EditComponent {
             telmovil: res.profile.telmovil,
             shortdescription: res.profile.shortdescription,
             redssociales: res.profile.redssociales,
+            especialidad: res.profile.especialidad,
+            precios: res.profile.precios,
             usuario: this.user.uid,
             img: res.profile.img
           });
@@ -232,6 +236,35 @@ export class EditComponent {
 
   }
 
+   onPaServiceSelect(event: any) {
+    const ic = event;
+    this.iswhatsapp = false;
+    if (ic === 'fa fa-whatsapp') {
+      this.selectedValueCode = ic;
+      this.iswhatsapp = true;
+    }
+  }
+
+  
+  addTarifa() {
+    if (this.item_tarifa && this.precio) {
+      this.tarifas.push({
+        item_tarifa: this.item_tarifa,
+        precio: this.precio,
+      });
+      this.item_tarifa = '';
+      this.precio = 0;
+
+    }
+  }
+
+  deleteTarifa(i: any) {
+    this.tarifas.splice(i, 1);
+    this.item_tarifa = '';
+    this.precio = 0;
+
+  }
+
 
 
   cambiarImagen(event: any):void {
@@ -267,15 +300,7 @@ export class EditComponent {
     this.ngOnInit();
   }
 
-  onPaServiceSelect(event: any) {
-    const ic = event;
-    this.iswhatsapp = false;
-    if (ic === 'fa fa-whatsapp') {
-      this.selectedValueCode = ic;
-      this.iswhatsapp = true;
-    }
-  }
-
+ 
 
   onUserSave() {
     if (!this.perfilForm.valid) {
@@ -331,17 +356,18 @@ export class EditComponent {
 
     }
     if (this.perfilForm.value.speciality_id) {
-      formData.append("speciality_id", this.perfilForm.value.speciality_id);
+      formData.append("especialidad", this.perfilForm.value.speciality_id);
 
     }
     if (this.redssociales) {
-      formData.append("redssociales", JSON.stringify(this.redssociales));
+      formData.append("redssociales", this.redssociales);
 
     }
     if (this.tarifas) {
-      formData.append("precios", JSON.stringify(this.tarifas));
+      formData.append("precios", this.tarifas);
 
     }
+
     if (this.FILE_AVATAR) {
       formData.append("imagen", this.FILE_AVATAR);
     }
@@ -356,7 +382,9 @@ export class EditComponent {
         ...this.perfilForm.value,
         _id: this.profileSeleccionado._id,
         usuario: this.user.uid,
-        redssociales: this.redssociales
+        redssociales: this.redssociales,
+        precios: this.tarifas,
+        
       }
       this.profileService.updateProfile(data, this.profileSeleccionado._id).subscribe((resp: any) => {
 
@@ -367,7 +395,9 @@ export class EditComponent {
     } else {
       const data = {
         ...this.perfilForm.value,
-        usuario: this.user.uid
+        usuario: this.user.uid,
+        redssociales: this.redssociales,
+        precios: this.tarifas,
       }
       this.profileService.createProfile(data).subscribe((resp: any) => {
         console.log(resp);

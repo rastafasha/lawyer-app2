@@ -97,8 +97,8 @@ cambiarStatus(tipodepago:any){
     let VALUE = tipodepago.status;
     // console.log(VALUE);
     
-    this.paymentMService.updateStatus(tipodepago, tipodepago.id).subscribe(
-      resp =>{
+    this.paymentMService.updateStatus(tipodepago.status, tipodepago._id).subscribe(
+      (resp:any) =>{
         // console.log(resp);
         Swal.fire('Actualizado', `actualizado correctamente`, 'success');
         // this.toaster.open({
@@ -123,7 +123,7 @@ save(){
       ciorif:this.ciorif,
       phone:this.phone,
       email: this.email,
-      user_id: this.user.id
+      user: this.user.uid
     }
     this.paymentMService.createPaymentmethod(data).subscribe((resp:any)=>{
       // console.log(resp);

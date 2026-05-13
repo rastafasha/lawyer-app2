@@ -8,7 +8,7 @@ export class Banner {
     public validacion: string,
     public createdAt: Date,
     public updatedAt: Date,
-    public status?: 'PENDING' | 'ACTIVE' | 'VERIFIED',
+    public status?: 'PENDING' | 'PUBLISHED' ,
     public img?: string,
     public _id?: string
 

@@ -83,7 +83,7 @@ export class WalletComponent {
 
   getSolicitudesbyMember() {
     this.isLoading = true;
-    this.solicitudService.getByMember(this.user.id).subscribe((resp: any) => {
+    this.solicitudService.getByMember(this.user.uid).subscribe((resp: any) => {
       this.solicitudes = resp.data;
       this.pedido = typeof resp.pedido === 'string'
         ? JSON.parse(resp.pedido) || []
