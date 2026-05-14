@@ -46,13 +46,6 @@ export class SolicitudesService {
         );
   }
 
-  getByGuest(usuario:any) {
-    const url = `${baseUrl}/solicitudes/cliente/${usuario}`;
-    return this.http.get<any>(url,this.headers)
-      .pipe(
-        map((resp:{ok: boolean, solicitudes: Solicitud}) => resp.solicitudes)
-      )
-  }
   getByMember(usuario:any) {
     const url = `${baseUrl}/solicitudes/user/${usuario}`;
     return this.http.get<any>(url,this.headers)

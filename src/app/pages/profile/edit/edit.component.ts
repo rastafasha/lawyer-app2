@@ -141,7 +141,6 @@ export class EditComponent {
     this.paisService.getPaises().subscribe(
       (res: any) => {
         this.paises = res.paises;
-        console.log(res);
       }
     );
   }
@@ -303,112 +302,51 @@ export class EditComponent {
  
 
   onUserSave() {
-    if (!this.perfilForm.valid) {
-      //mostramos las alertas de los campos requeridos
-      this.perfilForm.markAllAsTouched(); // Esto activa las validaciones visuales
-      return
-    }
-
-    const formData = new FormData();
-    formData.append("first_name", this.perfilForm.value.first_name);
-    formData.append("last_name", this.perfilForm.value.last_name);
-
-    if (this.perfilForm.value.direccion) {
-      formData.append("direccion", this.perfilForm.value.direccion);
-
-    }
-    if (this.perfilForm.value.description) {
-      formData.append("description", this.perfilForm.value.description);
-
-    }
-    if (this.perfilForm.value.pais) {
-      formData.append("pais", this.perfilForm.value.pais);
-
-    }
-
-    if (this.perfilForm.value.estado) {
-      formData.append("estado", this.perfilForm.value.estado);
-
-    }
-    if (this.perfilForm.value.ciudad) {
-      formData.append("ciudad", this.perfilForm.value.ciudad);
-
-    }
-    if (this.perfilForm.value.telefono) {
-      formData.append("telefono", this.perfilForm.value.telefono);
-
-    }
-    if (this.perfilForm.value.telhome) {
-      formData.append("telhome", this.perfilForm.value.telhome);
-
-    }
-    if (this.perfilForm.value.celular) {
-      formData.append("celular", this.perfilForm.value.celular);
-
-    }
-
-    if (this.perfilForm.value.n_doc) {
-      formData.append("n_doc", this.perfilForm.value.n_doc);
-
-    }
-    if (this.perfilForm.value.gender) {
-      formData.append("gender", this.perfilForm.value.gender);
-
-    }
-    if (this.perfilForm.value.speciality_id) {
-      formData.append("especialidad", this.perfilForm.value.speciality_id);
-
-    }
-    if (this.redssociales) {
-      formData.append("redssociales", this.redssociales);
-
-    }
-    if (this.tarifas) {
-      formData.append("precios", this.tarifas);
-
-    }
-
-    if (this.FILE_AVATAR) {
-      formData.append("imagen", this.FILE_AVATAR);
-    }
-    if (this.lang) {
-      formData.append("lang", this.lang);
-    }
-
-
-
-    if (this.profileSeleccionado) {
-      const data = {
-        ...this.perfilForm.value,
-        _id: this.profileSeleccionado._id,
-        usuario: this.user.uid,
-        redssociales: this.redssociales,
-        precios: this.tarifas,
-        
-      }
-      this.profileService.updateProfile(data, this.profileSeleccionado._id).subscribe((resp: any) => {
-
-        this.profileSeleccionado = resp;
-        Swal.fire('Exito!', 'Se ha actualizado la formData', 'success');
-        this.ngOnInit();
-      });
-    } else {
-      const data = {
-        ...this.perfilForm.value,
-        usuario: this.user.uid,
-        redssociales: this.redssociales,
-        precios: this.tarifas,
-      }
-      this.profileService.createProfile(data).subscribe((resp: any) => {
-        console.log(resp);
-        this.profileSeleccionado = resp;
-        Swal.fire('Exito!', 'Se ha creado la data', 'success');
-        // this.router.navigate(['/profile']);
-        this.ngOnInit();
-      });
-    }
-
+  if (!this.perfilForm.valid) {
+    this.perfilForm.markAllAsTouched();
+    return;
   }
+
+  // Construimos el objeto JSON mapeando explícitamente cada campo con el nombre de tu esquema de BD
+  const data: any = {
+    usuario: this.user.uid,
+    first_name: this.perfilForm.value.first_name,
+    last_name: this.perfilForm.value.last_name,
+    direccion: this.perfilForm.value.direccion || null,
+    shortdescription: this.perfilForm.value.shortdescription || null, // Nombre correcto de tu esquema
+    pais: this.perfilForm.value.pais || null,
+    ciudad: this.perfilForm.value.ciudad || null,
+    telhome: this.perfilForm.value.telhome || null,
+    telmovil: this.perfilForm.value.telmovil || null,             // Nombre correcto de tu esquema
+    n_doc: this.perfilForm.value.n_doc || null,
+    gender: this.perfilForm.value.gender || null,
+    especialidad: this.perfilForm.value.especialidad || null,   // Nombre correcto de tu esquema
+    lang: this.lang || null,
+    
+    // Forzamos el envío de tus variables globales de arreglos
+    redssociales: this.redssociales || [], 
+    precios: this.tarifas || []
+  };
+
+  // Si estamos editando, incluimos el ID del perfil y disparamos el servicio de actualización
+  if (this.profileSeleccionado) {
+    data._id = this.profileSeleccionado._id;
+
+    this.profileService.updateProfile(data, this.profileSeleccionado._id).subscribe((resp: any) => {
+      this.profileSeleccionado = resp;
+      Swal.fire('¡Éxito!', 'Perfil actualizado correctamente', 'success');
+      this.ngOnInit();
+    });
+  } else {
+    // Si no hay perfil previo, disparamos el servicio de creación
+    this.profileService.createProfile(data).subscribe((resp: any) => {
+      this.profileSeleccionado = resp;
+      Swal.fire('¡Éxito!', 'Perfil creado correctamente', 'success');
+      this.ngOnInit();
+    });
+  }
+}
+
 
   public cambiarLenguaje(lang: any) {
     this.activeLang = lang;

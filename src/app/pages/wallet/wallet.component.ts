@@ -28,7 +28,6 @@ import Swal from 'sweetalert2';
     LoadingComponent, NgIf,
     FormsModule,
     ReactiveFormsModule,
-    ImagenPipe
   ],
   templateUrl: './wallet.component.html',
   styleUrl: './wallet.component.scss'
@@ -84,7 +83,7 @@ export class WalletComponent {
   getSolicitudesbyMember() {
     this.isLoading = true;
     this.solicitudService.getByMember(this.user.uid).subscribe((resp: any) => {
-      this.solicitudes = resp.data;
+      this.solicitudes = resp;
       this.pedido = typeof resp.pedido === 'string'
         ? JSON.parse(resp.pedido) || []
         : resp.pedido || [];
@@ -94,37 +93,11 @@ export class WalletComponent {
     })
   }
 
-
-  closeReload() {
-    this.pedido_selected = null;
-    this.ngOnInit();
+solicitudSelected(solicitud: any) {
+    this.solicitud_selected = solicitud;
+    
   }
-
-
-
-  getSolicitudDetail(item: any) {
-    this.pedido_selected = item.id;
-    this.solicitudService.getSolicitud(this.pedido_selected).subscribe((resp: any) => {
-      this.solicitud_users = resp.solicitud_users || [];
-      this.client_id = resp.solicitud_users[0].client_id;
-      this.user_client_id = resp.solicitud_users[0].user_id;
-      // console.log(resp.solicitud_users);
-      this.status = resp.solicitud_users[0].status;
-      this.getClienteSolicitud()
-
-    })
-  }
-
-  getClienteSolicitud() {
-    this.clientService.getClient(this.client_id).subscribe((resp: any) => {
-      // console.log('respuesta para miembro',resp);
-      this.client = resp[0];
-      this.profile = resp[0].profile;
-      this.client_user_id = resp[0].clients_user[0].id;
-    })
-  }
-
-
+  
 
   onScrollDown() {
     // if (!this.nextUrl || this.isLoading) return;
@@ -148,6 +121,10 @@ export class WalletComponent {
   onScrollUp() {
     this.refreshData();
   }
+closeReload() {
+    this.pedido_selected = null;
+    this.ngOnInit();
+  }
 
 
 
@@ -166,14 +143,7 @@ export class WalletComponent {
 
 
 
-  solicitudSelected(solicitud: any) {
-    this.solicitud_selected = solicitud;
-    this.getSolicitudDetail(solicitud);
-    this.pedido = typeof solicitud.pedido === 'string'
-      ? JSON.parse(solicitud.pedido) || []
-      : solicitud.pedido || [];
-    // console.log(this.pedido);
-  }
+  
 
 
 

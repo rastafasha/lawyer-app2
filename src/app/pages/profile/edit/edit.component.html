@@ -172,7 +172,7 @@
                                                     class="login-danger">*</span>
                                             </span>
                                             <select class="form-control" formControlName="pais">
-                                                <option *ngFor="let data of paises" [value]="data.code">
+                                                <option *ngFor="let data of paises" [value]="data._id">
                                                     {{data.pais}}
                                                 </option>
                                             </select>
