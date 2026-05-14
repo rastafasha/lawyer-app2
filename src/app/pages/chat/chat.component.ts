@@ -14,6 +14,7 @@ import { MessageService } from '../../services/message.service';
 import { Profile } from '../../models/profile.model';
 import { AuthService } from '../../services/auth.service';
 import { ImagenPipe } from '../../pipes/imagen.pipe';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-chat',
@@ -38,7 +39,7 @@ export class ChatComponent {
     private chatService: ChatService,
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
-    private _clientService: ClientService,
+    private profileService: ProfileService,
     private messageService: MessageService,
     private authService: AuthService
   ) {
@@ -46,7 +47,22 @@ export class ChatComponent {
   }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(({ id }) => this.getUser(id));
+    this.activatedRoute.params.subscribe(({ id }) => this.getUserProfile(id));
+  }
+
+   getUserProfile(id: string) {
+    this.profileService.getByUser(id).subscribe((resp: any) => {
+      this.profile = resp.profile;
+
+      // try {
+      //   this.redessociales = typeof resp.profile.redessociales === 'string'
+      //     ? JSON.parse(resp.profile.redessociales) || []
+      //     : resp.profile.redessociales || [];
+      // } catch (error) {
+      //   console.error('Error parsing redessociales:', error);
+      //   // this.redessociales = [];
+      // }
+    });
   }
 
   public sendMessage() {
@@ -59,16 +75,7 @@ export class ChatComponent {
     this.message = '';
   }
 
-  getUser(id: string) {
-    this._clientService.getClient(id).subscribe((resp: any) => {
-      this.client = resp;
-      this.profile = resp.profile;
-      this.client_id = resp.profile.client_id;
-    });
-    setTimeout(() => {
-      this.listMessage();
-    }, 1000);
-  }
+ 
   
   public listMessage() {
     this.messageService
