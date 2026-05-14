@@ -60,8 +60,8 @@ export class SolicitudesRecentsComponent {
 
   getSolicitudesbyMember() {
     this.isLoading = true;
-    this.solicitudService.getByMember(this.user.id).subscribe((resp: any) => {
-      this.solicitudes = resp.data;
+    this.solicitudService.getByMember(this.user.uid).subscribe((resp: any) => {
+      this.solicitudes = resp;
       this.pedido = typeof resp.pedido === 'string'
         ? JSON.parse(resp.pedido) || []
         : resp.pedido || [];
@@ -73,28 +73,9 @@ export class SolicitudesRecentsComponent {
 
   solicitudSelected(solicitud: any) {
     this.solicitud_selected = solicitud;
-    this.getSolicitudDetail(solicitud);
-    this.pedido = typeof solicitud.pedido === 'string'
-      ? JSON.parse(solicitud.pedido) || []
-      : solicitud.pedido || [];
   }
 
-  getSolicitudDetail(item: any) {
-    this.pedido_selected = item.id;
-    this.solicitudService.getSolicitud(this.pedido_selected).subscribe((resp: any) => {
-      this.solicitud_users = resp.solicitud_users || [];
-      this.client_id = resp.solicitud_users[0].client_id;
-
-      this.getClienteSolicitud();
-    })
-  }
-
-  getClienteSolicitud() {
-    this.clientService.getClient(this.client_id).subscribe((resp: any) => {
-      this.client = resp[0];
-      this.profile = resp[0].profile;
-    })
-  }
+  
 
 
 }

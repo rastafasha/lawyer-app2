@@ -12,7 +12,6 @@ import { CommonModule, NgFor } from '@angular/common';
 import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
 import { Usuario } from '../../models/usuario.model';
 import { AuthService } from '../../services/auth.service';
-import { ListaUsuariosComponent } from '../../components/ListaUsuarios/ListaUsuarios.component';
 import { SolicitudesRecentsComponent } from '../../components/solicitudes-recents/solicitudes-recents.component';
 import { FichaprofileComponent } from '../../components/fichaprofile/fichaprofile.component';
 import { Profile } from '../../models/profile.model';
@@ -28,7 +27,7 @@ import { SpecialitiesService } from '../../services/specialities.service';
     // SliderHorizontalComponent, 
     LateralComponent, 
     SolicitudesRecentsComponent,
-    CommonModule, BackButtnComponent, ListaUsuariosComponent,
+    CommonModule, BackButtnComponent,
     TranslateModule,
     FichaprofileComponent,
     

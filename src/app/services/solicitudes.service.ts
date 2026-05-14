@@ -62,6 +62,11 @@ export class SolicitudesService {
     return this.http.post(URL,data, this.headers);
   }
  
+  updateSolicitud( data:any, solicitud_id:number){
+    const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
+    const URL = baseUrl+'/solicitudes/editar/'+solicitud_id;
+    return this.http.put(URL, data,this.headers);
+  }
   updateSolicitudStatus( data:any, solicitud_id:number){
     const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
     const URL = baseUrl+'/solicitudes/update-status/'+solicitud_id;

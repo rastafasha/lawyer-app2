@@ -84,6 +84,9 @@ export class WalletComponent {
     this.isLoading = true;
     this.solicitudService.getByMember(this.user.uid).subscribe((resp: any) => {
       this.solicitudes = resp;
+      // if(resp.solicitudActualizado){
+      //   this.solicitudes = resp.solicitudActualizado
+      // }
       this.pedido = typeof resp.pedido === 'string'
         ? JSON.parse(resp.pedido) || []
         : resp.pedido || [];
@@ -93,11 +96,11 @@ export class WalletComponent {
     })
   }
 
-solicitudSelected(solicitud: any) {
+  solicitudSelected(solicitud: any) {
     this.solicitud_selected = solicitud;
-    
+    console.log(this.solicitud_selected)
   }
-  
+
 
   onScrollDown() {
     // if (!this.nextUrl || this.isLoading) return;
@@ -121,7 +124,7 @@ solicitudSelected(solicitud: any) {
   onScrollUp() {
     this.refreshData();
   }
-closeReload() {
+  closeReload() {
     this.pedido_selected = null;
     this.ngOnInit();
   }
@@ -140,27 +143,35 @@ closeReload() {
 
 
 
-
-
-
-  
-
-
-
   cambiarStatus(status: any) {
-    console.log(status);
+    // 1. Validación de seguridad
+    if (!this.solicitud_selected) return;
+
+    // 2. Enviamos EXCLUSIVAMENTE el status en el cuerpo de la petición
     const data = {
-      status: status,
-      pedido: this.pedido
-    }
+      status: status.toUpperCase()
+    };
 
-    this.solicitudService.updateSolicitudStatus(data, this.solicitud_selected.id).subscribe((resp: any) => {
+    this.solicitudService.updateSolicitudStatus(data, this.solicitud_selected._id)
+      .subscribe({
+        next: (resp: any) => {
+          if (resp.ok) {
+            // 3. Vaciamos la selección para cerrar modales o limpiar la vista de detalle
+            this.solicitud_selected = null;
 
-      this.solicitud_selected = null
-      this.ngOnInit();
-    })
+            Swal.fire('¡Éxito!', 'El estado de la solicitud ha sido actualizado', 'success');
 
+            // 4. Refrescamos la lista general llamando al ciclo de vida
+            this.ngOnInit();
+          }
+        },
+        error: (err) => {
+          console.error('Error al actualizar status:', err);
+          Swal.fire('Error', 'No se pudo cambiar el estado de la solicitud', 'error');
+        }
+      });
   }
+
 
   addClient() {
     const formData = new FormData();
