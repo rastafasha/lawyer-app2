@@ -61,8 +61,8 @@ infiniteScroll
                       <i class="fa fa-anchor" aria-hidden="true"></i>
                     </span>
                     <select class="form-control" formControlName="speciality_id"  >
-                      <option *ngFor="let data of specialities" [value]="data.id">
-                      {{data.title}}
+                      <option *ngFor="let data of specialities" [value]="data._id">
+                      {{data.nombre}}
                       </option>
                   </select>
                   </div>

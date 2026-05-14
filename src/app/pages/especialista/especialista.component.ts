@@ -24,8 +24,8 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [
     CommonModule,
     HeaderComponent,
-    MenuFooterComponent, 
-    LateralComponent, 
+    MenuFooterComponent,
+    LateralComponent,
     BackButtnComponent,
     NgFor,
     FormsModule,
@@ -38,155 +38,155 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './especialista.component.scss'
 })
 export class EspecialistaComponent {
-  pageTitle= 'Profile';
-    public user!: any;
-    public isLoading:boolean = false;
-    loadingTitle!:string;
-    public profile!: Profile;
-    public redessociales!: RedesSociales[];
-    public precios!: Precios[];
-    public speciality_profile!: Speciality;
-    public speciality!: Speciality;
-    public solicitud!: Solicitud;
-    status!:Profile ;
-    role!:Profile ;
-    solicitudes_selected: any[] = [];
-    toastr: any;
-    profile_id!:string;
+  pageTitle = 'Profile';
+  public user!: any;
+  public isLoading: boolean = false;
+  loadingTitle!: string;
+  public profile!: Profile;
+  public redessociales!: RedesSociales[];
+  public precios!: Precios[];
+  public speciality_profile!: Speciality;
+  public speciality!: Speciality;
+  public solicitud!: Solicitud;
+  status!: Profile;
+  role!: Profile;
+  solicitudes_selected: any[] = [];
+  toastr: any;
+  profile_id!: string;
 
-    userForm: FormGroup = new FormGroup({
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('',[Validators.required, Validators.minLength(3)]),
-      userName: new FormControl('', [Validators.email, Validators.required]),
-      city: new FormControl(''),
-      state: new FormControl('Caracas'),
-      zipCode: new FormControl(''),
-      isAgree: new FormControl(false),
-  
-      });
-  
-  
-    constructor(
-      private authService: AuthService,
-      private profileService: ProfileService,
-      private specialityService: SpecialitiesService,
-      private solicitudService: SolicitudesService,
-      private activatedRoute: ActivatedRoute,
-      private fb: FormBuilder,
-    ) {
-      this.user = this.authService.getLocalStorage();
-    }
-  
-    ngOnInit(): void {
-      window.scrollTo(0, 0);
-      this.activatedRoute.params.subscribe(({ id }) => {
-        this.getProfile(id);
-      });
-      // this.validarFormularioPerfil();
-      
-    }
-  
-    getProfile(id:number){
-      this.isLoading = true;
-      this.loadingTitle = 'Cargando perfil';
-      this.profileService.getByUser(id).subscribe((resp:any) => {
-        // console.log(resp);
-        if(resp.status === '404' || resp.ok === false){
-          alert('no hay perfil')
-          this.isLoading = false;
-        }
-        this.profile = resp || [];
-        this.profile_id = this.profile._id || '';
-        if(this.profile){
+  userForm: FormGroup = new FormGroup({
+    firstName: new FormControl('', [Validators.required]),
+    lastName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    userName: new FormControl('', [Validators.email, Validators.required]),
+    city: new FormControl(''),
+    state: new FormControl('Caracas'),
+    zipCode: new FormControl(''),
+    isAgree: new FormControl(false),
 
-          this.redessociales = typeof resp.profile.redessociales === 'string' 
-              ? JSON.parse(resp.profile.redessociales) || []
-              : resp.profile.redessociales || [];
-  
-              this.precios = typeof resp.profile.precios === 'string' 
-              ? JSON.parse(resp.profile.precios) || []
-              : resp.profile.precios || [];
-          this.speciality_profile = resp.profile.speciality_id;
-          this.getSpeciality();
-          this.isLoading = false;
-        }
-      })
-    }
-  
-    getSpeciality(){
-      this.specialityService.getSpeciality(this.speciality_profile).subscribe((resp:any) => {
-        // console.log(resp);
-        this.speciality = resp;
-      })
-    }
+  });
 
-    cambiarStatus(data:any){
-      const VALUE = data;
 
-      const datos = {
-        "status": VALUE
+  constructor(
+    private authService: AuthService,
+    private profileService: ProfileService,
+    private specialityService: SpecialitiesService,
+    private solicitudService: SolicitudesService,
+    private activatedRoute: ActivatedRoute,
+    private fb: FormBuilder,
+  ) {
+    this.user = this.authService.getLocalStorage();
+  }
+
+  ngOnInit(): void {
+    window.scrollTo(0, 0);
+    this.activatedRoute.params.subscribe(({ id }) => {
+      this.getProfile(id);
+    });
+    // this.validarFormularioPerfil();
+
+  }
+
+  getProfile(id: number) {
+    this.isLoading = true;
+    this.loadingTitle = 'Cargando perfil';
+    this.profileService.getByUser(id).subscribe((resp: any) => {
+      // console.log(resp);
+      if (resp.status === '404' || resp.ok === false) {
+        alert('no hay perfil')
+        this.isLoading = false;
       }
-      this.isLoading = true;
-      this.profileService.updateProfileStatus(datos, this.profile_id).subscribe(
-        resp =>{
-          this.isLoading = false;
-          this.ngOnInit();
-        }
-      )
-    }
-    cambiarRole(data:any){
-      const VALUE = data;
-      console.log(VALUE);
+      this.profile = resp || [];
+      this.profile_id = this.profile._id || '';
+      if (this.profile) {
 
-      const datos = {
-        "role": VALUE
+        this.redessociales = typeof resp.profile.redessociales === 'string'
+          ? JSON.parse(resp.profile.redessociales) || []
+          : resp.profile.redessociales || [];
+
+        this.precios = typeof resp.profile.precios === 'string'
+          ? JSON.parse(resp.profile.precios) || []
+          : resp.profile.precios || [];
+        this.speciality_profile = resp.profile.speciality_id;
+        this.getSpeciality();
+        this.isLoading = false;
       }
-      
-      this.profileService.updateProfileStatus(datos, this.profile_id).subscribe(
-        resp =>{
-          console.log(resp);
-          this.ngOnInit();
-        }
-      )
+    })
+  }
+
+  getSpeciality() {
+    this.specialityService.getSpeciality(this.speciality_profile).subscribe((resp: any) => {
+      // console.log(resp);
+      this.speciality = resp;
+    })
+  }
+
+  cambiarStatus(data: any) {
+    const VALUE = data;
+
+    const datos = {
+      "status": VALUE
+    }
+    this.isLoading = true;
+    this.profileService.updateProfileStatus(datos, this.profile_id).subscribe(
+      resp => {
+        this.isLoading = false;
+        this.ngOnInit();
+      }
+    )
+  }
+  cambiarRole(data: any) {
+    const VALUE = data;
+    console.log(VALUE);
+
+    const datos = {
+      "role": VALUE
     }
 
-    // validarFormularioPerfil(){
-    //   this.userForm = this.fb.group({
-    //     nombre: ['', Validators.required],
-    //     surname: ['', Validators.required],
-    //     pais: [''],
-    //     estado: [''],
-    //     ciudad: [''],
-    //     telhome: ['', Validators.required],
-    //     telmovil: ['', Validators.required],
-    //     speciality_id: ['', Validators.required],
-    //     direccion: [''],
-    //     n_doc: [''],
-    //     gender: [''],
-    //     description: ['', Validators.required],
-    //     usuario: [this.user.id],
-    //     id: [''],
-    //   });
-    // }
+    this.profileService.updateProfileStatus(datos, this.profile_id).subscribe(
+      resp => {
+        console.log(resp);
+        this.ngOnInit();
+      }
+    )
+  }
 
-    solicitarItem(data:any){
+  // validarFormularioPerfil(){
+  //   this.userForm = this.fb.group({
+  //     nombre: ['', Validators.required],
+  //     surname: ['', Validators.required],
+  //     pais: [''],
+  //     estado: [''],
+  //     ciudad: [''],
+  //     telhome: ['', Validators.required],
+  //     telmovil: ['', Validators.required],
+  //     speciality_id: ['', Validators.required],
+  //     direccion: [''],
+  //     n_doc: [''],
+  //     gender: [''],
+  //     description: ['', Validators.required],
+  //     usuario: [this.user.id],
+  //     id: [''],
+  //   });
+  // }
 
-      const formData = new FormData();
-      formData.append("user_id", this.profile._id+'');
-      formData.append("cliente_id", this.user.id+'');
-      formData.append("pedido", JSON.stringify(data));
-      
+  solicitarItem(data: any) {
 
-      this.solicitudService.createSolicitud(formData).subscribe({
-        next: (resp:any) => {
-          this.solicitud = resp;
-          Swal.fire('Éxito!', 'Solicitud creada correctamente', 'success');
-          this.ngOnInit();
-        },
-        error: (err) => {
-          Swal.fire('Error', 'Error al crear la solicitud', 'error');
-          console.error(err);
-        }
-      });
-    }
+    const formData = new FormData();
+    formData.append("user_id", this.profile._id + '');
+    formData.append("cliente_id", this.user.id + '');
+    formData.append("pedido", JSON.stringify(data));
+
+
+    this.solicitudService.createSolicitud(formData).subscribe({
+      next: (resp: any) => {
+        this.solicitud = resp;
+        Swal.fire('Éxito!', 'Solicitud creada correctamente', 'success');
+        this.ngOnInit();
+      },
+      error: (err) => {
+        Swal.fire('Error', 'Error al crear la solicitud', 'error');
+        console.error(err);
+      }
+    });
+  }
 }
