@@ -170,11 +170,31 @@ export class DocumentsComponent {
   }
 
   deleteFile(FILE: any) {
-    this.documentService.deleteDocument(FILE).subscribe((resp: any) => {
-      this.ngOnInit();
-    })
-    this.FilesAdded.splice(FILE, 1);
-  }
+      Swal.fire({
+        title: 'Estas Seguro?',
+        text: "No podras recuperarlo!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Borrar!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.documentService.deleteDocument(FILE).subscribe(
+            response => {
+              this.ngOnInit();
+            }
+          )
+          this.FilesAdded.splice(FILE, 1);
+          Swal.fire(
+            'Borrado!',
+            'El Archivo fue borrado.',
+            'success'
+          )
+          this.ngOnInit();
+        }
+      });
+    }
 
 
   selectDoc(FILE: any) {

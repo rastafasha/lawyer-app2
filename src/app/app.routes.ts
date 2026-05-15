@@ -11,14 +11,13 @@ import { FilesComponent } from './pages/profile/documents/files/files.component'
 import { PaymentComponent } from './pages/wallet/payment/payment.component';
 import { OrderComponent } from './pages/wallet/order/order.component';
 import { LoginComponent } from './auth/login/login.component';
-import { CategoriaComponent } from './pages/categoria/categoria.component';
-import { EspecialistaComponent } from './pages/especialista/especialista.component';
 import { AuthGuard } from './guards/auth.guard';
 import { PaymentmethodComponent } from './pages/profile/paymentmethod/paymentmethod.component';
 import { BannerComponent } from './pages/admin/banner/banner.component';
 import { ClientprofileComponent } from './pages/clientprofile/clientprofile.component';
 import { ChatComponent } from './pages/chat/chat.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
+import { MisNotificacionesComponent } from './pages/mis-notificaciones/mis-notificaciones.component';
 
 export const routes: Routes = [
     {path: 'home', canActivate: [AuthGuard], component: HomeComponent},
@@ -27,9 +26,6 @@ export const routes: Routes = [
     {path: 'favorites', component: FavoritesComponent},
     {path: 'search', component: SearchComponent},
 
-    {path: 'especialidades', component: CategoriaComponent},
-    {path: 'especialidad/:id', component: CategoriaComponent},
-    {path: 'especialista/:id', component: EspecialistaComponent},
     
     {path: 'clientprofile/:id', component: ClientprofileComponent},
     {path: 'chat/:id', component: ChatComponent},
@@ -46,7 +42,7 @@ export const routes: Routes = [
     {path: 'profile/paymentmethods', component: PaymentmethodComponent},
     
     {path: 'admin/banners', component: BannerComponent},
-
+    {path: 'notificaciones', canActivate: [AuthGuard], component: MisNotificacionesComponent},
     //wallet
     {path: 'solicitudes', component: WalletComponent},
     {path: 'wallet-payment', component: PaymentComponent},

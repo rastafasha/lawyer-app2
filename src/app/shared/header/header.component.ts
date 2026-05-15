@@ -20,8 +20,9 @@ export class HeaderComponent {
   public profile!: Profile;
   langs: string[] = [];
   public activeLang = 'es';
-
   flag = false;
+  notificacionesPendientes!:number;
+
 
   constructor(
     private authService: AuthService,

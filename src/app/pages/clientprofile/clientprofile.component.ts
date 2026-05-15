@@ -20,6 +20,7 @@ import { HeaderComponent } from '../../shared/header/header.component';
 import { LoadingComponent } from '../../shared/loading/loading.component';
 import { MenuFooterComponent } from '../../shared/menu-footer/menu-footer.component';
 import { ClientService } from '../../services/client.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-clientprofile',
@@ -57,7 +58,6 @@ export class ClientprofileComponent {
   status!: Profile;
   role!: Profile;
   solicitudes_selected: any[] = [];
-  toastr: any;
 
   userForm: FormGroup = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
@@ -75,6 +75,7 @@ export class ClientprofileComponent {
     private authService: AuthService,
     private _clientService: ClientService,
     private activatedRoute: ActivatedRoute,
+    private toastr: ToastrService,
   ) {
     this.user = this.authService.getLocalStorage();
   }
@@ -116,18 +117,19 @@ export class ClientprofileComponent {
 
   addClient() {
 
-    const formData = new FormData();
-    formData.append("client_id", this.client.id + '');
-    formData.append("user_id", this.user.id + '');
+    const data ={
+      client: this.client,
+      usuario: this.user.uid
+    }
 
-    this._clientService.addClienttoUser(formData).subscribe({
+    this._clientService.addClienttoUser(data).subscribe({
       next: (resp: any) => {
         this.client = resp;
-        Swal.fire('Éxito!', 'Cliente creado correctamente', 'success');
+        this.toastr.success('Éxito!', 'Cliente creado correctamente')
         this.ngOnInit();
       }
       , error: (err) => {
-        Swal.fire('Error', 'Error al crear el cliente', 'error');
+        this.toastr.error('Error', 'Error al crear el cliente')
         console.error(err);
       }
     });

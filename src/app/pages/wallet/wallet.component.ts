@@ -16,6 +16,7 @@ import { ClientService } from '../../services/client.service';
 import { Profile, RedesSociales } from '../../models/profile.model';
 import Swal from 'sweetalert2';
 import { RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 declare var bootstrap: any;
 @Component({
   selector: 'app-wallet',
@@ -69,6 +70,7 @@ export class WalletComponent {
   private clientService = inject(ClientService);
   private authService = inject(AuthService);
   private userService = inject(UserService);
+  private toastr = inject(ToastrService);
 
 
 
@@ -167,8 +169,7 @@ export class WalletComponent {
           if (resp.ok) {
             // 3. Vaciamos la selección para cerrar modales o limpiar la vista de detalle
             this.solicitud_selected = null;
-
-            Swal.fire('¡Éxito!', 'El estado de la solicitud ha sido actualizado', 'success');
+            this.toastr.success('¡Éxito!', 'El estado de la solicitud ha sido actualizado')
 
             // 4. Refrescamos la lista general llamando al ciclo de vida
             this.ngOnInit();
@@ -176,7 +177,7 @@ export class WalletComponent {
         },
         error: (err) => {
           console.error('Error al actualizar status:', err);
-          Swal.fire('Error', 'No se pudo cambiar el estado de la solicitud', 'error');
+          this.toastr.error('Error', 'No se pudo cambiar el estado de la solicitud')
         }
       });
   }
@@ -190,31 +191,44 @@ export class WalletComponent {
     this.clientService.addClienttoUser(formData).subscribe({
       next: (resp: any) => {
         this.client = resp;
-        Swal.fire('Éxito!', 'Cliente creado correctamente', 'success');
+        this.toastr.success('¡Éxito!', 'Cliente creado correctamente')
         this.ngOnInit();
       }
       , error: (err) => {
-        Swal.fire('Error', 'Error al crear el cliente', 'error');
+        this.toastr.error('Error', 'Error al crear el cliente')
         console.error(err);
       }
     });
   }
 
-  deleteContact() {
-    const formData = new FormData();
-    formData.append("client_id", this.client.uid + '');
 
-    this.clientService.removeClient(this.client_id).subscribe({
-      next: (resp: any) => {
-        this.client = resp;
-        Swal.fire('Éxito!', 'client eliminado correctamente', 'success');
+
+
+  deleteContact(client_id: any) {
+    Swal.fire({
+      title: 'Estas Seguro?',
+      text: "No podras recuperarlo!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borrar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.clientService.removeClient(client_id).subscribe(
+          response => {
+            this.ngOnInit();
+          }
+        )
+        Swal.fire(
+          'Borrado!',
+          'El client fue borrado.',
+          'success'
+        )
         this.ngOnInit();
-      }
-      , error: (err) => {
-        Swal.fire('Error', 'Error al eliminar el client', 'error');
-        console.error(err);
       }
     });
   }
+
 
 }

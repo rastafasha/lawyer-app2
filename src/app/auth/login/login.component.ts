@@ -6,11 +6,10 @@ import { Usuario } from '../../models/usuario.model';
 import { AuthService } from '../../services/auth.service';
 import { ModalCondicionesComponent } from '../../components/modal-condiciones/modal-condiciones.component';
 import { NgIf } from '@angular/common';
-import { PwaNotifInstallerComponent } from '../../shared/pwa-notif-installer/pwa-notif-installer.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { PlacesService } from '../../services/places.service';
-declare const gapi: any;
+import { PwaNotifInstallerComponent } from '../../shared/pwa-notif-installer/pwa-notif-installer.component';
 
+declare const gapi: any;
 
 @Component({
   selector: 'app-login',

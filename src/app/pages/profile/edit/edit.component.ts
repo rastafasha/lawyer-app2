@@ -17,6 +17,7 @@ import { PaisService } from '../../../services/pais.service';
 import { Pais } from '../../../models/pais';
 import { PlacesService } from '../../../services/places.service';
 import { FileUploadService } from '../../../services/file-upload.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit',
@@ -38,9 +39,9 @@ export class EditComponent {
   pageTitle = 'Edit Profile';
   Title!: string;
   public iswhatsapp: boolean = false;
-  selectedValueCode = '';
-
   public isLoading: boolean = false;
+  public isLoadingImage: boolean = false;
+  selectedValueCode = '';
   loadingTitle!: string;
 
 
@@ -118,6 +119,7 @@ export class EditComponent {
     public paisService: PaisService,
     private fileUploadService: FileUploadService,
     private translate: TranslateService,
+    private toastr: ToastrService,
   ) {
     this.user = this.authService.getLocalStorage();
   }
@@ -283,6 +285,7 @@ export class EditComponent {
   }
 
   subirImagen() {
+    this.isLoadingImage = true;
     const profileId = this.profileSeleccionado?._id;
     if (!profileId) {
       return;
@@ -292,9 +295,11 @@ export class EditComponent {
       .actualizarFoto(this.imagenSubir, 'profiles', profileId)
       .then(img => {
         this.profileSeleccionado.img = img;
-        // this.toastr.success('Guardado', 'La imagen fue actualizada')
+        this.isLoadingImage = false;
+        this.toastr.success('Guardado', 'La imagen fue actualizada')
       }).catch(err => {
-        // this.toastr.error('Error', 'No se pudo subir la imagen')
+        this.isLoadingImage = false;
+        this.toastr.error('Error', 'No se pudo subir la imagen')
       })
     this.ngOnInit();
   }
@@ -334,14 +339,14 @@ export class EditComponent {
 
     this.profileService.updateProfile(data, this.profileSeleccionado._id).subscribe((resp: any) => {
       this.profileSeleccionado = resp;
-      Swal.fire('¡Éxito!', 'Perfil actualizado correctamente', 'success');
+      this.toastr.success('¡Éxito!', 'Perfil actualizado correctamente');
       this.ngOnInit();
     });
   } else {
     // Si no hay perfil previo, disparamos el servicio de creación
     this.profileService.createProfile(data).subscribe((resp: any) => {
       this.profileSeleccionado = resp;
-      Swal.fire('¡Éxito!', 'Perfil creado correctamente', 'success');
+      this.toastr.success('¡Éxito!', 'Perfil creado correctamente');
       this.ngOnInit();
     });
   }
