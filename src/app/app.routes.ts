@@ -18,6 +18,7 @@ import { ClientprofileComponent } from './pages/clientprofile/clientprofile.comp
 import { ChatComponent } from './pages/chat/chat.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
 import { MisNotificacionesComponent } from './pages/mis-notificaciones/mis-notificaciones.component';
+import { MisPagosComponent } from './pages/profile/mis-pagos/mis-pagos.component';
 
 export const routes: Routes = [
     {path: 'home', canActivate: [AuthGuard], component: HomeComponent},
@@ -47,6 +48,7 @@ export const routes: Routes = [
     {path: 'solicitudes', component: WalletComponent},
     {path: 'wallet-payment', component: PaymentComponent},
     {path: 'orders', component: OrderComponent},
+    {path: 'mis-pagos', component: MisPagosComponent},
 
     {path: '**', redirectTo: 'home', pathMatch: 'full'},
 ];

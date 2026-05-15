@@ -18,6 +18,7 @@ import { Pais } from '../../../models/pais';
 import { PlacesService } from '../../../services/places.service';
 import { FileUploadService } from '../../../services/file-upload.service';
 import { ToastrService } from 'ngx-toastr';
+import { ImagenPipe } from '../../../pipes/imagen.pipe';
 
 @Component({
   selector: 'app-edit',
@@ -30,7 +31,8 @@ import { ToastrService } from 'ngx-toastr';
     FormsModule,
     NgFor,
     LoadingComponent,
-    TranslateModule
+    TranslateModule,
+    ImagenPipe
   ],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.css'

@@ -7,29 +7,45 @@
 
                     <app-backButtn [pageTitle]="pageTitle" [Title]="Title"></app-backButtn>
                     <app-loading *ngIf="isLoading" [loadingTitle]="loadingTitle"></app-loading>
+                    <!-- Foto actual -->
+                    <div class="product_list" *ngIf="!isLoading">
+                        <div class="div1" *ngIf="profileSeleccionado">
+                            <img [src]="(profileSeleccionado.img ?? '') | imagenPipe: 'profiles'"
+                                [alt]="profileSeleccionado.first_name">
+                        </div>
+                        <div class="div2">
+                            <h3>{{user.username}} </h3>
+                            <p *ngIf="profileSeleccionado">{{profileSeleccionado.first_name}}
+                                {{profileSeleccionado.last_name}} </p>
+                            <p>{{user.n_doc}}</p>
+                        </div>
+                    </div>
                     <form [formGroup]="perfilForm" *ngIf="!isLoading">
                         <!-- datos -->
                         <div class="row">
                             <app-loading *ngIf="isLoadingImage" ></app-loading>
                             <div class="col-xs-12 col-sm-12 col-md-3 mb-3" *ngIf="!isLoadingImage">
                                 <!-- Foto -->
-                                <div class="form-group local-top-form">
-                                    <!-- <label class="local-top"> {{'formulario.Picture'|translate}}<span class="login-danger">*</span></label> -->
-                                    <label for="file" class="upload labelgoogle">
-                                        <input type="file" accept="image/*" name="image" id="file"
-                                            (change)="cambiarImagen($event)" class="hide-input input">
-                                        <span class="label__name">
-                                            {{'formulario.Select a Photo'|translate}}
-                                        </span>
-                                    </label>
+                                <div class="d-flex flex-column align-items-center gap-2 mt-3">
+                                    <!-- Área de previsualización circular para que parezca app nativa -->
+                                    <div class="avatar-preview shadow-sm mb-2" *ngIf="FILE_AVATAR">
+                                        <img [src]="IMAGE_PREVISUALIZA"
+                                            class="rounded-circle border border-3 border-white"
+                                            style="width: 120px; height: 120px; object-fit: cover;">
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label class="btn btn-outline-secondary w-100 rounded-pill mb-2">
+                                            <i class="bi bi-camera me-2"></i> Elegir Foto
+                                            <input type="file" accept="image/*" (change)="cambiarImagen($event)" hidden>
+                                        </label>
+
+                                        <button type="button" (click)="subirImagen()" *ngIf="FILE_AVATAR"
+                                            class="btn btn-success w-100 rounded-pill shadow-sm">
+                                            <i class="bi bi-cloud-arrow-up me-2"></i> Confirmar Cambio
+                                        </button>
+                                    </div>
                                 </div>
-                                <div *ngIf="FILE_AVATAR">
-                                    <img [src]="IMAGE_PREVISUALIZA" style="width: 250px;" alt="">
-                                </div>
-                                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
-                                    class="btn btn-success waves-effect waves-light m-r-10 btn-block">
-                                    <i class="fa fa-save"></i> Cambiar imagen
-                                </button>
                             </div>
 
                             <div class="col-xs-12 col-sm-12 col-md-9">
