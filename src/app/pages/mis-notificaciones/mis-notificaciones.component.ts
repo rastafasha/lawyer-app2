@@ -32,7 +32,7 @@ public pageNotif = 1;
   <p>Mantente al día con el estatus de tu cuenta y los avisos de la comunidad:</p>
   <ul>
     <li><strong>Historial de Pagos:</strong> Consulta las actualizaciones en tiempo real sobre tus reportes (Aprobados o Rechazados).</li> 
-    <li><strong>Alertas del Complejo:</strong> Recibe avisos generales y comunicados oficiales del <strong>Complejo Parque Central</strong>.</li> 
+    <li><strong>Alertas de Solicitudes:</strong> </li> 
     <li><strong>Vista Rápida:</strong> Cada notificación muestra un resumen inicial y la fecha de emisión para tu control.</li> 
     <li><strong>Gestión de Rechazos:</strong> Si un pago es rechazado, verás el <strong>motivo exacto</strong> y tendrás un botón directo para gestionar tus reportes pendientes de corrección.</li>
     <li><strong>Acceso a Detalles:</strong> Utiliza el <strong>botón azul</strong> en cada tarjeta para ampliar la información recibida.</li>

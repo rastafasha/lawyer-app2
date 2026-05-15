@@ -10,7 +10,9 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
+import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
+declare var bootstrap: any;
 @Component({
   selector: 'app-solicitudes-recents',
   imports: [
@@ -48,6 +50,7 @@ export class SolicitudesRecentsComponent {
   private solicitudService = inject(SolicitudesService);
   private clientService = inject(ClientService);
   private authService = inject(AuthService);
+  private toastr = inject(ToastrService);
 
   ngOnInit() {
     window.scrollTo(0, 0);
@@ -75,6 +78,89 @@ export class SolicitudesRecentsComponent {
     this.solicitud_selected = solicitud;
   }
 
+  abrirDetalle(item: any) {
+    this.solicitud_selected = item;
+    // 1. Abrir Offcanvas
+    const el = document.getElementById('offcanvasNotif');
+    const bsOffcanvas = new bootstrap.Offcanvas(el);
+    bsOffcanvas.show();
+  }
+
+   cambiarStatus(status: any) {
+      // 1. Validación de seguridad
+      if (!this.solicitud_selected) return;
+  
+      // 2. Enviamos EXCLUSIVAMENTE el status en el cuerpo de la petición
+      const data = {
+        status: status.toUpperCase()
+      };
+  
+      this.solicitudService.updateSolicitudStatus(data, this.solicitud_selected._id)
+        .subscribe({
+          next: (resp: any) => {
+            if (resp.ok) {
+              // 3. Vaciamos la selección para cerrar modales o limpiar la vista de detalle
+              this.solicitud_selected = null;
+              this.toastr.success('¡Éxito!', 'El estado de la solicitud ha sido actualizado')
+  
+              // 4. Refrescamos la lista general llamando al ciclo de vida
+              this.ngOnInit();
+            }
+          },
+          error: (err) => {
+            console.error('Error al actualizar status:', err);
+            this.toastr.error('Error', 'No se pudo cambiar el estado de la solicitud')
+          }
+        });
+    }
+  
+  
+    addClient() {
+      const formData = new FormData();
+      formData.append("client_id", this.client.uid + '');
+      formData.append("user_id", this.user.uid + '');
+  
+      this.clientService.addClienttoUser(formData).subscribe({
+        next: (resp: any) => {
+          this.client = resp;
+          this.toastr.success('¡Éxito!', 'Cliente creado correctamente')
+          this.ngOnInit();
+        }
+        , error: (err) => {
+          this.toastr.error('Error', 'Error al crear el cliente')
+          console.error(err);
+        }
+      });
+    }
+  
+  
+  
+  
+    deleteContact(client_id: any) {
+      Swal.fire({
+        title: 'Estas Seguro?',
+        text: "No podras recuperarlo!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Borrar!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.clientService.removeClient(client_id).subscribe(
+            response => {
+              this.ngOnInit();
+            }
+          )
+          Swal.fire(
+            'Borrado!',
+            'El client fue borrado.',
+            'success'
+          )
+          this.ngOnInit();
+        }
+      });
+    }
   
 
 
