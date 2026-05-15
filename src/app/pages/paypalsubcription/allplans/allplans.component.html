@@ -1,0 +1,169 @@
+<app-header></app-header>
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div *ngIf="!user || user === null || user === undefined && !isLoading">
+    <div class="container avisoregistro">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="card-body text-center bg-light">
+                    <p>Registrate o Inicia Sesión para Subscribirte!</p>
+                </div>
+
+                <div class="card-footer bg-light border-0 pb-4 pt-0 text-center">
+                    <button class="btn btn-vinotinto btn-lg" [routerLink]="['/login']">
+                        <i class="fa fa-user"></i> Login / Registro
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container py-5" *ngIf="!isLoading && user">
+    <app-backButtn pageTitle="Planes de Subscripción"></app-backButtn>
+    <!-- Forzamos una sola fila que alinee todo al centro y arriba -->
+    <div class="">
+
+        <!-- 1. PLAN GRATUITO (Ocupa 3/12 columnas en Desktop) -->
+        <div class="card shadow-sm mb-3">
+            <div class="card-body ">
+                <!-- Fila Superior: Fecha y Estatus -->
+
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div>
+                        <h5 class="fw-bold mb-0">Plan Gratuito</h5>
+                        <p class="small mb-0">$0 / mes</p>
+                    </div>
+                    <div class="plan-icon mb-2 text-primary">
+                        <i class="fa fa-3x fa-gift"></i>
+                    </div>
+
+                </div>
+
+                <!-- Fila Media: Monto -->
+                <div class="mb-2">
+
+                    <p class="card-text mb-3 small">Ideal para empezar a trabajar.</p>
+                    <div class="features small mb-auto">
+                        <p class="mb-2"><i class="fa fa-check text-success me-2"></i>Presencia por una Semana</p>
+                        <p class="mb-2"><i class="fa fa-check text-success me-2"></i>Soporte básico</p>
+                    </div>
+                </div>
+
+                <!-- Fila Inferior: Botón de Acción -->
+                <div class="d-flex justify-content-end  border-top border-light">
+                    <button class="btn btn-sm btn-outline-primary rounded-pill px-4 fw-bold" style="font-size: 0.8rem;"
+                        (click)="activarPlanGratis()">
+                        {{ perfil.plan === 'free' ? 'Tu Plan Actual' : 'Activar Gratis' }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. PLANES DE PAYPAL -->
+        <ng-container *ngFor="let plan of planPaypals">
+            <div *ngIf="plan.status === 'ACTIVE'">
+                <div class="card shadow-sm mb-3">
+                    <div class="card-body ">
+                        <!-- Fila Superior: Fecha y Estatus -->
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div class="plan-icon mb-2">
+                                <i class="fa fa-3x" [ngClass]="{
+                'fa-calendar': plan.name.toLowerCase().includes('mensual'),
+                'fa-star': plan.name.toLowerCase().includes('trimestral'),
+                'fa-diamond': plan.name.toLowerCase().includes('anual')
+              }"></i>
+                            </div>
+
+                            <h5 class="fw-bold mb-0">{{plan.name}}</h5>
+                            <p class="small mb-0">Premium</p>
+                        </div>
+
+                        <!-- Fila Media: Monto -->
+                        <div class="mb-3" *ngIf="plan.name.toLowerCase().includes('mensual')">
+
+                            <p class="card-text mb-3 small">Acceso ilimitado al contenido por un mes.</p>
+                            <details>
+                                <summary class="">Detalles del plan</summary>
+                                <div class="features small mb-auto">
+                                    <p class="mb-2"><i class="fa fa-check text-success me-2"></i>Presencia en Resultados
+                                    </p>
+                                    <p class="mb-2"><i class="fa fa-check text-success me-2"></i>Soporte 24/7</p>
+                                    <p class="mb-2"><i class="fa fa-check text-success me-2"></i>Contenido Premium</p>
+                                    <p class="mb-2"><i class="fa fa-check text-success me-2"></i>Creación de Contenido
+                                        con IA</p>
+                                    <p><i class="fa fa-check text-success me-2"></i>Sin publicidad</p>
+                                </div>
+                            </details>
+                        </div>
+                        <div class="mb-2" *ngIf="plan.name.toLowerCase().includes('trimestral')">
+
+                            <p class="card-text mb-3 small">Acceso ilimitado al contenido por 3 meses.</p>
+                            <details>
+                                <summary class="">Detalles del plan</summary>
+                                <div class="features small mb-auto">
+                                    <p class="mb-2"><i class="fa fa-check text-success me-2"></i>Presencia en Resultados
+                                    </p>
+                                    <p class="mb-2"><i class="fa fa-check text-success me-2"></i>Soporte 24/7</p>
+                                    <p class="mb-2"><i class="fa fa-check text-success me-2"></i>Contenido Premium</p>
+                                    <p class="mb-2"><i class="fa fa-check text-success me-2"></i>Creación de Contenido
+                                        con
+                                        IA</p>
+                                    <p><i class="fa fa-check text-success me-2"></i>Sin publicidad</p>
+                                </div>
+                            </details>
+
+                        </div>
+                        <div class="mb-2" *ngIf="plan.name.toLowerCase().includes('anual')">
+
+                            <p class="card-text mb-3 small">Acceso ilimitado al contenido por 1 año.</p>
+                            <details>
+                                <summary class="">Detalles del plan</summary>
+                                <div class="features small mb-auto">
+                                    <p class="mb-2"><i class="fa fa-check text-success me-2"></i>Presencia en Resultados
+                                    </p>
+                                    <p class="mb-2"><i class="fa fa-check text-success me-2"></i>Soporte 24/7</p>
+                                    <p class="mb-2"><i class="fa fa-check text-success me-2"></i>Contenido Premium</p>
+                                    <p class="mb-2"><i class="fa fa-check text-success me-2"></i>Creación de Contenido
+                                        con
+                                        IA</p>
+                                    <p><i class="fa fa-check text-success me-2"></i>Sin publicidad</p>
+                                </div>
+                            </details>
+
+                        </div>
+
+                        <!-- Fila Inferior: Botón de Acción -->
+
+                        <div class="d-flex justify-content-start border-light">
+                            <div class="position-relative" *ngIf="plan.name.toLowerCase().includes('mensual')">
+                                <span
+                                    class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-warning text-dark shadow-sm">
+                                    MÁS POPULAR
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end  border-top border-light">
+
+                            <button class="btn btn-sm btn-vinotinto rounded-pill px-4 fw-bold"
+                                style="font-size: 0.8rem;" data-bs-target="#viewPlan" data-bs-toggle="offcanvas"
+                                (click)="openViewModal(plan)">
+                                Obtener Plan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+    </div>
+</div>
+
+
+<app-menu-footer></app-menu-footer>
+
+
+
+<!-- <app-modalplans></app-modalplans> -->
+<app-pasarela-subcription [planSeleccionado]="planSeleccionado"></app-pasarela-subcription>

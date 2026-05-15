@@ -98,5 +98,16 @@ export class ProfileService {
     return this.http.delete(url, this.headers);
   }
 
+   activarPlanGratuito() {
+    const url = `${baseUrl}/profile/plangratuito`;
+    return this.http.post(url, this.headers);
+
+  }
+
+  saveSubscriptionId(uid: string, subscriptionId: string) {
+  const url = `${baseUrl}/profile/save-subscription`; // Ajusta tu URL
+  return this.http.post(url, { uid, subscriptionId });
+}
+
 
 }

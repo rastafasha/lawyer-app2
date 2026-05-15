@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { MenuFooterComponent } from '../../shared/menu-footer/menu-footer.component';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
@@ -35,6 +35,8 @@ declare var bootstrap: any;
   styleUrl: './wallet.component.scss'
 })
 export class WalletComponent {
+  @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
+
   pageTitle = 'Solicitudes';
 
   loadingTitle!: string;
@@ -182,13 +184,15 @@ export class WalletComponent {
       });
   }
 
+ 
+  addClient(solicitud: any) {
+    this.solicitud_selected = solicitud;
+    const data ={
+      clienteId: this.solicitud_selected.cliente.uid,
+      usuarioId: this.solicitud_selected.usuario.uid,
+    }
 
-  addClient() {
-    const formData = new FormData();
-    formData.append("client_id", this.client.uid + '');
-    formData.append("user_id", this.user.uid + '');
-
-    this.clientService.addClienttoUser(formData).subscribe({
+    this.clientService.addClienttoUser(data).subscribe({
       next: (resp: any) => {
         this.client = resp;
         this.toastr.success('¡Éxito!', 'Cliente creado correctamente')
@@ -217,6 +221,7 @@ export class WalletComponent {
       if (result.isConfirmed) {
         this.clientService.removeClient(client_id).subscribe(
           response => {
+             this.closeModal.emit();
             this.ngOnInit();
           }
         )
@@ -225,6 +230,7 @@ export class WalletComponent {
           'El client fue borrado.',
           'success'
         )
+         this.closeModal.emit();
         this.ngOnInit();
       }
     });

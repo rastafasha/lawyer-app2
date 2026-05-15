@@ -20,6 +20,10 @@
     border-radius: 8px;
     margin-bottom: 15px;
 }
+.product_list p, .product_list h3{
+    margin: 0;
+    padding: 0;
+}
 
 .div1 {
     grid-area: 1 / 1 / 2 / 2;

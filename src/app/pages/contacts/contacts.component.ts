@@ -1,5 +1,5 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { Component, inject, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
@@ -15,15 +15,15 @@ import { Usuario } from '../../models/usuario.model';
 import { AuthService } from '../../services/auth.service';
 import { ClientService } from '../../services/client.service';
 import { SolicitudesService } from '../../services/solicitudes.service';
-import { UserService } from '../../services/usuario.service';
 import { RatingStarComponent } from '../../components/ratingStar/ratingStar.component';
-
+import { RouterLink } from '@angular/router';
+import { ProfileService } from '../../services/profile.service';
+declare var bootstrap: any;
 @Component({
   selector: 'app-contacts',
   imports: [
     MenuFooterComponent, HeaderComponent,
     CommonModule,
-    // LateralComponent,
     BackButtnComponent,
     NgFor, TranslateModule,
     InfiniteScrollDirective,
@@ -31,17 +31,20 @@ import { RatingStarComponent } from '../../components/ratingStar/ratingStar.comp
     FormsModule,
     ReactiveFormsModule,
     ImagenPipe,
-    RatingStarComponent
+    RatingStarComponent,
+    RouterLink
   ],
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.scss'
 })
 export class ContactsComponent {
+  @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
   pageTitle = 'Contactos';
 
   loadingTitle!: string;
   isRefreshing = false;
   isLoading = false;
+  isLoadingFicha = false;
   isEdnOfList = false;
 
   public user!: any;
@@ -71,6 +74,7 @@ export class ContactsComponent {
 
   private solicitudService = inject(SolicitudesService);
   private clientService = inject(ClientService);
+  private profileService = inject(ProfileService);
   private authService = inject(AuthService);
 
   ngOnInit() {
@@ -80,6 +84,16 @@ export class ContactsComponent {
 
     this.getClientesbyuser()
   }
+
+   getClientesbyuser() {
+    this.isLoading = true;
+    this.clientService.getMyClients(this.user.uid).subscribe((resp: any) => {
+      this.clientes = resp.clients;
+      this.isLoading = false;
+    })
+
+  }
+
 
 
   closeReload() {
@@ -117,37 +131,32 @@ export class ContactsComponent {
     // Simulate data fetching 
     setTimeout(() => {
       this.isRefreshing = false;
-      // Update your data here 
       this.getClientesbyuser();
+      // Update your data here 
     }, 2000);
   }
 
-
-
-  getClientesbyuser() {
-    this.isLoading = true;
-    this.clientService.getMyClients(this.user.uid).subscribe((resp: any) => {
-      this.clientes = resp;
-      this.isLoading = false;
-    })
-
-  }
-
-
-
-  clienteSelected(cliente: any) {
+  
+   abrirDetalle(cliente: any) {
     this.cliente_selected = cliente;
+    // 1. Abrir Offcanvas
+    const el = document.getElementById('offcanvasNotif');
+    const bsOffcanvas = new bootstrap.Offcanvas(el);
+    bsOffcanvas.show();
     this.getClienteContact();
   }
 
   getClienteContact() {
-    this.clientService.getClient(this.cliente_selected.id).subscribe((resp: any) => {
-      this.client = resp;
-      this.client_id = this.client.uid;
+    this.isLoadingFicha = true;
+    this.profileService.getByUser(this.cliente_selected).subscribe((resp: any) => {
+      this.profile = resp;
+      
+      // this.client_id = this.client.uid;
       this.profile = resp.profile;
-      this.redessociales = typeof resp.profile.redessociales === 'string'
-        ? JSON.parse(resp[0].profile.redessociales) || []
-        : resp.profile.redessociales || [];
+      this.redessociales = typeof resp.profile.redssociales === 'string'
+        ? JSON.parse(resp[0].profile.redssociales) || []
+        : resp.profile.redssociales || [];
+        this.isLoadingFicha = false;
     })
   }
 
@@ -191,22 +200,35 @@ export class ContactsComponent {
 
   }
 
-  deleteContact() {
-    const formData = new FormData();
-    formData.append("client_id", this.client.uid + '');
+ 
 
-    this.clientService.removeClient(this.client_id).subscribe({
-      next: (resp: any) => {
-        this.client = resp;
-        Swal.fire('Éxito!', 'client eliminado correctamente', 'success');
-        this.ngOnInit();
+  deleteContact(cliente_selected: any) {
+        Swal.fire({
+          title: 'Estas Seguro?',
+          text: "No podras recuperarlo!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, Borrar!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.clientService.removeClient(cliente_selected).subscribe(
+              response => {
+                 this.closeModal.emit();
+                this.ngOnInit();
+              }
+            )
+            Swal.fire(
+              'Borrado!',
+              'El Archivo fue borrado.',
+              'success'
+            )
+             this.closeModal.emit();
+            this.ngOnInit();
+          }
+        });
       }
-      , error: (err) => {
-        Swal.fire('Error', 'Error al eliminar el client', 'error');
-        console.error(err);
-      }
-    });
-  }
 
   onRatingChanged(event: any) {
     console.log(event);
@@ -221,4 +243,7 @@ export class ContactsComponent {
       console.log(resp);
     })
   }
+
+
+   
 }

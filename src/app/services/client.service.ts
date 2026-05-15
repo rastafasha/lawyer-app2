@@ -51,7 +51,7 @@ export class ClientService {
     const url = `${baseUrl}/clients/myclients/${user}`;
     return this.http.get<any>(url, this.headers)
       .pipe(
-        map((resp: { ok: boolean, clients: Client }) => resp.clients)
+        map((resp: { ok: boolean, clients: Client }) => resp)
       )
   }
 
@@ -59,7 +59,7 @@ export class ClientService {
   addClienttoUser(data: any) {
     const headers = new HttpHeaders({ 'Authorization': 'Bearer' + this.authService.token });
     const URL = baseUrl + '/clients/addclient';
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data, this.headers);
   }
 
 

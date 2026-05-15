@@ -57,7 +57,6 @@ export class EditComponent {
   // public profile!: Profile;
   public profile!: Profile;
   // public redessociales: RedesSociales[] = []; // Initialize as an empty array
-  public precios!: Precios;
   // public listIcons: Icons[] = [];
   public speciality!: Speciality;
   public specialities: Speciality[] = [];
@@ -66,6 +65,7 @@ export class EditComponent {
   public profileSeleccionado!: Profile;
 
   public redssociales: any = [];
+  public precios: any = [];
   public tarifas: any = [];
   description: any;
   item_tarifa: any;
@@ -190,19 +190,31 @@ export class EditComponent {
             pais: res.profile.pais,
             lang: res.profile.lang,
             n_doc: res.profile.n_doc,
-            gender: res.profile.gender,
+             gender: res.profile.gender !== undefined && res.profile.gender !== null 
+            ? res.profile.gender.toString() 
+            : '0', 
             estado: res.profile.estado,
             ciudad: res.profile.ciudad,
             telhome: res.profile.telhome,
             telmovil: res.profile.telmovil,
             shortdescription: res.profile.shortdescription,
-            redssociales: res.profile.redssociales,
             especialidad: res.profile.especialidad,
-            precios: res.profile.precios,
+            // redssociales: res.profile.redssociales,
+            // precios: res.profile.precios,
             usuario: this.user.uid,
             img: res.profile.img
           });
           this.profileSeleccionado = res.profile;
+          if (typeof this.profileSeleccionado.redssociales === 'string') {
+            this.redssociales = JSON.parse(this.profileSeleccionado.redssociales);
+          } else {
+            this.redssociales = this.profileSeleccionado.redssociales || [];
+          }
+          if (typeof this.profileSeleccionado.precios === 'string') {
+            this.precios = JSON.parse(this.profileSeleccionado.precios);
+          } else {
+            this.precios = this.profileSeleccionado.precios || [];
+          }
         }
 
       );
@@ -314,6 +326,7 @@ export class EditComponent {
     return;
   }
 
+
   // Construimos el objeto JSON mapeando explícitamente cada campo con el nombre de tu esquema de BD
   const data: any = {
     usuario: this.user.uid,
@@ -326,13 +339,13 @@ export class EditComponent {
     telhome: this.perfilForm.value.telhome || null,
     telmovil: this.perfilForm.value.telmovil || null,             // Nombre correcto de tu esquema
     n_doc: this.perfilForm.value.n_doc || null,
-    gender: this.perfilForm.value.gender || null,
+    gender: Number(this.perfilForm.value.gender || 0),
     especialidad: this.perfilForm.value.especialidad || null,   // Nombre correcto de tu esquema
-    lang: this.lang || null,
+    lang: this.perfilForm.value.lang  || null,
     
     // Forzamos el envío de tus variables globales de arreglos
-    redssociales: this.redssociales || [], 
-    precios: this.tarifas || []
+    redssociales: this.redssociales, 
+    precios: this.tarifas
   };
 
   // Si estamos editando, incluimos el ID del perfil y disparamos el servicio de actualización

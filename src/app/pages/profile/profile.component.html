@@ -1,7 +1,6 @@
 <app-header></app-header>
-<section class="user">
-  <div class="container-fluid">
-    <div class="container">
+<section class="user home">
+  <div class="container">
       <div class="row">
         <div class="col-xs-12 col-sm-9 col-md-9">
           <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
@@ -14,7 +13,9 @@
                 <p>{{'Username'|translate}}: {{user.username}}</p>
                 <p *ngIf="profile">{{profile.first_name}} {{profile.last_name}}</p>
                 <p>{{user.email}}</p>
-                <p>{{speciality}}</p>
+                <p>ID: {{profile.n_doc}}</p>
+                <p>Especialidad: {{speciality}}</p>
+                <p >Plan: {{profile.plan}}</p>
                 <span class="badge  bg-primary" *ngIf="profile.status === 'PENDING'"> {{'Pending'|translate}}</span>
                 <span class="badge bg-success" *ngIf="profile.status === 'VERIFIED'">{{'Verified'|translate}}</span>
                 <span class="badge bg-danger" *ngIf="profile.status === 'REVIEW'">{{'For Review'|translate}}</span>
@@ -139,6 +140,5 @@
         <!-- lateral -->
       </div>
     </div>
-  </div>
 </section>
 <app-menu-footer></app-menu-footer>

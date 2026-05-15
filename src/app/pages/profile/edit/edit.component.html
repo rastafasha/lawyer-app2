@@ -1,5 +1,5 @@
 <app-header></app-header>
-<section class="user">
+<section class="user home">
     <div class="container-fluid">
         <div class="container">
             <div class="row">
@@ -15,9 +15,9 @@
                         </div>
                         <div class="div2">
                             <h3>{{user.username}} </h3>
+                            <p>{{user.email}} </p>
                             <p *ngIf="profileSeleccionado">{{profileSeleccionado.first_name}}
                                 {{profileSeleccionado.last_name}} </p>
-                            <p>{{user.n_doc}}</p>
                         </div>
                     </div>
                     <form [formGroup]="perfilForm" *ngIf="!isLoading">

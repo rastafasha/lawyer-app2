@@ -10,9 +10,10 @@
         <!-- aviso falta info -->
         <app-aviso [profile]="profile" [user]="user"></app-aviso>
         <!-- aviso falta info -->
+         <app-cintamiembro></app-cintamiembro>
 
-        <app-fichaprofile *ngIf="profile && user" [isLoading]="isLoading" [profile]="profile" [user]="user"
-          [redessociales]="redessociales" [speciality]="speciality"></app-fichaprofile>
+        <!-- <app-fichaprofile *ngIf="profile && user" [isLoading]="isLoading" [profile]="profile" [user]="user"
+          [redessociales]="redessociales" [speciality]="speciality"></app-fichaprofile> -->
 
         <app-solicitudes-recents [user]="user"></app-solicitudes-recents>
         <!---Slider-->

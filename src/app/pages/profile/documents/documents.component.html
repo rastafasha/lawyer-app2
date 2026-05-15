@@ -1,5 +1,5 @@
 <app-header></app-header>
-<section class="user-document " [class.refreshing]="isRefreshing" (scrolledUp)="onScrollUp()">
+<section class="home" [class.refreshing]="isRefreshing" (scrolledUp)="onScrollUp()">
     <div class="pull-down-indicator" *ngIf="isRefreshing">
         <app-loading></app-loading>
         <p class="text-center">

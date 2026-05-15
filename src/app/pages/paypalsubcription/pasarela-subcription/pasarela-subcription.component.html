@@ -1,0 +1,33 @@
+
+<div class="offcanvas offcanvas-bottom" id="viewPlan" tabindex="-1"
+    data-bs-backdrop="true" 
+    data-bs-keyboard="true"
+    aria-labelledby="modalProductLabel" 
+    style="height: auto; max-height: 90vh; border-radius: 25px 25px 0 0;"> <!-- Pure Bootstrap 5 Offcanvas with backdrop fix -->
+
+    <div class="offcanvas-header p-3" >
+        <h5 class="offcanvas-title" >{{planSeleccionado?.name}}</h5>
+        <!-- El atributo data-bs-dismiss ahora debe ser "offcanvas" -->
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" (click)="onModalHidden()" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body" >
+        <div class="container">
+          <div class="col-xs-12">
+            <h2>Precio Mensual: {{$any(planpaypal)?.billing_cycles?.[0]?.pricing_scheme?.fixed_price?.value | currency}}</h2>
+            <p>Cuota de activación (única vez): {{planpaypal?.payment_preferences?.setup_fee?.value |currency}}</p>
+            <hr>
+            <strong>
+              Total primer pago: {{ calcularTotal() | currency }}
+            </strong>
+            <p>{{$any(planpaypal)?.billing_cycles?.[0]?.frequency?.interval_unit}}</p>
+
+            <div *ngIf="planpaypal">
+              <ngx-paypal #advanced [config]="SubcriptionConfig"></ngx-paypal>
+            </div>
+          </div>
+
+        </div>
+    </div>
+</div>
+

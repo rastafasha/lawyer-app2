@@ -9,23 +9,22 @@ import { BackButtnComponent } from '../../shared/backButtn/backButtn.component';
 import { Usuario } from '../../models/usuario.model';
 import { AuthService } from '../../services/auth.service';
 import { SolicitudesRecentsComponent } from '../../components/solicitudes-recents/solicitudes-recents.component';
-import { FichaprofileComponent } from '../../components/fichaprofile/fichaprofile.component';
 import { Profile } from '../../models/profile.model';
 import { ProfileService } from '../../services/profile.service';
 import { Speciality } from '../../models/speciality.model';
 import { SpecialitiesService } from '../../services/specialities.service';
+import { CintamiembroComponent } from '../../shared/cintamiembro/cintamiembro.component';
 
 @Component({
   selector: 'app-home',
   imports: [
     HeaderComponent, MenuFooterComponent,
     AvisoComponent, 
-    // SliderHorizontalComponent, 
     LateralComponent, 
     SolicitudesRecentsComponent,
     CommonModule, BackButtnComponent,
     TranslateModule,
-    FichaprofileComponent,
+    CintamiembroComponent
     
   ],
   providers: [TranslateService],
