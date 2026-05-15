@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { ClientService } from '../../services/client.service';
 import { SolicitudesService } from '../../services/solicitudes.service';
@@ -26,6 +26,8 @@ declare var bootstrap: any;
   styleUrl: './solicitudes-recents.component.scss'
 })
 export class SolicitudesRecentsComponent {
+  @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
+
   pageTitle = 'Solicitudes';
   @Input() user!: any;
   loadingTitle!: string;
@@ -115,28 +117,27 @@ export class SolicitudesRecentsComponent {
     }
   
   
-    addClient() {
-      const formData = new FormData();
-      formData.append("client_id", this.client.uid + '');
-      formData.append("user_id", this.user.uid + '');
-  
-      this.clientService.addClienttoUser(formData).subscribe({
-        next: (resp: any) => {
-          this.client = resp;
-          this.toastr.success('¡Éxito!', 'Cliente creado correctamente')
-          this.ngOnInit();
-        }
-        , error: (err) => {
-          this.toastr.error('Error', 'Error al crear el cliente')
-          console.error(err);
-        }
-      });
+    addClient(solicitud: any) {
+    this.solicitud_selected = solicitud;
+    const data ={
+      clienteId: this.solicitud_selected.cliente.uid,
+      usuarioId: this.solicitud_selected.usuario.uid,
     }
+
+    this.clientService.addClienttoUser(data).subscribe({
+      next: (resp: any) => {
+        this.client = resp;
+        this.toastr.success('¡Éxito!', 'Cliente creado correctamente')
+        this.ngOnInit();
+      }
+      , error: (err) => {
+        this.toastr.error('Error', 'Error al crear el cliente')
+        console.error(err);
+      }
+    });
+  }
   
-  
-  
-  
-    deleteContact(client_id: any) {
+    deleteContact(cliente: any) {
       Swal.fire({
         title: 'Estas Seguro?',
         text: "No podras recuperarlo!",
@@ -147,8 +148,9 @@ export class SolicitudesRecentsComponent {
         confirmButtonText: 'Si, Borrar!'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.clientService.removeClient(client_id).subscribe(
+          this.clientService.removeClient(cliente).subscribe(
             response => {
+               this.closeModal.emit();
               this.ngOnInit();
             }
           )
@@ -157,11 +159,11 @@ export class SolicitudesRecentsComponent {
             'El client fue borrado.',
             'success'
           )
+           this.closeModal.emit();
           this.ngOnInit();
         }
       });
     }
-  
 
 
 }

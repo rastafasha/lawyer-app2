@@ -104,10 +104,10 @@
           <button type="button" (click)="deleteContact(solicitud_selected.cliente.uid)" class="btn btn-danger">
             <i class="fa fa-trash"></i>
           </button>
-          <button type="button" (click)="addClient()" class="btn btn-primary">
+          <button type="button" (click)="addClient(solicitud_selected)" class="btn btn-primary">
             <i class="fa fa-user-plus"></i>
           </button>
-          <button type="button" [routerLink]="['/chat/', solicitud_selected.cliente.uid]" class="btn btn-success">
+          <button type="button" [routerLink]="['/chat/', solicitud_selected]" class="btn btn-success">
             <i class="fa fa-comment" aria-hidden="true"></i>
           </button>
 
