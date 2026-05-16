@@ -1,4 +1,4 @@
-.itemlist{
+.itemlist {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -8,23 +8,22 @@
     grid-area: 0px;
     margin: 0;
     align-items: stretch;
-    & .info_itemlist{
+    & .info_itemlist {
         display: flex;
         align-items: flex-start;
         flex-direction: column;
-
     }
-    & .buttons{
+    & .buttons {
         display: flex;
         justify-content: flex-end;
         align-items: center;
         align-self: flex-start;
     }
-    & a img{
+    & a img {
         width: 70px;
     }
 }
-.post{
+.post {
     display: flex;
     flex-direction: column;
 }
@@ -35,54 +34,39 @@
     width: 100%;
 }
 
-.div-group{
+.div-group {
     height: auto;
 }
 
-.columnadoble{
+.columnadoble {
     column-count: 2;
     column-gap: 20px;
     column-fill: balance;
     column-rule: 1px solid #ccc;
-    
 }
 
-.cuadrosearch{
+.cuadrosearch {
     color: #ccc;
     transition: all 0.3s ease;
     padding: 15px;
 }
 
-.share__options{
+.share__options {
     display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        padding: 0px;
-        gap: 20px;
-        width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    gap: 20px;
+    width: 100%;
 }
 
-.modal{
-    top:30px
+.modal {
+    top: 30px;
 }
-
-.tab-content-set{
-    & .nav{
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        padding: 20px;
-        
-    }
-    & li {
-
-    }
-}
-
 
 @media (max-width: 768px) {
-    .columnadoble{
+    .columnadoble {
         column-count: 1;
         column-rule: 1px solid #ccc;
     }
@@ -91,5 +75,35 @@
         display: flex;
         flex-direction: column;
         width: 100%;
+    }
+}
+
+/* tab-conten */
+
+.tab-content-set {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    & .nav {
+        display: flex;
+        align-items: center;
+        padding: 6px;
+        gap: 15px;
+        & li {
+            display: flex;
+            padding: 5px;
+            font-size: 14px;
+            color: #333;
+            gap: 15px;
+            & a {
+                color: #333;
+                text-decoration: none;
+            }
+        }
+    }
+    & .active {
+        color: var(--vinotinto);
     }
 }

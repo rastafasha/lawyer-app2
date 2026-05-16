@@ -18,6 +18,7 @@ import { SolicitudesService } from '../../services/solicitudes.service';
 import { RatingStarComponent } from '../../components/ratingStar/ratingStar.component';
 import { RouterLink } from '@angular/router';
 import { ProfileService } from '../../services/profile.service';
+import { RedessocialesComponent } from '../../shared/redessociales/redessociales.component';
 declare var bootstrap: any;
 @Component({
   selector: 'app-contacts',
@@ -32,7 +33,8 @@ declare var bootstrap: any;
     ReactiveFormsModule,
     ImagenPipe,
     RatingStarComponent,
-    RouterLink
+    RouterLink,
+    RedessocialesComponent
   ],
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.scss'
@@ -85,7 +87,7 @@ export class ContactsComponent {
     this.getClientesbyuser()
   }
 
-   getClientesbyuser() {
+  getClientesbyuser() {
     this.isLoading = true;
     this.clientService.getMyClients(this.user.uid).subscribe((resp: any) => {
       this.clientes = resp.clients;
@@ -136,8 +138,8 @@ export class ContactsComponent {
     }, 2000);
   }
 
-  
-   abrirDetalle(cliente: any) {
+
+  abrirDetalle(cliente: any) {
     this.cliente_selected = cliente;
     // 1. Abrir Offcanvas
     const el = document.getElementById('offcanvasNotif');
@@ -150,13 +152,13 @@ export class ContactsComponent {
     this.isLoadingFicha = true;
     this.profileService.getByUser(this.cliente_selected).subscribe((resp: any) => {
       this.profile = resp;
-      
+
       // this.client_id = this.client.uid;
       this.profile = resp.profile;
       this.redessociales = typeof resp.profile.redssociales === 'string'
         ? JSON.parse(resp[0].profile.redssociales) || []
         : resp.profile.redssociales || [];
-        this.isLoadingFicha = false;
+      this.isLoadingFicha = false;
     })
   }
 
@@ -200,35 +202,35 @@ export class ContactsComponent {
 
   }
 
- 
+
 
   deleteContact(cliente_selected: any) {
-        Swal.fire({
-          title: 'Estas Seguro?',
-          text: "No podras recuperarlo!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Si, Borrar!'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.clientService.removeClient(cliente_selected).subscribe(
-              response => {
-                 this.closeModal.emit();
-                this.ngOnInit();
-              }
-            )
-            Swal.fire(
-              'Borrado!',
-              'El Archivo fue borrado.',
-              'success'
-            )
-             this.closeModal.emit();
+    Swal.fire({
+      title: 'Estas Seguro?',
+      text: "No podras recuperarlo!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borrar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.clientService.removeClient(cliente_selected).subscribe(
+          response => {
+            this.closeModal.emit();
             this.ngOnInit();
           }
-        });
+        )
+        Swal.fire(
+          'Borrado!',
+          'El Archivo fue borrado.',
+          'success'
+        )
+        this.closeModal.emit();
+        this.ngOnInit();
       }
+    });
+  }
 
   onRatingChanged(event: any) {
     console.log(event);
@@ -245,5 +247,5 @@ export class ContactsComponent {
   }
 
 
-   
+
 }

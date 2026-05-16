@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { BackButtnComponent } from '../../../shared/backButtn/backButtn.component';
 import { HeaderComponent } from '../../../shared/header/header.component';
 import { MenuFooterComponent } from '../../../shared/menu-footer/menu-footer.component';
@@ -14,8 +14,12 @@ import { Document } from '../../../models/document.model';
 import { environment } from '../../../environments/environment';
 import { LoadingComponent } from '../../../shared/loading/loading.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { SolicitudesService } from '../../../services/solicitudes.service';
 import { ClientService } from '../../../services/client.service';
+import { ToastrService } from 'ngx-toastr';
+import { FileUploadService } from '../../../services/file-upload.service';
+import { ModalAgregarComponent } from './modal-agregar/modal-agregar.component';
+import { ArchivosCategoriaComponent } from './archivosCategoria/archivosCategoria.component';
+import { SafeUrlPipe } from '../../../pipes/safe-url.pipe';
 const baseUrl = environment.url_servicios;
 declare let $: any;
 @Component({
@@ -29,14 +33,21 @@ declare let $: any;
     FormsModule,
     RouterModule,
     LoadingComponent,
-    TranslateModule
+    TranslateModule,
+    ModalAgregarComponent,
+    ArchivosCategoriaComponent,
   ],
   templateUrl: './documents.component.html',
   styleUrl: './documents.component.scss'
 })
 export class DocumentsComponent {
+
+  @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
+  
   pageTitle = 'Documents';
   isLoading: boolean = false;
+  isLoadingList: boolean = false;
+  isLoadingUpload: boolean = false;
   isRefreshing = false;
   isSearching = false;
   valid_form_success = false;
@@ -48,23 +59,39 @@ export class DocumentsComponent {
   public file_selected: any;
   public user_files: Document[] = [];
   public user_filesfiltered: Document[] = [];
+  public sharedFiles: Document[] = [];
   public document!: Document;
   public name_category: string = '';
   public name_file: string = '';
   public created_at!: string;
-  user_id!: number;
+  user_id!: string;
   user!: any;
   public rol?: string;
 
   currentPage = 1;
   share: any;
+  option_selectedd: number = 1;
+    solicitud_selectedd: any = 1;
 
   searchForm!: FormGroup;
+  documentForm!: FormGroup;
   document_selected: any = null;
   public user_cliente_id!: number;
   public cliente_id!: number;
   public user_member_id!: number;
   public clientes: any = [];
+
+  public FILE_AVATAR: any;
+  public IMAGE_PREVISUALIZA: any = "assets/images/no-image.jpg";
+
+  public imagenSubir!: File;
+  public imgTemp: any = null;
+  public isLoadingImage: boolean = false;
+
+  archivoSubir: File | null = null;
+  vistaPreviaTemp: any = "assets/images/no-image.jpg";
+  esPdf: boolean = false; // Nos dirá si el archivo es PDF o Imagen
+
 
   constructor(
     private authService: AuthService,
@@ -73,6 +100,8 @@ export class DocumentsComponent {
     public router: Router,
     public ativatedRoute: ActivatedRoute,
     public fb: FormBuilder,
+    public toastr: ToastrService,
+    private fileUploadService: FileUploadService,
 
   ) {
     this.user = this.authService.getLocalStorage();
@@ -82,7 +111,9 @@ export class DocumentsComponent {
     this.user_id = this.user.uid;
     this.rol = this.user.role;
     this.validarFormularioPerfil();
+    this.validarFormularioDocumento();
     this.getdocumentsbyUser();
+    this.getShared();
     // this.getdocumentsbyUserFilter();
     this.searchForm.reset();
   }
@@ -96,6 +127,15 @@ export class DocumentsComponent {
         user_id: [this.user.id],
       });
     }
+  }
+
+  validarFormularioDocumento() {
+    this.documentForm = this.fb.group({
+      name_category: [''],
+      created_at: [''],
+      name_file: [''],
+      user_id: [this.user.uid],
+    });
   }
 
 
@@ -130,8 +170,7 @@ export class DocumentsComponent {
   getdocumentsbyUser() {
     this.isLoading = true;
     this.currentPage;
-    this.documentService.getDocumentsByUser(
-      this.user_id).subscribe((resp: any) => {
+    this.documentService.getDocumentsByUser(this.user_id).subscribe((resp: any) => {
         this.FILES = resp
         this.isLoading = false;
         //agrupamos por name_category
@@ -149,127 +188,130 @@ export class DocumentsComponent {
     })
   }
 
-
-  processFile($event: any) {
-    const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    const allowedPdfType = 'application/pdf';
-
-    // No limpiamos this.FILES para mantener los archivos existentes
-
-    for (const file of $event.target.files) {
-      // Verificamos si el archivo es PDF o imagen
-      if (file.type === allowedPdfType || allowedImageTypes.includes(file.type)) {
-        // Agregamos el archivo solo si no existe ya en el array
-        if (!this.FILES.some((f: File) => f.name === file.name && f.size === file.size && f.lastModified === file.lastModified)) {
-          this.FILES.push(file);
-        }
-      } else {
-        console.warn(`Tipo de archivo no soportado: ${file.type}`);
-      }
-    }
+  getShared(){
+     this.isLoading = true;
+    this.documentService.getDocumentsSharedwithme(this.user_id).subscribe((resp:any)=>{
+      this.sharedFiles = resp;
+      this.isLoading = false;
+    })
   }
 
+
+
+ 
+
   deleteFile(FILE: any) {
-      Swal.fire({
-        title: 'Estas Seguro?',
-        text: "No podras recuperarlo!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si, Borrar!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.documentService.deleteDocument(FILE).subscribe(
-            response => {
-              this.ngOnInit();
-            }
-          )
-          this.FilesAdded.splice(FILE, 1);
-          Swal.fire(
-            'Borrado!',
-            'El Archivo fue borrado.',
-            'success'
-          )
-          this.ngOnInit();
-        }
-      });
-    }
+    Swal.fire({
+      title: 'Estas Seguro?',
+      text: "No podras recuperarlo!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borrar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.documentService.deleteDocument(FILE).subscribe(
+          response => {
+            this.ngOnInit();
+          }
+        )
+        this.FilesAdded.splice(FILE, 1);
+        Swal.fire(
+          'Borrado!',
+          'El Archivo fue borrado.',
+          'success'
+        )
+        this.ngOnInit();
+      }
+    });
+  }
 
 
   selectDoc(FILE: any) {
     this.file_selected = FILE;
   }
 
+ cambiarImagen(event: any): void {
+    const file: File = event.target.files[0];
 
+    if (!file) {
+      this.vistaPreviaTemp = null;
+      this.archivoSubir = null;
+      return;
+    }
 
-  closeModalDoc() {
+    // 1. Validar formatos permitidos (Imágenes o PDF)
+    const esImagen = file.type.startsWith('image/');
+    const esDocumentoPdf = file.type === 'application/pdf';
 
-    $('#view-doc').hide();
-    $("#view-doc").removeClass("show");
-    $("#view-doc").css("display", "none !important");
-    $(".modal").css("display", "none !important");
-    $(".modal-backdrop").remove();
-    $("body").removeClass();
-    $("body").removeAttr("style");
-    this.file_selected = null;
-    this.ngOnInit();
+    if (!esImagen && !esDocumentoPdf) {
+      this.toastr.error('Solo se permiten imágenes (PNG, JPG) o documentos PDF', 'Formato no soportado');
+      event.target.value = ''; // Resetea el input en el HTML
+      this.vistaPreviaTemp = null;
+      this.archivoSubir = null;
+      return;
+    }
+
+    // 2. Guardar archivo y tipo
+    this.archivoSubir = file;
+    this.esPdf = esDocumentoPdf;
+
+    // 3. Generar Base64 para la vista previa en el HTML
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      this.vistaPreviaTemp = reader.result;
+    };
   }
 
-
-  save() {
+save(eventData: { archivo: File, categoria: string }) {
     this.text_success = '';
     this.text_validation = '';
-    if (!this.name_category) {
-      this.text_validation = 'Es requerido ingresar un nombre de categoria';
+
+    // 1. ELIMINADO: Ya no leemos 'this.documentForm' en el padre.
+    // Las validaciones de si la categoría o el archivo existen ya se hicieron en el hijo 
+    // antes de lanzar el .emit(). Solo validamos por seguridad el parámetro recibido:
+    if (!eventData.archivo) {
+      this.toastr.error('Error', 'Necesitas seleccionar un recurso');
       return;
     }
 
-
-    if (this.FILES.length === 0) {
-      this.text_validation = 'Necesitas subir un recurso'
-      return;
-
-    }
-    const formData = new FormData();
-    formData.append('usuario', this.user_id + '');
-    formData.append('name_category', this.name_category);
-
-    this.FILES.forEach((file: any, index: number) => {
-      formData.append("files[" + index + "]", file);
-    });
     this.isLoading = true;
-    this.documentService.createDocument(formData).subscribe((resp: any) => {
 
-      if (resp.message == 403) {
-        // Swal.fire('Actualizado', this.text_validation, 'success');
-        this.isLoading = false
-        this.text_validation = resp.message_text;
+    // 2. Llamar al servicio usando directamente las variables limpias que te envió el hijo (eventData)
+    this.fileUploadService
+      .actualizarFoto(eventData.archivo, 'documents', this.user.uid, eventData.categoria)
+      .then(resp => {
+        this.isLoading = false;
 
-        Swal.fire({
-          position: "top-end",
-          icon: "warning",
-          title: this.text_validation,
-          showConfirmButton: false,
-          timer: 1500
-        });
+        if (!resp) {
+          this.toastr.error('Error', 'No se pudo procesar el documento en el servidor');
+          return;
+        }
 
-      } else {
-        this.isLoading = false
-        // Swal.fire('Actualizado', this.text_success, 'success' );
-        this.text_success = 'Se guardó el recurso con éxito';
-        // this.text_success = 'actualizado correctamente';
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: this.text_success,
-          showConfirmButton: false,
-          timer: 1500
-        });
-        this.getdocumentsbyUser();
-      }
-    })
+        // Éxito total: subido a Cloudinary y persistido en MongoDB
+        this.toastr.success('Se guardó el recurso con éxito');
+        this.getdocumentsbyUser(); // Recarga tu lista de documentos en pantalla
 
+        // 3. Notificación de cierre:
+        // Para limpiar el formulario del hijo, lo ideal es pasarle una señal o dejar 
+        // que el hijo se limpie solo al recibir que 'isLoading' volvió a false.
+        this.closeModal.emit();
+      })
+      .catch(err => {
+        this.isLoading = false;
+        console.error(err);
+        this.toastr.error('Error', 'Ocurrió un error inesperado al subir el archivo');
+      });
+  }
+
+closeReload() {
+    this.documentForm.reset();
+    this.vistaPreviaTemp = null;
+    // Cierra el offcanvas (Bootstrap) y recarga la lista.
+    // El modal llama a este método directamente como callback.
+    this.ngOnInit();
   }
 
   onScrollUp() {
@@ -285,9 +327,6 @@ export class DocumentsComponent {
     }, 2000);
   }
 
-  closeReload() {
-    this.ngOnInit();
-  }
 
   resetSearch(): void {
     this.isSearching = false;
@@ -296,38 +335,58 @@ export class DocumentsComponent {
   }
 
   // compartir archivo
-  solicitudSelected(document: any) {
-    this.document_selected = document;
-    this.user_member_id = this.user.id;
-    this.user_cliente_id = this.user.id;
+ 
+  // compartir archivo
+  solicitudSelected(documentId: any) {
+    // 1. Save the selected document ID in the parent state
+    this.document_selected = documentId;
+    console.log(this.document_selected)
+    // 2. Fetch the clients list (which populates this.clientes)
     this.getClientesbyuser();
-
   }
-
   getClientesbyuser() {
-    this.clientService.getMyClients(this.user_member_id).subscribe((resp: any) => {
-      this.clientes = resp;
+    this.clientService.getMyClients(this.user.uid).subscribe((resp: any) => {
+      this.clientes = resp.specialists;
     })
 
   }
 
+  onShareIt(eventData: { emailACompartir: string }) {
 
-  onShareIt(document: any) {
-    this.document_selected = document;
-    const data = {
-      document_id: this.document_selected,
-      user_id: this.user.id,
-      client_id: this.share,
+    if (!eventData.emailACompartir) {
+      this.toastr.warning('Por favor, selecciona un usuario con quien compartir.');
+      return;
     }
-    this.documentService.shareDocument(data).subscribe((resp: any) => {
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: this.text_success,
-        showConfirmButton: false,
-        timer: 1500
-      });
-    })
+
+    const data = {
+      documentId: this.document_selected,
+      usuario: this.user.uid,        // The owner of the file
+      emailACompartir: eventData.emailACompartir // The selected email payload sent by the child
+    };
+
+    this.documentService.shareDocument(data).subscribe({
+      next: (resp: any) => {
+        this.toastr.success('Se ha compartido el documento con éxito');
+        this.document_selected = null; // Clear selection to reset the UI dropdown view
+      },
+      error: (err) => {
+        console.error(err);
+        this.toastr.error('Error', 'No se pudo compartir el archivo');
+      }
+    });
   }
+
+    optionSelected(value: number) {
+      this.option_selectedd = value;
+      if (this.option_selectedd === 1) {
+  
+        // this.ngOnInit();
+      }
+      if (this.option_selectedd === 2) {
+        this.solicitud_selectedd = null;
+      }
+    }
+
+
 
 }

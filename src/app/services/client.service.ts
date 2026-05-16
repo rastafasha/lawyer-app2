@@ -54,7 +54,7 @@ export class ClientService {
         map((resp: { ok: boolean, clients: Client }) => resp)
       )
   }
-
+ 
 
   addClienttoUser(data: any) {
     const headers = new HttpHeaders({ 'Authorization': 'Bearer' + this.authService.token });

@@ -66,24 +66,7 @@
                 </div> -->
               </div>
             </div>
-            <div class="reds">
-              <div class="cont" *ngFor="let red of redssociales">
-                <a *ngIf="red.icono === 'fa fa-whatsapp'"
-                  href="https://wa.me/{{red.name_red}}?text=Estoy%20interesado%20en%20el%20producto%20en%20la%20flechaapp,%20favor%20ampliar%20informacion"
-                  target="_blank" rel="noopener noreferrer">
-                  <div class="option-admin">
-                    <i [class]="red.icono"></i>
-                  </div>
-                </a>
-                <a *ngIf="red.icono !== 'fa fa-whatsapp'" [href]="red.name_red" target="_blank"
-                  rel="noopener noreferrer">
-                  <div class="option-admin">
-                    <i [class]="red.icono"></i>
-                  </div>
-                </a>
-              </div>
-
-            </div>
+            <app-redessociales [redessociales]="redssociales"></app-redessociales>
             <div class="admin-services">
               <a [routerLink]="['/profile/edit', user.uid]">
                 <div class="option-admin">
@@ -123,6 +106,29 @@
                 </div>
               </a>
             </div>
+
+            <!-- configurar notificaciones push -->
+            <div class="setting-row" *ngIf="!isLoading && profile" [class.loading]="pushService.isProcessing$ | async">
+                <div class="setting-info">
+                    <i class="fa fa-bell"></i>
+                    <div class="text-container">
+                        <strong>Notificaciones Push</strong>
+                        <span>Avisos importantes</span>
+                    </div>
+                </div>
+
+                <div class="switch-wrapper">
+                    <!-- Spinner pequeño que solo aparece al cargar -->
+                    <div *ngIf="pushService.isProcessing$ | async" class="mini-spinner"></div>
+
+                    <label class="switch">
+                        <input type="checkbox" [disabled]="pushService.isProcessing$ | async"
+                            [checked]="pushService.isSubscribed$ | async" (change)="togglePush()">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+            <!-- configurar notificaciones push -->
           </div>
 
           <!--banner publicidad-->

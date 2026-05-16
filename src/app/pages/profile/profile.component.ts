@@ -14,6 +14,8 @@ import { SpecialitiesService } from '../../services/specialities.service';
 import { ImagenPipe } from "../../pipes/imagen.pipe";
 import { LoadingComponent } from '../../shared/loading/loading.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { PushNotificationService } from '../../services/push-notification.service';
+import { RedessocialesComponent } from '../../shared/redessociales/redessociales.component';
 
 @Component({
   imports: [
@@ -25,7 +27,8 @@ import { TranslateModule } from '@ngx-translate/core';
     BackButtnComponent,
     ImagenPipe,
     LoadingComponent,
-    TranslateModule
+    TranslateModule,
+    RedessocialesComponent
 ],
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -48,6 +51,7 @@ export class ProfileComponent {
     private authService: AuthService,
     private profileService: ProfileService,
     private specialityService: SpecialitiesService,
+    public pushService: PushNotificationService,
   ) {
     this.user = this.authService.getLocalStorage();
   }
@@ -82,5 +86,26 @@ export class ProfileComponent {
 
   logout() {
     this.authService.logout();
+  }
+
+  async togglePush() {
+    this.pushService.isProcessing$.next(true); // Activa el cargando
+
+    try {
+      const estaSuscrito = this.pushService.isSubscribed$.value;
+      if (estaSuscrito) {
+        const reg = await navigator.serviceWorker.ready;
+        const sub = await reg.pushManager.getSubscription();
+        if (sub) {
+          await sub.unsubscribe();
+          // Llamada opcional a tu backend para limpiar
+          this.pushService.setSubscriptionStatus(false);
+        }
+      } else {
+        await this.pushService.subscribeToNotifications();
+      }
+    } finally {
+      this.pushService.isProcessing$.next(false); // Desactiva el cargando
+    }
   }
 }
