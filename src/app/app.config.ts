@@ -7,10 +7,11 @@ import { routes } from './app.routes';
 import { provideServiceWorker } from '@angular/service-worker';
 import { HttpRequest, HttpHandlerFn, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { HttpInterceptor } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
-
+import { HTTP_INTERCEPTORS, } from '@angular/common/http';
+import { authInterceptor } from './http-interceptors/auth-interceptor';
+import { PaywallInterceptor } from './http-interceptors/paypal-interceptor';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -19,19 +20,30 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(
-      withInterceptors([imageInterceptor])
+      withInterceptors([
+        imageInterceptor,
+        authInterceptor, // Primero maneja autenticación
+      ]),
+      
     ),
     provideRouter(routes),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000'
     }),
+    
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: PaywallInterceptor, // Luego maneja errores de acceso/límites
+      multi: true
+    },
     provideAnimations(),
-        provideToastr({
-          positionClass: 'toast-top-center', // customize global options
-          timeOut: 3000,
-          // ... more options
-        }),
+    provideToastr({
+      positionClass: 'toast-top-center', // customize global options
+      timeOut: 3000,
+      // ... more options
+    }),
+
     ...TranslateModule.forRoot({
       defaultLanguage: 'es',
       loader: {
@@ -46,7 +58,7 @@ export const appConfig: ApplicationConfig = {
 function imageInterceptor(req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> {
   // Check if the request is for an image
   if (req.url.endsWith('.jpg') || req.url.endsWith('.png') || req.url.endsWith('.jpeg')) {
-   
+
     const jwtToken = window.localStorage.getItem('auth_token');
     const modifiedReq = req.clone({
       setHeaders: {
@@ -54,7 +66,7 @@ function imageInterceptor(req: HttpRequest<any>, next: HttpHandlerFn): Observabl
       }
     });
     return next(modifiedReq);
-    
+
   }
   // Pass through other requests unmodified
   return next(req);

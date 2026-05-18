@@ -7,10 +7,30 @@
 
         <app-backButtn [pageTitle]="pageTitle"></app-backButtn>
 
-        <!-- aviso falta info -->
-        <app-aviso [profile]="profile" [user]="user"></app-aviso>
-        <!-- aviso falta info -->
-         <app-cintamiembro></app-cintamiembro>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+              <app-aviso [profile]="profile" [user]="user"></app-aviso>
+              <button class="btn btn-outline-primary btn-sm rounded-circle shadow-sm"
+                (click)="instruccionesModal.open()" title="Ayuda de la sección">
+                <i class="fa fa-question"></i>
+              </button>
+            </div>
+        <app-cintamiembro></app-cintamiembro>
+        <!-- El banner SOLO se muestra si NO está suscrito -->
+        <div *ngIf="(pushService.isSubscribed$ | async) === false && !isLoading"
+          class="banner-notificaciones animate fadeIn">
+          <div class="mensaje">
+            <strong>📢 ¡No te pierdas nada!</strong>
+            <p>Activa las notificaciones para estar al día.</p>
+          </div>
+            <button type="button" (click)="btnActivarPush()" class="btn btn-outline-info mb-3 animate fadeIn">
+          Configurar Notificaciones
+        </button>
+        </div>
+
+        <!-- Opcional: Mostrar un mensaje sutil si ya está suscrito -->
+        <p *ngIf="pushService.isSubscribed$ | async" class="text-muted p-3 animate fadeIn">
+          <i class="fas fa-check-circle text-success"></i> Notificaciones activas
+        </p>
 
         <!-- <app-fichaprofile *ngIf="profile && user" [isLoading]="isLoading" [profile]="profile" [user]="user"
           [redessociales]="redessociales" [speciality]="speciality"></app-fichaprofile> -->
@@ -30,5 +50,5 @@
 </section>
 
 
-
+<app-modal-instrucciones [info]="info" sectionId="inicio" #instruccionesModal></app-modal-instrucciones>
 <app-menu-footer></app-menu-footer>

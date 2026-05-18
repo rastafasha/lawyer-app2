@@ -40,10 +40,8 @@ export class CintamiembroComponent implements OnInit {
     this.user = this.authService.getLocalStorage();
   }
   ngOnInit(): void {
-    const userStorage = localStorage.getItem('user');
 
-    if (userStorage && userStorage !== 'undefined') {
-      this.user = JSON.parse(userStorage);
+    if (this.user && this.user !== 'undefined') {
 
       // Verificamos que el objeto parseado no sea null
       if (this.user) {

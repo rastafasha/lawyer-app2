@@ -15,7 +15,7 @@
     <!-- contactos -->
     <div *ngFor="let item of clientes">
       <div class="card border-0 shadow-sm mb-3 ">
-        <div class="group itemFav shadow">
+        <div class="group itemFav">
 
           <div class="div1pagocon ">
             <div class="d-flex  justify-content-between">
@@ -56,7 +56,7 @@
           <p>{{'City'|translate}}: {{profile?.ciudad}}</p>
           <p>{{'Gender'|translate}}: {{profile?.gender}}</p>
           <p>{{'Description'|translate}}: {{ profile?.shortdescription }}</p>
-           <app-redessociales [redessociales]="redessociales"></app-redessociales>
+          <app-redessociales [redessociales]="redessociales"></app-redessociales>
           <app-ratingStar *ngIf="profile && user" [profile]="profile"></app-ratingStar>
         </div>
       </div>

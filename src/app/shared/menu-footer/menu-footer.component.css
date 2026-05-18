@@ -1,13 +1,10 @@
-.active{
-    color: red
+.menu-footer ul li a.active i {
+  color: #007bff; /* Reemplaza por tu color preferido (ej. Azul, Hexadecimal, etc.) */
+  transform: scale(1.1); /* Opcional: hace el icono un poco más grande */
+  transition: all 0.3s ease; /* Opcional: suaviza la transición de color */
 }
 
-.nav-link {
-  transition: all 0.2s ease-in-out;
-}
-
-.active-link i {
-  transform: scale(1.4);
-  display: inline-block;
-  color: #007bff; /* Cambia el color del icono activo */
+/* Estilo base para los iconos no activos (gris por defecto) */
+.menu-footer ul li a i {
+  color: #888888; 
 }

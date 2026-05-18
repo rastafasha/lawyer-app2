@@ -30,7 +30,7 @@ export class MessageService {
 
 
   getMessages() {
-    const url = `${baseUrl}/messages`;
+    const url = `${baseUrl}/message`;
     return this.http.get<any>(url,this.headers)
       .pipe(
         map((resp:{ok: boolean, messages: Message}) => resp.messages)
@@ -38,7 +38,7 @@ export class MessageService {
   }
 
   getMessage(id: Message) {
-    const url = `${baseUrl}/message/show/${id}`;
+    const url = `${baseUrl}/message/${id}`;
     return this.http.get<any>(url, this.headers)
       .pipe(
         map((resp:{ok: boolean, message: Message}) => resp.message)
@@ -60,11 +60,8 @@ export class MessageService {
       )
   }
   
-  
-
   createMessage(data:any){
-    const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
     const URL = baseUrl+'/message/store';
-    return this.http.post(URL,data, {headers:headers});
+    return this.http.post(URL,data, this.headers);
   }
 }

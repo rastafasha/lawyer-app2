@@ -1,15 +1,5 @@
 
-.listhorizontal,
-.slider-inicio,
-.user-document,
-.wallet,
-.lawyer-profile,
-.search,
-.favorites {
-    transform: translateY(70px);
-    /* padding-bottom: 100px; */
-    padding-bottom: 200px;
-}
+
 
 .home .areagris,
 .user-document .areagris,
